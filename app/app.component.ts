@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
-
-import { GREETING } from './config';
+import { Component, OnInit } from '@angular/core';
+import { BudgetKeyContenetService } from './budgetkey-content.service';
 
 @Component({
   selector: 'my-app',
-  styles: [`
-    budgetkey-container {
-        background-color: #cfc;
-        display: block;
-    }
-    
-    .container-fluid {
-        padding: 10px;
-        max-width: 1024px;
-    }
-  `],
   template: `
-      <budgetkey-container>
-        <div class="container-fluid">
-            <h1>{{greeting}}</h1>    
-            <img src="assets/img/smiley.jpg">
-        </div>      
-      </budgetkey-container>
+    <budgetkey-container>
+    <budgetkey-item-header></budgetkey-item-header>
+
+    <ul class="content-table">
+      <li *ngFor="let content of contents">
+        {{content.name}}
+      </li>
+    </ul>
+
+    <budgetkey-item-body></budgetkey-item-body>
+    </budgetkey-container>
   `,
+  providers: [BudgetKeyContenetService]
 })
-export class AppComponent  {
-  greeting = GREETING;
+
+export class AppComponent implements OnInit {
+  contents: {};
+
+  constructor(private contentsService: BudgetKeyContenetService) { }
+
+  getContents(): void {
+    this.contents = this.contentsService.getContents();
+  }
+
+  ngOnInit(): void {
+    this.getContents();
+  }
 }
