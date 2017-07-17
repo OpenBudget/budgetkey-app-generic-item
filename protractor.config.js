@@ -1,21 +1,13 @@
-// FIRST TIME ONLY- run:
+// FIRST TIME ONLY - run:
 //   ./node_modules/.bin/webdriver-manager update
 //
-//   Try: `npm run webdriver:update`
-//
-// AND THEN EVERYTIME ...
-//   1. Compile with `tsc`
-//   2. Make sure the test server (e.g., http-server: localhost:8080) is running.
-//   3. ./node_modules/.bin/protractor protractor.config.js
-//
-//   To do all steps, try:  `npm run e2e`
+// AND THEN EVERYTIME: `npm run e2e`
 
 var fs = require('fs');
 var path = require('canonical-path');
 var _ = require('lodash');
 
-
-exports.config = {
+module.exports.config = {
   directConnect: true,
 
   // Capabilities to be passed to the webdriver instance.
@@ -34,10 +26,10 @@ exports.config = {
   useAllAngular2AppRoots: true,
 
   // Base URL for application server
-  baseUrl: 'http://localhost:8080',
+  baseUrl: 'http://localhost:8000',
 
   // doesn't seem to work.
-  // resultJsonOutputFile: "foo.json",
+  // resultJsonOutputFile: 'foo.json',
 
   onPrepare: function() {
     //// SpecReporter
@@ -47,7 +39,7 @@ exports.config = {
 
     // debugging
     // console.log('browser.params:' + JSON.stringify(browser.params));
-    jasmine.getEnv().addReporter(new Reporter( browser.params )) ;
+    jasmine.getEnv().addReporter(new Reporter(browser.params)) ;
 
     // Allow changing bootstrap mode to NG1 for upgrade tests
     global.setProtractorToNg1Mode = function() {
@@ -66,7 +58,8 @@ exports.config = {
 
 // Custom reporter
 function Reporter(options) {
-  var _defaultOutputFile = path.resolve(process.cwd(), './_test-output', 'protractor-results.txt');
+  var _defaultOutputFile = path.resolve(process.cwd(),
+    './_test-output', 'protractor-results.txt');
   options.outputFile = options.outputFile || _defaultOutputFile;
 
   initOutputFile(options.outputFile);
@@ -86,8 +79,8 @@ function Reporter(options) {
       return spec.status;
     });
     statuses = _.uniq(statuses);
-    var status = statuses.indexOf('failed') >= 0 ? 'failed' : statuses.join(', ');
-    _currentSuite.status = status;
+    _currentSuite.status = statuses.indexOf('failed') >= 0 ?
+      'failed' : statuses.join(', ');
     log('Suite ' + _currentSuite.status + ': ' + suite.description, -1);
   };
 
@@ -137,7 +130,8 @@ function Reporter(options) {
 
   function initOutputFile(outputFile) {
     ensureDirectoryExistence(outputFile);
-    var header = "Protractor results for: " + (new Date()).toLocaleString() + "\n\n";
+    var header = 'Protractor results for: ' +
+      (new Date()).toLocaleString() + '\n\n';
     fs.writeFileSync(outputFile, header);
   }
 

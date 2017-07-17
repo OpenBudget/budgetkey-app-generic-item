@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BudgetKeyIntro } from './introduction';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'budgetkey-item-body',
-  template:`
+  template: `
   <budgetkey-item-intro></budgetkey-item-intro>
   <where-is-the-money></where-is-the-money>
   `
 })
 
-export class BudgetKeyItemBody{
+export class BudgetKeyItemBody {
 }

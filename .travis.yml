@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 language: node_js
 node_js:
-  - "5"
+  - "8"
 os:
   - linux
 env:
@@ -16,5 +16,5 @@ install:
   - npm install
 script:
   - npm run lint
-  - npm run test-once
+  - npm run test
   - npm run e2e

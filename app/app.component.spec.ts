@@ -1,8 +1,18 @@
+import 'karma-test-shim';
+
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { BudgetKeyItemHeader } from './budgetkey-item-header.component';
+
+import { BudgetKeyItemBody } from './budgetkey-item-body/budgetkey-item-body';
+import { BudgetKeyIntro } from './budgetkey-item-body/introduction';
+import { WhereIsTheMoney } from './budgetkey-item-body/where-is-the-money';
 
 describe('AppComponent', function () {
   let de: DebugElement;
@@ -10,8 +20,18 @@ describe('AppComponent', function () {
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AppComponent ]
+    return TestBed.configureTestingModule({
+      imports: [
+        BudgetKeyCommonModule,
+        HttpModule
+      ],
+      declarations: [
+        AppComponent,
+        BudgetKeyItemHeader,
+        BudgetKeyItemBody,
+        BudgetKeyIntro,
+        WhereIsTheMoney
+      ]
     })
     .compileComponents();
   }));
@@ -23,11 +43,4 @@ describe('AppComponent', function () {
   });
 
   it('should create component', () => expect(comp).toBeDefined() );
-
-  it('should have expected <h1> text', () => {
-    fixture.detectChanges();
-    const h1 = de.nativeElement;
-    expect(h1.innerText).toMatch(/angular/i,
-      '<h1> should say something about "Angular"');
-  });
 });
