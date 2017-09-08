@@ -10,10 +10,6 @@ import { AppComponent } from './app.component';
 
 import { BudgetKeyItemHeader } from './budgetkey-item-header.component';
 
-import { BudgetKeyItemBody } from './budgetkey-item-body/budgetkey-item-body';
-import { BudgetKeyIntro } from './budgetkey-item-body/introduction';
-import { WhereIsTheMoney } from './budgetkey-item-body/where-is-the-money';
-
 describe('AppComponent', function () {
   let de: DebugElement;
   let comp: AppComponent;
@@ -27,10 +23,7 @@ describe('AppComponent', function () {
       ],
       declarations: [
         AppComponent,
-        BudgetKeyItemHeader,
-        BudgetKeyItemBody,
-        BudgetKeyIntro,
-        WhereIsTheMoney
+        BudgetKeyItemHeader
       ]
     })
     .compileComponents();

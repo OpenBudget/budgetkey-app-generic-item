@@ -8,29 +8,46 @@ import { AppComponent }  from './app.component';
 
 import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
 
-import { BudgetKeyItemHeader } from './budgetkey-item-header.component';
+import { RenderTemplatePipe, PairsPipe } from './pipes';
 
-import { BudgetKeyItemBody } from './budgetkey-item-body/budgetkey-item-body';
-import { BudgetKeyIntro } from './budgetkey-item-body/introduction';
-import { WhereIsTheMoney } from './budgetkey-item-body/where-is-the-money';
+import { BudgetKeyItemService, QuestionsService, StoreService } from './services';
+
+import {
+  BeadcrumbsComponent,
+  HeaderComponent,
+  ItemDataComponent,
+  ItemQuestionsComponent,
+  ItemDataTableComponent,
+  ItemInfoComponent,
+  ItemVisualizationsComponent
+} from './components';
 
 @NgModule({
-  imports:      [
+  imports: [
     BrowserModule,
     HttpModule,
     BudgetKeyCommonModule
   ],
   declarations: [
+    RenderTemplatePipe,
+    PairsPipe,
     AppComponent,
-    BudgetKeyItemHeader,
-    BudgetKeyItemBody,
-    BudgetKeyIntro,
-    WhereIsTheMoney
+    BeadcrumbsComponent,
+    HeaderComponent,
+    ItemDataComponent,
+    ItemQuestionsComponent,
+    ItemDataTableComponent,
+    ItemInfoComponent,
+    ItemVisualizationsComponent
   ],
   providers: [
+    BudgetKeyItemService,
+    QuestionsService,
+    StoreService
   ],
-  bootstrap:    [ AppComponent ]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
-
 }

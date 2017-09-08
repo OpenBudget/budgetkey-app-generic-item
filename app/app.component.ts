@@ -1,34 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetKeyContenetService } from './budgetkey-content.service';
+import { BudgetKeyItemService, StoreService } from './services';
 
 @Component({
-  selector: 'my-app',
+  selector: 'budgetkey-app-generic-item',
   template: `
     <budgetkey-container>
-    <budgetkey-item-header></budgetkey-item-header>
-
-    <ul class="content-table">
-      <li *ngFor="let content of contents">
-        {{content.name}}
-      </li>
-    </ul>
-
-    <budgetkey-item-body></budgetkey-item-body>
+      <div class="container-fluid">
+        <budgetkey-page-header></budgetkey-page-header>
+        <div *ngIf="!loaded">Loading...</div>
+        <budgetkey-breadcrumbs *ngIf="loaded"></budgetkey-breadcrumbs>
+        <budgetkey-item-info *ngIf="loaded"></budgetkey-item-info>
+        <budgetkey-item-visualizations *ngIf="loaded"></budgetkey-item-visualizations>
+        <budgetkey-item-data *ngIf="loaded"></budgetkey-item-data>
+      </div>  
     </budgetkey-container>
-  `,
-  providers: [BudgetKeyContenetService]
+  `
 })
-
 export class AppComponent implements OnInit {
-  contents: {};
+  loaded: boolean;
 
-  constructor(private contentsService: BudgetKeyContenetService) { }
-
-  getContents(): void {
-    this.contents = this.contentsService.getContents();
+  constructor(private itemService: BudgetKeyItemService, private store: StoreService) {
+    this.loaded = false;
   }
 
   ngOnInit(): void {
-    this.getContents();
+    this.loaded = false;
+    this.itemService.getItem()
+      .then(item => {
+        this.store.item = item;
+        return this.itemService.getItemDescriptor(item.type);
+      })
+      .then(descriptor => {
+        this.store.descriptor = descriptor;
+        this.loaded = true;
+      });
   }
 }

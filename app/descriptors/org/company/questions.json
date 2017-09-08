@@ -1,0 +1,13 @@
+[
+  {
+    "text": "How much <source> money was received by this company",
+    "query": "SELECT * from funding where company_id=:id and source IN (:source)",
+    "parameters": {
+      "source": {
+        "Subsidy": "'s'",
+        "Procurement": "'p'",
+        "All": "'s', 'p'"
+      }
+    }
+  }
+]
