@@ -1,7 +1,8 @@
 export class Item {
   id: string | number = '';
-  type: string = '';
-  amount: string | number = 0;
+  kind: string = '';
+  received_amount: string | number = 0;
   name: string = '';
-  description: string = '';
+  score: number = 0;
+  details: object;
 }

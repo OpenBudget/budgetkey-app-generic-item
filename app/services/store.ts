@@ -13,6 +13,8 @@ class Store {
   currentParameters: object | null = null;
 }
 
+// Global state storage
+
 @Injectable()
 export class StoreService {
 

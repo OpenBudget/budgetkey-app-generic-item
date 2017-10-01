@@ -8,15 +8,15 @@ import { AppComponent }  from './app.component';
 
 import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
 
-import { RenderTemplatePipe, PairsPipe } from './pipes';
+import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
-import { BudgetKeyItemService, QuestionsService, StoreService } from './services';
+import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
 
 import {
   BeadcrumbsComponent,
   HeaderComponent,
-  ItemDataComponent,
   ItemQuestionsComponent,
+  ItemQuestionParameterComponent,
   ItemDataTableComponent,
   ItemInfoComponent,
   ItemVisualizationsComponent
@@ -31,11 +31,12 @@ import {
   declarations: [
     RenderTemplatePipe,
     PairsPipe,
+    KeysPipe,
     AppComponent,
     BeadcrumbsComponent,
     HeaderComponent,
-    ItemDataComponent,
     ItemQuestionsComponent,
+    ItemQuestionParameterComponent,
     ItemDataTableComponent,
     ItemInfoComponent,
     ItemVisualizationsComponent
@@ -43,7 +44,8 @@ import {
   providers: [
     BudgetKeyItemService,
     QuestionsService,
-    StoreService
+    StoreService,
+    EventsService
   ],
   bootstrap: [
     AppComponent

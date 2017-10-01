@@ -1,48 +1,75 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/core';
 import * as _ from 'lodash';
 
-import { BudgetKeyItemService, StoreService } from '../services';
+import { BudgetKeyItemService, StoreService, EventsService } from '../services';
 import { PreparedQuestion, PreparedQuestions } from '../model';
 
 @Component({
-  selector: 'budgetkey-item-data',
+  selector: 'item-questions-parameter',
   template: `
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-10">
-        <budgetkey-item-questions></budgetkey-item-questions>
-        <budgetkey-item-data-table></budgetkey-item-data-table>
-      </div>
-      <div class="col-xs-1"></div>
+    <div class="item-questions-parameter">
+      <span class="value" (click)="toggleDropdown()">{{ value }}</span>
+      <ul class="values" *ngIf="isDropDownVisible">
+        <li *ngFor="let item of values" (click)="setValue(item)"
+          [ngClass]="{selected: item === value}">{{ item }}</li>
+      </ul>
     </div>
-  `
+  `,
+  styles: [`
+    .item-questions-parameter {
+      position: relative;      
+    }
+    
+    .item-questions-parameter .value {
+      cursor: pointer;
+    }
+  `]
 })
-export class ItemDataComponent {
+export class ItemQuestionParameterComponent implements OnDestroy {
+  private eventSubscriptions: any[] = [];
+
+  @Input() public value: any;
+  @Input() public values: any[];
+  @Output() public change = new EventEmitter<any>();
+
+  private isDropDownVisible: boolean = false;
+
+  constructor(private events: EventsService) {
+    this.eventSubscriptions = [
+      this.events.dropdownActivate.subscribe(
+        (dropdown: any) => {
+          if (dropdown !== this) {
+            this.isDropDownVisible = false;
+          }
+        }
+      ),
+    ];
+  }
+
+  private toggleDropdown() {
+    this.isDropDownVisible = !this.isDropDownVisible;
+    if (this.isDropDownVisible) {
+      this.events.dropdownActivate.emit(this);
+    }
+  }
+
+  private setValue(value: any) {
+    this.value = value;
+    this.isDropDownVisible = false;
+    this.change.emit(this.value);
+  }
+
+  ngOnDestroy() {
+    this.eventSubscriptions.forEach(subscription => subscription.unsubscribe());
+    this.eventSubscriptions = [];
+  }
+
 }
 
 @Component({
   selector: 'budgetkey-item-questions',
-  template: `
-    <div>
-      <ng-container *ngFor="let fragment of currentQuestion.parsed">
-        <span *ngIf="fragment.isText">{{ fragment.value }}</span>
-        <select *ngIf="fragment.isParameter" 
-          [value]="currentParameters[fragment.name]" 
-          (change)="setParameter(fragment.name, $event.target.value)"
-        >
-          <option *ngFor="let pair of fragment.values | pairs" [value]="pair[0]">{{ pair[0] }}</option>
-        </select>
-      </ng-container>
-    </div>
-    <div>
-      <div *ngFor="let question of preparedQuestions">
-        <ng-container *ngFor="let fragment of question.parsed">
-          <span *ngIf="fragment.isText">{{ fragment.value }}</span>
-          <strong *ngIf="fragment.isParameter">{{ fragment.value }}</strong>
-        </ng-container>
-      </div>
-    </div>
-  `
+  template: require('./item-questions.html')
 })
 export class ItemQuestionsComponent implements OnDestroy {
 
@@ -50,10 +77,29 @@ export class ItemQuestionsComponent implements OnDestroy {
 
   preparedQuestions: PreparedQuestions;
   currentQuestion: PreparedQuestion;
+  redashUrl: string;
+  downloadUrl: string;
+
+  private isDropDownVisible: boolean = false;
+
+  private toggleDropDown() {
+    this.isDropDownVisible = !this.isDropDownVisible;
+    if (this.isDropDownVisible) {
+      this.events.dropdownActivate.emit(this);
+    }
+  }
+
+  private selectQuestion(question: PreparedQuestion) {
+    this.store.currentQuestion = question;
+    this.store.currentParameters = question.defaults;
+    this.isDropDownVisible = false;
+  }
 
   private onStoreChanged() {
     this.preparedQuestions = this.store.preparedQuestions;
     this.currentQuestion = this.store.currentQuestion;
+    this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
+    this.downloadUrl = this.itemService.getDownloadCSVUrl(this.store.dataQuery);
   }
 
   get currentParameters() {
@@ -65,10 +111,21 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.store.currentParameters = params;
   }
 
-  constructor(private store: StoreService) {
+  constructor(
+    private itemService: BudgetKeyItemService, private store: StoreService,
+    private events: EventsService
+  ) {
     this.eventSubscriptions = [
       this.store.itemChange.subscribe(() => this.onStoreChanged()),
       this.store.preparedQuestionsChange.subscribe(() => this.onStoreChanged()),
+      this.store.dataQueryChange.subscribe(() => this.onStoreChanged()),
+      this.events.dropdownActivate.subscribe(
+        (dropdown: any) => {
+          if (dropdown !== this) {
+            this.isDropDownVisible = false;
+          }
+        }
+      ),
     ];
     this.onStoreChanged();
   }
@@ -82,22 +139,32 @@ export class ItemQuestionsComponent implements OnDestroy {
 
 @Component({
   selector: 'budgetkey-item-data-table',
-  template: `
-    <div>
-      <table class="table">
-        <tr *ngFor="let row of data">
-          <td *ngFor="let value of row">{{ value }}</td>
-        </tr>
-      </table>
-    </div>
-  `
+  template: require('./item-data-table.html'),
+  animations: [
+    trigger('showTableAnimation', [
+      state('hidden', style({
+        height: '50vh'
+      })),
+      state('visible', style({
+        height: '50vh'
+      })),
+      transition('hidden <=> visible', animate('500ms ease-in')),
+    ]),
+  ]
 })
 export class ItemDataTableComponent {
+
+  private tableState = 'hidden';
 
   private eventSubscriptions: any[] = [];
 
   private query: string = '';
-  private data: any = [];
+  private headers: any[] = [];
+  private data: any[] = [];
+
+  private toggleTable() {
+    this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
+  }
 
   private onStoreChanged() {
     let query = this.store.dataQuery;
@@ -105,6 +172,7 @@ export class ItemDataTableComponent {
       this.query = query;
       this.itemService.getItemData(this.query).then((data: any) => {
         if (data.query === this.query) {
+          this.headers = data.headers;
           this.data = data.items;
         }
       });
