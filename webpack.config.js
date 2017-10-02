@@ -1,20 +1,28 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var UglifyJsPlugin = require('uglify-js-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglify-js-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var plugins = [
+const extractLess = new ExtractTextPlugin({
+  filename: "[name].[contenthash].css",
+  disable: process.env.NODE_ENV === "development"
+});
+
+const plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   }),
+  extractLess,
   new HtmlWebpackPlugin({
-    template: 'index.html'
+    template: 'index.html',
+    filename: '404.html' // set filename to 404.html to handle all URLs by Angular
   })
 ];
 
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'production') {
   plugins.push(new UglifyJsPlugin({
     sourceMap: true
   }));
@@ -22,7 +30,7 @@ if (process.env.NODE_ENV == 'production') {
 
 module.exports = {
   entry: {
-    'main': './app/main.ts'
+    'main': ['./app/main.ts', './app/styles/main.less']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -35,6 +43,12 @@ module.exports = {
         loader: 'awesome-typescript-loader'
       },
       {
+        test: /\.less$/,
+        use: extractLess.extract({
+          use: [{loader: 'raw-loader'}, {loader: 'less-loader'}]
+        })
+      },
+      {
         test: /\.html$/,
         loader: 'raw-loader'
       }
@@ -42,7 +56,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.js', '.html']
+    extensions: ['.ts', '.js', '.html', '.less', '.css']
   },
   plugins: plugins
 };

@@ -1,0 +1,19 @@
+<div class="row budgetkey-item-data-wrapper">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-10">
+    <div class="no-data-available" *ngIf="(data.length == 0) || (headers.length == 0)">No data available</div>
+    <table *ngIf="(data.length > 0) && (headers.length > 0)">
+      <thead>
+      <tr>
+        <td *ngFor="let header of headers">{{ header }}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let value of row">{{ value }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-1"></div>
+</div>

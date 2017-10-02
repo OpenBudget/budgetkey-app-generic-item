@@ -1,34 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetKeyContenetService } from './budgetkey-content.service';
+import { BudgetKeyItemService, StoreService } from './services';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @Component({
-  selector: 'my-app',
+  selector: 'budgetkey-app-generic-item',
   template: `
     <budgetkey-container>
-    <budgetkey-item-header></budgetkey-item-header>
+      <div class="budgetkey-item-wrapper container-fluid">
+        <budgetkey-page-header></budgetkey-page-header>
+        <div *ngIf="!loaded">Loading...</div>
+        <budgetkey-breadcrumbs *ngIf="loaded"></budgetkey-breadcrumbs>
+        <budgetkey-item-info *ngIf="loaded"></budgetkey-item-info>
+        <budgetkey-item-visualizations *ngIf="loaded"></budgetkey-item-visualizations>
 
-    <ul class="content-table">
-      <li *ngFor="let content of contents">
-        {{content.name}}
-      </li>
-    </ul>
-
-    <budgetkey-item-body></budgetkey-item-body>
+        <budgetkey-item-questions *ngIf="loaded"></budgetkey-item-questions>
+        <budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table>
+      </div>  
     </budgetkey-container>
   `,
-  providers: [BudgetKeyContenetService]
+  providers: [
+    Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
+  ],
 })
-
 export class AppComponent implements OnInit {
-  contents: {};
+  loaded: boolean;
 
-  constructor(private contentsService: BudgetKeyContenetService) { }
-
-  getContents(): void {
-    this.contents = this.contentsService.getContents();
+  constructor(private itemService: BudgetKeyItemService, private store: StoreService, private location: Location) {
+    this.loaded = false;
   }
 
   ngOnInit(): void {
-    this.getContents();
+    this.loaded = false;
+    let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
+    this.itemService.getItem(itemId)
+      .then(item => {
+        this.store.item = item;
+        return this.itemService.getItemDescriptor('org/' + item.kind);
+      })
+      .then(descriptor => {
+        this.store.descriptor = descriptor;
+        this.loaded = true;
+      });
   }
 }
