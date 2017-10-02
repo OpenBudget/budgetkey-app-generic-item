@@ -1,29 +1,59 @@
 import 'karma-test-shim';
+import './rxjs-extensions';
 
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
-import { BudgetKeyItemHeader } from './budgetkey-item-header.component';
+import { APP_BASE_HREF } from '@angular/common';
+
+import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
+
+import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
+
+import {
+  BeadcrumbsComponent,
+  HeaderComponent,
+  ItemQuestionsComponent,
+  ItemQuestionParameterComponent,
+  ItemDataTableComponent,
+  ItemInfoComponent,
+  ItemVisualizationsComponent
+} from './components';
 
 describe('AppComponent', function () {
-  let de: DebugElement;
   let comp: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       imports: [
-        BudgetKeyCommonModule,
-        HttpModule
+        BrowserModule,
+        HttpModule,
+        BudgetKeyCommonModule
       ],
       declarations: [
+        RenderTemplatePipe,
+        PairsPipe,
+        KeysPipe,
         AppComponent,
-        BudgetKeyItemHeader
+        BeadcrumbsComponent,
+        HeaderComponent,
+        ItemQuestionsComponent,
+        ItemQuestionParameterComponent,
+        ItemDataTableComponent,
+        ItemInfoComponent,
+        ItemVisualizationsComponent
+      ],
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'},
+        BudgetKeyItemService,
+        QuestionsService,
+        StoreService,
+        EventsService
       ]
     })
     .compileComponents();
@@ -32,7 +62,6 @@ describe('AppComponent', function () {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     comp = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('h1'));
   });
 
   it('should create component', () => expect(comp).toBeDefined() );

@@ -47,14 +47,14 @@ export class ItemQuestionParameterComponent implements OnDestroy {
     ];
   }
 
-  private toggleDropdown() {
+  toggleDropdown() {
     this.isDropDownVisible = !this.isDropDownVisible;
     if (this.isDropDownVisible) {
       this.events.dropdownActivate.emit(this);
     }
   }
 
-  private setValue(value: any) {
+  setValue(value: any) {
     this.value = value;
     this.isDropDownVisible = false;
     this.change.emit(this.value);
@@ -82,14 +82,14 @@ export class ItemQuestionsComponent implements OnDestroy {
 
   private isDropDownVisible: boolean = false;
 
-  private toggleDropDown() {
+  toggleDropDown() {
     this.isDropDownVisible = !this.isDropDownVisible;
     if (this.isDropDownVisible) {
       this.events.dropdownActivate.emit(this);
     }
   }
 
-  private selectQuestion(question: PreparedQuestion) {
+  selectQuestion(question: PreparedQuestion) {
     this.store.currentQuestion = question;
     this.store.currentParameters = question.defaults;
     this.isDropDownVisible = false;
@@ -162,7 +162,7 @@ export class ItemDataTableComponent {
   private headers: any[] = [];
   private data: any[] = [];
 
-  private toggleTable() {
+  toggleTable() {
     this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
   }
 

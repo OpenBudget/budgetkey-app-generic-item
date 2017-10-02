@@ -48,7 +48,7 @@ export class ItemInfoComponent implements OnDestroy {
 
   private isDescriptionVisible: boolean = true;
 
-  private toggleDescription() {
+  toggleDescription() {
     this.isDescriptionVisible = !this.isDescriptionVisible;
   }
 
