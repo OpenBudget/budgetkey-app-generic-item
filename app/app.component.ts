@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     this.itemService.getItem(itemId)
       .then(item => {
         this.store.item = item;
-        return this.itemService.getItemDescriptor('org/' + item.kind);
+        return this.itemService.getItemDescriptor(itemId);
       })
       .then(descriptor => {
         this.store.descriptor = descriptor;
