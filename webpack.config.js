@@ -17,8 +17,7 @@ const plugins = [
   }),
   extractLess,
   new HtmlWebpackPlugin({
-    template: 'index.html',
-    filename: '404.html' // set filename to 404.html to handle all URLs by Angular
+    template: 'index.html'
   })
 ];
 

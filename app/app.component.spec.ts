@@ -6,6 +6,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 
 import { APP_BASE_HREF } from '@angular/common';
@@ -33,6 +35,7 @@ describe('AppComponent', function () {
       imports: [
         BrowserModule,
         HttpModule,
+        FormsModule,
         BudgetKeyCommonModule
       ],
       declarations: [

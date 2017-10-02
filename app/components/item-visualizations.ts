@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
         <ng-container *ngFor="let tab of tabs">
           <div *ngIf="tab == current">
             Tab contents: {{ tab }}
-            <div *ngFor="let i of []">{{ i }}<br>{{ i }}<br>{{ i }}<br></div>
+            <div *ngFor="let i of [1,2,3,4,5,6,7,8,9]">{{ i }}<br>{{ i }}<br>{{ i }}<br></div>
           </div>
         </ng-container>
       </div>  
