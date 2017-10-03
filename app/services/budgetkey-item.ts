@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import descriptors from '../descriptors';
@@ -7,6 +8,9 @@ import { Item, Descriptor } from '../model';
 
 @Injectable()
 export class BudgetKeyItemService {
+  constructor(private http: Http) {
+  }
+
   getRedashUrl(query: string): string {
     // TODO: Implement
     return 'http://next.obudget.org/api/query?query=' +
@@ -21,19 +25,21 @@ export class BudgetKeyItemService {
 
   getItem(itemId: string): Promise<Item> {
     let url = 'http://next.obudget.org/get/' + itemId;
-    return Promise.resolve(
-      fetch(url)
-        .then(response => response.json())
-        .then(result => result.value)
-    );
+    return new Promise<Item>((resolve, reject) => {
+      this.http.get(url)
+        .map((res: any) => res.json())
+        .subscribe(
+          (res: any) => resolve(res.value),
+          () => reject(new Error('Cannot load ' + url))
+        );
+    });
   }
 
   getItemDescriptor(type: string): Promise<Descriptor> {
     type = type.replace(/^[/]+/, '').replace(/[/]+$/, '');
     for (let descriptor in descriptors) {
       if (descriptor.startsWith(type)) {
-        Promise.resolve(descriptors[type]);
-        return
+        return Promise.resolve(descriptors[type]);
       }
     }
     Promise.reject(new Error('No layout for ' + type));
@@ -42,15 +48,18 @@ export class BudgetKeyItemService {
   getItemData(query: string): Promise<object> {
     let url = 'http://next.obudget.org/api/query?query=' +
       encodeURIComponent(query);
-    return Promise.resolve(
-      fetch(url)
-        .then(response => response.json())
-        .then(result => result.rows)
-        .then((result: object[]) => {
-          let headers = result.length > 0 ? _.keys(_.first(result)) : [];
-          let items = _.map(result, _.values);
-          return {query, headers, items};
-        })
-    );
+    return new Promise<any>((resolve, reject) => {
+      this.http.get(url)
+        .map((res: any) => res.json())
+        .subscribe(
+          (res: any) => {
+            let rows: object[] = res.rows;
+            let headers = rows.length > 0 ? _.keys(_.first(rows)) : [];
+            let items = _.map(rows, _.values);
+            resolve({query, headers, items});
+          },
+          () => reject(new Error('Cannot load ' + url))
+        );
+    });
   }
 }

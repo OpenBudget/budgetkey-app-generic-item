@@ -8,9 +8,11 @@ import { Component } from '@angular/core';
       <div class="col-xs-8">
         <div class="row">
           <div class="col-xs-1"></div>
-          <div class="col-xs-10">
-            <input type="text" placeholder="חפשו הכל.. סעיף תקציבי, ארגון, אדם, או כל דבר אחר העולה על דעתכם..">            
-          </div>
+          <form ngNoForm method="get" [action]="searchUrl" class="col-xs-10">
+            <input type="text" placeholder="חפשו הכל.. סעיף תקציבי, ארגון, אדם, או כל דבר אחר העולה על דעתכם.."
+              [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"> 
+            <button type="submit"></button>
+          </form>
           <div class="col-xs-1"></div>
         </div>
       </div>
@@ -19,4 +21,10 @@ import { Component } from '@angular/core';
   `
 })
 export class HeaderComponent {
+  searchTerm: string = '';
+
+  get searchUrl() {
+    return 'http://next.obudget.org/app/search/#/search?term=' +
+      encodeURIComponent(this.searchTerm);
+  }
 }
