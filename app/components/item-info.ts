@@ -9,11 +9,11 @@ import { Item, Descriptor } from '../model';
       <div class="col-xs-1"></div>
       <div class="col-xs-10">
         <div class="row">
-          <div class="col-xs-2 text-left"><small>{{ item.details.type }}</small></div>
+          <div class="col-xs-2 text-left"><small [innerHTML]="descriptor.preTitleTemplate | renderTemplate:item"></small></div>
           <div class="col-xs-7">
             <h1 [innerHTML]="descriptor.titleTemplate | renderTemplate:item"></h1>
           </div>
-          <div class="col-xs-3 text-left">{{ item.received_amount }}</div>
+          <div class="col-xs-3 text-left" [innerHTML]="descriptor.amountTemplate | renderTemplate:item"></div>
         </div>
       </div>
       <div class="col-xs-1"></div>

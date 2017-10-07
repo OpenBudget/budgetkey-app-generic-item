@@ -31,8 +31,10 @@ export type PreparedQuestions = PreparedQuestion[];
 
 export class Descriptor {
   pathPrefix: string = '';
+  preTitleTemplate: string = '';
   titleTemplate: string = '';
   subtitleTemplate: string = '';
   textTemplate: string = '';
+  amountTemplate: string = '';
   questions: Questions = [];
 }
