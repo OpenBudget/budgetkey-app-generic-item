@@ -1,7 +1,7 @@
 [
   {
     "text": "Descendants in year <year>",
-    "query": "SELECT code AS \"Budget Code\", title AS \"Budget Title\", net_allocated AS \"Allocated\" FROM raw_budget WHERE code like ':code%' AND year IN (:year)",
+    "query": "SELECT code AS \"Budget Code\", title AS \"Budget Title\", net_allocated AS \"Allocated\" FROM raw_budget WHERE code like ':code%%' AND year IN (:year)",
     "parameters": {
       "year": {
         "2010 - 2018": "2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018",
