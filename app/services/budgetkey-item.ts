@@ -38,8 +38,8 @@ export class BudgetKeyItemService {
   getItemDescriptor(type: string): Promise<Descriptor> {
     type = type.replace(/^[/]+/, '').replace(/[/]+$/, '');
     for (let descriptor in descriptors) {
-      if (descriptor.startsWith(type)) {
-        return Promise.resolve(descriptors[type]);
+      if (type.startsWith(descriptor)) {
+        return Promise.resolve(descriptors[descriptor]);
       }
     }
     Promise.reject(new Error('No layout for ' + type));
