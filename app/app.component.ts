@@ -62,11 +62,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.loaded = false;
     let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
+    console.log(this.location.path(), itemId);
     this.itemService.getItem(itemId)
       .then(item => {
         this.store.item = item;
         this.title.setTitle(item.name);
-        return this.itemService.getItemDescriptor('org/' + item.kind);
+        return this.itemService.getItemDescriptor(itemId);
       })
       .then(descriptor => {
         this.store.descriptor = descriptor;
