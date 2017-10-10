@@ -2,8 +2,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as nunjucks from 'nunjucks';
 
 let env = new nunjucks.Environment();
-env.addFilter('format_number', function(x: any) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+env.addFilter('format_number', function(x: number) {
+  return x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits:2});
 });
 
 @Pipe({name: 'renderTemplate'})
