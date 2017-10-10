@@ -35,14 +35,15 @@ export class BudgetKeyItemService {
     });
   }
 
-  getItemDescriptor(type: string): Promise<Descriptor> {
-    type = type.replace(/^[/]+/, '').replace(/[/]+$/, '');
-    for (let descriptor in descriptors) {
-      if (type.startsWith(descriptor)) {
-        return Promise.resolve(descriptors[descriptor]);
+  getItemDescriptor(path: string): Promise<Descriptor> {
+    path = path.replace(/^[/]+/, '').replace(/[/]+$/, '');
+    for (let descriptor of descriptors) {
+      var searchPattern = new RegExp('^' + descriptor.pathPrefix);
+      if (searchPattern.test(path)) {
+        return Promise.resolve(descriptor);
       }
     }
-    Promise.reject(new Error('No layout for ' + type));
+    Promise.reject(new Error('No layout for ' + path));
   }
 
   getItemData(query: string): Promise<object> {
