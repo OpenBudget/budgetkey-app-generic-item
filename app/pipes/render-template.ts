@@ -3,7 +3,7 @@ import * as nunjucks from 'nunjucks';
 
 let env = new nunjucks.Environment();
 env.addFilter('format_number', function(x: any) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 });
 
 @Pipe({name: 'renderTemplate'})

@@ -38,7 +38,7 @@ export class BudgetKeyItemService {
   getItemDescriptor(path: string): Promise<Descriptor> {
     path = path.replace(/^[/]+/, '').replace(/[/]+$/, '');
     for (let descriptor of descriptors) {
-      var searchPattern = new RegExp('^' + descriptor.pathPrefix);
+      let searchPattern = new RegExp('^' + descriptor.pathPrefix);
       if (searchPattern.test(path)) {
         return Promise.resolve(descriptor);
       }
