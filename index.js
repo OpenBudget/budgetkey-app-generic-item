@@ -7,11 +7,16 @@ const nunjucks = require('nunjucks');
 
 const basePath = process.env.BASE_PATH || '/';
 const rootPath = path.resolve(__dirname, './dist');
+const disableCache = process.env.DISABLE_CACHE || false;
 
 const app = express();
+if (disableCache) {
+  app.disable('view cache');
+}
 
 nunjucks.configure(rootPath, {
   autoescape: true,
+  noCache: disableCache,
   express: app
 });
 

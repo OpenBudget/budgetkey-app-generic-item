@@ -14,7 +14,7 @@
     "test": "gulp && karma start karma.conf.js --single-run",
     "test-watch": "gulp && karma start karma.conf.js",
     "dist": "gulp && webpack --hide-modules",
-    "dist-serve": "gulp && webpack --hide-modules --watch & npm start"
+    "dist-serve": "gulp && webpack --hide-modules --watch & DISABLE_CACHE=true npm start"
   },
   "keywords": [],
   "author": "Adam Kariv <adam@obudget.org>",
