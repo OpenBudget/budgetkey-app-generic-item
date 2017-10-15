@@ -23,7 +23,8 @@ import {
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
   ItemInfoComponent,
-  ItemVisualizationsComponent
+  ItemVisualizationsComponent,
+  SpiffySankeyComponent,
 } from './components';
 
 describe('AppComponent', function () {
@@ -49,7 +50,8 @@ describe('AppComponent', function () {
         ItemQuestionParameterComponent,
         ItemDataTableComponent,
         ItemInfoComponent,
-        ItemVisualizationsComponent
+        ItemVisualizationsComponent,
+        SpiffySankeyComponent,
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

@@ -20,7 +20,8 @@ import {
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
   ItemInfoComponent,
-  ItemVisualizationsComponent
+  ItemVisualizationsComponent,
+  SpiffySankeyComponent,
 } from './components';
 
 @NgModule({
@@ -41,7 +42,8 @@ import {
     ItemQuestionParameterComponent,
     ItemDataTableComponent,
     ItemInfoComponent,
-    ItemVisualizationsComponent
+    ItemVisualizationsComponent,
+    SpiffySankeyComponent,
   ],
   providers: [
     Title,

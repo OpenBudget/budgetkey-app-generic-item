@@ -1,3 +1,9 @@
+class Chart {
+  title: string;
+  chart: object;
+}
+
+
 export class Item {
   id: string | number = '';
   kind: string = '';
@@ -5,4 +11,5 @@ export class Item {
   name: string = '';
   score: number = 0;
   details: object;
+  charts: Chart[];
 }
