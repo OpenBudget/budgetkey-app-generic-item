@@ -18,7 +18,7 @@ export class SpiffySankeyComponent {
 
   ngOnInit() {
 
-    let fig = {data:[this.chart]};
+    let fig: any = {data:[this.chart]};
     console.log('FFF', fig);
     let labels = [];
     if (!!window.chrome) {
@@ -43,7 +43,7 @@ export class SpiffySankeyComponent {
           color: "black",
           width: 0.5
         },
-        label: fig.data[0].node.label,
+        label: labels,
         color: fig.data[0].node.color
       },
 
