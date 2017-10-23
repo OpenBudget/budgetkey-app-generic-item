@@ -1,6 +1,6 @@
-import {Component, ViewChild, ElementRef, OnDestroy} from '@angular/core';
-import {Item} from "../model/item";
-import {StoreService} from "../services/store";
+import {Component, OnDestroy} from '@angular/core';
+import {Item} from '../model/item';
+import {StoreService} from '../services/store';
 
 
 @Component({

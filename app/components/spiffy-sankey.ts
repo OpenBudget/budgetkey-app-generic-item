@@ -18,29 +18,29 @@ export class SpiffySankeyComponent {
 
   ngOnInit() {
 
-    let fig: any = {data:[this.chart]};
+    let fig: any = {data: [this.chart]};
     console.log('FFF', fig);
     let labels = [];
     if (!!window.chrome) {
       for (let label of fig.data[0].node.label) {
-        labels.push(label.split("").reverse().join(""));
+        labels.push(label.split('').reverse().join(''));
       }
     }
 
     let data_ = {
-      type: "sankey",
+      type: 'sankey',
       domain: {
-        x: [0,1],
-        y: [0,1]
+        x: [0, 1],
+        y: [0, 1]
       },
-      orientation: "h",
-      valueformat: ",.0f",
-      // valuesuffix: "TWh",
+      orientation: 'h',
+      valueformat: ',.0f',
+      // valuesuffix: 'TWh',
       node: {
         pad: 15,
         thickness: 15,
         line: {
-          color: "black",
+          color: 'black',
           width: 0.5
         },
         label: labels,
