@@ -55,6 +55,7 @@ export class QuestionsService {
         .filter(item => item.isParameter)
         .map((item: any) => [item.name, item.value])
         .fromPairs()
+        .extend(question.defaults)
         .value();
       return result;
     });
