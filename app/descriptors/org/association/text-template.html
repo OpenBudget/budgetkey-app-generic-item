@@ -1,1 +1,24 @@
-{{ name }} was founded in year {{ details.registration_date }}, bla bla bla
+<h1>
+{{ details.guidestar_slogan }}
+</h1>
+<h2>
+{{ details.objective }}
+</h2>
+<div>
+תאריך ייסוד:
+{{ details.registration_date }}
+</div>
+<div>
+    כתובת:
+{{ details.address }}
+</div>
+{% if details.founders %}
+<div>
+מייסדים:
+{{ details.founders | join( ", ") }}
+</div>
+{% endif %}
+<div>
+ניהול תקין:
+{{ details.proper_management }}
+</div>

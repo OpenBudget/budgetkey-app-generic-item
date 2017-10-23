@@ -3,7 +3,11 @@ import * as nunjucks from 'nunjucks';
 
 let env = new nunjucks.Environment();
 env.addFilter('format_number', function(x: number) {
-  return x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2});
+  if (x) {
+    return x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2});
+  } else {
+    return '-';
+  }
 });
 
 @Pipe({name: 'renderTemplate'})
