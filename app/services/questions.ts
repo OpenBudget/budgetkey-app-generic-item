@@ -8,7 +8,6 @@ import {
 @Injectable()
 export class QuestionsService {
   parseQuestions(questions: Questions): PreparedQuestions {
-    let pattern = /<([a-z0-9-_]+)>/ig;
     return _.map(questions, function(question: Question) {
       let result = new PreparedQuestion();
       _.extend(result, question);
@@ -16,6 +15,7 @@ export class QuestionsService {
       let s = question.text;
       let parsed = [];
       while (true) {
+        let pattern = /<([a-z0-9-_]+)>/ig;
         let match = pattern.exec(s);
         if (match === null) {
           break;
