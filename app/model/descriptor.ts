@@ -2,6 +2,7 @@ export class Question {
   text: string = '';
   query: string = '';
   parameters: object = {};
+  defaults: object | null = {};
 }
 
 export class PreparedQuestionTextFragment {
