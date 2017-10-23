@@ -15,7 +15,7 @@
 {% if details.founders %}
 <div>
 מייסדים:
-{{ details.founders | join( ", ") }}
+{{ details.founders | load_json | join( ", ") }}
 </div>
 {% endif %}
 <div>

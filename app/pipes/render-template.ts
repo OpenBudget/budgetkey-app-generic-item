@@ -10,6 +10,15 @@ env.addFilter('format_number', function(x: number) {
   }
 });
 
+env.addFilter('load_json', function(x: string) {
+  if (x) {
+    return JSON.parse(x);
+  } else {
+    return null
+  }
+});
+
+
 @Pipe({name: 'renderTemplate'})
 export class RenderTemplatePipe implements PipeTransform {
   transform(template: string, data: object = {}): string {
