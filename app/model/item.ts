@@ -1,6 +1,7 @@
 class Chart {
   title: string;
   chart: object;
+  layout: object;
 }
 
 

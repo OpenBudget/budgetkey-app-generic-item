@@ -35,7 +35,7 @@ export class QuestionsService {
               isText: false,
               isParameter: true,
               name: name,
-              value: question.defaults[name] || _.first(_.keys(question.parameters[name])),
+              value: question.defaults ? question.defaults[name] : _.first(_.keys(question.parameters[name])),
               values: question.parameters[name]
             });
             s = s.substr(match.index + match[0].length);

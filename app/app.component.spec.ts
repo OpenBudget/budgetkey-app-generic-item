@@ -24,7 +24,7 @@ import {
   ItemDataTableComponent,
   ItemInfoComponent,
   ItemVisualizationsComponent,
-  SpiffySankeyComponent,
+  PlotlyChartComponent,
 } from './components';
 
 describe('AppComponent', function () {
@@ -51,7 +51,7 @@ describe('AppComponent', function () {
         ItemDataTableComponent,
         ItemInfoComponent,
         ItemVisualizationsComponent,
-        SpiffySankeyComponent,
+        PlotlyChartComponent,
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

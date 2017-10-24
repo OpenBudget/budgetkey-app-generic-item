@@ -21,7 +21,7 @@ import {
   ItemDataTableComponent,
   ItemInfoComponent,
   ItemVisualizationsComponent,
-  SpiffySankeyComponent,
+  PlotlyChartComponent,
 } from './components';
 
 @NgModule({
@@ -43,7 +43,7 @@ import {
     ItemDataTableComponent,
     ItemInfoComponent,
     ItemVisualizationsComponent,
-    SpiffySankeyComponent,
+    PlotlyChartComponent,
   ],
   providers: [
     Title,

@@ -19,8 +19,8 @@ import {StoreService} from '../services/store';
       <div class="tab-contents col-xs-12">
         <ng-container *ngFor="let tab of tabs">
           <div *ngIf="tab == current">
-            <budgetkey-spiffy-sankey [chart]="charts[current]"
-            ></budgetkey-spiffy-sankey>
+            <budgetkey-plotly-chart [data]="charts[current].data" [layout]="charts[current].layout"
+            ></budgetkey-plotly-chart>
           </div>
         </ng-container>
       </div>  
@@ -64,7 +64,10 @@ export class ItemVisualizationsComponent implements OnDestroy {
     if (this.item.charts) {
       for (let chart of this.item.charts) {
         this.tabs.push(chart.title);
-        this.charts[chart.title] = chart.chart;
+        this.charts[chart.title] = {
+          data: chart.chart,
+          layout: chart.layout || {}
+        };
       }
       this.showTab(this.tabs[0]);
     }
