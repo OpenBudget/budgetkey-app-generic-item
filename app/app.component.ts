@@ -10,7 +10,7 @@ import * as _ from 'lodash';
     <budgetkey-container>
       <div #container class="budgetkey-item-wrapper container-fluid">
         <budgetkey-page-header></budgetkey-page-header>
-        <div *ngIf="!loaded">Loading...</div>
+        <div *ngIf="!loaded"></div>
         <!--<budgetkey-breadcrumbs *ngIf="loaded"></budgetkey-breadcrumbs>-->
         <budgetkey-item-info *ngIf="loaded"></budgetkey-item-info>
         <budgetkey-item-visualizations *ngIf="loaded"></budgetkey-item-visualizations>
