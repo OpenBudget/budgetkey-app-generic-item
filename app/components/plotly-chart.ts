@@ -22,7 +22,7 @@ export class PlotlyChartComponent {
     let traces: any = this.data;
     console.log('FFF', traces);
     let labels = null;
-    if (traces[0].type == 'sankey') {
+    if (traces[0].type === 'sankey') {
       labels = [];
       if (!!window.chrome) {
         if (!traces[0].node._orig_label) {

@@ -14,7 +14,7 @@ env.addFilter('load_json', function(x: string) {
   if (x) {
     return JSON.parse(x);
   } else {
-    return null
+    return null;
   }
 });
 
