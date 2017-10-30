@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent }  from './app.component';
 
-import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
+import { BudgetKeyCommonModule, THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN } from 'budgetkey-ng2-components';
 
 import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
@@ -23,6 +23,23 @@ import {
   ItemVisualizationsComponent,
   PlotlyChartComponent,
 } from './components';
+
+import { THEME_TOKEN, defaultTheme } from './config';
+
+declare const BUDGETKEY_NG2_COMPONENTS_THEME: any;
+declare const BUDGETKEY_APP_GENERIC_ITEM_THEME: any;
+
+let providers: any[] = [
+  Title,
+  BudgetKeyItemService,
+  QuestionsService,
+  StoreService,
+  EventsService,
+  {provide: THEME_TOKEN, useValue: typeof(BUDGETKEY_APP_GENERIC_ITEM_THEME) === 'undefined' ? defaultTheme : BUDGETKEY_APP_GENERIC_ITEM_THEME}
+];
+if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
+  providers.push({provide: NG_COMPONENTS_THEME_TOKEN, useValue: BUDGETKEY_NG2_COMPONENTS_THEME});
+}
 
 @NgModule({
   imports: [
@@ -45,13 +62,7 @@ import {
     ItemVisualizationsComponent,
     PlotlyChartComponent,
   ],
-  providers: [
-    Title,
-    BudgetKeyItemService,
-    QuestionsService,
-    StoreService,
-    EventsService
-  ],
+  providers: providers,
   bootstrap: [
     AppComponent
   ]
