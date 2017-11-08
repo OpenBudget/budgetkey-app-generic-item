@@ -75,7 +75,11 @@ export class ItemQuestionsComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
   private isSearching: boolean;
+<<<<<<< 4753c0252c32433294ca18e06b497c419473bfe1
 
+=======
+  
+>>>>>>> loader on data receive
   preparedQuestions: PreparedQuestions;
   currentQuestion: PreparedQuestion;
   redashUrl: string;
