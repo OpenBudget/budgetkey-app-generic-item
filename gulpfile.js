@@ -33,7 +33,7 @@ gulp.task('styles:vendor', function() {
     './node_modules/budgetkey-ng2-components/lib/styles/**/*'
   ], {
     base: './node_modules/budgetkey-ng2-components/lib/styles/'
-  }).pipe(gulp.dest('./dist'));
+  }).pipe(gulp.dest('./dist/assets/styles'));
 });
 
 gulp.task('clean', ['clean:dist', 'clean:ts']);
