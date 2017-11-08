@@ -1,24 +1,43 @@
-<h1>
-{{ details.guidestar_slogan }}
-</h1>
-<h2>
-{{ details.objective }}
-</h2>
+
+<div class="well objective">
+    {% if details.guidestar_slogan %}
+    <h2>
+        ״{{ details.guidestar_slogan }}״
+    </h2>
+    {% endif %}
+    <h3>
+        {{ details.objective }}
+    </h3>
+</div>
 <div>
-תאריך ייסוד:
+    <label class="field-label">
+        תאריך ייסוד:
+    </label>
 {{ details.registration_date }}
 </div>
 <div>
+    <label class="field-label">
     כתובת:
+    </label>
 {{ details.address }}
 </div>
 {% if details.founders %}
 <div>
+    <label class="field-label">
 מייסדים:
+    </label>
 {{ details.founders | load_json | join( ", ") }}
 </div>
 {% endif %}
 <div>
+    <label class="field-label">
 ניהול תקין:
+    </label>
 {{ details.proper_management }}
+</div>
+<div>
+<small>
+    מידע נוסף ניתן למצוא באתר
+    <a href="http://www.guidestar.org.il/he/organization/{{ id }}" target="_blank">גיידסטאר</a>
+</small>
 </div>
