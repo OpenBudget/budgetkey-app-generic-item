@@ -54,5 +54,30 @@
       "phase": "אושרו",
       "period": "כל השנים"
     }
+  },
+  {
+    "text": " כלל ההתקשרויות עם הארגון ב <period>",
+    "query": "SELECT volume AS \"היקף\", executed AS \"ביצוע\", currency AS \"מטבע\", min_year||'-'||max_year AS \"תקופה\", purpose AS \"תיאור\", purchase_method->>0 AS \"אופן רכישה\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", order_date AS \"תאריך הזמנה\", start_date AS \"תאריך התחלה\", end_date AS \"תאריך סיום\" FROM contract_spending WHERE entity_id=':id' AND ((:period BETWEEN min_year AND max_year) or (min_year is null and :period <= max_year) or (max_year is null and :period >= min_year) or (:period is null))",
+    "parameters": {
+      "period": {
+        "כל השנים": "null",
+        "2014": "2014",
+        "2015": "2015",
+        "2016": "2016",
+        "2017": "2017",
+        "2018": "2018"
+      }
+    },
+    "defaults": {
+      "period": "כל השנים"
+    }
+  },
+  {
+    "text": "הגופים מהם בוצעו התקשרויות עם הארגון",
+    "query": "SELECT ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", currency AS \"מטבע\", sum(volume) AS \"סך היקף\", sum(executed) AS \"סך ביצוע\", min(min_year)||'-'||max(max_year) AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' group by 1, 2 order by 3 desc",
+    "parameters": {
+    },
+    "defaults": {
+    }
   }
 ]

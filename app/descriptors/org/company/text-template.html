@@ -1,1 +1,27 @@
-{{ name }} was founded in year {{ details.registration_date }}, bla bla bla
+{% if details.description %}
+<div class="well objective">
+    <h3>
+        {{ details.description }}
+    </h3>
+</div>
+{% endif %}
+<div>
+    <label class="field-label">
+        תאריך ייסוד:
+    </label>
+    {{ details.registration_date }}
+</div>
+<div>
+    <label class="field-label">
+{% if details.address_lines %}
+        כתובת:
+    </label>
+    {{ details.address_lines | join('<br/>') | safe }}
+</div>
+{% endif %}
+<div>
+    <label class="field-label">
+        סטטוס:
+    </label>
+    {{ details.status }}
+</div>
