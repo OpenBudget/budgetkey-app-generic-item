@@ -9,6 +9,7 @@ import descriptorBudget2Dig from './budget/budget2dig';
 import descriptorBudget4Dig from './budget/budget4dig';
 import descriptorBudget6Dig from './budget/budget6dig';
 import descriptorBudget8Dig from './budget/budget8dig';
+import descriptorTendersExemptions from './tenders/exemptions';
 import {Descriptor} from '../model/descriptor';
 
 let descriptors: Descriptor[] = [
@@ -21,6 +22,7 @@ let descriptors: Descriptor[] = [
   descriptorBudget4Dig,
   descriptorBudget6Dig,
   descriptorBudget8Dig,
+  descriptorTendersExemptions,
 ];
 
 export default descriptors;

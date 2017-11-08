@@ -1,0 +1,75 @@
+<label class="field-label">
+    תיאור ההתקשרות:
+</label>
+<div class="well objective">
+    {{description}}
+</div>
+
+{% if documents %}
+<div>
+    <label class="field-label">
+        מסמכים רלוונטים:
+    </label>
+    <ul>
+        {% for document in documents %}
+        <li>
+            <a href="{{ document.link }}">{{ document.description }}</a> [{{document.update_time}}]
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if subjects %}
+<div>
+    <label class="field-label">
+        תגיות נושא:
+    </label>
+    {{ subjects }}
+</div>
+{% endif %}
+
+{% if claim_date %}
+<div>
+    <label class="field-label">
+        מועד הבקשה:
+    </label>
+    {{ claim_date }}
+</div>
+{% endif %}
+
+{% if start_date %}
+<div>
+    <label class="field-label">
+        תחילת ההתקשרות:
+    </label>
+    {{ start_date }}
+</div>
+{% endif %}
+
+{% if end_date %}
+<div>
+    <label class="field-label">
+        סוף ההתקשרות:
+    </label>
+    {{ end_date }}
+</div>
+{% endif %}
+
+{% if last_update_date %}
+<div>
+    <label class="field-label">
+        תאריך עדכון:
+    </label>
+    {{ last_update_date }}
+</div>
+{% endif %}
+
+<div>
+    <small>
+        עוד מידע ניתן למצוא ב
+        <a href="{{page_url}}">
+            אתר מנהל הרכש
+        </a>
+    </small>
+</div>
