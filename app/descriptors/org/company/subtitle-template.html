@@ -3,5 +3,9 @@
 ({{name_en}})
 {% endif %}
 היא
+{% if details.government_company_info %}
+{{details.government}} ({{ details.type }})
+{% else %}
 {{ details.type }}
+{% endif %}
 (מספר תאגיד: {{ id }})

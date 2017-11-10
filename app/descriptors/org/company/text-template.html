@@ -25,3 +25,62 @@
     </label>
     {{ details.status }}
 </div>
+
+{% if details.government_company_info %}
+<div>
+    <label class="field-label">
+        תחום פעילות:
+    </label>
+    {{ details.government_company_info.activity_field }} / {{ details.government_company_info.main_area_of_activity }}
+</div>
+
+{% if details.government_company_info.directors_in_company or details.government_company_info.directors_not_by_state or details.government_company_info.directors_of_state  %}
+<div>
+    <label class="field-label">
+        בעלי תפקידים:
+    </label>
+    <ul>
+        {% for role in details.government_company_info.directors_in_company %}
+        <li>
+            <label class="field-label">
+                {{ role.role }}:
+            </label>
+            <a href="{{role.href}}">{{role.first_name}} {{role.last_name}}</a>
+        </li>
+        {% endfor %}
+        {% for role in details.government_company_info.directors_of_state %}
+        <li>
+            <label class="field-label">
+                דירקטור מטעם המדינה:
+            </label>
+            <a href="{{role.href}}">{{role.first_name}} {{role.last_name}}</a>
+        </li>
+        {% endfor %}
+        {% for role in details.government_company_info.directors_not_by_state %}
+        <li>
+            <label class="field-label">
+                דירקטור לא מטעם המדינה:
+            </label>
+           {{role.first_name}} {{role.last_name}}
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+{% endif %}
+
+
+<small>
+    מידע נוסף ניתן למצוא ב:
+    <ul>
+        <li>
+            <a href="details.government_company_info.href" target="_blank">אתר רשות החברות הממשלתיות</a>
+        </li>
+        {% if details.government_company_info.company_website %}
+        <li>
+            <a href="details.government_company_info.company_website" target="_blank">אתר החברה</a>
+        </li>
+        {% endif %}
+    </ul>
+</small>
+{% endif %}
