@@ -43,3 +43,21 @@
         {% endfor %}
     </ul>
 </div>
+
+{% if criteria_docs.length > 0 %}
+<div>
+    <label class="field-label">
+        מבחני תמיכה:
+    </label>
+    <ul>
+        {% for doc in criteria_docs %}
+        <li>
+            <a href="{{doc.pdf_url}}" target="_blank">
+                {{doc.title}} ({{doc.date}})
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <small>הערה: אנו לא יודעים להתאים בוודאות תמיכה תקציבית למבחן התמיכה הרלוונטי אליה. המבחנים המקושרים למעלה הן התאמות אפשריות אך לא וודאיות.</small>
+</div>
+{% endif %}

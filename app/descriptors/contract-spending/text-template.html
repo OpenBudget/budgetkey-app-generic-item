@@ -68,3 +68,20 @@
     </a>
 </div>
 {% endif %}
+
+{% if manof_excerpts.length > 0 %}
+<div>
+    <label class="field-label">
+        תהליכי רכש קשורים:
+    </label>
+    <ul>
+        {% for manof_ref in manof_excerpts %}
+        <li>
+            <a href="//next.obudget.org/i/tenders/{{manof_ref.tender_type}}/{{manof_ref.publication_id}}/{{manof_ref.tender_id}}">
+                {{ manof_ref.description }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
