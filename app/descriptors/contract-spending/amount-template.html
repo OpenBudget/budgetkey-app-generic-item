@@ -1,0 +1,3 @@
+<small>היקף ההתקשרות:</small>
+{{ volume | format_number }}
+<small>{% if currency == 'ILS' or currency == 'שקל' %}₪{% else %}{{ currency }}{% endif %}</small>

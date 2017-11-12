@@ -1,0 +1,16 @@
+<div>
+התקשרות של
+    {{ publisher[0] }}
+{% if purchasing_unit[0] != publisher[0] %}
+({{ purchasing_unit[0] }})
+{% endif %}
+עם
+{% if entity_name %}
+    <a href="/i/org/{{ entity_kind }}/{{ entity_id }}">
+
+        {{ entity_name }}
+
+    </a>
+{% else %}
+    {{ supplier_name[0] }}
+{% endif %}

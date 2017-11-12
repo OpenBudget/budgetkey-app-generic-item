@@ -1,0 +1,70 @@
+<label class="field-label">
+    מטרת ההתקשרות:
+</label>
+<div class="well objective">
+   {{ purpose }}
+</div>
+
+<div>
+    <label class="field-label">
+        אופן רכישה:
+    </label>
+    {{purchase_method[0]}}
+    {% if exemption_reason.length > 0 %}
+    ({{ exemption_reason[0] }})
+    {% endif %}
+</div>
+<div>
+    <label class="field-label">
+        שולמו עד כה:
+    </label>
+    {{ executed | format_number }}
+    <small>{% if currency == 'ILS' or currency == 'שקל' %}₪{% else %}{{ currency }}{% endif %}</small>
+</div>
+
+{% if order_date %}
+<div>
+    <label class="field-label">
+        מועד ההזמנה:
+    </label>
+    {{ order_date }}
+</div>
+{% endif %}
+
+{% if start_date %}
+<div>
+    <label class="field-label">
+        תחילת ההתקשרות:
+    </label>
+    {{ start_date }}
+</div>
+{% endif %}
+
+{% if end_date %}
+<div>
+    <label class="field-label">
+        סוף ההתקשרות:
+    </label>
+    {{ end_date }}
+</div>
+{% endif %}
+
+{% if buyer_description %}
+<div>
+    <label class="field-label">
+        היחידה הרוכשת:
+    </label>
+    {{ buyer_description }}
+</div>
+{% endif %}
+
+{% if budget_code %}
+<div>
+    <label class="field-label">
+        התקנה התקציבית:
+    </label>
+    <a href="//next.obudget.org/app/search/#/search?term={{ budget_code }}">
+        {{ budget_code }} - {{ budget_title }}
+    </a>
+</div>
+{% endif %}
