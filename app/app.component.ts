@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private itemService: BudgetKeyItemService, private store: StoreService,
-    private location: Location, private title: Title
+    private location: Location
   ) {
     this.loaded = false;
   }
@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
   handleItem(item: any): void {
     console.log(this);
     this.store.item = item;
-    this.title.setTitle(item.name);
     this.itemService.getItemDescriptor(item.doc_id)
       .then(descriptor => {
         this.store.descriptor = descriptor;
