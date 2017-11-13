@@ -42,6 +42,7 @@
     "plotly.js": "^1.31.0",
     "raw-loader": "^0.5.1",
     "reflect-metadata": "^0.1.8",
+    "request": "^2.83.0",
     "rxjs": "^5.4.0",
     "systemjs": "0.19.40",
     "zone.js": "^0.6.26"

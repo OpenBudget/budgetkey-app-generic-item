@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const nunjucks = require('nunjucks');
+const request = require("request");
 
 const basePath = process.env.BASE_PATH || '/';
 const rootPath = path.resolve(__dirname, './dist');
@@ -31,8 +32,20 @@ app.get(basePath + '*', function(req, res) {
     }
   }
 
-  res.render('index.html', {
-    base: basePath
+  request({
+    url: 'https://next.obudget.org/get/' + req.params[0],
+    json: true
+  }, function (error, response, body) {
+    if (body !== null && body.value) {
+      body = body.value;
+      res.render('index.html', {
+        base: basePath,
+        prefetchedItem: JSON.stringify(body),
+        title: body.page_title
+      });
+    } else {
+      res.sendStatus(404);
+    }
   });
 });
 
