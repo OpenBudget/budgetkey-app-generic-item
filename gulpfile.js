@@ -8,7 +8,7 @@ gulp.task('default', function(done) {
   runSequence('clean', 'assets', done);
 });
 
-gulp.task('assets', ['assets:app', 'assets:vendor', 'styles:vendor']);
+gulp.task('assets', ['assets:app', 'assets:vendor']);
 
 gulp.task('assets:app', function() {
   return gulp.src([
@@ -26,14 +26,6 @@ gulp.task('assets:vendor', function() {
   ], {
     base: './node_modules/budgetkey-ng2-components'
   }).pipe(gulp.dest('./dist'));
-});
-
-gulp.task('styles:vendor', function() {
-  return gulp.src([
-    './node_modules/budgetkey-ng2-components/lib/styles/**/*'
-  ], {
-    base: './node_modules/budgetkey-ng2-components/lib/styles/'
-  }).pipe(gulp.dest('./dist/assets/styles'));
 });
 
 gulp.task('clean', ['clean:dist', 'clean:ts']);

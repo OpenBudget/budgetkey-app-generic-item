@@ -5,6 +5,7 @@ const fs = require('fs');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const request = require("request");
+const urlencode = require('urlencode');
 
 const basePath = process.env.BASE_PATH || '/';
 const rootPath = path.resolve(__dirname, './dist');
@@ -33,10 +34,10 @@ app.get(basePath + '*', function(req, res) {
   }
 
   request({
-    url: 'https://next.obudget.org/get/' + req.params[0],
+    url: 'https://next.obudget.org/get/' + urlencode(req.params[0]),
     json: true
   }, function (error, response, body) {
-    if (body !== null && body.value) {
+    if (response.statusCode == 200 && body !== null && body.value) {
       body = body.value;
       res.render('index.html', {
         base: basePath,
@@ -44,7 +45,7 @@ app.get(basePath + '*', function(req, res) {
         title: body.page_title
       });
     } else {
-      res.sendStatus(404);
+      res.sendStatus(response.statusCode);
     }
   });
 });
