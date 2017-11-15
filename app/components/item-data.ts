@@ -74,7 +74,8 @@ export class ItemQuestionParameterComponent implements OnDestroy {
 export class ItemQuestionsComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
-
+  private isSearching: boolean;
+  
   preparedQuestions: PreparedQuestions;
   currentQuestion: PreparedQuestion;
   redashUrl: string;
@@ -100,6 +101,7 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
     this.downloadUrl = this.itemService.getDownloadCSVUrl(this.store.dataQuery);
+    this.isSearching = true;
   }
 
   get currentParameters() {
@@ -126,6 +128,7 @@ export class ItemQuestionsComponent implements OnDestroy {
           }
         }
       ),
+      this.store.onDataReceived.subscribe(() => {this.isSearching = false})
     ];
     this.onStoreChanged();
   }
@@ -174,6 +177,7 @@ export class ItemDataTableComponent {
         if (data.query === this.query) {
           this.headers = data.headers;
           this.data = data.items;
+          this.store.onDataReceived.emit();
         }
       });
     }
