@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent }  from './app.component';
 
 import { BudgetKeyCommonModule, THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN } from 'budgetkey-ng2-components';
+import { MushonkeyModule } from 'mushonkey';
 
 import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
@@ -46,7 +47,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     BrowserModule,
     HttpModule,
     FormsModule,
-    BudgetKeyCommonModule
+    BudgetKeyCommonModule,
+    MushonkeyModule
   ],
   declarations: [
     RenderTemplatePipe,

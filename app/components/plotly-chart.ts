@@ -1,4 +1,6 @@
 import {Component, ViewChild, ElementRef, Input} from '@angular/core';
+import {MushonKeyChart, MushonKeyFlowGroup, MushonKeyFlow} from "mushonkey/lib/components/MushonkeyComponent";
+import { Location } from '@angular/common';
 
 declare const Plotly: any;
 declare const window: any;
@@ -6,9 +8,44 @@ declare const window: any;
 @Component({
   selector: 'budgetkey-plotly-chart',
   template: `
+    <div class='mushonkey-wrapper' *ngIf="this.data.type == 'mushonkey'">
+        <mushonkey [chart]="mushonkeyChart" (onSelected)="onSelected($event)"></mushonkey>
+    </div>
     <div style="direction: ltr" #plot>
     </div>
-  `
+  `,
+  styles: [`
+      .mushonkey-wrapper {
+        width: 90%;
+        padding-right: 5%;
+        height: 1200px;
+        direction: ltr;
+      }
+      
+      :host >>> .centerpiece { 
+          stroke: lightgray;
+          stroke-width: 2;
+          fill: gray;
+       }
+      
+      :host >>> .centerpiece-text { 
+          font-size: 20px;
+          stroke: none;
+          fill: white;
+      }
+      
+      :host >>> .text { font-family: "Abraham TRIAL"; }
+      
+      :host >>> .budget-expense.connector { stroke: lightblue; }
+      :host >>> .budget-expense.text { fill: voilet; }
+
+      :host >>> .budget-parent.connector { stroke: red; }
+      :host >>> .budget-parent.text { fill: white; }
+
+      :host >>> .budget-revenues.connector { stroke: violet; }
+      :host >>> .budget-revenues.text { fill: black; }
+
+`]
 })
 export class PlotlyChartComponent {
 
@@ -16,73 +53,58 @@ export class PlotlyChartComponent {
   @Input() public layout: any;
 
   @ViewChild('plot') plot: ElementRef;
+  private mushonkeyChart: MushonKeyChart;
+
+  constructor(private location: Location) {
+
+  }
+
+  onSelected(context: any) {
+    console.log('BBB', context);
+    window.location.href = window.location.origin + '/i/'+context;
+  }
 
   ngOnInit() {
+    if (this.data.type == 'mushonkey') {
+      let groups: Array<MushonKeyFlowGroup> = [];
+      for (let group of this.data.groups) {
+        let flows: Array<MushonKeyFlow> = [];
+        for (let flow of group.flows) {
+          flows.unshift(new MushonKeyFlow(flow.size, flow.label, flow.context));
+        }
 
-    let traces: any = this.data;
-    console.log('FFF', traces);
-    let labels = null;
-    if (traces[0].type === 'sankey') {
-      labels = [];
-      if (!!window.chrome) {
-        if (!traces[0].node._orig_label) {
-          traces[0].node._orig_label = traces[0].node.label;
-          for (let label of traces[0].node._orig_label) {
-            labels.push(label.split('').reverse().join(''));
+        let mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
+        mkfg.labelTextSize = group.labelTextSize;
+        groups.push(mkfg)
+      }
+
+      let margin = {left:20, right:20, bottom:20, top:-900};
+      this.mushonkeyChart = new MushonKeyChart(groups, this.data.centerTitle, this.data.centerWidth, this.data.centerHeight, this.data.directionLeft, margin);
+
+    } else {
+      let traces: any = this.data;
+      let labels = null;
+      if (traces[0].type === 'sankey') {
+        labels = [];
+        if (!!window.chrome) {
+          if (!traces[0].node._orig_label) {
+            traces[0].node._orig_label = traces[0].node.label;
+            for (let label of traces[0].node._orig_label) {
+              labels.push(label.split('').reverse().join(''));
+            }
+            traces[0].node.label = labels;
           }
-          traces[0].node.label = labels;
         }
       }
+
+      let layout = Object.assign({
+        height: 600,
+        font: {
+          size: 10
+        }
+      }, this.layout);
+
+      Plotly.plot(this.plot.nativeElement, traces, layout);
     }
-
-    // let data_ = {
-    //   type: 'sankey',
-    //   domain: {
-    //     x: [0, 1],
-    //     y: [0, 1]
-    //   },
-    //   orientation: 'h',
-    //   valueformat: ',.0f',
-    //   // valuesuffix: 'TWh',
-    //   node: {
-    //     pad: 15,
-    //     thickness: 15,
-    //     line: {
-    //       color: 'black',
-    //       width: 0.5
-    //     },
-    //     label: labels,
-    //     color: fig.data[0].node.color
-    //   },
-    //
-    //   link: {
-    //     source: traces[0].link.source,
-    //     target: traces[0].link.target,
-    //     value: traces[0].link.value,
-    //     label: traces[0].link.label
-    //   }
-    // };
-    //
-    // let data = [data_];
-
-    let layout = Object.assign({
-      // title: "Energy forecast for 2050\n" +
-      // "Source: Department of Energy & Climate Change, Tom Counsell via Mike Bostock",
-      // width: 1118,
-      height: 600,
-      font: {
-        size: 10
-      }
-    }, this.layout);
-
-    Plotly.plot(this.plot.nativeElement, traces, layout);
-    // const data: any = [
-    //   {
-    //     x: ['giraffes', 'orangutans', 'monkeys'],
-    //     y: [20, 14, 23],
-    //     type: 'bar'
-    //   }
-    // ];
-    // Plotly.newPlot(this.plot.nativeElement, data);
   }
 }
