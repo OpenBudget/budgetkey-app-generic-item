@@ -1,5 +1,5 @@
 import {Component, ViewChild, ElementRef, Input} from '@angular/core';
-import {MushonKeyChart, MushonKeyFlowGroup, MushonKeyFlow} from "mushonkey/lib/components/MushonkeyComponent";
+import {MushonKeyChart, MushonKeyFlowGroup, MushonKeyFlow} from 'mushonkey/lib/components/MushonkeyComponent';
 import { Location } from '@angular/common';
 
 declare const Plotly: any;
@@ -61,11 +61,11 @@ export class PlotlyChartComponent {
 
   onSelected(context: any) {
     console.log('BBB', context);
-    window.location.href = window.location.origin + '/i/'+context;
+    window.location.href = window.location.origin + '/i/' + context;
   }
 
   ngOnInit() {
-    if (this.data.type == 'mushonkey') {
+    if (this.data.type === 'mushonkey') {
       let groups: Array<MushonKeyFlowGroup> = [];
       for (let group of this.data.groups) {
         let flows: Array<MushonKeyFlow> = [];
@@ -75,11 +75,18 @@ export class PlotlyChartComponent {
 
         let mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
         mkfg.labelTextSize = group.labelTextSize;
-        groups.push(mkfg)
+        groups.push(mkfg);
       }
 
-      let margin = {left:20, right:20, bottom:20, top:-900};
-      this.mushonkeyChart = new MushonKeyChart(groups, this.data.centerTitle, this.data.centerWidth, this.data.centerHeight, this.data.directionLeft, margin);
+      let margin = {left: 20, right: 20, bottom: 20, top: 20};
+      this.mushonkeyChart = new MushonKeyChart(
+        groups,
+        this.data.centerTitle,
+        this.data.centerWidth,
+        this.data.centerHeight,
+        this.data.directionLeft,
+        margin
+      );
 
     } else {
       let traces: any = this.data;

@@ -75,7 +75,7 @@ export class ItemQuestionsComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
   private isSearching: boolean;
-  
+
   preparedQuestions: PreparedQuestions;
   currentQuestion: PreparedQuestion;
   redashUrl: string;
@@ -128,7 +128,7 @@ export class ItemQuestionsComponent implements OnDestroy {
           }
         }
       ),
-      this.store.onDataReceived.subscribe(() => {this.isSearching = false})
+      this.store.onDataReceived.subscribe(() => {this.isSearching = false; })
     ];
     this.onStoreChanged();
   }
