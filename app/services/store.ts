@@ -28,7 +28,7 @@ export class StoreService {
 
   constructor(private questionsService: QuestionsService) {
   }
-  
+
   get item(): Item {
     return this.store.item;
   }
