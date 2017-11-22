@@ -164,6 +164,7 @@ export class ItemDataTableComponent {
   private query: string = '';
   private headers: any[] = [];
   private data: any[] = [];
+  private err: any;
 
   toggleTable() {
     this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
@@ -173,13 +174,21 @@ export class ItemDataTableComponent {
     let query = this.store.dataQuery;
     if (query !== this.query) {
       this.query = query;
-      this.itemService.getItemData(this.query).then((data: any) => {
-        if (data.query === this.query) {
-          this.headers = data.headers;
-          this.data = data.items;
+      this.itemService.getItemData(this.query)
+        .then((data: any) => {
+          if (data.query === this.query) {
+            this.headers = data.headers;
+            this.data = data.items;
+          }
+        })
+        .catch((err) => {
+          this.headers.length = 0;
+          this.data.length = 0;
+          this.err = err;
+        })
+        .done(() => {
           this.store.onDataReceived.emit();
-        }
-      });
+        });
     }
   }
 
