@@ -168,11 +168,13 @@ export class ItemDataTableComponent {
 
   private onStoreChanged() {
     let query = this.store.dataQuery;
+    let headers = this.store.currentQuestion.headers;
     if (query !== this.query) {
       this.query = query;
-      this.itemService.getItemData(this.query).then((data: any) => {
+      this.headers = headers;
+      this.itemService.getItemData(this.query,this.headers).then((data: any) => {
         if (data.query === this.query) {
-          this.headers = data.headers;
+          // this.headers = data.headers;
           this.data = data.items;
         }
       });

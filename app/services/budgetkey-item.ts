@@ -46,7 +46,7 @@ export class BudgetKeyItemService {
     Promise.reject(new Error('No layout for ' + path));
   }
 
-  getItemData(query: string): Promise<object> {
+  getItemData(query: string, headersList: string[]): Promise<object> {
     let url = 'http://next.obudget.org/api/query?query=' +
       encodeURIComponent(query);
     return new Promise<any>((resolve, reject) => {
@@ -54,7 +54,14 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let rows: object[] = res.rows;
+            let rows: object[]=[];
+            _.each(res.rows,(item)=>{
+              let newItem: object={};
+              _.each(headersList,(header)=>{
+                newItem[header]=item[header];
+              });
+              rows.push(newItem);
+            });
             let headers = rows.length > 0 ? _.keys(_.first(rows)) : [];
             let items = _.map(rows, _.values);
             resolve({query, headers, items});
