@@ -17,9 +17,9 @@ you can just run `nvm install` and you will have the correct version.
 
 The core components and apps support themes for reusability of common code.
 
-To run the app with a different theme, you need to set the theme in dist/assets/theme.THEME_NAME.js
+To run the app with a different theme, you need to set the theme in theme.THEME_NAME.js
 
-For example, dist/assets/theme.govbuy.js:
+For example, theme.govbuy.js:
 
 ```
 BUDGETKEY_NG2_COMPONENTS_THEME = {
@@ -39,7 +39,7 @@ For example, given a modified theme in ./my-theme.js:
 
 ```
 docker build -t budgetkey-app-generic-item .
-docker run -it -v `pwd`/my-theme.js:/app/dist/assets/theme.my.js --rm --name budgetkey-app-generic-item -p8000:8000 budgetkey-app-generic-item
+docker run -it -v `pwd`/my-theme.js:/app/theme.my.js --rm --name budgetkey-app-generic-item -p8000:8000 budgetkey-app-generic-item
 ```
 
 You could then add ?theme=my to enable this theme
