@@ -34,10 +34,13 @@ app.get(basePath + '*', function(req, res) {
   }
 
   var theme = typeof(req.query.theme) !== "undefined" ? req.query.theme : '';
-  var themeFilePath = theme !== '' ? path.resolve(__dirname, 'theme.'+req.query.theme+'.js') : null;
+  var themeFilePath = theme !== '' ? path.resolve(__dirname, 'theme.'+req.query.theme+'.json') : null;
   var themeScript = '';
   if (themeFilePath && fs.existsSync(themeFilePath)) {
-    themeScript = fs.readFileSync(themeFilePath);
+    var themeJson = JSON.parse(fs.readFileSync(themeFilePath));
+    for (var key in themeJson) {
+      themeScript += key+"="+JSON.stringify(themeJson[key])+";";
+    }
   }
 
   request({
