@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="assets/styles/budgetkey-ng2-components.css">
     <script>
       window.prefetchedItem = {{ prefetchedItem | safe }};
+      {{ themeScript | safe }}
     </script>
     <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//next.obudget.org/_fonts/stylesheet.css"></link>
@@ -15,6 +16,5 @@
 
   <body>
     <budgetkey-app-generic-item>Loading...</budgetkey-app-generic-item>
-    <script type="text/javascript" src="assets/theme.js"></script>
   </body>
 </html>

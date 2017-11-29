@@ -33,16 +33,27 @@ app.get(basePath + '*', function(req, res) {
     }
   }
 
+  var theme = typeof(req.query.theme) !== "undefined" ? req.query.theme : '';
+  var themeFilePath = theme !== '' ? path.resolve(__dirname, 'theme.'+req.query.theme+'.json') : null;
+  var themeScript = '';
+  if (themeFilePath && fs.existsSync(themeFilePath)) {
+    var themeJson = JSON.parse(fs.readFileSync(themeFilePath));
+    for (var key in themeJson) {
+      themeScript += key+"="+JSON.stringify(themeJson[key])+";";
+    }
+  }
+
   request({
     url: 'https://next.obudget.org/get/' + urlencode(req.params[0]),
     json: true
   }, function (error, response, body) {
-    if (response.statusCode == 200 && body !== null && body.value) {
+    if (response.statusCode === 200 && body !== null && body.value) {
       body = body.value;
       res.render('index.html', {
         base: basePath,
         prefetchedItem: JSON.stringify(body),
-        title: body.page_title
+        title: body.page_title,
+        themeScript: themeScript
       });
     } else {
       res.sendStatus(response.statusCode);
