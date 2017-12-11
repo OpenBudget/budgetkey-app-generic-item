@@ -54,17 +54,15 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let rows: object[]=[];
-            _.each(res.rows,(item)=>{
-              let newItem: object={};
+            let items: object[]=[];
+            _.each(res.rows,(row)=>{
+              let newItem: any[] =[];
               _.each(headersList,(header)=>{
-                newItem[header]=item[header];
+                newItem.push(row[header]);
               });
-              rows.push(newItem);
+              items.push(newItem);
             });
-            let headers = rows.length > 0 ? _.keys(_.first(rows)) : [];
-            let items = _.map(rows, _.values);
-            resolve({query, headers, items});
+            resolve({query, items});
           },
           () => reject(new Error('Cannot load ' + url))
         );

@@ -174,7 +174,6 @@ export class ItemDataTableComponent {
       this.headers = headers;
       this.itemService.getItemData(this.query,this.headers).then((data: any) => {
         if (data.query === this.query) {
-          // this.headers = data.headers;
           this.data = data.items;
         }
       });
