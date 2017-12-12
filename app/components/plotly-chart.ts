@@ -18,7 +18,7 @@ declare const window: any;
       .mushonkey-wrapper {
         width: 90%;
         padding-right: 5%;
-        height: 1200px;
+        height: 800px;
         direction: ltr;
       }
       
@@ -60,7 +60,6 @@ export class PlotlyChartComponent {
   }
 
   onSelected(context: any) {
-    console.log('BBB', context);
     window.location.href = window.location.origin + '/i/' + context;
   }
 
@@ -84,8 +83,7 @@ export class PlotlyChartComponent {
         this.data.centerTitle,
         this.data.centerWidth,
         this.data.centerHeight,
-        this.data.directionLeft,
-        margin
+        this.data.directionLeft
       );
 
     } else {
