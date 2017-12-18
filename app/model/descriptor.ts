@@ -3,6 +3,7 @@ export class Question {
   query: string = '';
   parameters: object = {};
   defaults: object | null = {};
+  headers: string[];
 }
 
 export class PreparedQuestionTextFragment {
