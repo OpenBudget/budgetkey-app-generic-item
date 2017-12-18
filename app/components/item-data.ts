@@ -172,14 +172,13 @@ export class ItemDataTableComponent {
 
   private onStoreChanged() {
     let query = this.store.dataQuery;
-    let headers = this.store.currentQuestion.headers;
     if (query !== this.query) {
       this.query = query;
-      this.headers = headers;
-      this.itemService.getItemData(this.query,this.headers)
+      let headersOrder = this.store.currentQuestion.headers;
+      this.itemService.getItemData(this.query,headersOrder)
         .then((data: any) => {
           if (data.query === this.query) {
-            //this.headers = data.headers;
+            this.headers = data.headers;
             this.data = data.items;
           }
         })
@@ -191,12 +190,6 @@ export class ItemDataTableComponent {
         .done(() => {
           this.store.onDataReceived.emit();
         });
-
-      this.itemService.getItemData(this.query,this.headers).then((data: any) => {
-        if (data.query === this.query) {
-          this.data = data.items;
-        }
-      });
     }
   }
 
