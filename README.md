@@ -17,21 +17,31 @@ you can just run `nvm install` and you will have the correct version.
 
 The core components and apps support themes for reusability of common code.
 
-To run the app with a different theme, you need to set the theme in assets/theme.js, for example:
+To run the app with a different theme, you need to set the theme in theme.THEME_NAME.json
 
+For example, theme.govbuy.json:
+
+```json
+{
+  "BUDGETKEY_NG2_COMPONENTS_THEME": {
+    "siteName": "רכש פתוח"
+  },
+  "BUDGETKEY_APP_GENERIC_ITEM_THEME": {
+    "siteName": "רכש פתוח",
+    "searchPlaceholder": "חפשו רכש!"
+  }
+}
 ```
-BUDGETKEY_NG2_COMPONENTS_THEME = {
-  siteName: "רכש פתוח"
-};
-```
 
-Restart the server and it should use this modified theme.
+To enable a theme, add it to the URL, e.g. http://localhost:8000/org/association/580050789?theme=govbuy
 
-The assets/theme.js file could be overwritten by docker volume - to allow to use the same image to serve the app using different themes.
+The theme files could be overwritten by docker volume - to allow to use the same image to serve the app using different themes.
 
-For example, given a modified theme in ./my-theme.js:
+For example, given a modified theme in ./my-theme.json:
 
 ```
 docker build -t budgetkey-app-generic-item .
-docker run -it -v `pwd`/my-theme.js:/app/dist/assets/theme.js --rm --name budgetkey-app-generic-item -p8000:8000 budgetkey-app-generic-item
+docker run -it -v `pwd`/my-theme.json:/app/theme.my.json --rm --name budgetkey-app-generic-item -p8000:8000 budgetkey-app-generic-item
 ```
+
+You could then add ?theme=my to enable this theme

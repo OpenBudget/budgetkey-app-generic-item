@@ -54,23 +54,32 @@ export class AppComponent implements OnInit {
 
   constructor(
     private itemService: BudgetKeyItemService, private store: StoreService,
-    private location: Location, private title: Title
+    private location: Location
   ) {
     this.loaded = false;
+  }
+
+  handleItem(item: any): void {
+    console.log(this);
+    this.store.item = item;
+    this.itemService.getItemDescriptor(item.doc_id)
+      .then(descriptor => {
+        this.store.descriptor = descriptor;
+        this.loaded = true;
+      });
   }
 
   ngOnInit(): void {
     this.loaded = false;
     let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
-    this.itemService.getItem(itemId)
-      .then(item => {
-        this.store.item = item;
-        this.title.setTitle(item.name);
-        return this.itemService.getItemDescriptor(itemId);
-      })
-      .then(descriptor => {
-        this.store.descriptor = descriptor;
-        this.loaded = true;
-      });
+    console.log(window['prefetchedItem']);
+    if (window['prefetchedItem']) {
+      this.handleItem(window['prefetchedItem']);
+    } else {
+      let thiz = this;
+      this.itemService.getItem(itemId)
+        .then(item => { thiz.handleItem(item); });
+    }
+
   }
 }

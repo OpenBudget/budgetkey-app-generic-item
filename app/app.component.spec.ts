@@ -3,7 +3,8 @@ import './rxjs-extensions';
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BudgetKeyCommonModule } from 'budgetkey-ng2-components';
+import {BudgetKeyCommonModule} from 'budgetkey-ng2-components';
+import { MushonkeyModule } from 'mushonkey';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ import {
   PlotlyChartComponent,
 } from './components';
 
+import {defaultTheme, THEME_TOKEN} from "./config";
+
 describe('AppComponent', function () {
   let comp: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -37,7 +40,8 @@ describe('AppComponent', function () {
         BrowserModule,
         HttpModule,
         FormsModule,
-        BudgetKeyCommonModule
+        BudgetKeyCommonModule,
+        MushonkeyModule
       ],
       declarations: [
         RenderTemplatePipe,
@@ -55,6 +59,7 @@ describe('AppComponent', function () {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
+        {provide: THEME_TOKEN, useValue: defaultTheme},
         BudgetKeyItemService,
         QuestionsService,
         StoreService,

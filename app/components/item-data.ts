@@ -74,6 +74,7 @@ export class ItemQuestionParameterComponent implements OnDestroy {
 export class ItemQuestionsComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
+  private isSearching: boolean;
 
   preparedQuestions: PreparedQuestions;
   currentQuestion: PreparedQuestion;
@@ -100,6 +101,7 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
     this.downloadUrl = this.itemService.getDownloadCSVUrl(this.store.dataQuery);
+    this.isSearching = true;
   }
 
   get currentParameters() {
@@ -126,6 +128,7 @@ export class ItemQuestionsComponent implements OnDestroy {
           }
         }
       ),
+      this.store.onDataReceived.subscribe(() => {this.isSearching = false; })
     ];
     this.onStoreChanged();
   }
@@ -161,6 +164,7 @@ export class ItemDataTableComponent {
   private query: string = '';
   private headers: any[] = [];
   private data: any[] = [];
+  private err: any;
 
   toggleTable() {
     this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
@@ -172,6 +176,22 @@ export class ItemDataTableComponent {
     if (query !== this.query) {
       this.query = query;
       this.headers = headers;
+      this.itemService.getItemData(this.query,this.headers)
+        .then((data: any) => {
+          if (data.query === this.query) {
+            //this.headers = data.headers;
+            this.data = data.items;
+          }
+        })
+        .catch((err) => {
+          this.headers.length = 0;
+          this.data.length = 0;
+          this.err = err;
+        })
+        .done(() => {
+          this.store.onDataReceived.emit();
+        });
+
       this.itemService.getItemData(this.query,this.headers).then((data: any) => {
         if (data.query === this.query) {
           this.data = data.items;
