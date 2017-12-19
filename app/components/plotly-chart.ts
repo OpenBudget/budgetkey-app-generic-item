@@ -22,6 +22,7 @@ declare const window: any;
         direction: ltr;
       }
       
+      
       :host >>> .centerpiece { 
           stroke: lightgray;
           stroke-width: 2;
