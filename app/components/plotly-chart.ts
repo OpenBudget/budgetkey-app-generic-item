@@ -77,7 +77,6 @@ export class PlotlyChartComponent {
         groups.push(mkfg);
       }
 
-      let margin = {left: 20, right: 20, bottom: 20, top: 20};
       this.mushonkeyChart = new MushonKeyChart(
         groups,
         this.data.centerTitle,
