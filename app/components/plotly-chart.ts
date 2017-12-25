@@ -21,22 +21,20 @@ declare const window: any;
         height: 800px;
         direction: ltr;
       }
-      
-      
-      :host >>> .centerpiece { 
+
+      :host >>> .centerpiece {
           stroke: lightgray;
           stroke-width: 2;
           fill: gray;
        }
-      
-      :host >>> .centerpiece-text { 
+
+       :host >>> .centerpiece-text {
           font-size: 20px;
           stroke: none;
           fill: white;
       }
-      
+
       :host >>> .text { font-family: "Abraham TRIAL"; }
-      
       :host >>> .budget-expense.connector { stroke: lightblue; }
       :host >>> .budget-expense.text { fill: voilet; }
 

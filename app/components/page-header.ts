@@ -12,19 +12,19 @@ import {THEME_TOKEN} from '../config';
             <div class="col-xs-1"></div>
             <form ngNoForm method="get" [action]="searchUrl" class="col-xs-10">
               <input type="text" [placeholder]="theme.searchPlaceholder"
-                [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"> 
+                [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}">
               <button type="submit"></button>
             </form>
             <div class="col-xs-1"></div>
           </div>
         </div>
-        <div class="col-xs-2"></div>      
+        <div class="col-xs-2"></div>
       </header>
     </div>
   `
 })
 export class HeaderComponent {
-  searchTerm: string = '';
+  searchTerm = '';
 
   get searchUrl() {
     return 'http://next.obudget.org/s/?q=' + encodeURIComponent(this.searchTerm);

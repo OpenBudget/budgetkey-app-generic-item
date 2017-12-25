@@ -19,7 +19,7 @@ import * as _ from 'lodash';
           <budgetkey-item-questions *ngIf="loaded"></budgetkey-item-questions>
         </div>
         <div #dataTable><budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table></div>
-      </div>  
+      </div>
     </budgetkey-container>
   `,
   styles: [`

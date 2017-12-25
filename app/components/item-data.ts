@@ -18,9 +18,8 @@ import { PreparedQuestion, PreparedQuestions } from '../model';
   `,
   styles: [`
     .item-questions-parameter {
-      position: relative;      
+      position: relative;
     }
-    
     .item-questions-parameter .value {
       cursor: pointer;
     }
@@ -33,7 +32,7 @@ export class ItemQuestionParameterComponent implements OnDestroy {
   @Input() public values: any[];
   @Output() public change = new EventEmitter<any>();
 
-  private isDropDownVisible: boolean = false;
+  private isDropDownVisible = false;
 
   constructor(private events: EventsService) {
     this.eventSubscriptions = [
@@ -81,7 +80,7 @@ export class ItemQuestionsComponent implements OnDestroy {
   redashUrl: string;
   downloadUrl: string;
 
-  private isDropDownVisible: boolean = false;
+  private isDropDownVisible = false;
 
   toggleDropDown() {
     this.isDropDownVisible = !this.isDropDownVisible;
@@ -161,7 +160,7 @@ export class ItemDataTableComponent {
 
   private eventSubscriptions: any[] = [];
 
-  private query: string = '';
+  private query = '';
   private headers: any[] = [];
   private data: any[] = [];
   private err: any;

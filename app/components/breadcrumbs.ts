@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
           <div class="col-xs-8">
             <ul class="breadcrumbs-items">
               <li>שיכון</li>
-            </ul>  
+            </ul>
           </div>
           <div class="col-xs-4 text-left year-select">
             <i>&#9656;</i>
@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
         </div>
       </div>
       <div class="col-xs-1"></div>
-    </div>  
+    </div>
   `
 })
 export class BeadcrumbsComponent {

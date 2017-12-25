@@ -1,34 +1,19 @@
 import 'karma-test-shim';
 import './rxjs-extensions';
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import {BudgetKeyCommonModule} from 'budgetkey-ng2-components';
 import { MushonkeyModule } from 'mushonkey';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
-
 import { APP_BASE_HREF } from '@angular/common';
-
 import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
-
 import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
+import { BeadcrumbsComponent, HeaderComponent, ItemQuestionsComponent, ItemQuestionParameterComponent,
+  ItemDataTableComponent, ItemInfoComponent, ItemVisualizationsComponent, PlotlyChartComponent } from './components';
 
-import {
-  BeadcrumbsComponent,
-  HeaderComponent,
-  ItemQuestionsComponent,
-  ItemQuestionParameterComponent,
-  ItemDataTableComponent,
-  ItemInfoComponent,
-  ItemVisualizationsComponent,
-  PlotlyChartComponent,
-} from './components';
-
-import {defaultTheme, THEME_TOKEN} from "./config";
+import {defaultTheme, THEME_TOKEN} from './config';
 
 describe('AppComponent', function () {
   let comp: AppComponent;

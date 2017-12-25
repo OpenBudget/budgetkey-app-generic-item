@@ -1,21 +1,21 @@
 export class Question {
-  text: string = '';
-  query: string = '';
+  text = '';
+  query = '';
   parameters: object = {};
   defaults: object | null = {};
 }
 
 export class PreparedQuestionTextFragment {
-  isText: boolean = false;
-  isParameter: boolean = false;
-  value: string = '';
+  isText = false;
+  isParameter = false;
+  value = '';
 }
 
 export class PreparedQuestionParameterFragment {
-  isText: boolean = false;
-  isParameter: boolean = false;
-  name: string = '';
-  value: string = '';
+  isText = false;
+  isParameter = false;
+  name = '';
+  value = '';
   values: object = {};
 }
 
@@ -31,11 +31,11 @@ export type Questions = Question[];
 export type PreparedQuestions = PreparedQuestion[];
 
 export class Descriptor {
-  pathPrefix: string = '';
-  preTitleTemplate: string = '';
-  titleTemplate: string = '';
-  subtitleTemplate: string = '';
-  textTemplate: string = '';
-  amountTemplate: string = '';
+  pathPrefix = '';
+  preTitleTemplate = '';
+  titleTemplate = '';
+  subtitleTemplate = '';
+  textTemplate = '';
+  amountTemplate = '';
   questions: Questions = [];
 }

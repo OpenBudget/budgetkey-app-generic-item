@@ -10,11 +10,11 @@ import {StoreService} from '../services/store';
       <div class="col-xs-1"></div>
       <div class="col-xs-10">
         <div class="tabs text-center">
-          <a href="javascript:void(0)" 
-            *ngFor="let tab of tabs" [ngClass]="{active: tab == current}" 
+          <a href="javascript:void(0)"
+            *ngFor="let tab of tabs" [ngClass]="{active: tab == current}"
             (click)="showTab(tab)">{{ tab }}</a>
         </div>
-      </div>  
+      </div>
       <div class="col-xs-1"></div>
       <div class="tab-contents col-xs-12">
         <ng-container *ngFor="let tab of tabs">
@@ -23,7 +23,7 @@ import {StoreService} from '../services/store';
             ></budgetkey-plotly-chart>
           </div>
         </ng-container>
-      </div>  
+      </div>
     </div>
   `
 })

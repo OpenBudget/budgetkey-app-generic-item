@@ -4,7 +4,7 @@ import { Item, Descriptor } from '../model';
 
 @Component({
   selector: 'budgetkey-item-info',
-  template: `  
+  template: `
     <div class="row budgetkey-item-title-wrapper">
       <div class="col-xs-1"></div>
       <div class="col-xs-10">
@@ -42,11 +42,9 @@ import { Item, Descriptor } from '../model';
 export class ItemInfoComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
-
   private item: Item;
   private descriptor: Descriptor;
-
-  private isDescriptionVisible: boolean = true;
+  private isDescriptionVisible = true;
 
   toggleDescription() {
     this.isDescriptionVisible = !this.isDescriptionVisible;
