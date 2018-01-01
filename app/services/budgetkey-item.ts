@@ -54,12 +54,12 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let items: object[]=[];
+            let items: object[] = [];
             let rows = res.rows;
-            let headers = rows.length > 0 ?_.union(headersOrder, _.keys(_.first(rows))) : [];
-            _.each(rows,(row)=>{
-              let newItem: any[] =[];
-              _.each(headers,(header)=>{
+            let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+            _.each(rows, (row) => {
+              let newItem: any[] = [];
+              _.each(headers, (header) => {
                 newItem.push(row[header]);
               });
               items.push(newItem);
