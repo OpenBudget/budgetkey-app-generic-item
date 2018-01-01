@@ -175,7 +175,7 @@ export class ItemDataTableComponent {
     if (query !== this.query) {
       this.query = query;
       let headersOrder = this.store.currentQuestion.headers;
-      this.itemService.getItemData(this.query,headersOrder)
+      this.itemService.getItemData(this.query, headersOrder)
         .then((data: any) => {
           if (data.query === this.query) {
             this.headers = data.headers;
