@@ -4,6 +4,7 @@ export class Question {
   parameters: object = {};
   defaults: object | null = {};
   headers: string[];
+  formatters: string[];
 }
 
 export class PreparedQuestionTextFragment {

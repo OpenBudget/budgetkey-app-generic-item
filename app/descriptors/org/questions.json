@@ -26,7 +26,11 @@
       "phase": "אושרו",
       "period": "כל השנים"
     },
-    "headers":["נושא","משרד","סוג תמיכה"]
+    "headers": ["נושא", "משרד", "סוג תמיכה"],
+    "formatters": [
+      { "סה״כ שולם": "budgetNumberFormatter" },
+      { "משרד": "budgetLinkFormatter" }
+    ]
   },
   {
     "text": "התקנות מהן הארגון קיבל תמיכות, לפי סה״כ כספים ש<phase> עבור בקשות מ <period>",
