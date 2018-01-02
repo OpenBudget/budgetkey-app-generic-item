@@ -27,7 +27,7 @@ export class HeaderComponent {
   searchTerm: string = '';
 
   get searchUrl() {
-    return 'http://next.obudget.org/s/?q=' + encodeURIComponent(this.searchTerm);
+    return 'https://next.obudget.org/s/?q=' + encodeURIComponent(this.searchTerm);
   }
 
   constructor (@Inject(THEME_TOKEN) private theme: any) {
