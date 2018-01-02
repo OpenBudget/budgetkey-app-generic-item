@@ -46,7 +46,17 @@ export class BudgetKeyItemService {
     Promise.reject(new Error('No layout for ' + path));
   }
 
-  getItemData(query: string, headersOrder: string[]): Promise<object> {
+  private budgetNumberFormatter(value: any)
+  {
+    return parseFloat(value).toLocaleString('he-IL',{ style: 'currency', currency: 'ILS' });
+  }
+  
+  private budgetLinkFormatter(value: string, hLink: string)
+  {
+    return '<a>' + value + '</a>';
+  }
+
+  getItemData(query: string, headersOrder: string[], formatters: string[]): Promise<object> {
     let url = 'http://next.obudget.org/api/query?query=' +
       encodeURIComponent(query);
     return new Promise<any>((resolve, reject) => {
@@ -54,14 +64,23 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let items: object[] = [];
-            let rows = res.rows;
-            let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+            let items: object[] = [], rows = res.rows, 
+            headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+            
             _.each(rows, (row) => {
               let newItem: any[] = [];
+              
               _.each(headers, (header) => {
-                newItem.push(row[header]);
+                let item = row[header];
+                
+                (typeof(item) != 'object') &&  _.each(formatters, (formatter) => {
+                  const formatterKey = Object.keys(formatter)[0], formatterValue = Object.values(formatter)[0];
+                  item = (formatterKey === header) ? this[formatterValue](item) : item;
+                });
+
+                newItem.push(item);
               });
+
               items.push(newItem);
             });
             resolve({query, headers, items});

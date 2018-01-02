@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "serve": "nodemon index.js",
     "pree2e": "./node_modules/protractor/bin/webdriver-manager update",
     "e2e": "npm run dist && tsc && concurrently \"npm start -- -s\" \"protractor protractor.config.js\" --kill-others --success first && gulp clean:ts",
     "lint": "tslint ./app/**/*.ts ./e2e/**/*.ts -t verbose",
