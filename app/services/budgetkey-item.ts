@@ -46,11 +46,11 @@ export class BudgetKeyItemService {
     Promise.reject(new Error('No layout for ' + path));
   }
 
-  private budgetNumberFormatter(value: any) {
+  private _budgetNumberFormatter(value: any) {
     return parseFloat(value).toLocaleString('he-IL', { style: 'currency', currency: 'ILS' });
   }
 
-  private budgetLinkFormatter(value: string, hLink: string) {
+  private _budgetLinkFormatter(value: string, hLink: string) {
     return '<a>' + value + '</a>';
   }
 
@@ -71,11 +71,12 @@ export class BudgetKeyItemService {
               _.each(headers, (header) => {
                 let item = row[header];
 
-                (typeof(item) !== 'object') &&  _.each(formatters, (formatter) => {
-                  const formatterKey = Object.keys(formatter)[0], formatterValue = Object.values(formatter)[0];
-                  item = (formatterKey === header) ? this[formatterValue](item) : item;
-                });
-
+                if (typeof item !== 'object') {
+                  _.each(formatters, (formatter) => {
+                    const formatterKey = Object.keys(formatter)[0], formatterValue = Object.values(formatter)[0];
+                    item = (formatterKey === header) ? this[formatterValue](item) : item;
+                  });
+                }
                 newItem.push(item);
               });
 

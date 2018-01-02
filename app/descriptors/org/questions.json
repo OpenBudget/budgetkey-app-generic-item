@@ -28,8 +28,8 @@
     },
     "headers": ["נושא", "משרד", "סוג תמיכה"],
     "formatters": [
-      { "סה״כ שולם": "budgetNumberFormatter" },
-      { "משרד": "budgetLinkFormatter" }
+      { "סה״כ שולם": "_budgetNumberFormatter" },
+      { "משרד": "_budgetLinkFormatter" }
     ]
   },
   {
