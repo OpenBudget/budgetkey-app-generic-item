@@ -46,13 +46,11 @@ export class BudgetKeyItemService {
     Promise.reject(new Error('No layout for ' + path));
   }
 
-  private budgetNumberFormatter(value: any)
-  {
-    return parseFloat(value).toLocaleString('he-IL',{ style: 'currency', currency: 'ILS' });
+  private budgetNumberFormatter(value: any) {
+    return parseFloat(value).toLocaleString('he-IL', { style: 'currency', currency: 'ILS' });
   }
-  
-  private budgetLinkFormatter(value: string, hLink: string)
-  {
+
+  private budgetLinkFormatter(value: string, hLink: string) {
     return '<a>' + value + '</a>';
   }
 
@@ -64,16 +62,16 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let items: object[] = [], rows = res.rows, 
+            let items: object[] = [], rows = res.rows,
             headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
-            
+
             _.each(rows, (row) => {
               let newItem: any[] = [];
-              
+
               _.each(headers, (header) => {
                 let item = row[header];
-                
-                (typeof(item) != 'object') &&  _.each(formatters, (formatter) => {
+
+                (typeof(item) !== 'object') &&  _.each(formatters, (formatter) => {
                   const formatterKey = Object.keys(formatter)[0], formatterValue = Object.values(formatter)[0];
                   item = (formatterKey === header) ? this[formatterValue](item) : item;
                 });
