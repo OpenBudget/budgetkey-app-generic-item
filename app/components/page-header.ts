@@ -10,10 +10,10 @@ import {THEME_TOKEN} from '../config';
         <div class="col-xs-8">
           <div class="row">
             <div class="col-xs-1"></div>
-            <form ngNoForm method="get" [action]="searchUrl" class="col-xs-10">
+            <form ngNoForm class="col-xs-10">
               <input type="text" [placeholder]="theme.searchPlaceholder"
                 [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"> 
-              <button type="submit"></button>
+              <button (click)="doSearch()"></button>
             </form>
             <div class="col-xs-1"></div>
           </div>
@@ -24,10 +24,22 @@ import {THEME_TOKEN} from '../config';
   `
 })
 export class HeaderComponent {
-  searchTerm: string = '';
+  searchTerm_: string = '';
 
-  get searchUrl() {
-    return 'https://next.obudget.org/s/?q=' + encodeURIComponent(this.searchTerm);
+  doSearch() {
+    let href = 'https://next.obudget.org/s/?q=' + encodeURIComponent(this.searchTerm_);
+    window.open(href, '_self');
+  }
+
+  set searchTerm(v: string) {
+    this.searchTerm_ = v;
+    if (this.searchTerm_ && this.searchTerm_.length >= 3) {
+      this.doSearch();
+    }
+  }
+
+  get searchTerm() {
+    return this.searchTerm_;
   }
 
   constructor (@Inject(THEME_TOKEN) private theme: any) {
