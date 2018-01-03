@@ -55,14 +55,17 @@ export class BudgetKeyItemService {
   }
 
   getItemData(query: string, headersOrder: string[], formatters: string[]): Promise<object> {
-    let url = 'http://next.obudget.org/api/query?query=' +
-      encodeURIComponent(query);
+    const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query),
+    formatterKeys = _.keys(formatters),
+    formatterValues = _.values(formatters);
+
     return new Promise<any>((resolve, reject) => {
       this.http.get(url)
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let items: object[] = [], rows = res.rows,
+            let items: object[] = [],
+            rows = res.rows,
             headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
 
             _.each(rows, (row) => {
@@ -71,10 +74,9 @@ export class BudgetKeyItemService {
               _.each(headers, (header) => {
                 let item = row[header];
 
-                if (typeof item !== 'object') {
-                  _.each(formatters, (formatter) => {
-                    const formatterKey = Object.keys(formatter)[0], formatterValue = Object.values(formatter)[0];
-                    item = (formatterKey === header) ? this[formatterValue](item) : item;
+                if (typeof item === 'string' || typeof item === 'number') {
+                  _.each(formatterKeys, (fKey, i) => {
+                    item = (fKey === header) ? this[formatterValues[i]](item) : item;
                   });
                 }
                 newItem.push(item);

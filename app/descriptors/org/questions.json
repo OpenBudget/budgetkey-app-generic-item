@@ -27,10 +27,10 @@
       "period": "כל השנים"
     },
     "headers": ["נושא", "משרד", "סוג תמיכה"],
-    "formatters": [
-      { "סה״כ שולם": "_budgetNumberFormatter" },
-      { "משרד": "_budgetLinkFormatter" }
-    ]
+    "formatters": { 
+      "סה״כ שולם": "_budgetNumberFormatter",
+      "משרד": "_budgetLinkFormatter" 
+    }
   },
   {
     "text": "התקנות מהן הארגון קיבל תמיכות, לפי סה״כ כספים ש<phase> עבור בקשות מ <period>",
