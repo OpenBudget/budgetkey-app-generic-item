@@ -47,8 +47,10 @@ export class BudgetKeyItemService {
   }
 
   private _budgetNumberFormatter(value: any) {
-    return value
-      ? parseFloat(value).toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
+    value = parseFloat(value);
+    
+    return isFinite(value)
+      ? value.toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
       : '-';
   }
 
@@ -64,9 +66,9 @@ export class BudgetKeyItemService {
         .map((res: any) => res.json())
         .subscribe(
           (res: any) => {
-            let items: object[] = [],
-            rows = res.rows,
-            headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+            let items: object[] = [];
+            let rows = res.rows;
+            let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
 
             _.each(rows, (row) => {
               let newItem: any[] = [];
