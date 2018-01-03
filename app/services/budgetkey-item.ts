@@ -47,7 +47,9 @@ export class BudgetKeyItemService {
   }
 
   private _budgetNumberFormatter(value: any) {
-    return parseFloat(value).toLocaleString('he-IL', { style: 'currency', currency: 'ILS' });
+    return value
+      ? parseFloat(value).toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
+      : '-';
   }
 
   private _budgetLinkFormatter(value: string, hLink: string) {
@@ -55,9 +57,7 @@ export class BudgetKeyItemService {
   }
 
   getItemData(query: string, headersOrder: string[], formatters: string[]): Promise<object> {
-    const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query),
-    formatterKeys = _.keys(formatters),
-    formatterValues = _.values(formatters);
+    const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query);
 
     return new Promise<any>((resolve, reject) => {
       this.http.get(url)
@@ -72,16 +72,9 @@ export class BudgetKeyItemService {
               let newItem: any[] = [];
 
               _.each(headers, (header) => {
-                let item = row[header];
-
-                if (typeof item === 'string' || typeof item === 'number') {
-                  _.each(formatterKeys, (fKey, i) => {
-                    item = (fKey === header) ? this[formatterValues[i]](item) : item;
-                  });
-                }
+                let item = formatters[header] ? this[formatters[header]](row[header]) : row[header];
                 newItem.push(item);
               });
-
               items.push(newItem);
             });
             resolve({query, headers, items});
