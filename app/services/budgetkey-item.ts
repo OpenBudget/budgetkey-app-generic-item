@@ -48,7 +48,7 @@ export class BudgetKeyItemService {
 
   private _budgetNumberFormatter(value: any) {
     value = parseFloat(value);
-    
+
     return isFinite(value)
       ? value.toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
       : '-';
