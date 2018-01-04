@@ -46,9 +46,21 @@ export class BudgetKeyItemService {
     Promise.reject(new Error('No layout for ' + path));
   }
 
-  getItemData(query: string, headersOrder: string[]): Promise<object> {
-    let url = 'http://next.obudget.org/api/query?query=' +
-      encodeURIComponent(query);
+  private _budgetNumberFormatter(value: any) {
+    value = parseFloat(value);
+
+    return isFinite(value)
+      ? value.toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
+      : '-';
+  }
+
+  private _budgetLinkFormatter(value: string, hLink: string) {
+    return '<a>' + value + '</a>';
+  }
+
+  getItemData(query: string, headersOrder: string[], formatters: string[]): Promise<object> {
+    const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query);
+
     return new Promise<any>((resolve, reject) => {
       this.http.get(url)
         .map((res: any) => res.json())
@@ -57,10 +69,13 @@ export class BudgetKeyItemService {
             let items: object[] = [];
             let rows = res.rows;
             let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+
             _.each(rows, (row) => {
               let newItem: any[] = [];
+
               _.each(headers, (header) => {
-                newItem.push(row[header]);
+                let item = formatters[header] ? this[formatters[header]](row[header]) : row[header];
+                newItem.push(item);
               });
               items.push(newItem);
             });
