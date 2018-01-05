@@ -1,6 +1,6 @@
 export class Question {
   text: string = '';
-  query: string = '';
+  query: string | string[] = '';
   parameters: object = {};
   defaults: object | null = {};
   headers: string[] | null = [];

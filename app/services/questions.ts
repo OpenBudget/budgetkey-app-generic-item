@@ -10,6 +10,9 @@ export class QuestionsService {
   parseQuestions(questions: Questions): PreparedQuestions {
     return _.map(questions, function(question: Question) {
       let result = new PreparedQuestion();
+      if (_.isArray(question.query)) {
+        question.query = question.query.join(' ');
+      }
       _.extend(result, question);
 
       let s = question.text;
