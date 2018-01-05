@@ -3,8 +3,8 @@ export class Question {
   query: string = '';
   parameters: object = {};
   defaults: object | null = {};
-  headers: string[];
-  formatters: string[];
+  headers: string[] | null = [];
+  formatters: object | null = {};
 }
 
 export class PreparedQuestionTextFragment {

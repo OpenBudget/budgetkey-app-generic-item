@@ -58,7 +58,7 @@ export class BudgetKeyItemService {
     return '<a>' + value + '</a>';
   }
 
-  getItemData(query: string, headersOrder: string[], formatters: string[]): Promise<object> {
+  getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {
     const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query);
 
     return new Promise<any>((resolve, reject) => {
