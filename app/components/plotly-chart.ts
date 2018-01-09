@@ -1,6 +1,7 @@
 import {Component, ViewChild, ElementRef, Input} from '@angular/core';
 import {MushonKeyChart, MushonKeyFlowGroup, MushonKeyFlow} from 'mushonkey/lib/components/MushonkeyComponent';
 import { Location } from '@angular/common';
+import * as d3 from 'd3';
 
 declare const Plotly: any;
 declare const window: any;
@@ -8,7 +9,7 @@ declare const window: any;
 @Component({
   selector: 'budgetkey-plotly-chart',
   template: `
-    <div class='mushonkey-wrapper' *ngIf="this.data.type == 'mushonkey'">
+    <div class='mushonkey-wrapper' [style.height]="chartHeight" #mushonkey >
         <mushonkey [chart]="mushonkeyChart" (onSelected)="onSelected($event)"></mushonkey>
     </div>
     <div style="direction: ltr" #plot>
@@ -18,21 +19,20 @@ declare const window: any;
       .mushonkey-wrapper {
         width: 90%;
         padding-right: 5%;
-        height: 800px;
         direction: ltr;
       }
       
       
       :host >>> .centerpiece { 
-          stroke: lightgray;
-          stroke-width: 2;
-          fill: gray;
-       }
-      
+          /*stroke: lightgray;*/
+          /*stroke-width: 2;*/
+          fill: url('#centerPiece');
+      }
+
       :host >>> .centerpiece-text { 
           font-size: 20px;
           stroke: none;
-          fill: white;
+          fill: #7A6B99;
       }
       
       :host >>> .text { font-family: "Abraham TRIAL"; }
@@ -40,8 +40,8 @@ declare const window: any;
       :host >>> .budget-expense.connector { stroke: lightblue; }
       :host >>> .budget-expense.text { fill: voilet; }
 
-      :host >>> .budget-parent.connector { stroke: red; }
-      :host >>> .budget-parent.text { fill: white; }
+      :host >>> .budget-parent.connector { stroke: #E4DCF5; }
+      :host >>> .budget-parent.text { fill: #7A6B99; }
 
       :host >>> .budget-revenues.connector { stroke: violet; }
       :host >>> .budget-revenues.text { fill: black; }
@@ -54,7 +54,10 @@ export class PlotlyChartComponent {
   @Input() public layout: any;
 
   @ViewChild('plot') plot: ElementRef;
+  @ViewChild('mushonkey') mushonkey: ElementRef;
+
   private mushonkeyChart: MushonKeyChart;
+  private chartHeight: string;
 
   constructor(private location: Location) {
 
@@ -66,25 +69,41 @@ export class PlotlyChartComponent {
 
   ngOnInit() {
     if (this.data.type === 'mushonkey') {
-      let groups: Array<MushonKeyFlowGroup> = [];
-      for (let group of this.data.groups) {
-        let flows: Array<MushonKeyFlow> = [];
-        for (let flow of group.flows) {
-          flows.unshift(new MushonKeyFlow(flow.size, flow.label, flow.context));
+      this.chartHeight = this.data.height;
+      setTimeout(() => {
+        let groups: Array<MushonKeyFlowGroup> = [];
+        for (let group of this.data.groups) {
+          let flows: Array<MushonKeyFlow> = [];
+          for (let flow of group.flows) {
+            flows.unshift(new MushonKeyFlow(flow.size, flow.label, flow.context));
+          }
+
+          let mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
+          mkfg.labelTextSize = group.labelTextSize;
+          groups.push(mkfg);
         }
+        this.mushonkeyChart = new MushonKeyChart(
+          groups,
+          this.data.centerTitle,
+          this.data.centerWidth,
+          this.data.centerHeight,
+          this.data.directionLeft
+        );
+        setTimeout(() => {
+          let svg = d3.select(this.mushonkey.nativeElement).select('svg');
+          let lg = svg.append('defs')
+                      .append('linearGradient')
+                      .attr('id', 'centerPiece');
+          lg.append('stop')
+            .attr('stop-color', 'lightblue')
+            .attr('offset', '10%');
+          lg.append('stop')
+            .attr('stop-color', '#E4DCF5')
+            .attr('offset', '100%');
 
-        let mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
-        mkfg.labelTextSize = group.labelTextSize;
-        groups.push(mkfg);
-      }
+        }, 0);
+      }, 0);
 
-      this.mushonkeyChart = new MushonKeyChart(
-        groups,
-        this.data.centerTitle,
-        this.data.centerWidth,
-        this.data.centerHeight,
-        this.data.directionLeft
-      );
 
     } else {
       let traces: any = this.data;

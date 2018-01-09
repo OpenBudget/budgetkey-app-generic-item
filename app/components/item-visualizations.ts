@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+  import {Component, OnDestroy} from '@angular/core';
 import {Item} from '../model/item';
 import {StoreService} from '../services/store';
 
@@ -7,23 +7,22 @@ import {StoreService} from '../services/store';
   selector: 'budgetkey-item-visualizations',
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-10">
-        <div class="tabs text-center">
+      <div class="col-md-2 tabs">
+        <div *ngFor="let tab of tabs"
+             [ngClass]="{active: tab == current}" 
+        >
           <a href="javascript:void(0)" 
-            *ngFor="let tab of tabs" [ngClass]="{active: tab == current}" 
-            (click)="showTab(tab)">{{ tab }}</a>
+             (click)="showTab(tab)">{{ tab }}</a>          
         </div>
       </div>  
-      <div class="col-xs-1"></div>
-      <div class="tab-contents col-xs-12">
+      <div class="col-md-10 tab-contents">
         <ng-container *ngFor="let tab of tabs">
           <div *ngIf="tab == current">
             <budgetkey-plotly-chart [data]="charts[current].data" [layout]="charts[current].layout"
             ></budgetkey-plotly-chart>
           </div>
         </ng-container>
-      </div>  
+      </div>
     </div>
   `
 })

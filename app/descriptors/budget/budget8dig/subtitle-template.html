@@ -1,2 +1,15 @@
-תקנה תקציבית תחת תכנית
-{{ (hierarchy | last)[1] }}
+תקנה תקציבית בתכנית
+<a href="/i/budget/{{ (hierarchy | last)[0] }}/{{year}}">
+    {{ (hierarchy | last)[1] }}
+</a>
+(תחת תחום
+<a href="/i/budget/{{ (hierarchy[2])[0] }}/{{year}}">
+    {{ (hierarchy[2])[1] }}
+</a>
+בסעיף
+<a href="/i/budget/{{ (hierarchy[1])[0] }}/{{year}}">
+    {{ (hierarchy[1])[1] }}
+</a>
+).
+<br/>
+כוללת תקציב עבור הוצאה מסוג ספציפי בפעילות אחת של הממשלה.
