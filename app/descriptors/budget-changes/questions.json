@@ -1,0 +1,41 @@
+[
+  {
+    "text": " כלל ההתקשרויות עם אותו הספק ב <period>",
+    "query": [
+  "SELECT order_date as \"תאריך הזמנה\",",
+  "       purchase_method->>0 as \"אופן התקשרות\",",
+  "       purchasing_unit->>0 as \"יחידה רוכשת\",",
+  "       purpose as \"מטרה\",",
+  "       start_date as \"תאריך תחילה\",",
+  "       volume as \"היקף\",",
+  "       executed as \"ביצוע\",",
+  "       currency as \"מטבע\",",
+  "       explanation->>0 as \"תיאור\",",
+  "       end_date as \"תאריך סיום\"",
+  "FROM contract_spending",
+  "WHERE entity_id=':entity_id'",
+  "  AND int4range(min_year, max_year, '[]') && int4range(:period, '[]')"
+    ],
+    "parameters": {
+      "period": {
+        "כל השנים": "2000,3000",
+        "2015": "2015,2015",
+        "2016": "2016,2016",
+        "2017": "2017,2017",
+        "2018": "2018,2018"
+      }
+    },
+    "defaults": {
+      "period": "כל השנים"
+    },
+    "headers": [
+      "יחידה רוכשת",
+      "מטרה",
+      "תאריך הזמנה",
+      "תאריך תחילה",
+      "תאריך סיום",
+      "היקף",
+      "ביצוע"
+    ]
+  }
+]

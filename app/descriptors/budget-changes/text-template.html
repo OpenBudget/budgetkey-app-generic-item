@@ -1,8 +1,8 @@
 <label class="field-label">
-    מטרת ההתקשרות:
+    דברי ההסבר להעברה:
 </label>
 <div class="objective">
-   {{ purpose }}
+   {{ explanation | newlines | safe }}
 </div>
 
 <div>

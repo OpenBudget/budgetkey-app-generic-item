@@ -6,7 +6,7 @@ import {THEME_TOKEN} from '../config';
   template: `
     <div class="row page-header-wrapper">
       <header>
-        <div class="col-xs-2 navbar-brand" style="padding-top: 20px;">{{theme.siteName}}</div>
+        <a href="/"><div class="col-xs-2 navbar-brand" style="padding-top: 20px;">{{theme.siteName}}</div></a>
         <div class="col-xs-8">
           <div class="row">
             <div class="col-xs-1"></div>

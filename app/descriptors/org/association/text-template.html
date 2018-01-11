@@ -1,13 +1,16 @@
 
-<div class="well objective">
+<label class="field-label">
+    תיאור ומטרת הארגון:
+</label>
+<div class="objective">
     {% if details.guidestar_slogan %}
     <h2>
         ״{{ details.guidestar_slogan }}״
     </h2>
     {% endif %}
-    <h3>
+    <div>
         {{ details.objective }}
-    </h3>
+    </div>
 </div>
 <div>
     <label class="field-label">
@@ -21,12 +24,20 @@
     </label>
 {{ details.address }}
 </div>
-{% if details.founders %}
+{% if (details.founders) %}
 <div>
     <label class="field-label">
 מייסדים:
     </label>
-{{ details.founders | join( ", ") }}
+{{ details.founders | join(", ") }}
+</div>
+{% endif %}
+{% if details.activity_region %}
+<div>
+    <label class="field-label">
+איזור פעילות בארץ:
+    </label>
+{{ details.activity_region }}
 </div>
 {% endif %}
 <div>

@@ -18,6 +18,14 @@ env.addFilter('load_json', function(x: string) {
   }
 });
 
+env.addFilter('newlines', function(x: string) {
+  if (x) {
+    return x.replace(/\n+/g, '<br/>');
+  } else {
+    return null;
+  }
+});
+
 
 @Pipe({name: 'renderTemplate'})
 export class RenderTemplatePipe implements PipeTransform {
