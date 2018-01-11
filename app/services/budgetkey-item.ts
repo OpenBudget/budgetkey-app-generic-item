@@ -18,8 +18,7 @@ export class BudgetKeyItemService {
   }
 
   getDownloadCSVUrl(query: string): string {
-    // TODO: Implement
-    return 'http://next.obudget.org/api/query?query=' +
+    return 'http://next.obudget.org/api/download?query=' +
       encodeURIComponent(query);
   }
 
