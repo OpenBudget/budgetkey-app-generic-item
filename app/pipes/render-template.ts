@@ -2,9 +2,10 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as nunjucks from 'nunjucks';
 
 let env = new nunjucks.Environment();
+let safe: any = env.getFilter('safe');
 env.addFilter('format_number', function(x: number) {
   if (x) {
-    return x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2});
+    return safe('<span class="number">' + x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + '</span>');
   } else {
     return '-';
   }
@@ -18,13 +19,14 @@ env.addFilter('load_json', function(x: string) {
   }
 });
 
-env.addFilter('newlines', function(x: string) {
+env.addFilter('split', function(x: string) {
   if (x) {
-    return x.replace(/\n+/g, '<br/>');
+    return x.split(':');
   } else {
-    return null;
+    return [];
   }
 });
+
 
 
 @Pipe({name: 'renderTemplate'})

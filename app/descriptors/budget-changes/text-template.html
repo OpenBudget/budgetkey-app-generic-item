@@ -1,87 +1,94 @@
+<div>
+    <label class="field-label">
+        סוג הפניה:
+    </label>
+    {{ change_type_name[0] }}
+</div>
+
+<div>
+    <label class="field-label">
+        מספרי הפניה:
+    </label>
+    {{ committee_id | join(", ") }}
+</div>
+
 <label class="field-label">
     דברי ההסבר להעברה:
 </label>
 <div class="objective">
-   {{ explanation | newlines | safe }}
+   {{ explanation | nl2br | safe }}
 </div>
 
-<div>
-    <label class="field-label">
-        אופן רכישה:
-    </label>
-    {{purchase_method[0]}}
-    {% if exemption_reason.length > 0 %}
-    ({{ exemption_reason[0] }})
-    {% endif %}
-</div>
-<div>
-    <label class="field-label">
-        שולמו עד כה:
-    </label>
-    {{ executed | format_number }}
-    <small>{% if currency == 'ILS' or currency == 'שקל' %}₪{% else %}{{ currency }}{% endif %}</small>
-</div>
-
-{% if order_date %}
-<div>
-    <label class="field-label">
-        מועד ההזמנה:
-    </label>
-    {{ order_date }}
-</div>
-{% endif %}
-
-{% if start_date %}
-<div>
-    <label class="field-label">
-        תחילת ההתקשרות:
-    </label>
-    {{ start_date }}
-</div>
-{% endif %}
-
-{% if end_date %}
-<div>
-    <label class="field-label">
-        סוף ההתקשרות:
-    </label>
-    {{ end_date }}
-</div>
-{% endif %}
-
-{% if buyer_description %}
-<div>
-    <label class="field-label">
-        היחידה הרוכשת:
-    </label>
-    {{ buyer_description }}
-</div>
-{% endif %}
-
-{% if budget_code %}
-<div>
-    <label class="field-label">
-        התקנה התקציבית:
-    </label>
-    <a href="//next.obudget.org/s/?q={{ budget_code }}">
-        {{ budget_code }} - {{ budget_title }}
-    </a>
-</div>
-{% endif %}
-
-{% if manof_excerpts.length > 0 %}
-<div>
-    <label class="field-label">
-        תהליכי רכש קשורים:
-    </label>
-    <ul>
-        {% for manof_ref in manof_excerpts %}
-        <li>
-            <a href="//next.obudget.org/i/tenders/{{manof_ref.tender_type}}/{{manof_ref.publication_id}}/{{manof_ref.tender_id}}">
-                {{ manof_ref.description }}
-            </a>
-        </li>
+<label class="field-label">
+    רשימת השינויים:
+</label>
+<table class="table">
+    <thead>
+        <th>קוד</th>
+        <th>תכנית</th>
+        <th>שינוי<br/> בהוצאה נטו</th>
+        <th>שינוי<br/> בהוצאה מותנית</th>
+        <th>שינוי<br/> בהרשאה להתחייב</th>
+        <th>שינוי<br/> בהכנסה מיועדת</th>
+        <th>שינוי<br/> בשיא כח אדם</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <strong>
+                    סה״כ שינויים
+                </strong>
+            </td>
+            <td>
+                <strong>
+                    {{ net_expense_diff | format_number }}
+                </strong>
+            </td>
+            <td>
+                <strong>
+                    {{ gross_expense_diff | format_number }}
+                </strong>
+            </td>
+            <td>
+                <strong>
+                    {{ commitment_limit_diff | format_number }}
+                </strong>
+            </td>
+            <td>
+                <strong>
+                    {{ allocated_income_diff | format_number }}
+                </strong>
+            </td>
+            <td>
+                <strong>
+                    {{ personnel_max_diff | format_number }}
+                </strong>
+            </td>
+        </tr>
+        {% for change in change_list %}
+        <tr>
+            <td>
+                {{ (change.budget_code_title | split)[0] }}
+            </td>
+            <td>
+                {{ (change.budget_code_title | split)[1] }}
+            </td>
+            <td>
+                {{ change.net_expense_diff | format_number }}
+            </td>
+            <td>
+                {{ change.gross_expense_diff | format_number }}
+            </td>
+            <td>
+                {{ change.commitment_limit_diff | format_number }}
+            </td>
+            <td>
+                {{ change.allocated_income_diff | format_number }}
+            </td>
+            <td>
+                {{ change.personnel_max_diff | format_number }}
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
-</div>
-{% endif %}
+    </tbody>
+</table>

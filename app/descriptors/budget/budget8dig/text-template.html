@@ -24,12 +24,16 @@
 {% endif %}
 
 {% if personnel_allocated + contractors_allocated %}
-תחת תקנה זו מוקצים
+תחת סעיף זה מוקצים
 {% if personnel_allocated %}
-{{personnel_allocated}} תקני כח אדם, ובנוסף
+{{personnel_allocated}}
+תקני כח אדם
+{% endif %}
+{% if (personnel_allocated>0) and (contractors_allocate>0) %}
+, ובנוסף
 {% endif %}
 {% if contractors_allocated %}
-{{contractors_allocated}} חודשי עבודה בלתי צמיתה (יועצים וקבלנים).
-{% endif %}
+{{contractors_allocated}} חודשי עבודה בלתי צמיתה (יועצים וקבלנים)
+{% endif %}.
 <br/>
 {% endif %}
