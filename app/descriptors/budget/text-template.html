@@ -44,7 +44,7 @@
 {{personnel_allocated}}
 תקני כח אדם
 {% endif %}
-{% if personnel_allocated && contractors_allocated %}
+{% if (personnel_allocated>0) and (contractors_allocated>0) %}
 , ובנוסף
 {% endif %}
 {% if contractors_allocated %}
