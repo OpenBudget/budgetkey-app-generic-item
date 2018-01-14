@@ -79,7 +79,13 @@
   },
   {
     "text": "הגופים מהם בוצעו התקשרויות עם הארגון",
-    "query": "SELECT ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", currency AS \"מטבע\", sum(volume) AS \"סך היקף\", sum(executed) AS \"סך ביצוע\", min(min_year)||'-'||max(max_year) AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' group by 1, 2 order by 3 desc",
+    "query": [
+      "SELECT ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ",
+      "currency AS \"מטבע\", sum(volume) AS \"סך היקף\", sum(executed) AS \"סך ביצוע\", ",
+      "min(min_year)||'-'||max(max_year) AS \"תקופה\" ",
+      "FROM contract_spending ",
+      "WHERE entity_id=':id' ",
+      "group by 1, 2 order by 3 desc"],
     "parameters": {
     },
     "defaults": {
