@@ -13,17 +13,17 @@ export class BudgetKeyItemService {
 
   getRedashUrl(query: string): string {
     // TODO: Implement
-    return 'http://next.obudget.org/api/query?query=' +
+    return '//next.obudget.org/api/query?query=' +
       encodeURIComponent(query);
   }
 
   getDownloadCSVUrl(query: string): string {
-    return 'http://next.obudget.org/api/download?query=' +
+    return '//next.obudget.org/api/download?query=' +
       encodeURIComponent(query);
   }
 
   getItem(itemId: string): Promise<Item> {
-    let url = 'http://next.obudget.org/get/' + itemId;
+    let url = '//next.obudget.org/get/' + itemId;
     return new Promise<Item>((resolve, reject) => {
       this.http.get(url)
         .map((res: any) => res.json())
@@ -58,7 +58,7 @@ export class BudgetKeyItemService {
   }
 
   getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {
-    const url = 'http://next.obudget.org/api/query?query=' + encodeURIComponent(query);
+    const url = '//next.obudget.org/api/query?query=' + encodeURIComponent(query);
 
     return new Promise<any>((resolve, reject) => {
       this.http.get(url)
