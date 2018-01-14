@@ -10,6 +10,17 @@
         "join jsonb_each_text(budget_.history) d on true"
     ],
     "parameters": {
+    },
+    "headers": [
+      "שנה",
+      "תקציב מקורי",
+      "תקציב אחרי שינויים",
+      "ביצוע בפועל"
+    ],
+    "formatters": {
+      "תקציב מקורי": "_budgetNumberFormatter",
+      "תקציב אחרי שינויים": "_budgetNumberFormatter",
+      "ביצוע בפועל": "_budgetNumberFormatter"
     }
   }
 ]
