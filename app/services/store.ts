@@ -61,14 +61,17 @@ export class StoreService {
   get currentQuestion(): PreparedQuestion {
     return this.store.currentQuestion || _.first(this.preparedQuestions);
   }
+
   set currentQuestion(value: PreparedQuestion) {
     this.store.currentQuestion = value;
+    this.store.currentParameters = value.defaults;
     this.dataQueryChange.emit();
   }
 
   get currentParameters(): object {
     return this.store.currentParameters || this.currentQuestion.defaults;
   }
+
   set currentParameters(value: object) {
     this.store.currentParameters = value;
     this.dataQueryChange.emit();
