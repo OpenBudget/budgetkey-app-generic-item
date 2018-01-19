@@ -64,7 +64,9 @@ export class StoreService {
 
   set currentQuestion(value: PreparedQuestion) {
     this.store.currentQuestion = value;
-    this.store.currentParameters = value.defaults;
+    if (value) {
+      this.store.currentParameters = value.defaults;
+    }
     this.dataQueryChange.emit();
   }
 
