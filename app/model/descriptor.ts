@@ -1,9 +1,10 @@
 export class Question {
   text: string = '';
-  query: string = '';
+  query: string | string[] = '';
   parameters: object = {};
   defaults: object | null = {};
-  headers: string[];
+  headers: string[] | null = [];
+  formatters: object | null = {};
 }
 
 export class PreparedQuestionTextFragment {

@@ -1,1 +1,7 @@
-{{ title }} was allocated {{net_allocated}}₪ in year {{ year }}, bla bla bla
+{% if explanation %}
+<div class="objective">
+    {{ explanation | safe }}
+    <div><small>&mdash;&nbsp;מקור: {{explanation_source}}</small></div>
+</div>
+<br/>
+{% endif %}

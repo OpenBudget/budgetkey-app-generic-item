@@ -7,54 +7,12 @@ html, body {
   -moz-font-feature-settings: 'tnum','lnum';
 }
 
-.site-nav {
-  // Hide default header
-  display: none;
-}
-
 .app {
-  position: relative;
+  //position: relative;
   background: #FCFCFC;
 }
 
 .budgetkey-item-wrapper {
-  .page-header-wrapper {
-    padding: 20px 0;
-
-    form {
-      position: relative;
-    }
-
-    button[type=submit] {
-      position: absolute;
-      left: 20px;
-      top: 5px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 0;
-      margin: 0;
-      padding: 0;
-      background: transparent url('assets/img/search.svg') center center no-repeat;
-    }
-
-    input {
-      display: inline-block;
-      width: 100%;
-      box-sizing: border-box;
-      border: 2px solid #EEEEEE;
-      height: 50px;
-      border-radius: 25px;
-      font-size: 16px;
-      padding-left: 55px;
-      padding-right: 20px;
-      background: #FFFFFF;
-
-      &:focus {
-        outline: none;
-      }
-    }
-  }
 
   .budgetkey-breadcrumbs-wrapper {
     padding: 10px 0;
@@ -124,14 +82,15 @@ html, body {
     line-height: 34px;
     padding: 20px 0;
 
-    .toggle-description {
-      text-align: center;
-      cursor: pointer;
-      color: #B7B7B7;
+    .subtitle {
+      font-weight: bold;
+      margin-bottom: 0.5em;
     }
 
     .objective {
       text-align: justify;
+      padding-right: 20px;
+      border-right: gray solid 1px;
     }
 
     label.field-label {
@@ -151,24 +110,30 @@ html, body {
 
     .tabs {
       margin: 0;
+      padding: 0;
 
-      a {
-        display: inline-block;
+      div {
         margin: 0;
+        width: 100%;
         padding: 10px 20px;
         font-size: 20px;
         font-weight: bold;
         color: #9B9B9B;
         text-decoration: none;
 
-        &:hover, &:active, &.active {
+        &:hover {
           color: #4A4A4A;
+        }
+        &:active, &.active {
+          color: #4A4A4A;
+          background: #f0f0ff;
         }
       }
     }
 
     .tab-contents {
       margin: 0 0 10px 0;
+      padding: 0;
     }
   }
 
@@ -363,4 +328,13 @@ html, body {
       }
     }
   }
+}
+
+.number {
+  direction: ltr;
+  display: inline-block;
+}
+
+.container-fluid {
+  max-width: 1280px;
 }

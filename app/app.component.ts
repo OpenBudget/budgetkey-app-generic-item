@@ -7,9 +7,8 @@ import * as _ from 'lodash';
 @Component({
   selector: 'budgetkey-app-generic-item',
   template: `
-    <budgetkey-container>
+    <budgetkey-container [showHeader]="true" [showSearchBar]="true">
       <div #container class="budgetkey-item-wrapper container-fluid">
-        <budgetkey-page-header></budgetkey-page-header>
         <div *ngIf="!loaded"></div>
         <!--<budgetkey-breadcrumbs *ngIf="loaded"></budgetkey-breadcrumbs>-->
         <budgetkey-item-info *ngIf="loaded"></budgetkey-item-info>
