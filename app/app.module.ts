@@ -16,7 +16,6 @@ import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } f
 
 import {
   BeadcrumbsComponent,
-  HeaderComponent,
   ItemQuestionsComponent,
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
@@ -56,7 +55,6 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     KeysPipe,
     AppComponent,
     BeadcrumbsComponent,
-    HeaderComponent,
     ItemQuestionsComponent,
     ItemQuestionParameterComponent,
     ItemDataTableComponent,

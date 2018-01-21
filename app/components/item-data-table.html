@@ -1,7 +1,7 @@
 <div class="row budgetkey-item-data-wrapper">
   <div class="col-xs-1"></div>
   <div class="col-xs-10">
-    <div class="no-data-available" *ngIf="(data.length == 0) && (!err)">אין נתונום לפי בחירתך</div>
+    <div class="no-data-available" *ngIf="(data.length == 0) && (!err)">לא התקבלו נתונים שעונים על שאלה זו</div>
     <div class="no-data-available" *ngIf="(!!err)">שגיאה באחזור מידע מהשרת</div>
     <table *ngIf="(data.length > 0) && (headers.length > 0)">
       <thead>
@@ -11,7 +11,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let row of data">
-        <td *ngFor="let value of row">{{ value }}</td>
+        <td *ngFor="let value of row" [innerHTML]="value"></td>
       </tr>
       </tbody>
     </table>

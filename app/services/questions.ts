@@ -10,6 +10,9 @@ export class QuestionsService {
   parseQuestions(questions: Questions): PreparedQuestions {
     return _.map(questions, function(question: Question) {
       let result = new PreparedQuestion();
+      if (_.isArray(question.query)) {
+        question.query = question.query.join(' ');
+      }
       _.extend(result, question);
 
       let s = question.text;
@@ -61,8 +64,11 @@ export class QuestionsService {
     });
   }
 
-  formatQuery(query: string, parameters: object): string {
+  formatQuery(query: string | string[], parameters: object): string {
     // TODO: Escape parameters (needs to be discussed)
+    if (_.isArray(query)) {
+      query = query.join(' ');
+    }
     return query.replace(/:([a-z][a-z0-9_]*)/ig, (match, name) => {
       return parameters.hasOwnProperty(name) ? parameters[name] : match;
     });

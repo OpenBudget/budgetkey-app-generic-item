@@ -19,7 +19,6 @@ import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } f
 
 import {
   BeadcrumbsComponent,
-  HeaderComponent,
   ItemQuestionsComponent,
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
@@ -49,7 +48,6 @@ describe('AppComponent', function () {
         KeysPipe,
         AppComponent,
         BeadcrumbsComponent,
-        HeaderComponent,
         ItemQuestionsComponent,
         ItemQuestionParameterComponent,
         ItemDataTableComponent,
