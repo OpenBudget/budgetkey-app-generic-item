@@ -1,7 +1,7 @@
 [
   {
-    "text": " סך היקף ההתקשרויות עם הארגון ב <period> לפי <purchase_query>",
-    "query": "SELECT sum(volume) AS \"סה״כ היקף\", sum(executed) AS \"סה״כ בוצע\", :purchase_query, min(min_year)||' - '||max(max_year) AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' AND ((:period BETWEEN min_year AND max_year) OR (min_year IS NULL AND :period <= max_year) OR (max_year IS NULL AND :period >= min_year) OR (:period IS NULL)) GROUP BY 3 ORDER BY 1 DESC nulls LAST",
+    "text": " סך ההתקשרויות עם הארגון מ <period>",
+    "query": "SELECT sum(volume) AS \"סה״כ היקף\", sum(executed) AS \"סה״כ בוצע\", currency AS \"מטבע\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", purchase_method->>0 AS \"אופן הרכישה\", min(min_year)||' - '||max(max_year) AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) GROUP BY 3,4,5 ORDER BY 1 DESC nulls LAST",
     "parameters": {
       "period": {
         "כל השנים": "0",
@@ -16,20 +16,15 @@
         "2016": "2016",
         "2017": "2017",
         "2018": "2018"
-      },
-      "purchase_query": {
-        "היחידה הרוכשת": "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\"",
-        "אופן הרכישה": "purchase_method->>0 AS \"אופן הרכישה\""
       }
     },
     "defaults": {
-      "period": "כל השנים",
-      "purchase_query": "היחידה הרוכשת"
+      "period": "כל השנים"
     }
   },
   {
-    "text": " כלל הפטורים ממכרז עם הארגון ב <period>",
-    "query": "SELECT volume AS \"סה״כ היקף\", executed AS \"סה״כ בוצע\", exemption_reason AS \"סיבה\", min_year||' - '||max_year AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' AND (purchase_method->>0)='פטור ממכרז' AND ((:period BETWEEN min_year AND max_year) OR (min_year IS NULL AND :period <= max_year) OR (max_year IS NULL AND :period >= min_year) OR (:period IS NULL)) ORDER BY 1 DESC nulls LAST",
+    "text": " כלל הפטורים ממכרז עם הארגון מ <period>",
+    "query": "SELECT volume AS \"סה״כ היקף\", executed AS \"סה״כ בוצע\", exemption_reason AS \"סיבה\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", min_year||' - '||max_year AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' AND (purchase_method->>0)='פטור ממכרז' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) ORDER BY 1 DESC nulls LAST",
     "parameters": {
       "period": {
         "כל השנים": "0",
@@ -126,20 +121,6 @@
     },
     "defaults": {
       "period": "כל השנים"
-    }
-  },
-  {
-    "text": "הגופים מהם בוצעו התקשרויות עם הארגון",
-    "query": [
-      "SELECT ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ",
-      "currency AS \"מטבע\", sum(volume) AS \"סך היקף\", sum(executed) AS \"סך ביצוע\", ",
-      "min(min_year)||'-'||max(max_year) AS \"תקופה\" ",
-      "FROM contract_spending ",
-      "WHERE entity_id=':id' ",
-      "group by 1, 2 order by 3 desc"],
-    "parameters": {
-    },
-    "defaults": {
     }
   }
 ]
