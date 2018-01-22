@@ -33,6 +33,7 @@ export class StoreService {
     return this.store.item;
   }
   set item(value: Item) {
+    value.year = this.store.item.year;
     this.store.item = value;
     this.itemChange.emit(this.store.item);
     this.dataQueryChange.emit();

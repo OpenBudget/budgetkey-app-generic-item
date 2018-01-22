@@ -1,0 +1,16 @@
+<label class="field-label">
+   מעמד מוניציפלי:
+</label>
+    {{ details['status_municipal_'+year] }}
+<div>
+    <label class="field-label">
+        שנת קבלת מעמד מוניציפלי:
+    </label>
+    {{ details.year_reception_status_municipal }}
+</div>
+<div>
+    <label class="field-label">
+        כמות תושבים:
+    </label>
+    {{ details['total_population_end_'+year+'_1000s']*1000 }}
+</div>
