@@ -5,7 +5,7 @@
   "SELECT order_date as \"תאריך הזמנה\",",
   "       purchase_method->>0 as \"אופן התקשרות\",",
   "       purchasing_unit->>0 as \"יחידה רוכשת\",",
-  "       purpose as \"מטרה\",",
+  "       'contract-spending/' || order_id || '/' || budget_code || '#' || purpose as \"מטרה\",",
   "       start_date as \"תאריך תחילה\",",
   "       volume as \"היקף\",",
   "       executed as \"ביצוע\",",
@@ -36,6 +36,9 @@
       "תאריך סיום",
       "היקף",
       "ביצוע"
-    ]
+    ],
+    "formatters": {
+      "מטרה": "_budgetItemTitleFormatter"
+    }
   }
 ]
