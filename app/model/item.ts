@@ -13,5 +13,4 @@ export class Item {
   score: number = 0;
   details: object;
   charts: Chart[];
-  year: number = 2015;
 }
