@@ -2,6 +2,7 @@
 
 import descriptorOrgAssociation from './org/association';
 import descriptorOrgCompany from './org/company';
+import descriptorOrgMunicipality from './org/municipality';
 import descriptorOrg from './org';
 import descriptorBudgetFunc from './budget/budgetFunc';
 import descriptorBudgetFuncDetail from './budget/budgetFuncDetail';
@@ -18,6 +19,7 @@ import {Descriptor} from '../model/descriptor';
 let descriptors: Descriptor[] = [
   descriptorOrgAssociation,
   descriptorOrgCompany,
+  descriptorOrgMunicipality,
   descriptorOrg,
   descriptorBudgetFunc,
   descriptorBudgetFuncDetail,

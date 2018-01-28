@@ -1,5 +1,32 @@
 [
   {
+    "text": " סך ההתקשרויות עם הארגון מ <period>",
+    "query": "SELECT sum(volume) AS \"סה״כ היקף\", sum(executed) AS \"סה״כ בוצע\", currency AS \"מטבע\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", purchase_method->>0 AS \"אופן הרכישה\", min(min_year)||' - '||max(max_year) AS \"תקופה\" FROM contract_spending WHERE entity_id=':id' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) GROUP BY 3,4,5 ORDER BY 1 DESC nulls LAST",
+    "parameters": {
+      "period": {
+        "כל השנים": "0",
+        "2008": "2008",
+        "2009": "2009",
+        "2010": "2010",
+        "2011": "2011",
+        "2012": "2012",
+        "2013": "2013",
+        "2014": "2014",
+        "2015": "2015",
+        "2016": "2016",
+        "2017": "2017",
+        "2018": "2018"
+      }
+    },
+    "defaults": {
+      "period": "כל השנים"
+    }
+  },
+  {
+    "text": " כלל הפטורים והמכרזים ממכרז עם הארגון",
+    "query": "select tender_type, page_title, regulation, publisher, description, claim_date, start_date, end_date from procurement_tenders_processed where entity_id=':id'"
+  },
+  {
     "text": " כלל התמיכות שהארגון קיבל ש <phase> ב <period>",
     "query": "SELECT :phase AS \"שנה\", supporting_ministry AS \"משרד\", request_type AS \"סוג תמיכה\", support_title AS \"נושא\", sum(amount_paid) as \"סה״כ שולם\" FROM raw_supports WHERE :phase :period AND entity_id=':id' GROUP BY 1, 2, 3, 4",
     "parameters": {
@@ -27,9 +54,9 @@
       "period": "כל השנים"
     },
     "headers": ["נושא", "משרד", "סוג תמיכה"],
-    "formatters": { 
+    "formatters": {
       "סה״כ שולם": "_budgetNumberFormatter",
-      "משרד": "_budgetLinkFormatter" 
+      "משרד": "_budgetLinkFormatter"
     }
   },
   {
@@ -75,20 +102,6 @@
     },
     "defaults": {
       "period": "כל השנים"
-    }
-  },
-  {
-    "text": "הגופים מהם בוצעו התקשרויות עם הארגון",
-    "query": [
-      "SELECT ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ",
-      "currency AS \"מטבע\", sum(volume) AS \"סך היקף\", sum(executed) AS \"סך ביצוע\", ",
-      "min(min_year)||'-'||max(max_year) AS \"תקופה\" ",
-      "FROM contract_spending ",
-      "WHERE entity_id=':id' ",
-      "group by 1, 2 order by 3 desc"],
-    "parameters": {
-    },
-    "defaults": {
     }
   }
 ]
