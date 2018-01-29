@@ -5,7 +5,7 @@
     "query": ["SELECT :phase AS \"שנה\", supporting_ministry AS \"משרד\", request_type AS \"סוג תמיכה\", ", 
               "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type || '#' || support_title AS \"נושא\", ", 
               "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"מקבל התמיכה\", ",
-              "sum(amount_paid) as \"סה״כ שולם\" FROM raw_supports WHERE :phase :period AND budget_code=':code' GROUP BY 1, 2, 3, 4, 5"],
+              "sum(amount_paid) as \"סה״כ שולם\" FROM raw_supports WHERE :phase :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5"],
     "parameters": {
       "phase": {
         "שולמו": "year_paid",
@@ -43,7 +43,7 @@
               "budget_code || '#budget#' || budget_code AS \"מספר תקנה\", ", 
               "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"מקבל התמיכה\", ",
               "sum(:phase) as \"סה״כ\", min(year_requested) || '-' || max(year_requested)  as \"תקופה\" ", 
-              "FROM raw_supports WHERE year_requested :period AND  budget_code=':code' GROUP BY 1, 2, 3 ORDER BY 4 DESC nulls last"],
+              "FROM raw_supports WHERE year_requested :period AND  budget_code like ':code%%' GROUP BY 1, 2, 3 ORDER BY 4 DESC nulls last"],
     "parameters": {
       "phase": {
         "שולמו": "amount_paid",
@@ -81,7 +81,7 @@
               "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", purchase_method->>0 AS \"אופן הרכישה\", ", 
               "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"ספק\", ",
               "min(min_year)||' - '||max(max_year) AS \"תקופה\" FROM contract_spending ", 
-              "WHERE budget_code=':code' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) ", 
+              "WHERE budget_code like ':code%%' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) ", 
               "GROUP BY 3,4,5,6 ORDER BY 1 DESC nulls LAST"
             ],
     "parameters": {
@@ -126,7 +126,7 @@
               "case when entity_name is null then supplier_name->>0 else ('org/' || entity_kind || '/' || entity_id || '#' || entity_name) end as \"ספק\", ",
               "purchase_method->>0 AS \"אופן רכישה\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ", 
               "order_date AS \"תאריך הזמנה\", start_date AS \"תאריך התחלה\", end_date AS \"תאריך סיום\" FROM contract_spending ", 
-              "WHERE budget_code=':code' AND ((:period BETWEEN min_year AND max_year) or (min_year is null and :period <= max_year) or ", 
+              "WHERE budget_code like ':code%%' AND ((:period BETWEEN min_year AND max_year) or (min_year is null and :period <= max_year) or ", 
               "(max_year is null and :period >= min_year) or (:period is null))",
               "ORDER BY order_date nulls last"
             ],
