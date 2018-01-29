@@ -27,7 +27,7 @@ import {
   PlotlyChartComponent,
 } from './components';
 
-import {defaultTheme, THEME_TOKEN} from "./config";
+import {defaultTheme, THEME_TOKEN} from './config';
 
 describe('AppComponent', function () {
   let comp: AppComponent;
