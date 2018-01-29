@@ -28,8 +28,8 @@
   },
   {
     "text": " כלל הפטורים והמכרזים ממכרז עם הארגון",
-    "query": ["select tender_type, page_title, regulation, publisher, volume,", 
-              "'tenders/' || tender_type || '/' || publication_id || '/' || tender_id || '#' || description as description  , ", 
+    "query": ["select tender_type, page_title, regulation, publisher, volume,",
+              "'tenders/' || tender_type || '/' || publication_id || '/' || tender_id || '#' || description as description  , ",
               "claim_date, start_date, end_date from procurement_tenders_processed where entity_id=':id'"],
     "headers": [
       "tender_type",
@@ -49,8 +49,8 @@
   },
   {
     "text": " כלל התמיכות שהארגון קיבל ש <phase> ב <period>",
-    "query": ["SELECT :phase AS \"שנה\", supporting_ministry AS \"משרד\", request_type AS \"סוג תמיכה\", ", 
-      "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type || '#' || support_title AS \"נושא\", ", 
+    "query": ["SELECT :phase AS \"שנה\", supporting_ministry AS \"משרד\", request_type AS \"סוג תמיכה\", ",
+      "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type || '#' || support_title AS \"נושא\", ",
       "sum(amount_paid) as \"סה״כ שולם\" FROM raw_supports WHERE :phase :period AND entity_id=':id' GROUP BY 1, 2, 3, 4"],
     "parameters": {
       "phase": {
@@ -84,8 +84,8 @@
   },
   {
     "text": "התקנות מהן הארגון קיבל תמיכות, לפי סה״כ כספים ש<phase> עבור בקשות מ <period>",
-    "query": ["SELECT SUPPORT_TITLE AS \"נושא\", ", 
-              "budget_code || '#budget#' || budget_code AS \"מספר תקנה\", ", 
+    "query": ["SELECT SUPPORT_TITLE AS \"נושא\", ",
+              "budget_code || '#budget#' || budget_code AS \"מספר תקנה\", ",
               "sum(:phase) as \"סה״כ\", min(year_requested) || '-' || max(year_requested)  as \"תקופה\" FROM raw_supports WHERE year_requested :period AND  entity_id=':id' GROUP BY 1, 2 ORDER BY 3 DESC nulls last"],
     "parameters": {
       "phase": {
@@ -118,8 +118,8 @@
   },
   {
     "text": " כלל ההתקשרויות עם הארגון ב <period>",
-    "query": ["SELECT volume AS \"היקף\", executed AS \"ביצוע\", currency AS \"מטבע\", min_year||'-'||max_year AS \"תקופה\", ", 
-              "'contract-spending/' || order_id || '/' || budget_code || '#' || purpose AS \"תיאור\", ", 
+    "query": ["SELECT volume AS \"היקף\", executed AS \"ביצוע\", currency AS \"מטבע\", min_year||'-'||max_year AS \"תקופה\", ",
+              "'contract-spending/' || order_id || '/' || budget_code || '#' || purpose AS \"תיאור\", ",
               "purchase_method->>0 AS \"אופן רכישה\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", order_date AS \"תאריך הזמנה\", start_date AS \"תאריך התחלה\", end_date AS \"תאריך סיום\" FROM contract_spending WHERE entity_id=':id' AND ((:period BETWEEN min_year AND max_year) or (min_year is null and :period <= max_year) or (max_year is null and :period >= min_year) or (:period is null))"],
     "parameters": {
       "period": {
