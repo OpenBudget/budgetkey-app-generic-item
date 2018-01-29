@@ -53,8 +53,24 @@ export class BudgetKeyItemService {
       : '-';
   }
 
-  private _budgetLinkFormatter(value: string, hLink: string) {
-    return '<a>' + value + '</a>';
+  private _budgetLinkFormatter(value: string) {
+    return '<a href="' + value + '">קישור</a>';
+  }
+
+  private _budgetLinkTitleFormatter(value: string) {
+    let parts = value.split('#', 2);
+    return '<a href="' + parts[0] + '">' + parts[1] + '</a>';
+  }
+
+  private _budgetItemTitleFormatter(value: string) {
+    let parts = value.split('#', 2);
+    return '<a href="https://next.obudget.org/i/' + parts[0] + '">' + parts[1] + '</a>';
+  }
+
+  private _budgetSearchTitleFormatter(value: string) {
+    let parts = value.split('#', 3);
+    return '<a href="https://next.obudget.org/s?q=' + 
+      encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) + '">' + parts[2] + '</a>';
   }
 
   getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {
