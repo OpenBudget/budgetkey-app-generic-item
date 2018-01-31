@@ -90,6 +90,7 @@ export class BudgetKeyItemService {
           (res: any) => {
             let items: object[] = [];
             let rows = res.rows;
+            let total = res.total;
             let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
 
             _.each(rows, (row) => {
@@ -101,7 +102,7 @@ export class BudgetKeyItemService {
               });
               items.push(newItem);
             });
-            resolve({query, headers, items});
+            resolve({query, headers, items, total});
           },
           () => reject(new Error('Cannot load ' + url))
         );
