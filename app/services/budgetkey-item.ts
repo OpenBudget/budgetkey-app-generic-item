@@ -65,7 +65,9 @@ export class BudgetKeyItemService {
       return '';
     }
     let parts = value.split('#', 2);
-    if (parts.length < 2) return value;
+    if (parts.length < 2) {
+      return value;
+    }
     return '<a href="' + parts[0] + '">' + parts[1] + '</a>';
   }
 
