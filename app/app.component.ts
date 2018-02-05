@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
       let li = /li=(\d+)/;
       let match = li.exec(searchResultsLocation);
       if (match && match.length>1) {
-        let position = parseInt(match[1]]);
+        let position = parseInt(match[1]);
         if (gtag) {
           gtag('event', 'view_item', {
             'event_label': itemId,
