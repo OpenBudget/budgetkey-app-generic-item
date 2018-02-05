@@ -164,6 +164,7 @@ export class ItemDataTableComponent {
   private query: string = '';
   private headers: any[] = [];
   private data: any[] = [];
+  private total: number = 0;
   private err: any;
 
   toggleTable() {
@@ -181,11 +182,13 @@ export class ItemDataTableComponent {
           if (data.query === this.query) {
             this.headers = data.headers;
             this.data = data.items;
+            this.total = data.total;
           }
         })
         .catch((err) => {
           this.headers.length = 0;
           this.data.length = 0;
+          this.total = 0;
           this.err = err;
         })
         .done(() => {

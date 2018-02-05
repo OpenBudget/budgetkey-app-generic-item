@@ -15,6 +15,11 @@
       </tr>
       </tbody>
     </table>
+    <div>
+      מציג {{data.length}} תוצאות מתוך {{ total }}.
+      <strong *ngIf="total > data.length">ניתן להוריד את כל הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
+      <strong *ngIf="total <= data.length">ניתן להוריד את הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
+    </div>
   </div>
   <div class="col-xs-1"></div>
 </div>

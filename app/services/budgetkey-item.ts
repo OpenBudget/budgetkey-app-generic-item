@@ -54,22 +54,43 @@ export class BudgetKeyItemService {
   }
 
   private _budgetLinkFormatter(value: string) {
+    if (!value) {
+      return '';
+    }
     return '<a href="' + value + '">קישור</a>';
   }
 
   private _budgetLinkTitleFormatter(value: string) {
+    if (!value) {
+      return '';
+    }
     let parts = value.split('#', 2);
+    if (parts.length < 2) {
+      return value;
+    }
     return '<a href="' + parts[0] + '">' + parts[1] + '</a>';
   }
 
   private _budgetItemTitleFormatter(value: string) {
+    if (!value) {
+      return '';
+    }
     let parts = value.split('#', 2);
+    if (parts.length < 2) {
+      return value;
+    }
     return '<a href="https://next.obudget.org/i/' + parts[0] + '">' + parts[1] + '</a>';
   }
 
   private _budgetSearchTitleFormatter(value: string) {
+    if (!value) {
+      return '';
+    }
     let parts = value.split('#', 3);
-    return '<a href="https://next.obudget.org/s?q=' + 
+    if (parts.length < 3) {
+      return value;
+    }
+    return '<a href="https://next.obudget.org/s?q=' +
       encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) + '">' + parts[2] + '</a>';
   }
 
@@ -83,6 +104,7 @@ export class BudgetKeyItemService {
           (res: any) => {
             let items: object[] = [];
             let rows = res.rows;
+            let total = res.total;
             let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
 
             _.each(rows, (row) => {
@@ -94,7 +116,7 @@ export class BudgetKeyItemService {
               });
               items.push(newItem);
             });
-            resolve({query, headers, items});
+            resolve({query, headers, items, total});
           },
           () => reject(new Error('Cannot load ' + url))
         );
