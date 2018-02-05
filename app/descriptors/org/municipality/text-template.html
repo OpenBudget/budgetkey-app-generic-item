@@ -1,0 +1,39 @@
+<label class="field-label">
+   מעמד מוניציפלי:
+</label>
+    {{ details['status_municipal_2015'] }}
+<div>
+    <label class="field-label">
+        שנת קבלת מעמד מוניציפלי:
+    </label>
+    {{ details.year_reception_status_municipal }}
+</div>
+<div>
+    <label class="field-label">
+        כמות תושבים:
+    </label>
+    {{ details['total_population_end_2015_1000s']*1000 }}
+  <label class="field-label">
+     אחוז יהודים:
+  </label>
+  {{ details['jews_pct_2015']}}
+</div>
+<div>
+  <label class="field-label">
+    מדד פריפריאליות:
+  </label>
+  {{ details.index_peripheral_2004_grade_by_group_cluster}}
+</div>
+<div>
+  <label class="field-label">
+    סה"כ הכנסות:
+  </label>
+  {{ details['number_incl_income_of_municipality_1000s_nis_2015']*1000}}
+  <label class="field-label">
+     מתוכם מהתקציב:
+  </label>
+  {{ details['total_income_of_municipality_budget_regular_1000s_nis_2015']*1000}}
+</div>
+<label class="up-to-date">
+  *הנתונים נכונים לשנת 2015
+</label>
