@@ -3,6 +3,9 @@ import { BudgetKeyItemService, StoreService } from './services';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import * as _ from 'lodash';
 
+const gtag: any = window['gtag'];
+
+
 @Component({
   selector: 'budgetkey-app-generic-item',
   template: `
@@ -70,6 +73,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.loaded = false;
     let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
+    let searchResultsLocation = window.location.search;
+    if (searchResultsLocation) {
+      let li = /li=(\d+)/;
+      let match = li.exec(searchResultsLocation);
+      if (match && match.length>1) {
+        let position = parseInt(match[1]]);
+        if (gtag) {
+          gtag('event', 'view_item', {
+            'event_label': itemId,
+            'value': position
+          });  
+        }
+      }
+    }
     console.log(window['prefetchedItem']);
     if (window['prefetchedItem']) {
       this.handleItem(window['prefetchedItem']);
