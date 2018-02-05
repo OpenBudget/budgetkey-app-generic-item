@@ -80,6 +80,7 @@ export class ItemQuestionsComponent implements OnDestroy {
   currentQuestion: PreparedQuestion;
   redashUrl: string;
   downloadUrl: string;
+  downloadUrlXlsx: string;
 
   private isDropDownVisible: boolean = false;
 
@@ -100,7 +101,8 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.preparedQuestions = this.store.preparedQuestions;
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
-    this.downloadUrl = this.itemService.getDownloadCSVUrl(this.store.dataQuery);
+    this.downloadUrl = this.itemService.getDownloadUrl(this.store.dataQuery, 'csv');
+    this.downloadUrlXlsx = this.itemService.getDownloadUrl(this.store.dataQuery, 'xlsx');
     this.isSearching = true;
   }
 
