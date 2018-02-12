@@ -11,6 +11,8 @@ import descriptorBudget4Dig from './budget/budget4dig';
 import descriptorBudget6Dig from './budget/budget6dig';
 import descriptorBudget8Dig from './budget/budget8dig';
 import descriptorTendersExemptions from './tenders/exemptions';
+import descriptorTendersOffice from './tenders/office';
+import descriptorTendersCentral from './tenders/central';
 import descriptorContractSpending from './contract-spending';
 import descriptorBudgetChanges from './budget-changes';
 import descriptorSupports from './supports';
@@ -28,6 +30,8 @@ let descriptors: Descriptor[] = [
   descriptorBudget6Dig,
   descriptorBudget8Dig,
   descriptorTendersExemptions,
+  descriptorTendersOffice,
+  descriptorTendersCentral,
   descriptorContractSpending,
   descriptorBudgetChanges,
   descriptorSupports,
