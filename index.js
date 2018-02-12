@@ -61,7 +61,7 @@ app.get(basePath + '*', function(req, res) {
       res.render('index.html', {
         base: basePath,
         prefetchedItem: JSON.stringify(body),
-        title: body.page_title == "None עם None" ? "מכרז" : body.page_title,
+        title: body.page_title,
         themeScript: themeScript
       });
     } else {
