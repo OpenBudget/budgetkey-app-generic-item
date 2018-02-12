@@ -17,9 +17,9 @@ export class BudgetKeyItemService {
       encodeURIComponent(query);
   }
 
-  getDownloadCSVUrl(query: string): string {
+  getDownloadUrl(query: string, format: string): string {
     return '//next.obudget.org/api/download?query=' +
-      encodeURIComponent(query);
+      encodeURIComponent(query) + '&format=' + format;
   }
 
   getItem(itemId: string): Promise<Item> {
