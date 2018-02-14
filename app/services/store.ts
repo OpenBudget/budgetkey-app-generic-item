@@ -24,7 +24,7 @@ export class StoreService {
   descriptorChange = new EventEmitter<Descriptor>();
   preparedQuestionsChange = new EventEmitter();
   dataQueryChange = new EventEmitter();
-  onDataReceived = new EventEmitter();
+  onDataReady = new EventEmitter();
 
   constructor(private questionsService: QuestionsService) {
   }

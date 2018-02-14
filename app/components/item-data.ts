@@ -130,7 +130,7 @@ export class ItemQuestionsComponent implements OnDestroy {
           }
         }
       ),
-      this.store.onDataReceived.subscribe(() => {this.isSearching = false; })
+      this.store.onDataReady.subscribe(() => {this.isSearching = false; })
     ];
     this.onStoreChanged();
   }
@@ -194,8 +194,10 @@ export class ItemDataTableComponent {
           this.err = err;
         })
         .done(() => {
-          this.store.onDataReceived.emit();
+          this.store.onDataReady.emit();
         });
+    } else {
+      this.store.onDataReady.emit();
     }
   }
 
