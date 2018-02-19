@@ -77,13 +77,13 @@ export class AppComponent implements OnInit {
     if (searchResultsLocation) {
       let li = /li=(\d+)/;
       let match = li.exec(searchResultsLocation);
-      if (match && match.length>1) {
-        let position = parseInt(match[1]);
+      if (match && match.length > 1) {
+        let position = parseInt(match[1], 10);
         if (gtag) {
           gtag('event', 'view_item', {
             'event_label': itemId,
             'value': position
-          });  
+          });
         }
       }
     }
