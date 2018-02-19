@@ -1,9 +1,20 @@
+{% if description %}
 <label class="field-label">
-    תיאור ההתקשרות:
+    תיאור המכרז:
 </label>
 <div class="objective">
     {{description}}
 </div>
+{% endif %}
+
+{% if reason %}
+<div>
+  <label class="field-label">
+    סיבה:
+  </label>
+  {{reason}}
+</div>
+{% endif %}
 
 {% if documents.length > 0 %}
 <div>
@@ -42,30 +53,12 @@
 </div>
 {% endif %}
 
-{% if start_date %}
-<div>
-    <label class="field-label">
-        תחילת ההתקשרות:
-    </label>
-    {{ start_date }}
-</div>
-{% endif %}
-
 {% if end_date %}
 <div>
     <label class="field-label">
-        סוף ההתקשרות:
+        סוף מכרז:
     </label>
     {{ end_date }}
-</div>
-{% endif %}
-
-{% if last_update_date %}
-<div>
-    <label class="field-label">
-        תאריך עדכון:
-    </label>
-    {{ last_update_date }}
 </div>
 {% endif %}
 
@@ -74,7 +67,16 @@
   <label class="field-label">
    איש קשר:
   </label>
-  {{ contact }}
+  {{ contact }} {{contact_email}}
+</div>
+{% endif %}
+
+{% if supplier %}
+<div>
+  <label class="field-label">
+   זכיין:
+  </label>
+  {{supplier}}
 </div>
 {% endif %}
 
