@@ -1,6 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Inject } from '@angular/core';
 import { StoreService } from '../services';
 import { Item, Descriptor } from '../model';
+import { THEME_ID_TOKEN } from '../config';
 
 import * as _ from 'lodash';
 
@@ -51,10 +52,11 @@ export class ItemInfoComponent implements OnDestroy {
 
   private onStoreChanged() {
     this.item = ItemInfoComponent.processItem(this.store.item);
+    this.item.theme_id = this.theme_id;
     this.descriptor = this.store.descriptor;
   }
 
-  constructor(private store: StoreService) {
+  constructor(private store: StoreService, @Inject(THEME_ID_TOKEN) private theme_id: any) {
     this.eventSubscriptions = [
       this.store.itemChange.subscribe(() => this.onStoreChanged()),
       this.store.descriptorChange.subscribe(() => this.onStoreChanged()),

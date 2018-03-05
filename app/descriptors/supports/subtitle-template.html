@@ -3,7 +3,7 @@
 {{year_requested}}
 ב
 {% if entity_name %}
-    <a href="/i/org/{{ entity_kind }}/{{ entity_id }}">
+    <a href="{{ 'org' | itemlink:entity_kind,entity_id }}">
 
         {{ entity_name }}
 

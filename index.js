@@ -49,6 +49,7 @@ app.get(basePath + '*', function(req, res) {
       for (var key in themeJson) {
         themeScript += key+"="+JSON.stringify(themeJson[key])+";";
       }
+      themeScript += "BUDGETKEY_THEME_ID=" + JSON.stringify(req.query.theme) + ";";
     }
   }
 

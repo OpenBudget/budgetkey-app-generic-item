@@ -63,7 +63,7 @@
     <label class="field-label">
         התקנה התקציבית:
     </label>
-    <a href="//next.obudget.org/s/?q={{ budget_code }}">
+    <a href="//next.obudget.org/s/?q={{ budget_code }}{% if theme_id %}&theme={{ theme_id }}{% endif %}">
         {{ budget_code }} - {{ budget_title }}
     </a>
 </div>
@@ -77,7 +77,7 @@
     <ul>
         {% for manof_ref in manof_excerpts %}
         <li>
-            <a href="//next.obudget.org/i/tenders/{{manof_ref.tender_type}}/{{manof_ref.publication_id}}/{{manof_ref.tender_id}}">
+            <a href="//next.obudget.org/i/tenders/{{manof_ref.tender_type}}/{{manof_ref.publication_id}}/{{manof_ref.tender_id}}{% if theme_id %}?theme={{ theme_id }}{% endif %}">
                 {{ manof_ref.description }}
             </a>
         </li>
