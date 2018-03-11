@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
-import { StoreService, ThemeService } from '../services';
+import {Component, Inject, OnDestroy} from '@angular/core';
+import { StoreService } from '../services';
 import { Item, Descriptor } from '../model';
 
 import * as _ from 'lodash';
+import {THEME_ID_TOKEN} from '../config';
 
 @Component({
   selector: 'budgetkey-item-info',
@@ -12,11 +13,11 @@ import * as _ from 'lodash';
       <div class="col-md-11">
         <div class="row">
           <div class="col-md-2 text-left"><small 
-            [innerHTML]="descriptor.preTitleTemplate | renderTemplate:item:theme.themeId"></small></div>
+            [innerHTML]="descriptor.preTitleTemplate | renderTemplate:item:themeId"></small></div>
           <div class="col-md-6">
-            <h1 [innerHTML]="descriptor.titleTemplate | renderTemplate:item:theme.themeId"></h1>
+            <h1 [innerHTML]="descriptor.titleTemplate | renderTemplate:item:themeId"></h1>
           </div>
-          <div class="col-md-4 text-left" [innerHTML]="descriptor.amountTemplate | renderTemplate:item:theme.themeId"></div>
+          <div class="col-md-4 text-left" [innerHTML]="descriptor.amountTemplate | renderTemplate:item:themeId"></div>
         </div>
       </div>
     </div>
@@ -27,8 +28,8 @@ import * as _ from 'lodash';
         <div class="row">
           <div class="col-md-1"></div>
           <div class="col-md-10">
-            <div class="subtitle" [innerHTML]="descriptor.subtitleTemplate | renderTemplate:item:theme.themeId"></div>
-            <div [innerHTML]="descriptor.textTemplate | renderTemplate:item:theme.themeId"></div>
+            <div class="subtitle" [innerHTML]="descriptor.subtitleTemplate | renderTemplate:item:themeId"></div>
+            <div [innerHTML]="descriptor.textTemplate | renderTemplate:item:themeId"></div>
           </div>
           <div class="col-md-1"></div>
         </div>
@@ -55,7 +56,7 @@ export class ItemInfoComponent implements OnDestroy {
     this.descriptor = this.store.descriptor;
   }
 
-  constructor(private store: StoreService, private theme: ThemeService) {
+  constructor(private store: StoreService, @Inject(THEME_ID_TOKEN) private themeId: any) {
     this.eventSubscriptions = [
       this.store.itemChange.subscribe(() => this.onStoreChanged()),
       this.store.descriptorChange.subscribe(() => this.onStoreChanged()),

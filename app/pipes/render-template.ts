@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import * as nunjucks from 'nunjucks';
 
 let env = new nunjucks.Environment();
@@ -27,12 +27,16 @@ env.addFilter('split', function(x: string) {
   }
 });
 
-env.addFilter('search_link', function(urlEncodedParams: string, theme_id: string) {
-  return '//next.obudget.org/s/?' + urlEncodedParams + (theme_id ? '&theme=' + theme_id : '');
+env.addFilter('search_link', function(searchTerm: string, displayDocs: string, themeId: string) {
+  return '//next.obudget.org/s/?' +
+    'q=' + encodeURIComponent(searchTerm) +
+    (displayDocs ? '&dd=' + displayDocs : '') +
+    (themeId ? '&theme=' + themeId : '');
 });
 
-env.addFilter('item_link', function(doc_type, entity_kind, entity_id, theme_id: string) {
-  return '//next.obudget.org/i/' + doc_type + '/' + entity_kind + '/' + entity_id + (theme_id ? '?theme=' + theme_id : '');
+env.addFilter('item_link', function(docType, docId, themeId: string) {
+  return '//next.obudget.org/i/' + docType + '/' + docId +
+    (themeId ? '?theme=' + themeId : '');
 });
 
 @Pipe({name: 'renderTemplate'})

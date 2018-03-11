@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 
 import { APP_BASE_HREF } from '@angular/common';
 
-import { RenderTemplatePipe, PairsPipe, KeysPipe, SearchLinkPipe, ItemLinkPipe } from './pipes';
+import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
 import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
 
@@ -46,8 +46,6 @@ describe('AppComponent', function () {
         RenderTemplatePipe,
         PairsPipe,
         KeysPipe,
-        ItemLinkPipe,
-        SearchLinkPipe,
         AppComponent,
         BeadcrumbsComponent,
         ItemQuestionsComponent,

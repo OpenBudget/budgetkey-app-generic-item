@@ -10,9 +10,9 @@ import { AppComponent }  from './app.component';
 import { BudgetKeyCommonModule, THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN } from 'budgetkey-ng2-components';
 import { MushonkeyModule } from 'mushonkey';
 
-import { RenderTemplatePipe, PairsPipe, KeysPipe , ItemLinkPipe, SearchLinkPipe } from './pipes';
+import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
-import { BudgetKeyItemService, QuestionsService, StoreService, EventsService, ThemeService } from './services';
+import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
 
 import {
   BeadcrumbsComponent,
@@ -40,8 +40,7 @@ let providers: any[] = [
     provide: THEME_TOKEN,
     useValue: typeof(BUDGETKEY_APP_GENERIC_ITEM_THEME) === 'undefined' ? defaultTheme : BUDGETKEY_APP_GENERIC_ITEM_THEME
   },
-  {provide: THEME_ID_TOKEN, useValue: typeof(BUDGETKEY_THEME_ID) === 'undefined' ? null : BUDGETKEY_THEME_ID},
-  ThemeService
+  {provide: THEME_ID_TOKEN, useValue: typeof(BUDGETKEY_THEME_ID) === 'undefined' ? null : BUDGETKEY_THEME_ID}
 ];
 if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
   providers.push({provide: NG_COMPONENTS_THEME_TOKEN, useValue: BUDGETKEY_NG2_COMPONENTS_THEME});
@@ -59,8 +58,6 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     RenderTemplatePipe,
     PairsPipe,
     KeysPipe,
-    ItemLinkPipe,
-    SearchLinkPipe,
     AppComponent,
     BeadcrumbsComponent,
     ItemQuestionsComponent,

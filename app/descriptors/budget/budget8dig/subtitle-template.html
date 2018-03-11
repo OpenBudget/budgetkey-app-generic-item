@@ -1,13 +1,13 @@
 תקנה תקציבית בתכנית
-<a href="{{ 'budget' | item_link((hierarchy | last)[0], year, theme_id) }}">
+<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year, theme_id) }}">
     {{ (hierarchy | last)[1] }}
 </a>
 (תחת תחום
-<a href="{{ 'budget' | item_link(hierarchy[2][0], year, theme_id) }}">
+<a href="{{ 'budget' | item_link(hierarchy[2][0] + '/' + year, theme_id) }}">
     {{ (hierarchy[2])[1] }}
 </a>
 בסעיף
-<a href="{{ 'budget' | item_link(hierarchy[1][0], year, theme_id) }}">
+<a href="{{ 'budget' | item_link(hierarchy[1][0] + '/' + year, theme_id) }}">
     {{ (hierarchy[1])[1] }}
 </a>
 ).
