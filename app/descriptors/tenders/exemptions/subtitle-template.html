@@ -2,7 +2,7 @@
     {{ publisher }}
     מבקש להודיע על התקשרות בפטור ממכרז עם
 
-    <a href="/i/org/{{ entity_kind }}/{{ entity_id }}">
+    <a href="{{ 'budget' | item_link(entity_kind, entity_id, theme_id) }}">
 
         {{ entity_name }}
 

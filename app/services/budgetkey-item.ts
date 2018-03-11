@@ -9,9 +9,7 @@ import { THEME_ID_TOKEN } from '../config';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http, @Inject(THEME_ID_TOKEN) private themeId: any) {
-    console.log('--BudgetKeyItemService -- this.themeId = ' + this.themeId);
-  }
+  constructor(private http: Http, @Inject(THEME_ID_TOKEN) private themeId: any) { }
 
   getRedashUrl(query: string): string {
     // TODO: Implement
@@ -95,7 +93,8 @@ export class BudgetKeyItemService {
       return value;
     }
     return '<a href="https://next.obudget.org/s?q=' +
-      encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) + '">' + parts[2] + '</a>';
+      encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) +
+        (this.themeId ? '?theme=' + this.themeId : '') + '">' + parts[2] + '</a>';
   }
 
   getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {

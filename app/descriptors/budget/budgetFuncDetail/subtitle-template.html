@@ -1,7 +1,7 @@
 ריכוז כלל ההוצאה תחת תת-נושא
 {{ func_cls_title_2[0] }},
 במסגרת הנושא
-<a href="/i/budget/C{{(func_cls_json[0] | load_json)[0]}}/{{year}}">
+<a href="{{ 'budget' | item_link('C'+(func_cls_json[0] | load_json)[0], year, theme_id) }}">
     {{ func_cls_title_1[0] }}
 </a>.<br/>
 הטיפול בתת-נושא זה יכול להתחלק בין מספר משרדים שונים.
