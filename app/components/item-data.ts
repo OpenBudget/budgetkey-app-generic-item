@@ -2,7 +2,7 @@ import { Component, Input, Output, OnDestroy, EventEmitter } from '@angular/core
 import { trigger, state, style, transition, animate } from '@angular/core';
 import * as _ from 'lodash';
 
-import { BudgetKeyItemService, StoreService, EventsService } from '../services';
+import { BudgetKeyItemService, StoreService, EventsService, ThemeService } from '../services';
 import { PreparedQuestion, PreparedQuestions } from '../model';
 
 @Component({
@@ -201,7 +201,7 @@ export class ItemDataTableComponent {
     }
   }
 
-  constructor(private store: StoreService, private itemService: BudgetKeyItemService) {
+  constructor(private store: StoreService, private itemService: BudgetKeyItemService, private theme: ThemeService) {
     this.eventSubscriptions = [
       this.store.dataQueryChange.subscribe(() => this.onStoreChanged()),
     ];

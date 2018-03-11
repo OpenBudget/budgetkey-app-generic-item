@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import { Http } from '@angular/http';
 import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
 import { Item, Descriptor } from '../model';
+import { THEME_ID_TOKEN } from '../config';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http) {
+  constructor(private http: Http, @Inject(THEME_ID_TOKEN) private themeId: any) {
+    console.log('--BudgetKeyItemService -- this.themeId = ' + this.themeId);
   }
 
   getRedashUrl(query: string): string {
@@ -79,7 +81,9 @@ export class BudgetKeyItemService {
     if (parts.length < 2) {
       return value;
     }
-    return '<a href="https://next.obudget.org/i/' + parts[0] + '">' + parts[1] + '</a>';
+
+    return '<a href="https://next.obudget.org/i/' + parts[0] + (this.themeId ? '?theme=' + this.themeId : '') +
+      '">' + parts[1] + '</a>';
   }
 
   private _budgetSearchTitleFormatter(value: string) {

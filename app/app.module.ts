@@ -12,7 +12,7 @@ import { MushonkeyModule } from 'mushonkey';
 
 import { RenderTemplatePipe, PairsPipe, KeysPipe , ItemLinkPipe, SearchLinkPipe } from './pipes';
 
-import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } from './services';
+import { BudgetKeyItemService, QuestionsService, StoreService, EventsService, ThemeService } from './services';
 
 import {
   BeadcrumbsComponent,
@@ -40,7 +40,8 @@ let providers: any[] = [
     provide: THEME_TOKEN,
     useValue: typeof(BUDGETKEY_APP_GENERIC_ITEM_THEME) === 'undefined' ? defaultTheme : BUDGETKEY_APP_GENERIC_ITEM_THEME
   },
-  {provide: THEME_ID_TOKEN, useValue: typeof(BUDGETKEY_THEME_ID) === 'undefined' ? null : BUDGETKEY_THEME_ID}
+  {provide: THEME_ID_TOKEN, useValue: typeof(BUDGETKEY_THEME_ID) === 'undefined' ? null : BUDGETKEY_THEME_ID},
+  ThemeService
 ];
 if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
   providers.push({provide: NG_COMPONENTS_THEME_TOKEN, useValue: BUDGETKEY_NG2_COMPONENTS_THEME});
