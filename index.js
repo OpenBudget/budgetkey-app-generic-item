@@ -58,12 +58,16 @@ app.get(basePath + '*', function(req, res) {
   }, function (error, response, body) {
     if (response.statusCode === 200 && body !== null && body.value) {
       body = body.value;
-      res.render('index.html', {
-        base: basePath,
-        prefetchedItem: JSON.stringify(body),
-        title: body.page_title,
-        themeScript: themeScript
-      });
+      if (body.__redirect) {
+        res.redirect('/i/' + body.__redirect);
+      } else {
+        res.render('index.html', {
+          base: basePath,
+          prefetchedItem: JSON.stringify(body),
+          title: body.page_title,
+          themeScript: themeScript
+        });  
+      }
     } else {
       res.sendStatus(response.statusCode);
     }
