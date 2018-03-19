@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
 import { Item, Descriptor } from '../model';
-import { THEME_ID_TOKEN } from '../config';
+import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http, @Inject(THEME_ID_TOKEN) private themeId: any) { }
+  constructor(private http: Http, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) { }
 
   getRedashUrl(query: string): string {
     // TODO: Implement
@@ -80,7 +80,8 @@ export class BudgetKeyItemService {
       return value;
     }
 
-    return '<a href="https://next.obudget.org/i/' + parts[0] + (this.themeId ? '?theme=' + this.themeId : '') +
+    return '<a href="https://next.obudget.org/i/' + parts[0]
+      + (this.ngComponentsTheme.themeId ? '?theme=' + this.ngComponentsTheme.themeId : '') +
       '">' + parts[1] + '</a>';
   }
 
@@ -94,7 +95,7 @@ export class BudgetKeyItemService {
     }
     return '<a href="https://next.obudget.org/s?q=' +
       encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) +
-        (this.themeId ? '?theme=' + this.themeId : '') + '">' + parts[2] + '</a>';
+        (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
   getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {

@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { BudgetKeyItemService, StoreService, EventsService } from '../services';
 import { PreparedQuestion, PreparedQuestions } from '../model';
-import {THEME_ID_TOKEN} from '../config';
+import { THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN } from 'budgetkey-ng2-components';
 
 @Component({
   selector: 'item-questions-parameter',
@@ -203,7 +203,7 @@ export class ItemDataTableComponent {
   }
 
   constructor(private store: StoreService, private itemService: BudgetKeyItemService,
-              @Inject(THEME_ID_TOKEN) private themeId: any) {
+              @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
     this.eventSubscriptions = [
       this.store.dataQueryChange.subscribe(() => this.onStoreChanged()),
     ];

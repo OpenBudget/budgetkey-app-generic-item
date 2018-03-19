@@ -27,7 +27,7 @@ import {
   PlotlyChartComponent,
 } from './components';
 
-import {defaultTheme, THEME_TOKEN, THEME_ID_TOKEN} from './config';
+import {defaultTheme, THEME_TOKEN} from './config';
 
 describe('AppComponent', function () {
   let comp: AppComponent;
@@ -61,8 +61,7 @@ describe('AppComponent', function () {
         BudgetKeyItemService,
         QuestionsService,
         StoreService,
-        EventsService,
-        {provide: THEME_ID_TOKEN, useValue: null}
+        EventsService
       ]
     })
     .compileComponents();

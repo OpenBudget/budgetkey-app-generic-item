@@ -6,5 +6,3 @@ export const defaultTheme = {
   siteName: 'מפתח התקציב',
   searchPlaceholder: 'חפשו הכל.. סעיף תקציבי, ארגון, אדם, או כל דבר אחר העולה על דעתכם..'
 };
-
-export const THEME_ID_TOKEN = new OpaqueToken('Theme Id Token');
