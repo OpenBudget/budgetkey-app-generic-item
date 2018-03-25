@@ -52,20 +52,22 @@ app.get(basePath + '*', function(req, res) {
     }
   }
 
+  let doc_id = req.params[0];
   request({
-    url: 'https://next.obudget.org/get/' + urlencode(req.params[0]),
+    url: 'https://next.obudget.org/get/' + urlencode(doc_id),
     json: true
   }, function (error, response, body) {
     if (response.statusCode === 200 && body !== null && body.value) {
       body = body.value;
       if (body.__redirect) {
-        res.redirect('/i/' + body.__redirect);
+        res.redirect(basePath + body.__redirect);
       } else {
         res.render('index.html', {
           base: basePath,
           prefetchedItem: JSON.stringify(body),
           title: body.page_title,
-          themeScript: themeScript
+          themeScript: themeScript,
+          doc_id: doc_id
         });  
       }
     } else {
