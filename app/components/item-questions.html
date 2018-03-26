@@ -19,6 +19,7 @@
       </div>
       <div *ngIf="isDropDownVisible" class="questions">
         <div *ngFor="let question of preparedQuestions" class="item-questions-fragments-wrapper"
+          [ngClass]="{active: question==currentQuestion}"
           (click)="selectQuestion(question)">
           <ng-container *ngFor="let fragment of question.parsed">
             <span *ngIf="fragment.isText">{{ fragment.value }}</span>
