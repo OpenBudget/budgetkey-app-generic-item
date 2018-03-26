@@ -32,7 +32,7 @@
     "@types/plotly.js": "^1.28.7",
     "angular-in-memory-web-api": "~0.1.15",
     "bluebird": "^3.5.0",
-    "budgetkey-ng2-components": "^0.1.16",
+    "budgetkey-ng2-components": "^0.1.17",
     "core-js": "^2.4.1",
     "express": "^4.16.1",
     "glslify": "^6.1.0",
