@@ -61,7 +61,7 @@ app.get(basePath + '*', function(req, res) {
     if (response.statusCode === 200 && body !== null && body.value) {
       body = body.value;
       if (body.__redirect) {
-        res.redirect(basePath + body.__redirect);
+        res.redirect(basePath + body.__redirect + (theme?('?theme='+theme):''));
       } else {
         res.render('index.html', {
           base: basePath,
@@ -69,7 +69,7 @@ app.get(basePath + '*', function(req, res) {
           title: body.page_title,
           themeScript: themeScript,
           doc_id: doc_id
-        });  
+        });
       }
     } else {
       res.sendStatus(response.statusCode);
