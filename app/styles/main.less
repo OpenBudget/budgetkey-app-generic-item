@@ -168,6 +168,10 @@ html, body {
         border: 1px solid #F0F0F0;
         border-right: 0;
         border-radius: 5px 0 0 5px;
+
+        span {
+          cursor: pointer;
+        }
       }
 
       .toggle {
@@ -210,6 +214,10 @@ html, body {
 
           &:first-child {
             border-top: 0;
+          }
+
+          &.active {
+            background-color: #FF5A5F19;
           }
 
           &:after {

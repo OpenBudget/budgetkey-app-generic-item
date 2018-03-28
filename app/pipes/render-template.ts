@@ -27,6 +27,22 @@ env.addFilter('split', function(x: string) {
   }
 });
 
+env.addFilter('hebrew_list', function(x: any) {
+  let i = 0;
+  let ret = '';
+  for (; i < x.length ; i++) {
+    if (i > 0) {
+      if (i === x.length - 1) {
+        ret += ' ו';
+      } else {
+        ret += ', ';
+      }
+    }
+    ret += '' + x[i];
+  }
+  return ret;
+});
+
 env.addFilter('search_link', function(searchTerm: string, displayDocs: string) {
   return env.renderString(
     '//next.obudget.org/s/?q={{encodeURIComponent(searchTerm)}}' +
