@@ -1,10 +1,10 @@
 תכנית בתקציב המדינה - תחת תחום
 
-<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year, theme_id) }}">
+<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year) }}">
     {{ (hierarchy | last)[1] }}
 </a>
 בסעיף
-<a href="{{ 'budget' | item_link((hierarchy[1])[0] + '/' + year, theme_id) }}">
+<a href="{{ 'budget' | item_link((hierarchy[1])[0] + '/' + year) }}">
     {{ (hierarchy[1])[1] }}
 </a>
 .

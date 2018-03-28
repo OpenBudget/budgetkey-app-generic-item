@@ -27,22 +27,26 @@ env.addFilter('split', function(x: string) {
   }
 });
 
-env.addFilter('search_link', function(searchTerm: string, displayDocs: string, themeId: string) {
-  return '//next.obudget.org/s/?' +
-    'q=' + encodeURIComponent(searchTerm) +
-    (displayDocs ? '&dd=' + displayDocs : '') +
-    (themeId ? '&theme=' + themeId : '');
+env.addFilter('search_link', function(searchTerm: string, displayDocs: string) {
+  return env.renderString(
+    '//next.obudget.org/s/?q={{encodeURIComponent(searchTerm)}}' +
+          '{% if displayDocs %}&dd={{displayDocs}}{% endif %}' +
+          '{% if themeId %}&theme={{themeId}}{% endif %}',
+    {'searchTerm': searchTerm, 'displayDocs': displayDocs}
+  );
 });
 
-env.addFilter('item_link', function(docType, docId, themeId: string) {
-  return '//next.obudget.org/i/' + docType + '/' + docId +
-    (themeId ? '?theme=' + themeId : '');
+env.addFilter('item_link', function(docType, docId) {
+  return env.renderString(
+    '//next.obudget.org/i/{{docType}}/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
+    {'docType': docType, 'docId': docId}
+  );
 });
 
 @Pipe({name: 'renderTemplate'})
 export class RenderTemplatePipe implements PipeTransform {
   transform(template: string, data: object = {}, themeId: string = null): string {
-    data['theme_id'] = themeId;
+    env.addGlobal('themeId', themeId);
     return env.renderString(template, data);
   }
 }
