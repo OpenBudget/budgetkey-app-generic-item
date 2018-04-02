@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import { Http } from '@angular/http';
 import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
 import { Item, Descriptor } from '../model';
+import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) { }
 
   getRedashUrl(query: string): string {
     // TODO: Implement
@@ -79,7 +79,10 @@ export class BudgetKeyItemService {
     if (parts.length < 2) {
       return value;
     }
-    return '<a href="https://next.obudget.org/i/' + parts[0] + '">' + parts[1] + '</a>';
+
+    return '<a href="https://next.obudget.org/i/' + parts[0]
+      + (this.ngComponentsTheme.themeId ? '?theme=' + this.ngComponentsTheme.themeId : '') +
+      '">' + parts[1] + '</a>';
   }
 
   private _budgetSearchTitleFormatter(value: string) {
@@ -91,7 +94,8 @@ export class BudgetKeyItemService {
       return value;
     }
     return '<a href="https://next.obudget.org/s?q=' +
-      encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) + '">' + parts[2] + '</a>';
+      encodeURIComponent(parts[0]) + '&dd=' + encodeURIComponent(parts[1]) +
+        (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
   getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {

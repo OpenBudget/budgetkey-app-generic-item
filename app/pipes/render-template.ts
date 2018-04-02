@@ -43,12 +43,26 @@ env.addFilter('hebrew_list', function(x: any) {
   return ret;
 });
 
+env.addFilter('search_link', function(searchTerm: string, displayDocs: string) {
+  return env.renderString(
+    '//next.obudget.org/s/?q={{encodeURIComponent(searchTerm)}}' +
+          '{% if displayDocs %}&dd={{displayDocs}}{% endif %}' +
+          '{% if themeId %}&theme={{themeId}}{% endif %}',
+    {'searchTerm': searchTerm, 'displayDocs': displayDocs}
+  );
+});
 
-
+env.addFilter('item_link', function(docType, docId) {
+  return env.renderString(
+    '//next.obudget.org/i/{{docType}}/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
+    {'docType': docType, 'docId': docId}
+  );
+});
 
 @Pipe({name: 'renderTemplate'})
 export class RenderTemplatePipe implements PipeTransform {
-  transform(template: string, data: object = {}): string {
+  transform(template: string, data: object = {}, themeId: string = null): string {
+    env.addGlobal('themeId', themeId);
     return env.renderString(template, data);
   }
 }
