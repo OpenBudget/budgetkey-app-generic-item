@@ -11,10 +11,8 @@ const gtag: any = window['gtag'];
   template: `
     <budgetkey-container [showHeader]="true" [showSearchBar]="true">
       <div #container class="budgetkey-item-wrapper container-fluid">
-        <div *ngIf="!loaded"></div>
-        <!--<budgetkey-breadcrumbs *ngIf="loaded"></budgetkey-breadcrumbs>-->
-        <budgetkey-item-info *ngIf="loaded"></budgetkey-item-info>
-        <budgetkey-item-visualizations *ngIf="loaded"></budgetkey-item-visualizations>
+        <budgetkey-item-container *ngIf="loaded && style" [style]="style">
+        </budgetkey-item-container>
 
         <div #questionsPanel class="sticky" (click)="scrollToTable()">
           <budgetkey-item-questions *ngIf="loaded"></budgetkey-item-questions>
@@ -38,6 +36,7 @@ const gtag: any = window['gtag'];
 })
 export class AppComponent implements OnInit {
   loaded: boolean;
+  style: string;
 
   @ViewChild('questionsPanel') questionsPanel: ElementRef;
   @ViewChild('dataTable') dataTable: ElementRef;
@@ -66,6 +65,7 @@ export class AppComponent implements OnInit {
     this.itemService.getItemDescriptor(item.doc_id)
       .then(descriptor => {
         this.store.descriptor = descriptor;
+        this.style = descriptor.style;
         this.loaded = true;
       });
   }

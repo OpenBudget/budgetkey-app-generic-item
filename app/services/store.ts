@@ -3,11 +3,11 @@ import * as _ from 'lodash';
 
 import { QuestionsService } from './questions';
 
-import { Item, Descriptor, PreparedQuestion, PreparedQuestions } from '../model';
+import { Item, PreparedQuestion, PreparedQuestions, DescriptorBase } from '../model';
 
 class Store {
   item = new Item();
-  descriptor = new Descriptor();
+  descriptor = new DescriptorBase('', '', []);
   preparedQuestions: PreparedQuestions | null = null;
   currentQuestion: PreparedQuestion | null = null;
   currentParameters: object | null = null;
@@ -21,7 +21,7 @@ export class StoreService {
   private store = new Store();
 
   itemChange = new EventEmitter<Item>();
-  descriptorChange = new EventEmitter<Descriptor>();
+  descriptorChange = new EventEmitter<DescriptorBase>();
   preparedQuestionsChange = new EventEmitter();
   dataQueryChange = new EventEmitter();
   onDataReady = new EventEmitter();
@@ -38,10 +38,10 @@ export class StoreService {
     this.dataQueryChange.emit();
   }
 
-  get descriptor(): Descriptor {
+  get descriptor(): DescriptorBase {
     return this.store.descriptor;
   }
-  set descriptor(value: Descriptor) {
+  set descriptor(value: DescriptorBase) {
     this.store.descriptor = value;
     this.store.preparedQuestions = null;
     this.currentQuestion = null;

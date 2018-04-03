@@ -1,4 +1,6 @@
-export default {
+import { SimpleDescriptor } from '../../../model';
+
+export default new SimpleDescriptor({
   pathPrefix: 'org/association/',
   titleTemplate: require('../title-template.html'),
   preTitleTemplate: require('../pretitle-template.html'),
@@ -6,4 +8,4 @@ export default {
   subtitleTemplate: require('./subtitle-template.html'),
   questions: require('../questions.json'),
   textTemplate: require('./text-template.html')
-};
+});

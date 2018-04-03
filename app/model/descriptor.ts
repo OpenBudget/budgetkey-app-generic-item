@@ -32,12 +32,33 @@ export class PreparedQuestion extends Question {
 export type Questions = Question[];
 export type PreparedQuestions = PreparedQuestion[];
 
-export class Descriptor {
-  pathPrefix: string = '';
+export class DescriptorBase {
+  pathPrefix: string;
+  style: string;
+  questions: Questions;
+
+  constructor(pathPrefix: string,
+              style: string,
+              questions: Questions) {
+    this.pathPrefix = pathPrefix;
+    this.style = style;
+    this.questions = questions;
+  }
+}
+
+export class SimpleDescriptor extends DescriptorBase {
   preTitleTemplate: string = '';
   titleTemplate: string = '';
   subtitleTemplate: string = '';
   textTemplate: string = '';
   amountTemplate: string = '';
-  questions: Questions = [];
+
+  constructor(x: any) {
+    super(x.pathPrefix, 'basic', x.questions);
+    this.preTitleTemplate = x.preTitleTemplate;
+    this.titleTemplate = x.titleTemplate;
+    this.subtitleTemplate = x.subtitleTemplate;
+    this.textTemplate = x.textTemplate;
+    this.amountTemplate = x.amountTemplate;
+    }
 }

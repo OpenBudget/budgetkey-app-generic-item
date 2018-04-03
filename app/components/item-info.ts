@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import { StoreService } from '../services';
-import { Item, Descriptor } from '../model';
+import { Item, SimpleDescriptor } from '../model';
 
 import * as _ from 'lodash';
 import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
@@ -43,7 +43,7 @@ export class ItemInfoComponent implements OnDestroy {
   private eventSubscriptions: any[] = [];
 
   private item: Item;
-  private descriptor: Descriptor;
+  private descriptor: SimpleDescriptor;
 
   private static processItem(item: Item): Item {
     return <Item>_.mapKeys(item, (value: any, key: string, obj: any) => {
@@ -53,7 +53,7 @@ export class ItemInfoComponent implements OnDestroy {
 
   private onStoreChanged() {
     this.item = ItemInfoComponent.processItem(this.store.item);
-    this.descriptor = this.store.descriptor;
+    this.descriptor = <SimpleDescriptor>this.store.descriptor;
   }
 
   constructor(private store: StoreService, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {

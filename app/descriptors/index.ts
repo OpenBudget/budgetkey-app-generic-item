@@ -16,9 +16,10 @@ import descriptorTendersCentral from './tenders/central';
 import descriptorContractSpending from './contract-spending';
 import descriptorBudgetChanges from './budget-changes';
 import descriptorSupports from './supports';
-import {Descriptor} from '../model/descriptor';
+import descriptorReportNGOActivity from './reports/ngo-activity-report';
+import {DescriptorBase} from '../model/descriptor';
 
-let descriptors: Descriptor[] = [
+let descriptors: DescriptorBase[] = [
   descriptorOrgAssociation,
   descriptorOrgCompany,
   descriptorOrgMunicipality,
@@ -35,6 +36,7 @@ let descriptors: Descriptor[] = [
   descriptorContractSpending,
   descriptorBudgetChanges,
   descriptorSupports,
+  descriptorReportNGOActivity,
 ];
 
 export default descriptors;

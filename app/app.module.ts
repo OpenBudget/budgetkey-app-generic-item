@@ -22,6 +22,9 @@ import {
   ItemInfoComponent,
   ItemVisualizationsComponent,
   PlotlyChartComponent,
+  ItemContainerComponent,
+  ItemDirective,
+  BasicItemComponent,
 } from './components';
 
 import { THEME_TOKEN, defaultTheme } from './config';
@@ -64,7 +67,11 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ItemInfoComponent,
     ItemVisualizationsComponent,
     PlotlyChartComponent,
+    ItemContainerComponent,
+    ItemDirective,
+    BasicItemComponent,
   ],
+  entryComponents: [ BasicItemComponent ],
   providers: providers,
   bootstrap: [
     AppComponent

@@ -4,7 +4,7 @@ import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
-import { Item, Descriptor } from '../model';
+import { Item, DescriptorBase } from '../model';
 import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Injectable()
@@ -34,7 +34,7 @@ export class BudgetKeyItemService {
     });
   }
 
-  getItemDescriptor(path: string): Promise<Descriptor> {
+  getItemDescriptor(path: string): Promise<DescriptorBase> {
     path = path.replace(/^[/]+/, '').replace(/[/]+$/, '');
     for (let descriptor of descriptors) {
       let searchPattern = new RegExp('^' + descriptor.pathPrefix);
