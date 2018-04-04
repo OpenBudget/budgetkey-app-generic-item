@@ -18,8 +18,15 @@ import {StoreService} from '../../../services/store';
       <div class="col-md-10 tab-contents">
         <ng-container *ngFor="let tab of tabs">
           <div *ngIf="tab == current">
-            <budgetkey-plotly-chart [data]="charts[current].data" [layout]="charts[current].layout"
-            ></budgetkey-plotly-chart>
+            <budgetkey-chart-plotly 
+                *ngIf="charts[current].data.type != 'mushonkey'"
+                [data]="charts[current].data" 
+                [layout]="charts[current].layout"
+            ></budgetkey-chart-plotly>
+            <budgetkey-chart-mushonkey
+                *ngIf="charts[current].data.type == 'mushonkey'"
+                [data]="charts[current].data" 
+            ></budgetkey-chart-mushonkey>
           </div>
         </ng-container>
       </div>
