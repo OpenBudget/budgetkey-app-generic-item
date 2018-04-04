@@ -13,7 +13,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
         <div class="indicator col-md-3" *ngFor="let indicator of descriptor.indicators">
           <div>
             <span class="borderon"></span>
-            <img [src]="'/assets/img/' + indicator.asset"/>
+            <img [src]="'assets/img/' + indicator.asset"/>
             <div class="indicator-text" [innerHTML]="indicator.template | renderTemplate:item:ngComponentsTheme.themeId"></div>
           </div>
         </div>
