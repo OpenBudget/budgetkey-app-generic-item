@@ -1,12 +1,11 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
-import { StoreService } from '../services';
-import { Item, SimpleDescriptor } from '../model';
+import { Component } from '@angular/core';
+import { SimpleDescriptor, DescriptorBase } from '../../../model';
 
 import * as _ from 'lodash';
-import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import { BaseItemInfoComponent } from '../../base-item-info';
 
 @Component({
-  selector: 'budgetkey-item-info',
+  selector: 'simple-item-info',
   template: `  
     <div class="row budgetkey-item-title-wrapper">
       <div class="col-md-1"></div>
@@ -38,35 +37,11 @@ import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components
     </div>
   `
 })
-export class ItemInfoComponent implements OnDestroy {
+export class SimpleItemInfoComponent extends BaseItemInfoComponent {
 
-  private eventSubscriptions: any[] = [];
-
-  private item: Item;
   private descriptor: SimpleDescriptor;
 
-  private static processItem(item: Item): Item {
-    return <Item>_.mapKeys(item, (value: any, key: string, obj: any) => {
-      return key.replace(/-/g, '_');
-    });
-  }
-
-  private onStoreChanged() {
-    this.item = ItemInfoComponent.processItem(this.store.item);
+  setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <SimpleDescriptor>this.store.descriptor;
   }
-
-  constructor(private store: StoreService, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
-    this.eventSubscriptions = [
-      this.store.itemChange.subscribe(() => this.onStoreChanged()),
-      this.store.descriptorChange.subscribe(() => this.onStoreChanged()),
-    ];
-    this.onStoreChanged();
-  }
-
-  ngOnDestroy() {
-    this.eventSubscriptions.forEach(subscription => subscription.unsubscribe());
-    this.eventSubscriptions = [];
-  }
-
 }

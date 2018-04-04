@@ -26,14 +26,21 @@ export class StoreService {
   dataQueryChange = new EventEmitter();
   onDataReady = new EventEmitter();
 
+  private static processItem(item: Item): Item {
+    return <Item>_.mapKeys(item, (value: any, key: string, obj: any) => {
+      return key.replace(/-/g, '_');
+    });
+  }
+
   constructor(private questionsService: QuestionsService) {
   }
 
   get item(): Item {
     return this.store.item;
   }
+
   set item(value: Item) {
-    this.store.item = value;
+    this.store.item = StoreService.processItem(value);
     this.itemChange.emit(this.store.item);
     this.dataQueryChange.emit();
   }
@@ -41,6 +48,7 @@ export class StoreService {
   get descriptor(): DescriptorBase {
     return this.store.descriptor;
   }
+  
   set descriptor(value: DescriptorBase) {
     this.store.descriptor = value;
     this.store.preparedQuestions = null;

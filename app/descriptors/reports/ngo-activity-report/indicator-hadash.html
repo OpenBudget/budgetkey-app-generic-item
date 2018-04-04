@@ -1,0 +1,9 @@
+{{ details.report.total.total_amount }}
+ ארגונים פרסמו נתונים
+ב-3 השנים האחרונות
+{%- if details.report.is_new_org %}
+, מתוכם 
+{{ details.report.is_new_org.total_amount }}
+ ארגונים חדשים הוקמו
+ בשנים אלו
+{% endif %}

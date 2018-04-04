@@ -1,0 +1,28 @@
+{{ details.report.total.association_num_of_employees }}
+ עובדים
+ו-{{ details.report.total.association_num_of_volunteers }}
+  מתנדבים פעילים בארגונים אלו
+{% if details.report.total.association_activity_region_list | length > 4 %}
+ב{{details.report.total.association_activity_region_list[0][0]}},
+{{details.report.total.association_activity_region_list[1][0]}},
+{{details.report.total.association_activity_region_list[2][0]}}
+וב-{{ details.report.total.association_activity_region_list | length - 3 }} ישובים נוספים
+
+{% elif details.report.total.association_activity_region_list | length == 4 %}
+ב{{details.report.total.association_activity_region_list[0][0]}},
+{{details.report.total.association_activity_region_list[1][0]}}
+וב-{{ details.report.total.association_activity_region_list | length - 2 }} ישובים נוספים
+
+{% elif details.report.total.association_activity_region_list | length == 3 %}
+ב{{details.report.total.association_activity_region_list[0][0]}},
+{{details.report.total.association_activity_region_list[1][0]}}
+ו{{details.report.total.association_activity_region_list[2][0]}}
+
+{% elif details.report.total.association_activity_region_list | length == 2 %}
+ב{{details.report.total.association_activity_region_list[0][0]}}
+ו{{details.report.total.association_activity_region_list[1][0]}}
+
+{% elif details.report.total.association_activity_region_list | length == 1 %}
+ב{{details.report.total.association_activity_region_list[0][0]}}
+
+{% endif %}

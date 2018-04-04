@@ -10,7 +10,7 @@ const gtag: any = window['gtag'];
   selector: 'budgetkey-app-generic-item',
   template: `
     <budgetkey-container [showHeader]="true" [showSearchBar]="true">
-      <div #container class="budgetkey-item-wrapper container-fluid">
+      <div #container class="budgetkey-item-wrapper container-fluid" [ngClass]="'style-' + style">
         <budgetkey-item-container *ngIf="loaded && style" [style]="style">
         </budgetkey-item-container>
 

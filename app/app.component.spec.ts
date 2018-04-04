@@ -22,9 +22,12 @@ import {
   ItemQuestionsComponent,
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
-  ItemInfoComponent,
-  ItemVisualizationsComponent,
   PlotlyChartComponent,
+  ItemContainerComponent,
+  ItemDirective,
+  SimpleItemInfoComponent,
+  SimpleItemVisualizationsComponent,
+  SimpleItemComponent,
 } from './components';
 
 import {defaultTheme, THEME_TOKEN} from './config';
@@ -51,9 +54,12 @@ describe('AppComponent', function () {
         ItemQuestionsComponent,
         ItemQuestionParameterComponent,
         ItemDataTableComponent,
-        ItemInfoComponent,
-        ItemVisualizationsComponent,
         PlotlyChartComponent,
+        ItemContainerComponent,
+        ItemDirective,
+        SimpleItemInfoComponent,
+        SimpleItemVisualizationsComponent,
+        SimpleItemComponent,
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

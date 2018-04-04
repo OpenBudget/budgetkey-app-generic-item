@@ -19,12 +19,16 @@ import {
   ItemQuestionsComponent,
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
-  ItemInfoComponent,
-  ItemVisualizationsComponent,
   PlotlyChartComponent,
   ItemContainerComponent,
   ItemDirective,
-  BasicItemComponent,
+
+  SimpleItemInfoComponent,
+  SimpleItemVisualizationsComponent,
+  SimpleItemComponent,
+
+  ReportItemComponent,
+  ReportItemInfoComponent,
 } from './components';
 
 import { THEME_TOKEN, defaultTheme } from './config';
@@ -64,14 +68,18 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ItemQuestionsComponent,
     ItemQuestionParameterComponent,
     ItemDataTableComponent,
-    ItemInfoComponent,
-    ItemVisualizationsComponent,
     PlotlyChartComponent,
     ItemContainerComponent,
     ItemDirective,
-    BasicItemComponent,
+
+    SimpleItemInfoComponent,
+    SimpleItemVisualizationsComponent,
+    SimpleItemComponent,
+
+    ReportItemComponent,
+    ReportItemInfoComponent,  
   ],
-  entryComponents: [ BasicItemComponent ],
+  entryComponents: [ SimpleItemComponent, ReportItemComponent ],
   providers: providers,
   bootstrap: [
     AppComponent

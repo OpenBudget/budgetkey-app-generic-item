@@ -54,11 +54,32 @@ export class SimpleDescriptor extends DescriptorBase {
   amountTemplate: string = '';
 
   constructor(x: any) {
-    super(x.pathPrefix, 'basic', x.questions);
+    super(x.pathPrefix, 'simple', x.questions);
     this.preTitleTemplate = x.preTitleTemplate;
     this.titleTemplate = x.titleTemplate;
     this.subtitleTemplate = x.subtitleTemplate;
     this.textTemplate = x.textTemplate;
     this.amountTemplate = x.amountTemplate;
     }
+}
+
+export class Indicator {
+  asset: string;
+  template: string;
+
+  constructor(asset: string, template: string) {
+    this.asset = asset;
+    this.template = template;
+  }
+}
+
+export class ReportDescriptor extends DescriptorBase {
+  indicators: Indicator[] = [];
+  titleTemplate: string = '';
+
+  constructor(x: any) {
+    super(x.pathPrefix, 'report', x.questions);
+    this.indicators = x.indicators;
+    this.titleTemplate = x.titleTemplate;
+  }
 }

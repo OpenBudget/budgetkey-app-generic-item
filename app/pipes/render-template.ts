@@ -11,6 +11,18 @@ env.addFilter('format_number', function(x: number) {
   }
 });
 
+env.addFilter('format_relative_percent', function(x: number) {
+  if (x >= 0) {
+    if (x > 1) {
+      return safe('<span class="number">' + (100 * (x - 1)).toFixed(0) + '%</span> יותר');
+    } else {
+      return safe('<span class="number">' + (100 * x).toFixed(0) + '%</span>');
+    }
+  } else {
+    return '?%';
+  }
+});
+
 env.addFilter('load_json', function(x: string) {
   if (x) {
     return JSON.parse(x);

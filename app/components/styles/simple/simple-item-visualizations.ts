@@ -1,10 +1,10 @@
   import {Component, OnDestroy} from '@angular/core';
-import {Item} from '../model/item';
-import {StoreService} from '../services/store';
+import {Item} from '../../../model/item';
+import {StoreService} from '../../../services/store';
 
 
 @Component({
-  selector: 'budgetkey-item-visualizations',
+  selector: 'simple-item-visualizations',
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
       <div class="col-md-2 tabs">
@@ -26,7 +26,7 @@ import {StoreService} from '../services/store';
     </div>
   `
 })
-export class ItemVisualizationsComponent implements OnDestroy {
+export class SimpleItemVisualizationsComponent implements OnDestroy {
 
   private eventSubscriptions: any[] = [];
 
