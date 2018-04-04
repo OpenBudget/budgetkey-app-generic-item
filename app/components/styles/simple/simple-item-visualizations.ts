@@ -7,75 +7,79 @@ import {StoreService} from '../../../services/store';
   selector: 'simple-item-visualizations',
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
-      <div class="col-md-2 tabs">
-        <div *ngFor="let tab of tabs"
-             [ngClass]="{active: tab == current}" 
-        >
+      <div class="tabs">
+        <div *ngFor="let tab of charts"
+             [ngClass]="{active: tab == current}">
           <a href="javascript:void(0)" 
-             (click)="showTab(tab)">{{ tab }}</a>          
+             (click)="showTab(tab)">{{ tab.title }}</a>          
         </div>
       </div>  
-      <div class="col-md-10 tab-contents">
-        <ng-container *ngFor="let tab of tabs">
-          <div *ngIf="tab == current">
-            <budgetkey-chart-plotly 
-                *ngIf="charts[current].data.type != 'mushonkey'"
-                [data]="charts[current].data" 
-                [layout]="charts[current].layout"
-            ></budgetkey-chart-plotly>
-            <budgetkey-chart-mushonkey
-                *ngIf="charts[current].data.type == 'mushonkey'"
-                [data]="charts[current].data" 
-            ></budgetkey-chart-mushonkey>
-          </div>
+      <div class="tab-contents" *ngIf="chart">
+        <ng-container *ngIf="!subcharts">
+          <ng-container *ngFor="let tab of charts">
+            <budgetkey-chart-router [chart]="chart" *ngIf="tab == current">
+            </budgetkey-chart-router>
+          </ng-container>
         </ng-container>
+        <div class="subtabs" *ngIf="subcharts">
+          <div *ngFor="let subtab of subcharts"
+              [ngClass]="{active: subtab === currentSub}">
+            <a href="javascript:void(0)" 
+              (click)="showSubTab(subtab)" 
+              [innerHtml]="subtab.title"></a>          
+          </div>
+          <ng-container *ngFor="let subtab of subcharts">
+            <budgetkey-chart-router [chart]="chart" *ngIf="subtab == currentSub">
+            </budgetkey-chart-router> 
+          </ng-container>
+        </div>
       </div>
     </div>
   `
 })
-export class SimpleItemVisualizationsComponent implements OnDestroy {
-
-  private eventSubscriptions: any[] = [];
+export class SimpleItemVisualizationsComponent {
 
   private item: Item;
 
-  private current: string = null;
-  private tabs: string[] = [];
-  private charts: object = {};
+  private current: any = null;
+  private currentSub: any = null;
+
+  private charts: any = {};
+  private subcharts: any = null;
+  private chart: any = {};
 
   ngOnInit() {
+    this.item = this.store.item;
+    this.charts = {};
+    this.current = null;
+    this.charts = this.item.charts;
+    if (this.charts) {
+      this.showTab(this.charts[0]);
+    }
   }
 
-  showTab(tab: string) {
-    this.current = tab;
+  showTab(selectedChart: any) {
+    if (this.current === selectedChart) {
+      return;
+    }
+    this.current = selectedChart;
+    if (this.current.subcharts) {
+      this.subcharts = this.current.subcharts;
+      this.currentSub = this.current.subcharts[0];
+      this.chart = this.currentSub;
+    } else {
+      this.chart = selectedChart;
+      this.subcharts = null;
+      this.currentSub = null;
+      console.log(this.chart);
+    }
+  }
+
+  showSubTab(subtab: string) {
+    this.currentSub = subtab;
   }
 
   constructor(private store: StoreService) {
-    this.eventSubscriptions = [
-      this.store.itemChange.subscribe(() => this.onStoreChanged()),
-    ];
-    this.onStoreChanged();
   }
 
-  ngOnDestroy() {
-    this.eventSubscriptions.forEach(subscription => subscription.unsubscribe());
-    this.eventSubscriptions = [];
-  }
-
-  private onStoreChanged() {
-    this.item = this.store.item;
-    this.tabs = [];
-    this.charts = {};
-    this.current = null;
-    if (this.item.charts) {
-      for (let chart of this.item.charts) {
-        this.tabs.push(chart.title);
-        this.charts[chart.title] = {
-          data: chart.chart,
-          layout: chart.layout || {}
-        };
-      }
-      this.showTab(this.tabs[0]);
-    }
-  }
 }

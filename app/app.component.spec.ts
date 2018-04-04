@@ -25,6 +25,7 @@ import {
   ItemContainerComponent,
   ItemDirective,
 
+  ChartRouterComponent,
   MushonKeyChartComponent,
   PlotlyChartComponent,
 
@@ -63,6 +64,7 @@ describe('AppComponent', function () {
         ItemContainerComponent,
         ItemDirective,
 
+        ChartRouterComponent,
         PlotlyChartComponent,
         MushonKeyChartComponent,
 

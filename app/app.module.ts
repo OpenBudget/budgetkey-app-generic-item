@@ -22,6 +22,7 @@ import {
   ItemContainerComponent,
   ItemDirective,
 
+  ChartRouterComponent,
   MushonKeyChartComponent,
   PlotlyChartComponent,
 
@@ -70,10 +71,10 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ItemQuestionsComponent,
     ItemQuestionParameterComponent,
     ItemDataTableComponent,
-    PlotlyChartComponent,
     ItemContainerComponent,
     ItemDirective,
 
+    ChartRouterComponent,
     MushonKeyChartComponent,
     PlotlyChartComponent,
   

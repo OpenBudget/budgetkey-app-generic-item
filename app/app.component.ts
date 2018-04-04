@@ -14,10 +14,12 @@ const gtag: any = window['gtag'];
         <budgetkey-item-container *ngIf="loaded && style" [style]="style">
         </budgetkey-item-container>
 
-        <div #questionsPanel class="sticky" (click)="scrollToTable()">
+        <div #questionsPanel class="sticky questions-panel" (click)="scrollToTable()">
           <budgetkey-item-questions *ngIf="loaded"></budgetkey-item-questions>
         </div>
-        <div #dataTable><budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table></div>
+        <div #dataTable class="data-table">
+          <budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table>
+        </div>
       </div>  
     </budgetkey-container>
   `,
