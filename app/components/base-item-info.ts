@@ -11,7 +11,7 @@ export class BaseItemInfoComponent {
     store: StoreService;
     item: Item;
 
-    constructor(store: StoreService, 
+    constructor(store: StoreService,
                 @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
         this.store = store;
         this.item = this.store.item;

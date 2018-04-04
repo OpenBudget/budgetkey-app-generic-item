@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
 
 import { ItemDirective } from './item-directive';
 import { SimpleItemComponent, ReportItemComponent } from './styles';

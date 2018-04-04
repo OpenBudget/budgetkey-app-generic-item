@@ -48,7 +48,7 @@ export class StoreService {
   get descriptor(): DescriptorBase {
     return this.store.descriptor;
   }
-  
+
   set descriptor(value: DescriptorBase) {
     this.store.descriptor = value;
     this.store.preparedQuestions = null;
