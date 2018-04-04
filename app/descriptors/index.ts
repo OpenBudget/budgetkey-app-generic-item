@@ -17,6 +17,7 @@ import descriptorContractSpending from './contract-spending';
 import descriptorBudgetChanges from './budget-changes';
 import descriptorSupports from './supports';
 import descriptorReportNGOActivity from './reports/ngo-activity-report';
+import descriptorReportNGODistrict from './reports/ngo-district-report';
 import {DescriptorBase} from '../model/descriptor';
 
 let descriptors: DescriptorBase[] = [
@@ -37,6 +38,7 @@ let descriptors: DescriptorBase[] = [
   descriptorBudgetChanges,
   descriptorSupports,
   descriptorReportNGOActivity,
+  descriptorReportNGODistrict,
 ];
 
 export default descriptors;

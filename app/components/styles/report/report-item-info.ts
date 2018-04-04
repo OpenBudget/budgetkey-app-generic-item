@@ -9,7 +9,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
   template: `  
     <div class="container">
       <div class="title" [innerHTML]="descriptor.titleTemplate | renderTemplate:item:ngComponentsTheme.themeId"></div>
-      <div class="row">
+      <div class="row" [style.right]="(4 - descriptor.indicators.length)*12.5 + '%'">
         <div class="indicator col-md-3" *ngFor="let indicator of descriptor.indicators">
           <div>
             <span class="borderon"></span>
