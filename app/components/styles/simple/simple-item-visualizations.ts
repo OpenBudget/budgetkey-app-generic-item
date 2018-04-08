@@ -19,12 +19,6 @@ import {StoreService} from '../../../services/store';
         </div>
       </div>  
       <div class="tab-contents" *ngIf="chart">
-        <ng-container *ngIf="!subcharts">
-          <ng-container *ngFor="let tab of charts">
-            <budgetkey-chart-router [chart]="chart" *ngIf="tab == current">
-            </budgetkey-chart-router>
-          </ng-container>
-        </ng-container>
         <div class="chart-title" [innerHtml]="current['long_title'] || current.title"></div>
         <div class="subtabs" *ngIf="subcharts">
           <div class="subtab-row">
@@ -36,14 +30,22 @@ import {StoreService} from '../../../services/store';
                 <label [innerHtml]="subtab.title"></label>
             </div>
           </div>
-          <div class="subtab-title" *ngIf="currentSub.long_title" [innerHtml]="currentSub.long_title"></div>
+        </div>
+        <ng-container *ngIf="!subcharts">
+          <ng-container *ngFor="let tab of charts">
+            <budgetkey-chart-router [chart]="chart" *ngIf="tab == current">
+            </budgetkey-chart-router>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="subcharts">
           <ng-container *ngFor="let subtab of subcharts">
             <ng-container *ngIf="subtab == currentSub">
+              <div class="subtab-title" *ngIf="subtab.long_title" [innerHtml]="subtab.long_title"></div>
               <budgetkey-chart-router [chart]="chart">
               </budgetkey-chart-router> 
             </ng-container>
           </ng-container>
-        </div>
+        </ng-container>
       </div>
     </div>
   `
