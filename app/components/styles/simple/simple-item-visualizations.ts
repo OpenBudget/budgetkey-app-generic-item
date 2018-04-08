@@ -84,12 +84,14 @@ export class SimpleItemVisualizationsComponent implements OnInit {
       this.chart = selectedChart;
       this.subcharts = null;
       this.currentSub = null;
-      console.log(this.chart);
     }
+    console.log(this.chart);
   }
 
-  showSubTab(subtab: string) {
+  showSubTab(subtab: any) {
     this.currentSub = subtab;
+    this.chart = this.currentSub;
+    console.log(this.chart);
   }
 
   constructor(private store: StoreService) {

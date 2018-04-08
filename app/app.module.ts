@@ -25,6 +25,7 @@ import {
   ChartRouterComponent,
   MushonKeyChartComponent,
   PlotlyChartComponent,
+  HorizontalBarchartChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -77,13 +78,14 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ChartRouterComponent,
     MushonKeyChartComponent,
     PlotlyChartComponent,
-  
+    HorizontalBarchartChartComponent,
+
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,
     SimpleItemComponent,
 
     ReportItemComponent,
-    ReportItemInfoComponent,  
+    ReportItemInfoComponent,
   ],
   entryComponents: [ SimpleItemComponent, ReportItemComponent ],
   providers: providers,

@@ -10,6 +10,9 @@ import { Component, Input } from '@angular/core';
     <budgetkey-chart-mushonkey  *ngIf="chart.type == 'mushonkey'"
         [data]="chart.chart" 
     ></budgetkey-chart-mushonkey>
+    <budgetkey-chart-horizontal-barchart  *ngIf="chart.type == 'horizontal-barchart'"
+        [data]="chart.chart" 
+    ></budgetkey-chart-horizontal-barchart>
 `
 })
 export class ChartRouterComponent {
