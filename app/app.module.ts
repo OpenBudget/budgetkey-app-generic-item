@@ -26,6 +26,7 @@ import {
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
+  AdamKeyChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -79,6 +80,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     MushonKeyChartComponent,
     PlotlyChartComponent,
     HorizontalBarchartChartComponent,
+    AdamKeyChartComponent,
 
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,

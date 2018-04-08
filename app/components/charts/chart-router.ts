@@ -13,6 +13,9 @@ import { Component, Input } from '@angular/core';
     <budgetkey-chart-horizontal-barchart  *ngIf="chart.type == 'horizontal-barchart'"
         [data]="chart.chart" 
     ></budgetkey-chart-horizontal-barchart>
+    <budgetkey-chart-adamkey  *ngIf="chart.type == 'adamkey'"
+        [data]="chart.chart" 
+    ></budgetkey-chart-adamkey>
 `
 })
 export class ChartRouterComponent {

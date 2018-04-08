@@ -29,6 +29,7 @@ import {
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
+  AdamKeyChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -69,6 +70,7 @@ describe('AppComponent', function () {
         PlotlyChartComponent,
         MushonKeyChartComponent,
         HorizontalBarchartChartComponent,
+        AdamKeyChartComponent,
 
         SimpleItemInfoComponent,
         SimpleItemVisualizationsComponent,
