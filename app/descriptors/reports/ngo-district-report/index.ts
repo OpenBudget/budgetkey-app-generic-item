@@ -17,5 +17,6 @@ export default new ReportDescriptor({
       require('./indicator-toshavim.html')
     ),
   ],
+  suffixTemplate: require('./suffix-template.html'),
   questions: require('./questions.json')
 });

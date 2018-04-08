@@ -21,5 +21,6 @@ export default new ReportDescriptor({
       require('./indicator-semel.html')
     ),
   ],
+  suffixTemplate: require('./suffix-template.html'),
   questions: require('./questions.json')
 });

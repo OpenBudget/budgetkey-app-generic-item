@@ -18,6 +18,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
           </div>
         </div>
       </div>
+      <div class="suffix" [innerHTML]="descriptor.suffixTemplate | renderTemplate:item:ngComponentsTheme.themeId"></div>
     </div>
   `
 })

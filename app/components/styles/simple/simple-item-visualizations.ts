@@ -7,15 +7,17 @@ import {StoreService} from '../../../services/store';
   selector: 'simple-item-visualizations',
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
-      <div class="tabs">
+      <div class="tabs" *ngIf="charts.length > 1">
         <div class="row">
-          <div *ngFor="let tab of charts"
-              [style.width]="(100 / charts.length) + '%'"
-              class="tab-header"
-              [ngClass]="{active: tab == current}">
-              <a href="javascript:void(0)" 
-              (click)="showTab(tab)">{{ tab.title }}</a>          
-             </div>
+          <ng-container>
+            <div *ngFor="let tab of charts"
+                [style.width]="(100 / charts.length) + '%'"
+                class="tab-header"
+                [ngClass]="{active: tab == current}">
+                <a href="javascript:void(0)" 
+                (click)="showTab(tab)">{{ tab.title }}</a>          
+            </div>
+          </ng-container>
         </div>
       </div>  
       <div class="tab-contents" *ngIf="chart">
