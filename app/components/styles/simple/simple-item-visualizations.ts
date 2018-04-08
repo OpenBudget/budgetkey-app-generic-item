@@ -1,4 +1,4 @@
-  import {Component, OnDestroy} from '@angular/core';
+  import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Item} from '../../../model/item';
 import {StoreService} from '../../../services/store';
 
@@ -8,10 +8,14 @@ import {StoreService} from '../../../services/store';
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
       <div class="tabs">
-        <div *ngFor="let tab of charts"
-             [ngClass]="{active: tab == current}">
-          <a href="javascript:void(0)" 
-             (click)="showTab(tab)">{{ tab.title }}</a>          
+        <div class="row">
+          <div *ngFor="let tab of charts"
+              [style.width]="(100 / charts.length) + '%'"
+              class="tab-header"
+              [ngClass]="{active: tab == current}">
+              <a href="javascript:void(0)" 
+              (click)="showTab(tab)">{{ tab.title }}</a>          
+             </div>
         </div>
       </div>  
       <div class="tab-contents" *ngIf="chart">
@@ -21,23 +25,30 @@ import {StoreService} from '../../../services/store';
             </budgetkey-chart-router>
           </ng-container>
         </ng-container>
+        <div class="chart-title" [innerHtml]="current['long_title'] || current.title"></div>
         <div class="subtabs" *ngIf="subcharts">
-          <div *ngFor="let subtab of subcharts"
-              [ngClass]="{active: subtab === currentSub}">
-            <a href="javascript:void(0)" 
-              (click)="showSubTab(subtab)" 
-              [innerHtml]="subtab.title"></a>          
+          <div class="subtab-row">
+            <div class="subtab" *ngFor="let subtab of subcharts"
+                [ngClass]="{active: subtab === currentSub}"
+                (click)="showSubTab(subtab)"
+                [style.width]="(100 / subcharts.length) + '%'">
+                <input type="radio" [checked]="subtab === currentSub"/>
+                <label [innerHtml]="subtab.title"></label>
+            </div>
           </div>
+          <div class="subtab-title" *ngIf="currentSub.long_title" [innerHtml]="currentSub.long_title"></div>
           <ng-container *ngFor="let subtab of subcharts">
-            <budgetkey-chart-router [chart]="chart" *ngIf="subtab == currentSub">
-            </budgetkey-chart-router> 
+            <ng-container *ngIf="subtab == currentSub">
+              <budgetkey-chart-router [chart]="chart">
+              </budgetkey-chart-router> 
+            </ng-container>
           </ng-container>
         </div>
       </div>
     </div>
   `
 })
-export class SimpleItemVisualizationsComponent {
+export class SimpleItemVisualizationsComponent implements OnInit {
 
   private item: Item;
 
