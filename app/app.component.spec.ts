@@ -26,10 +26,16 @@ import {
   ItemDirective,
 
   ChartRouterComponent,
+  VerticalLayoutComponent,
+  HorizontallLayoutComponent,
+
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
   AdamKeyChartComponent,
+  TemplateChartComponent,
+  PointatronChartComponent,
+  ComparatronChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -37,6 +43,9 @@ import {
 
   ReportItemInfoComponent,
   ReportItemComponent,
+
+  OrgItemInfoComponent,
+  OrgItemComponent,
 } from './components';
 
 import {defaultTheme, THEME_TOKEN} from './config';
@@ -67,10 +76,16 @@ describe('AppComponent', function () {
         ItemDirective,
 
         ChartRouterComponent,
+        VerticalLayoutComponent,
+        HorizontallLayoutComponent,
+
         PlotlyChartComponent,
         MushonKeyChartComponent,
         HorizontalBarchartChartComponent,
         AdamKeyChartComponent,
+        TemplateChartComponent,
+        PointatronChartComponent,
+        ComparatronChartComponent,
 
         SimpleItemInfoComponent,
         SimpleItemVisualizationsComponent,
@@ -78,6 +93,9 @@ describe('AppComponent', function () {
 
         ReportItemInfoComponent,
         ReportItemComponent,
+
+        OrgItemInfoComponent,
+        OrgItemComponent,
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

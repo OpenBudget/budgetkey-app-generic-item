@@ -1,6 +1,7 @@
   import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Item} from '../../../model/item';
 import {StoreService} from '../../../services/store';
+import { DescriptorBase } from '../../../model';
 
 
 @Component({
@@ -55,16 +56,18 @@ import {StoreService} from '../../../services/store';
 export class SimpleItemVisualizationsComponent implements OnInit {
 
   private item: Item;
+  private visualizationTemplates: Map<string, string>;
 
   private current: any = null;
   private currentSub: any = null;
 
   private charts: any = {};
   private subcharts: any = null;
-  private chart: any = {};
+  private chart_: any = {};
 
   ngOnInit() {
     this.item = this.store.item;
+    this.visualizationTemplates = this.store.descriptor.visualizationTemplates;
     this.charts = {};
     this.current = null;
     this.charts = this.item.charts;
@@ -94,6 +97,21 @@ export class SimpleItemVisualizationsComponent implements OnInit {
     this.currentSub = subtab;
     this.chart = this.currentSub;
     console.log(this.chart);
+  }
+
+  public set chart(chart: any) {
+    this.chart_ = chart;
+    if (chart.type === 'template') {
+      if (!chart.template) {
+        chart.chart = {}
+        chart.chart.template = this.visualizationTemplates[chart.template_id];
+        chart.chart.item = this.item;
+      }
+    }
+  }
+
+  public get chart(): any {
+    return this.chart_;
   }
 
   constructor(private store: StoreService) {

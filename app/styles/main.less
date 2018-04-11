@@ -16,94 +16,6 @@ html, body {
 
 .budgetkey-item-wrapper {
 
-  .budgetkey-breadcrumbs-wrapper {
-    padding: 10px 0;
-    background: #FFFFFF;
-
-    .year-select {
-      font-size: 16px;
-
-      i {
-        font-style: normal;
-        color: #CCCCCC;
-      }
-
-      span {
-        color: #FF5A5F;
-        font-weight: bold;
-      }
-    }
-
-    .breadcrumbs-items {
-      &, li {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        color: #7A6B99;
-        display: inline-block;
-        white-space: nowrap;
-      }
-
-      li:after {
-        content: ' / ';
-      }
-    }
-  }
-
-  .budgetkey-item-title-wrapper {
-    border-top: 3px solid #7A6B99;
-    background-color: #E4DCF5;
-    color: #7A6B99;
-    font-size: 32px;
-    line-height: 42px;
-    font-weight: bold;
-    box-sizing: border-box;
-    padding-top: 3px;
-    padding-bottom: 2px;
-
-    h1 {
-      margin: 0;
-      padding: 0;
-      font: inherit;
-      color: inherit;
-      vertical-align: top;
-    }
-
-    small {
-      font-size: 16px;
-      line-height: 42px;
-      font-weight: normal;
-      vertical-align: top;
-    }
-  }
-
-  .budgetkey-item-description-wrapper {
-    background: #FFFFFF;
-    color: #3C4948;
-    font-size: 20px;
-    line-height: 34px;
-    padding: 20px 0;
-
-    .subtitle {
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-
-    .objective {
-      text-align: justify;
-      padding-right: 20px;
-      border-right: gray solid 1px;
-    }
-
-    label.field-label {
-      font-size: 80%;
-    }
-
-    label.up-to-date {
-      font-size: 60%;
-    }
-  }
-
   .budgetkey-item-visualizations-wrapper {
     overflow: hidden;
     width: 80%;	
@@ -412,74 +324,6 @@ html, body {
   }
 }
 
-.style-report {
-  .row {
-    position: relative;
-  }
-
-  .container {
-    margin-top: 25px;
-    background-color: rgba(216, 239, 197, 0.14);
-  }
-
-  .title {
-    font-family: "Miriam Libre", sans-serif;
-    font-size: 32px;
-    font-weight: bold;
-    line-height: 38px;	
-    text-align: center;
-    margin-top: 27px;
-  }
-
-  .indicator {
-    > div {
-      width: 100%;
-      text-align: center;
-      margin-top: 70px;
-    }
-    img {
-      height: 85px;
-      margin-bottom: 20px;
-    }
-    .indicator-text {
-      color: #4A4A4A;	
-      font-size: 18px;	
-      line-height: 28px;	
-
-      .figure {
-        font-weight: bold;
-        line-height: 40px;
-        font-size: 28px;
-      }
-    }
-  }
-
-  .borderon {
-    box-sizing: border-box;	
-    height: 186px;	
-    width: 3px;	
-    border: 1px solid #E6E6E6;
-    float: left;
-    position: relative;
-    right: 15px
-  }
-
-  .row > div:last-child .borderon {
-    display: none;
-  }
-
-  .suffix {
-    margin-top: 60px;
-    margin-bottom: 30px;
-    color: #AAAAAA;
-    font-family: "Miriam Libre";
-    font-size: 16px;
-    text-align: center;
-    font-weight: 400;
-  }
-}
-
-
 .number {
   direction: ltr;
   display: inline-block;
@@ -488,3 +332,8 @@ html, body {
 .container-fluid {
   max-width: 1280px;
 }
+
+@import url('./simple.less');
+@import url('./report.less');
+@import url('./org.less');
+@import url('./chart-template.less');

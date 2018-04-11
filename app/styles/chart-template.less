@@ -1,0 +1,143 @@
+.budgetkey-chart-template {
+    .chart-container {
+        margin-top: 20px;
+    }
+
+    .label {
+        padding: 0;
+        color: #4A4A4A;	
+        font-family: "Abraham TRIAL";	
+        font-size: 20px;	
+        font-weight: 700;	
+        line-height: 50px;
+    }
+
+    .simple {
+        color: #4A4A4A;	
+        font-family: "Abraham TRIAL";	
+        font-size: 20px;	
+        font-weight: 400;	
+        line-height: 34px;	
+    }
+
+    .moreinfo-container {
+        float: left;
+        padding-top: 50px;
+        padding-bottom: 25px;
+    }
+
+    .moreinfo {
+        color: #AAAAAA;	
+        font-family: "Miriam Libre";	
+        font-size: 16px;	
+        line-height: 22px;	
+    }
+
+    .cred-row-container {
+        padding: 16px;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.5;
+
+            border-width: 1px;
+            border-style: solid;
+
+            border-image-repeat: repeat;
+            border-image-width: auto;    
+        }
+
+        &.positive::after {
+            border-image-source: url('assets/img/creds-border-v@1x.png');
+            border-image-slice: 85 16 20 85;
+            @media 
+            (-webkit-min-device-pixel-ratio: 2), 
+            (min-resolution: 192dpi) { 
+                & {
+                    border-image-source: url('assets/img/creds-border-v@2x.png');
+                    border-image-slice: 173 31 38 168;
+                }
+            }
+            @media 
+            (-webkit-min-device-pixel-ratio: 3), 
+            (min-resolution: 288dpi) { 
+                & {
+                    border-image-source: url('assets/img/creds-border-v@3x.png');
+                    border-image-slice: 340 20 20 200;
+                }
+            }    
+        }
+
+        &.negative::after {
+            border-image-source: url('assets/img/creds-border-x@1x.png');
+            border-image-slice: 85 16 20 85;
+            @media 
+            (-webkit-min-device-pixel-ratio: 2), 
+            (min-resolution: 192dpi) { 
+                & {
+                    border-image-source: url('assets/img/creds-border-x@2x.png');
+                    border-image-slice: 173 31 38 168;
+                }
+            }
+            @media 
+            (-webkit-min-device-pixel-ratio: 3), 
+            (min-resolution: 288dpi) { 
+                & {
+                    border-image-source: url('assets/img/creds-border-x@3x.png');
+                    border-image-slice: 340 20 20 200;
+                }
+            }    
+        }
+
+        .cred-row {
+            margin: 0;
+            border: 1px solid #D5D5D5;	
+            border-radius: 4px;
+
+            .deets {
+                padding: 20px;
+                padding-right: 0;
+
+                color: #4A4A4A;	
+                font-family: "Miriam Libre";	
+                font-size: 20px;	
+                font-weight: normal;
+
+                .expiration {
+                    border: 1px solid #DDD;
+                    border-radius: 4px;
+                    padding: 5px 20px;
+                }
+            }
+
+            .explanation {
+                color: #4A4A4A;	
+                font-family: "Abraham TRIAL";	
+                font-size: 20px;	
+                line-height: 34px;
+            }
+
+            .cred-stats-container {
+                background-color: #f8f8f8;
+                text-align: center;
+                padding-bottom: 10px;
+
+                .cred-stats-title {
+                    color: #4A4A4A;	
+                    font-family: "Miriam Libre";
+                    font-size: 12px;
+                    padding: 25px 40px;
+                    display: inline-block;
+                }
+            }
+        }        
+    }
+}

@@ -1,0 +1,111 @@
+.style-org {
+
+  .row-container {
+    padding: 0px 140px;
+  }
+
+  .title-container {
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 25%, rgba(234,248,222,1) 25%, rgba(234,248,222,1) 100%);
+
+    .title-row {
+      margin-top: 45px;
+      height: 50px;	
+      border-top: 1px solid #EAF9DE;
+      border-bottom: 1px solid #EAF9DE;
+
+      > div {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+          justify-content: flex-end;
+        }
+        &.invert {
+          background-color: #fff;
+        }
+      }
+
+      .pretitle {
+        display: inline-block;
+        padding: 1px 5px;
+        height: 17px;	
+        color: #EAF9DE;	
+        background-color: #425136;
+        font-family: "Abraham TRIAL";	
+        font-size: 13px;	
+        font-weight: 400;	
+        line-height: 17px;	
+        border-radius: 4px;	
+      }
+
+      .title {
+        color: #425136;	
+        font-family: "Miriam Libre";	
+        font-size: 28px;	
+        font-weight: bold;
+      }
+
+      .org-id {
+        small {
+          color: #ABBA9F;	
+          font-family: "Abraham TRIAL";	
+          font-size: 12px;
+        }
+        div {
+          color: #3E4E59;	
+          font-family: "Miriam Libre";	
+          font-size: 16px;	
+          font-weight: bold;
+        }
+      }
+
+      .amount {
+
+        display: flex;
+        align-items: center;
+
+        small {
+          display: inline-block;
+          margin-left: 10px;
+          text-align: left;
+          color: #ABBA9F;	
+          font-family: "Abraham TRIAL";	
+          font-size: 12px;
+          line-height: 15px;
+        }
+
+        .figure {        
+          color: #425136;	
+          font-family: "Miriam Libre";	
+          font-size: 22px;	
+          font-weight: bold;
+          line-height: 29px;
+          white-space: nowrap;
+        }
+      }
+
+    }  
+  }   
+  .text-container {
+
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05);
+    margin-top: 15px;
+
+    color: #4A4A4A;	
+    font-family: "Abraham TRIAL";	
+    font-size: 20px;
+
+    .tag {
+      display: inline-block;
+      margin: 5px;
+      margin-right: 0px;
+      padding: 0px 5px;
+      border: 1px solid rgba(66,81,54, 0.25);
+      border-radius: 6px;
+      color: #425136;	
+      font-size: 14px;
+    }
+  }
+
+}

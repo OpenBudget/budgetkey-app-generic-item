@@ -33,16 +33,19 @@ export type Questions = Question[];
 export type PreparedQuestions = PreparedQuestion[];
 
 export class DescriptorBase {
+  visualizationTemplates: any;
   pathPrefix: string;
   style: string;
   questions: Questions;
 
   constructor(pathPrefix: string,
               style: string,
-              questions: Questions) {
+              questions: Questions,
+              visualizationTemplates?: any) {
     this.pathPrefix = pathPrefix;
     this.style = style;
     this.questions = questions;
+    this.visualizationTemplates = visualizationTemplates || {};
   }
 }
 
@@ -53,14 +56,14 @@ export class SimpleDescriptor extends DescriptorBase {
   textTemplate: string = '';
   amountTemplate: string = '';
 
-  constructor(x: any) {
-    super(x.pathPrefix, 'simple', x.questions);
+  constructor(x: any, style?: string) {
+    super(x.pathPrefix, style || 'simple', x.questions, x.visualizationTemplates);
     this.preTitleTemplate = x.preTitleTemplate;
     this.titleTemplate = x.titleTemplate;
     this.subtitleTemplate = x.subtitleTemplate;
     this.textTemplate = x.textTemplate;
     this.amountTemplate = x.amountTemplate;
-    }
+  }
 }
 
 export class Indicator {

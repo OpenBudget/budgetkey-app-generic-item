@@ -1,55 +1,185 @@
+<div class="col-md-10">
+<div class="tag">
+תחום {{ details.field_of_activity_display }}
+</div>
 
+<p>
+ארגון זה הוא
+    {{kind_he}} 
+    העוסקת בתחום
+    {{details.field_of_activity_display}}.
+</p>
 
-<label class="field-label">
-    תיאור ומטרת הארגון:
-</label>
-<div class="objective">
-    {% if details.guidestar_slogan %}
-    <h2>
-        ״{{ details.guidestar_slogan }}״
-    </h2>
+{% if (details.activity_region_list | length) == 1 %}
+<p>
+        על פי הדיווח, פעילותו מתרכזת ב{{details.activity_region_list[0]}}.
+</p>
+{% elif (details.activity_region_districts | length) == 1  %}
+<p>
+        על פי הדיווח, פעילותו מתרכזת במחוז 
+        {{details.activity_region_districts[0]}}.
+</p>
+{% endif %}
+
+{% if details.unique_activity_districts | length %}
+<p>
+    זהו הארגון הפעיל היחיד העוסק בתחום
+    {{details.field_of_activity_display}}
+    במחוזות
+    {{ details.unique_activity_districts | hebrew_list }}.
+</p>
+{% endif %}
+
+{% if details.unique_activity_regions | length %}
+<p>
+    זהו הארגון הפעיל היחיד שדיווח על פעילות בתחום
+    {{details.field_of_activity_display}}
+    {% if (details.unique_activity_regions | length) > 1 %}
+        בישובים
+    {% else %}
+        בישוב
     {% endif %}
-    <div>
-        {{ details.objective }}
-    </div>
-</div>
-<div>
-    <label class="field-label">
-        תאריך ייסוד:
-    </label>
-{{ details.registration_date }}
-</div>
-<div>
-    <label class="field-label">
-    כתובת:
-    </label>
-{{ details.address }}
-</div>
-{% if (details.founders) %}
-<div>
-    <label class="field-label">
-מייסדים:
-    </label>
-{{ details.founders | join(", ") }}
-</div>
+    {{ details.unique_activity_regions | hebrew_list }}.
+</p>
 {% endif %}
-{% if details.activity_region %}
-<div>
-    <label class="field-label">
-איזור פעילות בארץ:
-    </label>
-{{ details.activity_region }}
-</div>
+
+{% if details.yearly_turnover %}
+<p>
+    המחזור הכספי השנתי המדווח האחרון
+    ({{ details.last_report_year }})
+    , עמד על 
+    {{ details.yearly_turnover | format_number }}₪.
+</p>
+
+{% if details.rank_of_yearly_turnover_in_field %}
+<p>
+    זהו הארגון ה-{{ details.rank_of_yearly_turnover_in_field }}
+    בגובה המחזור הכספי המדווח מבין הארגונים הפעילים בתחום
+    {{ details.field_of_activity_display}}.
+</p>
+{%endif%}
+
+{% if details.has_highest_turnover_in_district %}
+<p>
+    הוא הארגון בעל המחזור הכספי השנתי הגבוה בתחום
+    {{ details.field_of_activity_display}}
+    במחוז
+    {{ details.activity_region_districts[0]}}.
+</p>
 {% endif %}
-<div>
-    <label class="field-label">
-ניהול תקין:
-    </label>
-{{ details.proper_management }}
+
+<p>
+    גובה המחזור הכספי השנתי החציוני של ארגונים הפועלים בתחום ודיווחו על פעילותם הוא 
+    {{details.median_turnover_in_field_of_activity | format_number}}₪.
+</p>
+{% endif %}
+
+{% if details.rank_of_employees_in_field_of_activity %}
+<p>
+    זהו הארגון ה-{{ details.rank_of_employees_in_field_of_activity }}
+    במספר העובדים מבין הארגונים הפעילים בתחום
+    {{ details.field_of_activity_display}}.
+</p>
+{% endif %}
+
+{% if details.rank_of_volunteers_in_field_of_activity %}
+<p>
+    זהו הארגון ה-{{details.rank_of_volunteers_in_field_of_activity}}
+    במספר המתנדבים מבין הארגונים הפעילים בתחום
+    {{ details.field_of_activity_display}}.
+</p>
+{% endif %}
+
+{% if details.is_oldest_org_in_field_of_activity %}
+<p>
+    זהו הארגון הפעיל הותיק ביותר בתחום
+    {{ details.field_of_activity_display}}
+    בכל הארץ.
+</p>
+{% endif %}
+
+{% if (details.districts_where_oldest_org_in_field_of_activity | length) > 0 %}
+<p>
+    זהו הארגון הפעיל הותיק ביותר בתחום
+    {{ details.field_of_activity_display}}
+    במחוז
+    {{ details.districts_where_oldest_org_in_field_of_activity | hebrew_list}}.
+</p>
+{% endif %}
+
+{% if received_amount %}
+<p>
+    {% if received_amount_contracts and received_amount_supports %}
+        סך הכנסות הארגון מכספי המדינה בשלוש השנים האחרונות
+        {{received_amount | format_number}}₪,
+        מתוכם
+        {{received_amount_contracts | format_number}}₪
+        בהתקשרויות
+        ו-{{received_amount_supports | format_number}}₪
+        בתמיכות.
+    {% elif received_amount_contracts %}
+        סך הכנסות הארגון מהתקשרויות עם המדינה בשלוש השנים האחרונות
+        {{received_amount_contracts | format_number}}₪.
+    {% else %}
+        סך התמיכות להן זכה הארגון מהמדינה בשלוש השנים האחרונות
+        {{received_amount_supports | format_number}}₪.
+    {% endif %}
+</p>
+
+{% if details.rank_of_overall_recipient_in_field_of_activity %}
+<p>
+    הארגון דורג במקום ה-{{details.rank_of_overall_recipient_in_field_of_activity}}
+    בגובה ההכנסות מכספי מדינה בשלוש השנים האחרונות
+    בתחום
+    {{details.field_of_activity_display}}.
+</p>
+{% endif %}
+
+{% if details.rank_of_contract_recipient_in_field_of_activity %}
+<p>
+    הארגון מדורג במקום ה-{{details.rank_of_contract_recipient_in_field_of_activity}}
+    בגובה ההכנסות מהתקשרויות עם גופי ממשל
+    בתחום
+    {{details.field_of_activity_display}}.
+</p>
+{% endif %}
+
+{% if details.rank_of_supports_recipient_in_field_of_activity %}
+<p>
+    הארגון מדורג במקום ה-{{details.rank_of_supports_recipient_in_field_of_activity}}
+    בגובה ההכנסות מתמיכות מכספי מדינה
+    בתחום
+    {{details.field_of_activity_display}}.
+</p>
+{% endif %}
+
+{% if details.sole_government_procurer_name %}
+<p>
+    כל ההתקשרויות המתועדות
+    ({{details.sole_government_procurer_count}})
+    הן עם
+    {{details.sole_government_procurer_name}}.
+</p>
+{% endif %}
+
+{% if details.sole_government_supporter_name %}
+<p>
+    כל התמיכות הממשלתיות המתועדות 
+    ({{details.sole_government_supporter_support_count}})
+    הועברו על ידי
+    {{details.sole_government_supporter_name}}.
+</p>
+{% endif %}
+
+{% else %}
+<p>
+    {% if received_amount_alltime %}
+        לא תועדו הכנסות של הארגון מכספי המדינה בשלוש השנים האחרונות, (אם כי היו בעבר).
+    {% else %}
+        לא תועדו הכנסות של הארגון מכספי המדינה בשלוש השנים האחרונות.
+    {% endif %}
+</p>
+{% endif %}
 </div>
-<div>
-<small>
-    מידע נוסף ניתן למצוא באתר
-    <a href="http://www.guidestar.org.il/he/organization/{{ id }}" target="_blank">גיידסטאר</a>
-</small>
+<div class="col-md-2">
 </div>

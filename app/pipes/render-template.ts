@@ -75,6 +75,7 @@ env.addFilter('item_link', function(docType, docId) {
 export class RenderTemplatePipe implements PipeTransform {
   transform(template: string, data: object = {}, themeId: string = null): string {
     env.addGlobal('themeId', themeId);
+    data['_math'] = Math;
     return env.renderString(template, data);
   }
 }

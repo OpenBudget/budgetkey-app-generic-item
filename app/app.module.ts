@@ -23,10 +23,16 @@ import {
   ItemDirective,
 
   ChartRouterComponent,
+  VerticalLayoutComponent,
+  HorizontallLayoutComponent,
+
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
   AdamKeyChartComponent,
+  TemplateChartComponent,
+  PointatronChartComponent,
+  ComparatronChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -34,7 +40,12 @@ import {
 
   ReportItemComponent,
   ReportItemInfoComponent,
+
+  OrgItemComponent,
+  OrgItemInfoComponent,
 } from './components';
+
+import { SafeHtmlPipe } from './components/charts';
 
 import { THEME_TOKEN, defaultTheme } from './config';
 
@@ -75,12 +86,19 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ItemDataTableComponent,
     ItemContainerComponent,
     ItemDirective,
+    SafeHtmlPipe,
 
     ChartRouterComponent,
+    VerticalLayoutComponent,
+    HorizontallLayoutComponent,
+
     MushonKeyChartComponent,
     PlotlyChartComponent,
     HorizontalBarchartChartComponent,
     AdamKeyChartComponent,
+    TemplateChartComponent,
+    PointatronChartComponent,
+    ComparatronChartComponent,
 
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,
@@ -88,8 +106,11 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 
     ReportItemComponent,
     ReportItemInfoComponent,
+
+    OrgItemComponent,
+    OrgItemInfoComponent,
   ],
-  entryComponents: [ SimpleItemComponent, ReportItemComponent ],
+  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent ],
   providers: providers,
   bootstrap: [
     AppComponent
