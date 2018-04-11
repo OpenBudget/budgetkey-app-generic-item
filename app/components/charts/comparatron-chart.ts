@@ -19,15 +19,18 @@ import { hierarchy, pack } from 'd3-hierarchy';
   </div>
 
   <div class='compare-bar'
-    [style.top]='data.compare.top + "px"'>
-    <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
-        class="compare-line"
-         viewBox="0 0 125 20" width="125" height="20">
-      <path d="M0 10 L125 10"></path>
-    </svg>
+    [style.top]='(data.compare.top - 15) + "px"'>
     <div class='compare-text'>
-      <span class='compare-amount'>{{ data.compare.amount_fmt }}</span>
-      <span class='compare-label'>{{ data.compare.label }}</span>
+      <div>
+      <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+          class="compare-line"
+          viewBox="0 0 125 20" width="125" height="20">
+        <path d="M0 15 L125 15"></path>
+      </svg>
+      <span class="median-icon"></span>
+        <span class='compare-amount'>{{ data.compare.amount_fmt }}</span>
+      </div>
+      <span class='compare-label' [innerHtml]="data.compare.label"></span>
     </div>
   </div>
 </div>
@@ -92,7 +95,6 @@ import { hierarchy, pack } from 'd3-hierarchy';
     }
 
     .compare-amount {
-      display: block;
       color: #4A4A4A;	
       font-family: "Miriam Libre";
       font-size: 14px;
@@ -104,6 +106,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
       color: #757575;	
       font-family: "Abraham TRIAL";	
       font-size: 12px;
+      text-indent: 145px;
     }
 
     svg {
