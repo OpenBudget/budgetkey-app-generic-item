@@ -1,7 +1,6 @@
-  import {Component, OnDestroy, OnInit} from '@angular/core';
+  import {Component, OnInit} from '@angular/core';
 import {Item} from '../../../model/item';
 import {StoreService} from '../../../services/store';
-import { DescriptorBase } from '../../../model';
 
 
 @Component({
@@ -56,7 +55,6 @@ import { DescriptorBase } from '../../../model';
 export class SimpleItemVisualizationsComponent implements OnInit {
 
   private item: Item;
-  private visualizationTemplates: Map<string, string>;
 
   private current: any = null;
   private currentSub: any = null;
@@ -67,7 +65,6 @@ export class SimpleItemVisualizationsComponent implements OnInit {
 
   ngOnInit() {
     this.item = this.store.item;
-    this.visualizationTemplates = this.store.descriptor.visualizationTemplates;
     this.charts = {};
     this.current = null;
     this.charts = this.item.charts;
@@ -101,13 +98,6 @@ export class SimpleItemVisualizationsComponent implements OnInit {
 
   public set chart(chart: any) {
     this.chart_ = chart;
-    if (chart.type === 'template') {
-      if (!chart.template) {
-        chart.chart = {}
-        chart.chart.template = this.visualizationTemplates[chart.template_id];
-        chart.chart.item = this.item;
-      }
-    }
   }
 
   public get chart(): any {

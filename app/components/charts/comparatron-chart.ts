@@ -46,6 +46,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
       display:flex;
       align-items: center;
       flex-flow: column;
+      margin-top: 30px;
     }
 
     .comparatron-container {
@@ -72,7 +73,8 @@ import { hierarchy, pack } from 'd3-hierarchy';
 
     .main-rect {
       width: 100%;
-      background-color: blue;
+      background-color: #D7EEC5;
+      border: 1px solid #B3E28D;
     }
 
     .main-label {

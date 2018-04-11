@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { StoreService } from '../../services';
+import { Item } from '../../model';
 
 @Component({
   selector: 'budgetkey-chart-router',
@@ -35,8 +37,27 @@ import { Component, Input } from '@angular/core';
 })
 export class ChartRouterComponent {
 
-  @Input() public chart: any;
+    @Input() public chart: any;
 
-  constructor() {
-  }
+    item: Item;
+    private visualizationTemplates: Map<string, string>;
+
+    constructor(private store: StoreService) {
+        this.item = this.store.item;
+        this.visualizationTemplates = this.store.descriptor.visualizationTemplates;
+    }
+
+    ngOnInit() {
+        let chart = this.chart;
+        if (chart.type === 'template') {
+            if (!chart.chart) {
+                chart.chart = {}
+            }
+            if (!chart.chart.template) {
+                chart.chart = {}
+                chart.chart.template = this.visualizationTemplates[chart.template_id];
+                chart.chart.item = this.item;
+            }
+        }
+    }
 }
