@@ -46,6 +46,7 @@ import {
 
   OrgItemInfoComponent,
   OrgItemComponent,
+  SafeHtmlPipe,
 } from './components';
 
 import {defaultTheme, THEME_TOKEN} from './config';
@@ -74,6 +75,7 @@ describe('AppComponent', function () {
         ItemDataTableComponent,
         ItemContainerComponent,
         ItemDirective,
+        SafeHtmlPipe,
 
         ChartRouterComponent,
         VerticalLayoutComponent,
