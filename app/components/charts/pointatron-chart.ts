@@ -66,12 +66,16 @@ export class PointatronChartComponent {
 
   roots: any[] = [];
   MAX_RADIUS = 5;
+  MAX_AMOUNT = 2500;
 
   constructor() {}
 
   ngOnInit() {
     for (let v of this.data.values) {
       let amount = v.amount;
+      if (amount > this.MAX_AMOUNT) {
+        amount = this.MAX_AMOUNT;
+      }
       let nodes: any = [];
       for (let i = 0 ; i < amount ; i ++) {
         nodes.push({value: 0.75 + 0.5 * Math.random(), i: i});
