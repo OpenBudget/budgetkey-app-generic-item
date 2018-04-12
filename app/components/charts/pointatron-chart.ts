@@ -10,7 +10,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
     <div class='svg-container'>
       <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 200 200" [attr.width]="200 / root.scale" [attr.height]="200 / root.scale" version="1.1">
-        <circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="root.radius" style="stroke:white; stroke-width: 1"
+        <circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="root.radius"
                 [style.fill]="root.color" *ngFor="let c of root.children"/>
       </svg>
     </div>
@@ -56,6 +56,11 @@ svg {
   font-size: 20px;	
   font-weight: bold;	
   line-height: 26px;
+}
+
+circle {
+  stroke: white; 
+  stroke-width: 1;
 }
     `
   ]
