@@ -1,3 +1,17 @@
 #!/bin/bash
-docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
-docker push budgetkey/budgetkey-app-generic-item:latest
+if [ "${DOCKER_USERNAME}" != "" ] && [ "${DOCKER_PASSWORD}" != "" ] && [ "${GITHUB_TOKEN}" != "" ] &&\
+   [ "${TRAVIS_PULL_REQUEST}" == "false" ] && ! echo "${TRAVIS_COMMIT_MESSAGE}" | grep -- --no-deploy; then
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin &&\
+    ( docker pull "${DOCKER_IMAGE}:${DEPLOY_BRANCH}"; true ) &&\
+    docker build --cache-from "${DOCKER_IMAGE}:${DEPLOY_BRANCH}" \
+                 -t "${DOCKER_IMAGE}:${TRAVIS_COMMIT}" \
+                 -t "${DOCKER_IMAGE}:${DEPLOY_BRANCH}" \
+                 . &&\
+    docker push "${DOCKER_IMAGE}:${TRAVIS_COMMIT}" &&\
+    docker push "${DOCKER_IMAGE}:${DEPLOY_BRANCH}" &&\
+    K8S_OPS_DIR=`mktemp -d` && cd $K8S_OPS_DIR &&\
+    git clone --depth 1 --branch "${K8S_OPS_REPO_BRANCH}" "https://github.com/${K8S_OPS_REPO_SLUG}.git" . &&\
+    ./helm_update_values.sh '{"'"${DEPLOY_VALUES_CHART_NAME}"'":{"'"${DEPLOY_VALUES_IMAGE_PROP}"'":"'"${DOCKER_IMAGE}:${TRAVIS_COMMIT}"'"}}' \
+                            "${DEPLOY_COMMIT_MESSAGE}" "${GITHUB_TOKEN}" \
+                            "${K8S_OPS_REPO_SLUG}" "${K8S_OPS_REPO_BRANCH}"
+fi
