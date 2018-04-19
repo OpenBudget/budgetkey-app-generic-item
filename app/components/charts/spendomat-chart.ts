@@ -33,6 +33,20 @@ import * as _ from 'lodash';
         <div class="row-label amount-label">
           <span>{{s.amount_fmt}}</span>
         </div>
+        <div class="row-label kinds-label">
+          <span *ngIf="s.count == 1 && s.spending_types[0] == 'contract'">התקשרות אחת</span>
+          <span *ngIf="s.count == 1 && s.spending_types[0] == 'support'">תמיכה אחת</span>
+          <ng-container *ngIf="s.count > 1">
+            <span>{{s.count}}</span>
+            <ng-container *ngIf="s.spending_types.length > 1">
+              <span>התקשרויות ותמיכות</span>
+            </ng-container>
+            <ng-container *ngIf="s.spending_types.length == 1">
+              <span *ngIf="s.spending_types[0] == 'contract'">התקשרויות</span>
+              <span *ngIf="s.spending_types[0] == 'support'">תמיכות</span>
+            </ng-container>
+          </ng-container>
+        </div>
       </div>
 
     </div>
@@ -58,6 +72,7 @@ import * as _ from 'lodash';
     height: 16px;	
     width: 60%;	
     border-radius: 4px;
+    margin-bottom: 5px;
   }
 
   .row-part {
@@ -124,6 +139,16 @@ import * as _ from 'lodash';
 
     font-size: 14px;	
     line-height: 19px;
+  }
+
+  .kinds-label {
+    left: -200px;
+    text-align: right;
+    width: 200px;
+
+    font-size: 10px;	
+    line-height: 18px;
+    display: inline-block;
   }
 
   .small .amount-label {
