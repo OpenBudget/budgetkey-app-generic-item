@@ -30,6 +30,7 @@ import * as _ from 'lodash';
       </div>
       <div class="spendomat-tags"
            [ngClass]="{selected: selected}"
+           (mouseleave)="hoverIndex = -1"
       >
         <div class="tag" 
              *ngFor="let s of row.spending.slice(0, 4); let i = index"
@@ -43,8 +44,11 @@ import * as _ from 'lodash';
       <div class="small-spendomat-rows"
            [ngClass]="{selected: selected}"
            [style.height]="(selected ? 20 * row.spending.length : 0) + 'px'"
-      >
-        <div class="small spendomat-row" *ngFor="let s of row.spending; let i = index">
+           (mouseleave)="hoverIndex = -1"
+        >
+        <div class="small spendomat-row" *ngFor="let s of row.spending; let i = index"
+             (mouseover)="hoverIndex = i"
+        >
           <div class="row-bg"></div>
           <div class="row-part" 
               [style.width]='aw + "%"' *ngFor='let aw of s.amount_widths'
