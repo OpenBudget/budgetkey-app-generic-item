@@ -5,47 +5,73 @@ import * as _ from 'lodash';
   selector: 'budgetkey-chart-spendomat-row',
   template: `
     <div class="spendomat-container">
-      <div class="spendomat-row">
+      <div class="spendomat-row"
+           (mouseleave)="hoverIndex = -1">
         <div class="row-bg"></div>
-        <div class="row-part" *ngFor="let s of row.spending.slice().reverse()" [style.width]='s.acc_width + "%"'></div>
+        <div class="row-part" 
+             *ngFor="let s of row.spending.slice().reverse(); let i = index;" 
+             [style.width]='s.acc_width + "%"'
+             [ngClass]="{hovered: i == row.spending.length - 1 - hoverIndex}"
+             (mouseover)="hoverIndex = row.spending.length - 1 - i"
+             >
+        </div>
         <div class="row-label payer-label">
           <span>{{row.payer}}</span>
         </div>
         <div class="row-label amount-label">
           <span>{{row.amount_fmt}}</span>
         </div>
-        <div class="chevron-container">
+        <div class="chevron-container"
+             [ngClass]="{selected: selected}"
+             (click)="selected = !selected"
+        >
           <div class="chevron"></div>
         </div>
       </div>
-      <div class="spendomat-tags">
-        <div class="tag" *ngFor="let s of row.spending.slice(0, 4)">
+      <div class="spendomat-tags"
+           [ngClass]="{selected: selected}"
+      >
+        <div class="tag" 
+             *ngFor="let s of row.spending.slice(0, 4); let i = index"
+             [ngClass]="{hovered: i == hoverIndex}"
+             (mouseover)="hoverIndex = i"
+             >
           {{ s.tag }} 
         </div>
       </div>
 
-      <div class="small spendomat-row" *ngFor="let s of row.spending">
-        <div class="row-bg"></div>
-        <div class="row-part" [style.width]='aw + "%"' *ngFor='let aw of s.amount_widths'></div>
-        <div class="row-label payer-label">
-          <span>{{s.tag}}</span>
-        </div>
-        <div class="row-label amount-label">
-          <span>{{s.amount_fmt}}</span>
-        </div>
-        <div class="row-label kinds-label">
-          <span *ngIf="s.count == 1 && s.spending_types[0] == 'contract'">התקשרות אחת</span>
-          <span *ngIf="s.count == 1 && s.spending_types[0] == 'support'">תמיכה אחת</span>
-          <ng-container *ngIf="s.count > 1">
-            <span>{{s.count}}</span>
-            <ng-container *ngIf="s.spending_types.length > 1">
-              <span>התקשרויות ותמיכות</span>
+      <div class="small-spendomat-rows"
+           [ngClass]="{selected: selected}"
+           [style.height]="(selected ? 20 * row.spending.length : 0) + 'px'"
+      >
+        <div class="small spendomat-row" *ngFor="let s of row.spending; let i = index">
+          <div class="row-bg"></div>
+          <div class="row-part" 
+              [style.width]='aw + "%"' *ngFor='let aw of s.amount_widths'
+              [ngClass]="{hovered: i == hoverIndex}"
+          ></div>
+          <div class="row-label payer-label"
+              [ngClass]="{hovered: i == hoverIndex}"
+          >
+            <span>{{s.tag}}</span>
+          </div>
+          <div class="row-label amount-label">
+            <span>{{s.amount_fmt}}</span>
+          </div>
+          <div class="row-label kinds-label">
+            <span *ngIf="s.count == 1 && s.spending_types[0] == 'contract'">התקשרות אחת</span>
+            <span *ngIf="s.count == 1 && s.spending_types[0] == 'support'">תמיכה אחת</span>
+            <ng-container *ngIf="s.count > 1">
+              <span>{{s.count}}</span>
+              <ng-container *ngIf="s.spending_types.length > 1">
+                <span>התקשרויות ותמיכות</span>
+              </ng-container>
+              <ng-container *ngIf="s.spending_types.length == 1">
+                <span *ngIf="s.spending_types[0] == 'contract'">התקשרויות</span>
+                <span *ngIf="s.spending_types[0] == 'support'">תמיכות</span>
+              </ng-container>
             </ng-container>
-            <ng-container *ngIf="s.spending_types.length == 1">
-              <span *ngIf="s.spending_types[0] == 'contract'">התקשרויות</span>
-              <span *ngIf="s.spending_types[0] == 'support'">תמיכות</span>
-            </ng-container>
-          </ng-container>
+          </div>
         </div>
       </div>
 
@@ -85,8 +111,15 @@ import * as _ from 'lodash';
     background-color: #EAF9DE;    
   }
 
+  .row-part.hovered {
+    background-color: #6A9548;
+  }
+
   .small .row-part {
     border-radius: 0px 4px 4px 0px;
+  }
+  .small .row-part.hovered {
+    background-color: #C5E1AF;
   }
 
   .row-bg {
@@ -115,8 +148,9 @@ import * as _ from 'lodash';
     padding: 0 19px;
     color: #3E4E59;	
     font-family: "Miriam Libre";	
+    pointer-events: none;
   }
-
+  
   .payer-label {
     right: 0;
 
@@ -166,6 +200,7 @@ import * as _ from 'lodash';
     display: flex;
     flex-flow: column;
     justify-content: center;
+    cursor: pointer;
   }
 
   .chevron {
@@ -174,12 +209,26 @@ import * as _ from 'lodash';
     border-style: solid;
     border-width: 7px 7px 7px 0;
     border-color: transparent #7FAA5E transparent transparent;
+    transition-property: transform;
+    transition-duration: 200ms;
+    transform: rotate(0);
   }
 
-  .chevron.rotated {
+  .selected .chevron {
     transform: rotate(-90deg);
   }
   
+  .spendomat-tags {
+    height: 30px;
+    overflow-y: hidden;
+    transition-property: height;
+    transition-duration: 200ms;
+  }
+
+  .spendomat-tags.selected {
+    height: 6px;
+  }
+
   .tag {
     display: inline-block;
     margin: 6px 4px;
@@ -192,14 +241,35 @@ import * as _ from 'lodash';
     border-radius: 4px;	
     background-color: #F6F7F0;
   }
+
+  .tag.hovered {
+    color: #fffff;
+    background-color: #C5E1AF;
+  }
+
+  .small-spendomat-rows {
+    overflow: hidden;
+    transition-property: height;
+    transition-duration: 200ms;
+  }
     `
   ]
 })
 export class SpendomatChartComponentRow {
 
   @Input() public row: any;
+  hoverIndex_: number = -1;
+  selected: boolean = false;
 
   constructor() {}
+
+  public set hoverIndex( v: number) {
+    this.hoverIndex_ = v;
+  }
+
+  public get hoverIndex(): number {
+    return this.hoverIndex_;
+  }
 
   ngOnInit() {
   }
@@ -240,14 +310,11 @@ export class SpendomatChartComponent {
       (r) => {
         r['amount_fmt'] = r['amount'].toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + ' ₪';
         let width = 100 * r['amount'] / sum;
-        console.log('width', width);
         let acc = 0;
         _.each(r['spending'], (s) => {
           s['amount_fmt'] = s['amount'].toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + ' ₪';
           let s_width = s['amount'] / r['amount'];
-          console.log('s_width', s_width);
           acc += s_width * width;
-          console.log('acc', acc);
           s['acc_width'] = acc;
           s['width'] = s_width * 100;
 
@@ -261,15 +328,6 @@ export class SpendomatChartComponent {
         });
       }
     );
-    console.log('PPP', sum, data);
-    // for (let payer in data) {
-    //   if (payer === 'all') {
-    //     continue;
-    //   }
-    //   let row = data[payer];
-    //   // row['payer'] = payer;
-    //   this.rows.push(row)
-    // }
   }
 
 }
