@@ -36,6 +36,8 @@ import {
   TemplateChartComponent,
   PointatronChartComponent,
   ComparatronChartComponent,
+  SpendomatChartComponent,
+  SpendomatChartComponentRow,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -88,6 +90,8 @@ describe('AppComponent', function () {
         TemplateChartComponent,
         PointatronChartComponent,
         ComparatronChartComponent,
+        SpendomatChartComponent,
+        SpendomatChartComponentRow,
 
         SimpleItemInfoComponent,
         SimpleItemVisualizationsComponent,

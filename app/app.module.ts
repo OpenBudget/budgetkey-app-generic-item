@@ -33,6 +33,8 @@ import {
   TemplateChartComponent,
   PointatronChartComponent,
   ComparatronChartComponent,
+  SpendomatChartComponent,
+  SpendomatChartComponentRow,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -99,6 +101,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     TemplateChartComponent,
     PointatronChartComponent,
     ComparatronChartComponent,
+    SpendomatChartComponent,
+    SpendomatChartComponentRow,
 
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,

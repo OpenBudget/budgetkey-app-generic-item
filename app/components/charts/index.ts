@@ -8,3 +8,4 @@ export * from './adamkey-chart';
 export * from './template-chart';
 export * from './pointatron-chart';
 export * from './comparatron-chart';
+export * from './spendomat-chart';

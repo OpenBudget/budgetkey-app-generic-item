@@ -33,6 +33,9 @@ import { Item } from '../../model';
     <budgetkey-chart-comparatron            *ngIf="chart.type == 'comparatron'"
             [data]="chart.chart" 
     ></budgetkey-chart-comparatron>
+    <budgetkey-chart-spendomat            *ngIf="chart.type == 'spendomat'"
+            [data]="chart.chart" 
+    ></budgetkey-chart-spendomat>
 `
 })
 export class ChartRouterComponent {
