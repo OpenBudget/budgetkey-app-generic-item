@@ -2,7 +2,10 @@ import { ReportDescriptor, Indicator } from '../../../model';
 
 export default new ReportDescriptor({
   pathPrefix: 'reports/ngo-district-report/',
-  titleTemplate: require('./title-template.html'),
+  titlePrefix: 'ארגונים הפעילים במחוז',
+  titleSuffix: '',
+  titleField: 'district',
+  titleOtherURLPrefix: 'reports/ngo-district-report/',
   indicators: [
     new Indicator(
       'icon-shetach.svg',

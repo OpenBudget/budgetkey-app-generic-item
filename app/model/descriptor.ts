@@ -78,13 +78,19 @@ export class Indicator {
 
 export class ReportDescriptor extends DescriptorBase {
   indicators: Indicator[] = [];
-  titleTemplate: string = '';
+  titlePrefix: string = '';
+  titleSuffix: string = '';
+  titleField: string = '';
+  titleOtherURLPrefix: string = '';
   suffixTemplate: string = '';
 
   constructor(x: any) {
     super(x.pathPrefix, 'report', x.questions);
     this.indicators = x.indicators;
     this.suffixTemplate = x.suffixTemplate;
-    this.titleTemplate = x.titleTemplate;
+    this.titlePrefix = x.titlePrefix;
+    this.titleSuffix = x.titleSuffix;
+    this.titleField = x.titleField;
+    this.titleOtherURLPrefix = x.titleOtherURLPrefix;
   }
 }
