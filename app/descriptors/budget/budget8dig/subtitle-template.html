@@ -1,15 +1,8 @@
 תקנה תקציבית בתכנית
-<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year) }}">
-    {{ (hierarchy | last)[1] }}
-</a>
+{{ ((hierarchy | last)[1]) | item_link('budget/' + (hierarchy | last)[0] + '/' + year) }}
 (תחת תחום
-<a href="{{ 'budget' | item_link(hierarchy[2][0] + '/' + year) }}">
-    {{ (hierarchy[2])[1] }}
-</a>
+{{ ((hierarchy[2])[1]) | item_link('budget/' + hierarchy[2][0] + '/' + year) }}
 בסעיף
-<a href="{{ 'budget' | item_link(hierarchy[1][0] + '/' + year) }}">
-    {{ (hierarchy[1])[1] }}
-</a>
-).
+{{ ((hierarchy[1])[1]) | item_link('budget/' + hierarchy[1][0] + '/' + year) }}).
 <br/>
 כוללת תקציב עבור הוצאה מסוג ספציפי בפעילות אחת של הממשלה.

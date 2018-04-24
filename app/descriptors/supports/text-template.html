@@ -16,9 +16,7 @@
         <label class="field-label">
             התקנה התקציבית:
         </label>
-        <a href="{{ budget_code | search_link('budget') }}">
-            {{ budget_code }} - {{ support_title }}
-        </a>
+        {{ (budget_code + ' - ' + support_title) | search_link(budget_code, 'budget') }}
     </div>
     {% endif %}
 {% endfor %}

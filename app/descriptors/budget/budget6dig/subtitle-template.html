@@ -1,12 +1,7 @@
 תכנית בתקציב המדינה - תחת תחום
 
-<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year) }}">
-    {{ (hierarchy | last)[1] }}
-</a>
+{{ ((hierarchy | last)[1]) | item_link('budget/' + (hierarchy | last)[0] + '/' + year) }}
 בסעיף
-<a href="{{ 'budget' | item_link((hierarchy[1])[0] + '/' + year) }}">
-    {{ (hierarchy[1])[1] }}
-</a>
-.
+{{ ((hierarchy[1])[1]) | item_link('budget/' + (hierarchy[1])[0] + '/' + year) }}.
 <br/>
 לרוב כוללת תקציב עבור פעילות מרכזית אחת של הממשלה. העברות תקציביות מבוצעות ברמת התכנית.

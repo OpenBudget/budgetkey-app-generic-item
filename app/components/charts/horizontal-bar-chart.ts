@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
       <tbody>
         <tr *ngFor='let value of data.values; let i = index'>
           <td class='cell-index'>{{ i + 1 }}</td>
-          <td class='cell-label'>{{ value.label }}</td>
+          <td class='cell-label' [innerHTML]="value.label"></td>
           <td class='cell-bar'>
             <span class="bar-bg"></span>
             <span class="bar" [style.width]="100 * (value.value / maxValue) + '%'"></span>
@@ -35,6 +35,7 @@ tr {
   font-family: "Abraham TRIAL";	
   font-size: 18px;	
   text-align: right;
+  padding-left: 5px;
 }
 
 .cell-label {

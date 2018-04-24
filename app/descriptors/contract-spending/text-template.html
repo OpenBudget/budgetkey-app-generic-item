@@ -63,9 +63,7 @@
     <label class="field-label">
         התקנה התקציבית:
     </label>
-    <a href="{{ budget_code | search_link(null) }}">
-        {{ budget_code }} - {{ budget_title }}
-    </a>
+    {{ (budget_code + ' - ' + budget_title) | search_link(budget_code, 'budget') }}
 </div>
 {% endif %}
 
@@ -77,9 +75,7 @@
     <ul>
         {% for manof_ref in manof_excerpts %}
         <li>
-            <a href="{{ 'tenders' | item_link(manof_ref.tender_type + '/' + manof_ref.publication_id + '/' + manof_ref.tender_id) }}">
-                {{ manof_ref.description }}
-            </a>
+            {{ manof_ref.description |  item_link('tenders/' + manof_ref.tender_type + '/' + manof_ref.publication_id + '/' + manof_ref.tender_id) }}
         </li>
         {% endfor %}
     </ul>
