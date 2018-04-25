@@ -1,14 +1,8 @@
 <div>
     {{ publisher }}
     מבקש להודיע על התקשרות בפטור ממכרז עם
-
-    <a href="{{ 'budget' | item_link(entity_kind + '/' + entity_id) }}">
-
-        {{ entity_name }}
-
-    </a>
+    {{ entity_name | item_link('org/' + entity_kind + '/' + entity_id) }}
     מטעמים של
-
     {{ regulation }}
 </div>
 <div>

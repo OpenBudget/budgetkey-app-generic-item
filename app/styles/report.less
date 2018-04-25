@@ -11,10 +11,49 @@
     .title {
       font-family: "Miriam Libre", sans-serif;
       font-size: 32px;
-      font-weight: bold;
+      font-weight: normal;
       line-height: 38px;	
       text-align: center;
       margin-top: 27px;
+
+      strong {
+        background-color: #EAF9DE;
+        display: inline-block;
+
+        span {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        .report-dropdown {
+          background: white;
+          padding: 10px;
+          position: absolute;
+          z-index: 1;
+          max-height: 260px;
+          overflow-y: scroll;
+          box-shadow: 0px 5px 9px -4px rgba(0,0,0,0.75);
+
+          &.hidden {
+            display: none;
+          }
+
+          span {
+            display: block;
+            font-size: 24px;
+            font-weight: normal;
+            text-decoration: none;
+            text-align: right;
+          }
+        }
+        // &::after {
+        //   content: "\e114";
+        //   font-family: 'Glyphicons Halflings';
+        //   font-style: normal;
+        //   font-weight: 400;
+        //   font-size: 20px
+        // }
+      }
     }
   
     .indicator {

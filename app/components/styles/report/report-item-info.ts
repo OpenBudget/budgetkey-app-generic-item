@@ -8,7 +8,22 @@ import { BaseItemInfoComponent } from '../../base-item-info';
   selector: 'report-item-info',
   template: `  
     <div class="container">
-      <div class="title" [innerHTML]="descriptor.titleTemplate | renderTemplate:item:ngComponentsTheme.themeId"></div>
+      <div class="title">
+        <small>{{descriptor.titlePrefix}}</small><br/>
+        <strong>
+            <span (click)="dropdownHidden = !dropdownHidden">
+              {{ item.details[descriptor.titleField] }}
+            </span>
+            <div class="report-dropdown"
+                 [ngClass]="{hidden: dropdownHidden}"
+            >
+                <span *ngFor="let other of item.others">
+                  <a [href]="'//next.obudget.org/i/' + descriptor.titleOtherURLPrefix + other">{{other}}</a>
+                </span>
+            </div>
+        </strong><br/>
+        <small>{{descriptor.titleSuffix}}</small>
+      </div>
       <div class="row" [style.right]="(4 - descriptor.indicators.length)*12.5 + '%'">
         <div class="indicator col-md-3" *ngFor="let indicator of descriptor.indicators">
           <div>
@@ -25,6 +40,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 export class ReportItemInfoComponent extends BaseItemInfoComponent {
 
   private descriptor: ReportDescriptor;
+  private dropdownHidden: boolean = true;
 
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <ReportDescriptor>this.store.descriptor;

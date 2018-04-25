@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import * as nunjucks from 'nunjucks';
+import * as _ from 'lodash';
 
 let env = new nunjucks.Environment();
 let safe: any = env.getFilter('safe');
@@ -52,22 +53,46 @@ env.addFilter('hebrew_list', function(x: any) {
     }
     ret += '' + x[i];
   }
-  return ret;
+  return safe(ret);
 });
 
-env.addFilter('search_link', function(searchTerm: string, displayDocs: string) {
+env.addFilter('search_url', function(searchTerm: string, displayDocs: string) {
   return env.renderString(
-    '//next.obudget.org/s/?q={{encodeURIComponent(searchTerm)}}' +
+    '//next.obudget.org/s/?q={{searchTerm}}' +
           '{% if displayDocs %}&dd={{displayDocs}}{% endif %}' +
           '{% if themeId %}&theme={{themeId}}{% endif %}',
-    {'searchTerm': searchTerm, 'displayDocs': displayDocs}
+    {searchTerm: encodeURIComponent(searchTerm), displayDocs: displayDocs}
   );
 });
 
-env.addFilter('item_link', function(docType, docId) {
+env.addFilter('item_url', function(docId) {
   return env.renderString(
-    '//next.obudget.org/i/{{docType}}/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
-    {'docType': docType, 'docId': docId}
+    '//next.obudget.org/i/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
+    {docId: docId}
+  );
+});
+
+env.addFilter('item_link', function(text, docId: string) {
+  return safe(env.renderString(
+    '<a href="{{ docId | item_url }}">{{text}}</a>',
+    {text: text, docId: docId}
+  ));
+});
+
+env.addFilter('search_link', function(text, searchTerm: string, displayDocs: string) {
+  return safe(env.renderString(
+    '<a href="{{ searchTerm | search_url(displayDocs) }}">{{text}}</a>',
+    {text: text, searchTerm: searchTerm, displayDocs: displayDocs}
+  ));
+});
+
+env.addFilter('links_to_item', function(list, docIdTemplate: string) {
+  return _.map(
+    list,
+    (term: string) => {
+      let docId = docIdTemplate.replace(':term', term);
+      return safe(env.renderString('{{ term | item_link(docId) }}', {term: term, docId: docId}));
+    }
   );
 });
 

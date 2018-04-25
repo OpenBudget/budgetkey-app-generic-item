@@ -1,5 +1,3 @@
 תחום פעילות בתקציב המדינה - תחת סעיף
-<a href="{{ 'budget' | item_link((hierarchy | last)[0] + '/' + year) }}">
-    {{ (hierarchy | last)[1] }}
-</a>.<br/>
+{{ ((hierarchy | last)[1]) | item_link('budget/' + ((hierarchy | last)[0] + '/' + year)) }}.<br/>
 לרוב כולל תקציב עבור קבוצת פעילויות מרכזית במשרד ממשלתי כלשהו.

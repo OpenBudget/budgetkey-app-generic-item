@@ -110,13 +110,13 @@ import * as _ from 'lodash';
     top: 0;
     right: 0;
     height: 100%;
-    border: 1px solid #7FAA5E;	
+    border: 1px solid #C5E1AF;	
     border-radius: 0px 10px 10px 0px;
     background-color: #EAF9DE;    
   }
 
   .row-part.hovered {
-    background-color: #6A9548;
+    background-color: #C5E1AF;
   }
 
   .small .row-part {

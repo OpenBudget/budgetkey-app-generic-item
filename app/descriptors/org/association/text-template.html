@@ -7,7 +7,7 @@
 ארגון זה הוא
     {{kind_he}} 
     העוסקת בתחום
-    {{details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 
 {% if (details.activity_region_list | length) == 1 %}
@@ -17,7 +17,7 @@
 {% elif (details.activity_region_districts | length) == 1  %}
 <p>
         על פי הדיווח, פעילותו מתרכזת במחוז 
-        {{details.activity_region_districts[0]}}.
+        {{details.activity_region_districts[0] | item_link('reports/ngo-district-report/' + details.activity_region_districts[0])}}.
 </p>
 {% endif %}
 
@@ -26,7 +26,7 @@
     זהו הארגון הפעיל היחיד העוסק בתחום
     {{details.field_of_activity_display}}
     במחוזות
-    {{ details.unique_activity_districts | hebrew_list }}.
+    {{ details.unique_activity_districts | links_to_item('reports/ngo-district-report/:term') | hebrew_list }}.
 </p>
 {% endif %}
 
@@ -55,16 +55,16 @@
 <p>
     זהו הארגון ה-{{ details.rank_of_yearly_turnover_in_field }}
     בגובה המחזור הכספי המדווח מבין הארגונים הפעילים בתחום
-    {{ details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {%endif%}
 
 {% if details.has_highest_turnover_in_district %}
 <p>
     הוא הארגון בעל המחזור הכספי השנתי הגבוה בתחום
-    {{ details.field_of_activity_display}}
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}
     במחוז
-    {{ details.activity_region_districts[0]}}.
+    {{details.activity_region_districts[0] | item_link('reports/ngo-district-report/' + details.activity_region_districts[0])}}.
 </p>
 {% endif %}
 
@@ -78,7 +78,7 @@
 <p>
     זהו הארגון ה-{{ details.rank_of_employees_in_field_of_activity }}
     במספר העובדים מבין הארגונים הפעילים בתחום
-    {{ details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {% endif %}
 
@@ -86,14 +86,14 @@
 <p>
     זהו הארגון ה-{{details.rank_of_volunteers_in_field_of_activity}}
     במספר המתנדבים מבין הארגונים הפעילים בתחום
-    {{ details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {% endif %}
 
 {% if details.is_oldest_org_in_field_of_activity %}
 <p>
     זהו הארגון הפעיל הותיק ביותר בתחום
-    {{ details.field_of_activity_display}}
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}
     בכל הארץ.
 </p>
 {% endif %}
@@ -101,9 +101,9 @@
 {% if (details.districts_where_oldest_org_in_field_of_activity | length) > 0 %}
 <p>
     זהו הארגון הפעיל הותיק ביותר בתחום
-    {{ details.field_of_activity_display}}
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}
     במחוז
-    {{ details.districts_where_oldest_org_in_field_of_activity | hebrew_list}}.
+    {{ details.districts_where_oldest_org_in_field_of_activity | links_to_item("reports/ngo-district-report/:term") | hebrew_list}}.
 </p>
 {% endif %}
 
@@ -131,7 +131,7 @@
     הארגון דורג במקום ה-{{details.rank_of_overall_recipient_in_field_of_activity}}
     בגובה ההכנסות מכספי מדינה בשלוש השנים האחרונות
     בתחום
-    {{details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {% endif %}
 
@@ -140,7 +140,7 @@
     הארגון מדורג במקום ה-{{details.rank_of_contract_recipient_in_field_of_activity}}
     בגובה ההכנסות מהתקשרויות עם גופי ממשל
     בתחום
-    {{details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {% endif %}
 
@@ -149,7 +149,7 @@
     הארגון מדורג במקום ה-{{details.rank_of_supports_recipient_in_field_of_activity}}
     בגובה ההכנסות מתמיכות מכספי מדינה
     בתחום
-    {{details.field_of_activity_display}}.
+    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 {% endif %}
 

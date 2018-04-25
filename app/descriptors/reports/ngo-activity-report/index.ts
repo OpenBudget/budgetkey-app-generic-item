@@ -2,7 +2,10 @@ import { ReportDescriptor, Indicator } from '../../../model';
 
 export default new ReportDescriptor({
   pathPrefix: 'reports/ngo-activity-report/',
-  titleTemplate: require('./title-template.html'),
+  titlePrefix: 'ארגונים הפעילים בתחום',
+  titleSuffix: 'בכל הארץ',
+  titleField: 'field_of_activity_display',
+  titleOtherURLPrefix: 'reports/ngo-activity-report/',
   indicators: [
     new Indicator(
       'icon-hadash.svg',
