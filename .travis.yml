@@ -25,6 +25,8 @@ env:
     - secure: CZd2EJc1viLeNjdyBA3EJqeAz6RHKhupZfjvG70RhKkoNGVyzCcWTYyZq3wgqaO0TJQ31bdbOwvCmtRX+xgEFyt3RqclZPmQudbooiz2taFzTWez7qRKGHoRmXyPGvtu8vgQXXFI2iNetpumPh6CCud0vcmGidZwzkgg3D3+fBtr/8sWpz7kUXEuE8IslmbtYWzGMsrjjJz7mpiU2KrrL0lkCaDZFFnzZXE16Zyq3YT/Lx8PdO4Dv67T7ht5/UDKhztzOMR6at2FB/J2oaaeCQYYSkzBfdIYABAAcQ13Z9lmSuVDJaDw8knpsMrV7y8WtXfZ71JYWAj5kp9FFChWZqcnWFZ8yFUA+fkFzPJ+8rSjzEgqp8+ouSseaZ8jGymCSBctONdT8ykCpeXHq6ReQ6f7smVWO3n1QtiWr/DrdF2DItbFuClV10PUIGw5FIxwxP1q0Yjmp6zfTG/7s/L0Gf8NidMhabeLIVL1dR1GtMNvHos/OFMMp0kFvYCwfnGmHj5fV7RZI7K9DvZtor6RcqFkqvIsvuH5FMgcqbYsMH8rjoUt7s7IFahQbsvm0B8TIkCLjmR3PbBFGxFVHJjTKP1Dtkf2yOVcb9r8e66UuaGl6+9yn/j3rFHx7syyT2q/isC6PuH5cf+BbEOJ7JbXOEvG2bkP93P9w0vccziK/98=
     - secure: S3EYzn54EzohFTdPgKHY46bK5g2wC2nTddhGjmQUQPWRh8uBkC79L7LvZLiqapRu3eAXURZZlLBWq7ZMDigmD9zmwfs9SYLzW59BsOBv4VGjBt0sBrN+IOt4V1NI0yCy9K0tOJUGuG5BzdrTIXfK/HUGGTMlXo9QyazjGKIcA9PbNEhRVfPPLXqWrjABe1JdFjl+Cz5oZThnlES8T45KkMA0pdqFURqBcv7XZRBxplz6qRhQ1CzwDiYTwBvMksL35zVOFOi1OJu+vlgJRggaCKb8WmPvcwWCb5qDYwYJN/IiNq5hNfnG8kBeW2/5xD4CCZlDJPmuVMmTk1sKimIGEk++Gi+cWYtVRVXfG1RiM783xiFte74yvCGQoZftug3VF6GvqLhEyvL+LFzal65go/elKyGsVC9uoYiUn/dPyShBZujIt3/3+BI2sHw6GOyght2Pjs3zmRv2Bd+kARWQxo9yVcxKa2RlAX+GMMg29k5PmEg6nTbA2AvowdvBuORma2k01yp/oQ0RbcOC654XR8fuzkfShQxkGwWvZCnhgs+niJAVpZcA/jHGh62snNqH2PogiHPhZmC5r8FBC1RpmwGywbp7AIODq/Y0YLwjtR5E1fHcVSh3Gt1kvCU9iFY81txBMqtK/fcQGgVgAIfZzThnwRa6W+XStMN0LnNVr7I=
 before_script:
+  - curl -s https://raw.githubusercontent.com/OpenBudget/budgetkey-k8s/master/apps_travis_script.sh > .travis.sh
+  - bash .travis.sh script
   - sh -e /etc/init.d/xvfb start
 install:
   - npm install
@@ -32,8 +34,6 @@ script:
   - npm run lint
   - npm run test
   - npm run e2e
-  - curl -s https://raw.githubusercontent.com/OpenBudget/budgetkey-k8s/master/apps_travis_script.sh > .travis.sh
-  - bash .travis.sh script
 deploy:
   skip_cleanup: true
   provider: script
