@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Inject } from '@angular/core';
 import { Location } from '@angular/common';
+
+import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Component({
   selector: 'budgetkey-chart-horizontal-barchart',
@@ -86,7 +88,8 @@ export class HorizontalBarchartChartComponent {
   @Input() public data: any;
   maxValue: number = 1;
 
-  constructor(private location: Location) {
+  constructor(private location: Location,
+              @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
   }
 
   ngOnInit() {
@@ -94,12 +97,19 @@ export class HorizontalBarchartChartComponent {
       if (v.value > this.maxValue) {
         this.maxValue = v.value;
       }
+      if (this.ngComponentsTheme.themeId) {
+        v.label = v.label.replace('theme=budgetkey', 'theme=' + this.ngComponentsTheme.themeId);
+      }
     }
     this.maxValue *= 1.15;
   }
 
   onSelected(context: any) {
-    window.location.href = window.location.origin + '/i/' + context;
+    let href = window.location.origin + '/i/' + context;
+    if (this.ngComponentsTheme.themeId) {
+      href += '?theme=' + this.ngComponentsTheme.themeId;
+    }
+    window.location.href = href;
   }
 
 }

@@ -15,9 +15,9 @@ import { Item } from '../../model';
     <budgetkey-chart-horizontal-barchart  *ngIf="chart.type == 'horizontal-barchart'"
         [data]="chart.chart" 
     ></budgetkey-chart-horizontal-barchart>
-    <budgetkey-chart-adamkey              *ngIf="chart.type == 'adamkey'"
+    <budgetkey-chart-adamkey-wrapper     *ngIf="chart.type == 'adamkey'"
         [data]="chart.chart" 
-    ></budgetkey-chart-adamkey>
+    ></budgetkey-chart-adamkey-wrapper>
     <budgetkey-chart-template             *ngIf="chart.type == 'template'"
         [data]="chart.chart" 
     ></budgetkey-chart-template>

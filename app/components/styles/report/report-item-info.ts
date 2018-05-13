@@ -18,7 +18,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
                  [ngClass]="{hidden: dropdownHidden}"
             >
                 <span *ngFor="let other of item.others">
-                  <a [href]="'//next.obudget.org/i/' + descriptor.titleOtherURLPrefix + other">{{other}}</a>
+                  <a [href]="href(other)">{{other}}</a>
                 </span>
             </div>
         </strong><br/>
@@ -44,5 +44,13 @@ export class ReportItemInfoComponent extends BaseItemInfoComponent {
 
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <ReportDescriptor>this.store.descriptor;
+  }
+
+  href(other: string) {
+    return '//next.obudget.org/i/' + 
+          this.descriptor.titleOtherURLPrefix +
+          other +
+          '?theme=' +
+          this.ngComponentsTheme.themeId;
   }
 }

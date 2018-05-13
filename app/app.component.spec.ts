@@ -8,6 +8,7 @@ import { MushonkeyModule } from 'mushonkey';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { AdamkeyModule } from 'adamkey';
 
 import { AppComponent } from './app.component';
 
@@ -32,7 +33,7 @@ import {
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
-  AdamKeyChartComponent,
+  AdamKeyChartWrapperComponent,
   TemplateChartComponent,
   PointatronChartComponent,
   ComparatronChartComponent,
@@ -64,7 +65,8 @@ describe('AppComponent', function () {
         HttpModule,
         FormsModule,
         BudgetKeyCommonModule,
-        MushonkeyModule
+        MushonkeyModule,
+        AdamkeyModule
       ],
       declarations: [
         RenderTemplatePipe,
@@ -86,7 +88,7 @@ describe('AppComponent', function () {
         PlotlyChartComponent,
         MushonKeyChartComponent,
         HorizontalBarchartChartComponent,
-        AdamKeyChartComponent,
+        AdamKeyChartWrapperComponent,
         TemplateChartComponent,
         PointatronChartComponent,
         ComparatronChartComponent,

@@ -9,6 +9,7 @@ import { AppComponent }  from './app.component';
 
 import { BudgetKeyCommonModule, THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN } from 'budgetkey-ng2-components';
 import { MushonkeyModule } from 'mushonkey';
+import { AdamkeyModule } from 'adamkey';
 
 import { RenderTemplatePipe, PairsPipe, KeysPipe } from './pipes';
 
@@ -29,12 +30,12 @@ import {
   MushonKeyChartComponent,
   PlotlyChartComponent,
   HorizontalBarchartChartComponent,
-  AdamKeyChartComponent,
   TemplateChartComponent,
   PointatronChartComponent,
   ComparatronChartComponent,
   SpendomatChartComponent,
   SpendomatChartComponentRow,
+  AdamKeyChartWrapperComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -75,7 +76,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     HttpModule,
     FormsModule,
     BudgetKeyCommonModule,
-    MushonkeyModule
+    MushonkeyModule,
+    AdamkeyModule
   ],
   declarations: [
     RenderTemplatePipe,
@@ -97,12 +99,12 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     MushonKeyChartComponent,
     PlotlyChartComponent,
     HorizontalBarchartChartComponent,
-    AdamKeyChartComponent,
     TemplateChartComponent,
     PointatronChartComponent,
     ComparatronChartComponent,
     SpendomatChartComponent,
     SpendomatChartComponentRow,
+    AdamKeyChartWrapperComponent,
 
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,
