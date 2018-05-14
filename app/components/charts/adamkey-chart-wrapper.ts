@@ -10,11 +10,16 @@ import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components
   styles: [
     `
     ::ng-deep .label-col a {
-      color: #7FAA5E;	
+      color: #5A32D1;	
       font-family: "Abraham TRIAL";	
       font-size: 14px;
       text-align: right; 
     }
+
+    ::ng-deep .selected .label-col a {
+      color: #FFFFF;	
+    }
+
 `
   ]
 })

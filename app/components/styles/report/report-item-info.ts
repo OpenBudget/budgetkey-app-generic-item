@@ -47,10 +47,13 @@ export class ReportItemInfoComponent extends BaseItemInfoComponent {
   }
 
   href(other: string) {
-    return '//next.obudget.org/i/' + 
-          this.descriptor.titleOtherURLPrefix +
-          other +
-          '?theme=' +
-          this.ngComponentsTheme.themeId;
+    let href = '//next.obudget.org/i/' + 
+      this.descriptor.titleOtherURLPrefix +
+      other;
+    if (this.ngComponentsTheme.themeId) {
+      href += '?theme=' +
+        this.ngComponentsTheme.themeId;
+    }
+    return href;
   }
 }
