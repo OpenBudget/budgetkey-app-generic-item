@@ -30,7 +30,7 @@ before_install:
 before_script:
 - sh -e /etc/init.d/xvfb start
 install:
-- npm install
+- npm install --no-audit
 script:
 - npm run lint
 - npm run test
