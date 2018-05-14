@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as _ from 'lodash';
+import { format_number } from '../../pipes/render-template';
 
 @Component({
   selector: 'budgetkey-chart-spendomat-row',
@@ -19,7 +20,7 @@ import * as _ from 'lodash';
           <span>{{row.payer}}</span>
         </div>
         <div class="row-label amount-label">
-          <span>{{row.amount_fmt}}</span>
+          <span [innerHtml]="row.amount_fmt"></span>
         </div>
         <div class="chevron-container"
              [ngClass]="{selected: selected}"
@@ -60,8 +61,8 @@ import * as _ from 'lodash';
             <span>{{s.tag}}</span>
           </div>
           <div class="row-label amount-label">
-            <span>{{s.amount_fmt}}</span>
-          </div>
+            <span [innerHtml]="s.amount_fmt"></span>
+            </div>
           <div class="row-label kinds-label">
             <span *ngIf="s.count == 1 && s.spending_types[0] == 'contract'">התקשרות אחת</span>
             <span *ngIf="s.count == 1 && s.spending_types[0] == 'support'">תמיכה אחת</span>
@@ -319,11 +320,11 @@ export class SpendomatChartComponent {
     _.each(
       this.rows,
       (r) => {
-        r['amount_fmt'] = r['amount'].toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + ' ₪';
+        r['amount_fmt'] = format_number(r['amount']) + ' ₪';
         let width = 100 * r['amount'] / sum;
         let acc = 0;
         _.each(r['spending'], (s) => {
-          s['amount_fmt'] = s['amount'].toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + ' ₪';
+          s['amount_fmt'] = format_number(s['amount']) + ' ₪';
           let s_width = s['amount'] / r['amount'];
           acc += s_width * width;
           s['acc_width'] = acc;

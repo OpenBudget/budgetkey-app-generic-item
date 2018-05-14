@@ -6,6 +6,7 @@ import descriptors from '../descriptors';
 
 import { Item, DescriptorBase } from '../model';
 import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import { format_number } from '../pipes';
 
 @Injectable()
 export class BudgetKeyItemService {
@@ -49,7 +50,7 @@ export class BudgetKeyItemService {
     value = parseFloat(value);
 
     return isFinite(value)
-      ? value.toLocaleString('he-IL', { style: 'currency', currency: 'ILS' })
+      ? format_number(value)
       : '-';
   }
 

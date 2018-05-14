@@ -4,19 +4,24 @@ import * as _ from 'lodash';
 
 let env = new nunjucks.Environment();
 let safe: any = env.getFilter('safe');
-env.addFilter('format_number', function(x: number) {
+
+export function format_number(x: number) {
   if (x) {
     let fracDigits = 0;
     if (x < 1000) {
       fracDigits = 2;
     }
-    return safe('<span class="number">' +
-                x.toLocaleString('en-US', {style: 'decimal',
-                                           maximumFractionDigits: fracDigits}) +
-                '</span>');
+    return '<span class="number">' +
+              x.toLocaleString('en-US', {style: 'decimal',
+                                         maximumFractionDigits: fracDigits}) +
+           '</span>';
   } else {
     return '-';
   }
+}
+
+env.addFilter('format_number', function(x: number) {
+  return safe(format_number(x));
 });
 
 env.addFilter('format_relative_percent', function(x: number) {
