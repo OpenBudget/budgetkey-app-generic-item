@@ -22,6 +22,8 @@ import {StoreService} from '../../../services/store';
       </div>  
       <div class="tab-contents" *ngIf="chart">
         <div class="chart-title" [innerHtml]="current['long_title'] || current.title"></div>
+        <div class="chart-description" *ngIf="current.description"
+             [innerHtml]="current.description"></div>
         <div class="subtabs" *ngIf="subcharts">
           <div class="subtab-row">
             <div class="subtab" *ngFor="let subtab of subcharts"
