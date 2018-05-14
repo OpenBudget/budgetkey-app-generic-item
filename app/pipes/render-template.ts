@@ -6,7 +6,14 @@ let env = new nunjucks.Environment();
 let safe: any = env.getFilter('safe');
 env.addFilter('format_number', function(x: number) {
   if (x) {
-    return safe('<span class="number">' + x.toLocaleString('en-US', {style: 'decimal', maximumFractionDigits: 2}) + '</span>');
+    let fracDigits = 0;
+    if (x < 1000) {
+      fracDigits = 2;
+    }
+    return safe('<span class="number">' +
+                x.toLocaleString('en-US', {style: 'decimal',
+                                           maximumFractionDigits: fracDigits}) +
+                '</span>');
   } else {
     return '-';
   }
