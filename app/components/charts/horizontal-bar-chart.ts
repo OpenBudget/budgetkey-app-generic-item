@@ -71,9 +71,9 @@ tr {
   right: 0px;
   display: inline-block;
   height: 30px;
-  border: 1px solid #7FAA5E;
+  border: 1px solid #FFCAB6;
   opacity: 0.5;
-  background-color: #EAF9DE;
+  background-color: #FFCAB6;
 }
 
 .bar-label {

@@ -6,7 +6,17 @@ import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components
   selector: 'budgetkey-chart-adamkey-wrapper',
   template: `
   <budgetkey-chart-adamkey [data]="data"></budgetkey-chart-adamkey>
-  `
+  `,
+  styles: [
+    `
+    ::ng-deep .label-col a {
+      color: #7FAA5E;	
+      font-family: "Abraham TRIAL";	
+      font-size: 14px;
+      text-align: right; 
+    }
+`
+  ]
 })
 export class AdamKeyChartWrapperComponent  {
 

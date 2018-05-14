@@ -20,8 +20,8 @@ export default new ReportDescriptor({
       require('./indicator-shnati.html')
     ),
     new Indicator(
-      'icon-semel.svg',
-      require('./indicator-semel.html')
+      'icon-coins.svg',
+      require('./indicator-coins.html')
     ),
   ],
   suffixTemplate: require('./suffix-template.html'),

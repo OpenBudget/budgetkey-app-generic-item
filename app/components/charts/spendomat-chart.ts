@@ -110,20 +110,24 @@ import * as _ from 'lodash';
     top: 0;
     right: 0;
     height: 100%;
-    border: 1px solid #C5E1AF;	
+    border: 1px solid #5D40D4;	
     border-radius: 0px 10px 10px 0px;
-    background-color: #EAF9DE;    
+    background-color: #B6A5EB;    
   }
 
   .row-part.hovered {
-    background-color: #C5E1AF;
+    background-color: #5D40D4;
+    color: #ffffff;
   }
 
   .small .row-part {
     border-radius: 0px 4px 4px 0px;
+    background-color: #f6f3fa;    
+    border: 1px solid #B3AADE;	
   }
+
   .small .row-part.hovered {
-    background-color: #C5E1AF;
+    background-color: #5D40D4;
   }
 
   .row-bg {
@@ -132,10 +136,10 @@ import * as _ from 'lodash';
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid #7FAA5E;	
+    border: 1px solid #5D40D4;	
     opacity: 0.5;	
     border-radius: 10px;	
-    background-color: #EAF9DE;    
+    background-color: #B6A5EB;    
   }
 
   .small .row-bg {
@@ -212,7 +216,7 @@ import * as _ from 'lodash';
     height: 0;
     border-style: solid;
     border-width: 7px 7px 7px 0;
-    border-color: transparent #7FAA5E transparent transparent;
+    border-color: transparent #5D40D4 transparent transparent;
     transition-property: transform;
     transition-duration: 200ms;
     transform: rotate(0);
@@ -241,14 +245,17 @@ import * as _ from 'lodash';
     font-family: "Abraham TRIAL";	
     font-size: 12px;	
     line-height: 16px;
-    border: 1px solid #7FAA5E;	
     border-radius: 4px;	
-    background-color: #F6F7F0;
+    // border: 1px solid #5D40D4;	
+    // background-color: #F6F7F0;
+
+    background-color: #f6f3fa;    
+    border: 1px solid #B3AADE;	
   }
 
   .tag.hovered {
-    color: #fffff;
-    background-color: #C5E1AF;
+    color: #ffffff;
+    background-color: #5D40D4;
   }
 
   .small-spendomat-rows {
