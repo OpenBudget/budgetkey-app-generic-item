@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
   }
 
   handleItem(item: any): void {
-    console.log(this);
     this.store.item = item;
     this.itemService.getItemDescriptor(item.doc_id)
       .then(descriptor => {

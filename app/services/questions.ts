@@ -7,16 +7,28 @@ import {
 
 @Injectable()
 export class QuestionsService {
-  parseQuestions(questions: Questions): PreparedQuestions {
-    return _.map(questions, function(question: Question) {
+
+  formatQuery(query: string | string[], parameters: object): string {
+    // TODO: Escape parameters (needs to be discussed)
+    if (_.isArray(query)) {
+      query = query.join(' ');
+    }
+    return query.replace(/:([a-z][a-z0-9_.]*)/ig, (match, name) => {
+      return _.get(parameters, name) ? _.get(parameters, name) : match;
+    });
+  }
+
+  parseQuestions(questions: Questions, parameters: object): PreparedQuestions {
+    return _.map(questions, (question: Question) => {
       let result = new PreparedQuestion();
       if (_.isArray(question.query)) {
         question.query = question.query.join(' ');
       }
       _.extend(result, question);
 
-      let s = question.text;
+      let s = this.formatQuery(question.text, parameters);
       let parsed = [];
+      let lastText: any = null;
       while (true) {
         let pattern = /<([a-z0-9-_]+)>/ig;
         let match = pattern.exec(s);
@@ -27,12 +39,18 @@ export class QuestionsService {
         if (question.parameters.hasOwnProperty(name)) {
           if (_.values(question.parameters[name]).length > 0) {
             let fragment = s.substr(0, match.index);
+            console.log('MMM', fragment, lastText);
             if (fragment !== '') {
-              parsed.push({
-                isText: true,
-                isParameter: false,
-                value: fragment
-              });
+              if (lastText) {
+                lastText.value += fragment;
+                lastText = null;
+              } else {
+                parsed.push({
+                  isText: true,
+                  isParameter: false,
+                  value: fragment
+                });
+              }
             }
             parsed.push({
               isText: false,
@@ -42,7 +60,25 @@ export class QuestionsService {
               values: question.parameters[name]
             });
             s = s.substr(match.index + match[0].length);
+          } else {
+            console.log('XXX', name, lastText);
           }
+        } else {
+          let fragment = s.substr(0, match.index + match[0].length);
+          console.log('OOO', fragment, lastText);
+          if (fragment !== '') {
+            if (lastText) {
+              lastText.value += fragment;
+            } else {
+              lastText = {
+                isText: true,
+                isParameter: false,
+                value: fragment
+              };
+              parsed.push(lastText);
+            }
+          }
+          s = s.substr(match.index + match[0].length);
         }
       }
       if (s !== '') {
@@ -61,16 +97,6 @@ export class QuestionsService {
         .extend(question.defaults)
         .value();
       return result;
-    });
-  }
-
-  formatQuery(query: string | string[], parameters: object): string {
-    // TODO: Escape parameters (needs to be discussed)
-    if (_.isArray(query)) {
-      query = query.join(' ');
-    }
-    return query.replace(/:([a-z][a-z0-9_]*)/ig, (match, name) => {
-      return parameters.hasOwnProperty(name) ? parameters[name] : match;
     });
   }
 }

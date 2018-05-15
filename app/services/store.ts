@@ -61,7 +61,9 @@ export class StoreService {
   get preparedQuestions(): PreparedQuestions {
     if (this.store.preparedQuestions === null) {
       this.store.preparedQuestions = this.questionsService.parseQuestions(
-        this.descriptor.questions);
+        this.descriptor.questions,
+        this.store.item
+      );
     }
     return this.store.preparedQuestions;
   }

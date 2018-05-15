@@ -4,7 +4,8 @@
     <div class="budgetkey-item-questions" [ngClass]="{expanded: isDropDownVisible}">
       <div class="current">
         <ng-container *ngFor="let fragment of currentQuestion.parsed">
-          <span *ngIf="fragment.isText" (click)="toggleDropDown()">{{ fragment.value }}</span>
+          <span *ngIf="fragment.isText" (click)="toggleDropDown()"
+                [innerHtml]="fragment.value"></span>
           <item-questions-parameter *ngIf="fragment.isParameter"
             [value]="currentParameters[fragment.name]"
             [values]="fragment.values | keys"
@@ -22,7 +23,8 @@
           [ngClass]="{active: question==currentQuestion}"
           (click)="selectQuestion(question)">
           <ng-container *ngFor="let fragment of question.parsed">
-            <span *ngIf="fragment.isText">{{ fragment.value }}</span>
+            <span *ngIf="fragment.isText"
+                  [innerHtml]="fragment.value"></span>
             <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
           </ng-container>
         </div>
