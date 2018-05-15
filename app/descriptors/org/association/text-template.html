@@ -12,11 +12,11 @@
 
 {% if (details.activity_region_list | length) == 1 %}
 <p>
-        על פי הדיווח, פעילותו מתרכזת ב{{details.activity_region_list[0]}}.
+        על פי הדיווח, הפעילות מרוכזת ב{{details.activity_region_list[0]}}.
 </p>
 {% elif (details.activity_region_districts | length) == 1  %}
 <p>
-        על פי הדיווח, פעילותו מתרכזת במחוז 
+        על פי הדיווח, הפעילות מרוכזת במחוז 
         {{details.activity_region_districts[0] | item_link('reports/ngo-district-report/' + details.activity_region_districts[0])}}.
 </p>
 {% endif %}
@@ -110,7 +110,7 @@
 {% if received_amount %}
 <p>
     {% if received_amount_contracts and received_amount_supports %}
-        סך הכנסות הארגון מכספי המדינה בשלוש השנים האחרונות
+        סך הכנסות הארגון מכספי המדינה בשלוש השנים האחרונות הוא
         {{received_amount | format_number}}₪,
         מתוכם
         {{received_amount_contracts | format_number}}₪
