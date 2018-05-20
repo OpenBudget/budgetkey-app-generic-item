@@ -36,6 +36,16 @@ env.addFilter('format_relative_percent', function(x: number) {
   }
 });
 
+env.addFilter('format_absolute_percent', function(x: number) {
+  if (x >= 0) {
+    x = x * 100;
+    x = Math.ceil(x);
+    return safe('<span class="number">' + x.toFixed(0) + '%</span>');
+  } else {
+    return '?%';
+  }
+});
+
 env.addFilter('load_json', function(x: string) {
   if (x) {
     return JSON.parse(x);
