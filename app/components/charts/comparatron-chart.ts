@@ -73,8 +73,8 @@ import { hierarchy, pack } from 'd3-hierarchy';
 
     .main-rect {
       width: 100%;
-      background-color: #D7EEC5;
-      border: 1px solid #B3E28D;
+      background-color: #FFAE90;
+      border: 1px solid #FFAE90;
     }
 
     .main-label {
