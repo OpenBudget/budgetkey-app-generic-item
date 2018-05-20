@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="82px" height="82px" viewBox="0 0 82 82" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>x corner</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="item-page---certificate-" transform="translate(-1046.000000, -960.000000)">
+            <g id="Stacked-Group">
+                <g id="main" transform="translate(2.000000, 420.000000)">
+                    <g id="certifcate-1-copy-2" transform="translate(134.052140, 525.000000)">
+                        <g id="x-corner" transform="translate(910.000000, 15.000000)">
+                            <path d="M80.4872799,1.54656572 L1.51548542,80.5183602 C1.16463559,80.86921 0.892587268,81.2690208 0.699340442,81.6957991 C0.258153966,81.0527628 1.02717007e-16,80.2743098 0,79.4355618 L0,5 C-2.705415e-16,2.790861 1.790861,1 4,1 L78.4676379,1 C79.2043346,1 79.894516,1.19915594 80.4872799,1.54656572 Z" id="Combined-Shape" fill="#E3E3E3" transform="translate(40.515759, 41.500000) rotate(-270.000000) translate(-40.515759, -41.500000) "></path>
+                            <path d="M59.0046693,21.2753247 L68.283603,12 L71.0093385,14.7246753 L61.7304047,24 L71.0093385,33.2753247 L68.283603,36 L59.0046693,26.7246753 L49.7257355,36 L47,33.2753247 L56.2789338,24 L47,14.7246753 L49.7257355,12 L59.0046693,21.2753247 Z" id="Combined-Shape" fill="#CF6060" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
