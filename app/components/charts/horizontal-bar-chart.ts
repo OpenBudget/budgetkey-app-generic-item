@@ -6,6 +6,7 @@ import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components
 @Component({
   selector: 'budgetkey-chart-horizontal-barchart',
   template: `
+  <div class="chart">
     <table>
       <tbody>
         <tr *ngFor='let value of data.values; let i = index'>
@@ -19,9 +20,15 @@ import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components
         </tr>
       </tbody>
     </table>
-  `,
+  </div>
+    `,
   styles: [
     `
+.chart {
+  max-height: 570px;
+  overflow-y: scroll;
+}
+
 table {
   width: 75%;
   font-size: 14px;
