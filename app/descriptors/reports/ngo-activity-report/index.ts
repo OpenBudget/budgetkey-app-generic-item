@@ -1,8 +1,12 @@
 import { ReportDescriptor, Indicator } from '../../../model';
 
+let activeTooltip = 'ארגון מוגדר כפעיל אם הוצג עבורו דיווח שנתי באתר "גיידסטאר" באחת משלוש השנים האחרונות.'
+
 export default new ReportDescriptor({
   pathPrefix: 'reports/ngo-activity-report/',
-  titlePrefix: 'ארגונים הפעילים בתחום',
+  titlePrefix: `ארגונים 
+  <span class='bk-tooltip-anchor'>הפעילים<span class='bk-tooltip'>` + activeTooltip + `</span></span>
+   בתחום`,
   titleSuffix: 'בכל הארץ',
   titleField: 'field_of_activity_display',
   titleOtherURLPrefix: 'reports/ngo-activity-report/',

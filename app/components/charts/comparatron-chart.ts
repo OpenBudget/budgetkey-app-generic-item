@@ -109,6 +109,11 @@ import { hierarchy, pack } from 'd3-hierarchy';
       font-family: "Abraham TRIAL";	
       font-size: 12px;
       text-indent: 145px;
+
+    }
+
+    ::ng-deep .bk-tooltip {
+      text-indent: 0px;
     }
 
     svg {

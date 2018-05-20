@@ -54,8 +54,7 @@
 {% if details.rank_of_yearly_turnover_in_field %}
 <p>
     זהו הארגון ה-{{ details.rank_of_yearly_turnover_in_field }}
-    בגובה המחזור הכספי המדווח מבין הארגונים הפעילים בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    בגובה המחזור הכספי המדווח מבין הארגונים הפעילים בתחום.
 </p>
 {%endif%}
 
@@ -77,16 +76,14 @@
 {% if details.rank_of_employees_in_field_of_activity %}
 <p>
     זהו הארגון ה-{{ details.rank_of_employees_in_field_of_activity }}
-    במספר העובדים מבין הארגונים הפעילים בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    במספר העובדים מבין הארגונים הפעילים בתחום.
 </p>
 {% endif %}
 
 {% if details.rank_of_volunteers_in_field_of_activity %}
 <p>
     זהו הארגון ה-{{details.rank_of_volunteers_in_field_of_activity}}
-    במספר המתנדבים מבין הארגונים הפעילים בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    במספר המתנדבים מבין הארגונים הפעילים בתחום.
 </p>
 {% endif %}
 
@@ -130,8 +127,7 @@
 <p>
     הארגון דורג במקום ה-{{details.rank_of_overall_recipient_in_field_of_activity}}
     בגובה ההכנסות מכספי מדינה בשלוש השנים האחרונות
-    בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    בתחום.
 </p>
 {% endif %}
 
@@ -139,8 +135,7 @@
 <p>
     הארגון מדורג במקום ה-{{details.rank_of_contract_recipient_in_field_of_activity}}
     בגובה ההכנסות מהתקשרויות עם גופי ממשל
-    בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    בתחום.
 </p>
 {% endif %}
 
@@ -148,8 +143,7 @@
 <p>
     הארגון מדורג במקום ה-{{details.rank_of_supports_recipient_in_field_of_activity}}
     בגובה ההכנסות מתמיכות מכספי מדינה
-    בתחום
-    {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
+    בתחום.
 </p>
 {% endif %}
 

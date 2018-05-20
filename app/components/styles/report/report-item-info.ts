@@ -9,7 +9,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
   template: `  
     <div class="container">
       <div class="title">
-        <small>{{descriptor.titlePrefix}}</small><br/>
+        <small [innerHtml]="descriptor.titlePrefix"></small><br/>
         <strong>
             <span (click)="dropdownHidden = !dropdownHidden">
               {{ item.details[descriptor.titleField] }}
