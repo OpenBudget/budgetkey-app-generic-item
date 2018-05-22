@@ -1,4 +1,4 @@
-import { format_number } from "../pipes";
+import { format_number } from '../pipes';
 
 export class Question {
   text: string;
@@ -53,7 +53,7 @@ export class DescriptorBase {
         return isFinite(x)
           ? format_number(x)
           : '-';
-      }
+      };
     } else if (mod === 'budget_code') {
       return (x: any, row: any) => {
         if (!x) {
@@ -66,7 +66,7 @@ export class DescriptorBase {
           x = x.slice(2);
         }
         return code.slice(1);
-      }
+      };
     } else { // Parametrized modifiers next
       let parts = mod.split('(');
       mod = parts[0];
@@ -79,7 +79,7 @@ export class DescriptorBase {
           } else {
             return x;
           }
-        }
+        };
       } else if (mod === 'search_term') {
         return (x: any, row: any) => {
           let term = row[param];
@@ -88,7 +88,7 @@ export class DescriptorBase {
           } else {
             return x;
           }
-        }
+        };
       } else {
         throw('Unknown formatter ' + mod);
       }
@@ -98,7 +98,7 @@ export class DescriptorBase {
   private getRowGetter(header: string) {
     return (x: any, row: any) => {
       return row[header];
-    }
+    };
   }
 
   private compose(func: any, func2: any) {
