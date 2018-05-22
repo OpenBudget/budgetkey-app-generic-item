@@ -10,7 +10,11 @@ import { format_number } from '../pipes';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) { }
+  constructor(private http: Http, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) { 
+    for (let descriptor of descriptors) {
+      descriptor.init(this.ngComponentsTheme.themeId);
+    }
+  }
 
   getRedashUrl(query: string): string {
     // TODO: Implement

@@ -44,7 +44,7 @@ export class DescriptorBase {
   private SIMPLE_MODIFIER = /:([a-z_]+)$/;
   private PARAMETER_MODIFIER = /:([a-z_]+\([a-z_]+\))$/;
 
-  private getFormatter(mod: string) {
+  private getFormatter(mod: string, themeId: string) {
     // Simple modifiers first
     if (mod === 'number') {
       return (x: any, row: any) => {
@@ -75,7 +75,11 @@ export class DescriptorBase {
         return (x: any, row: any) => {
           let item_id = row[param];
           if (item_id) {
-            return '<a href="/i/' + row[param] + '">' + x + '</a>';
+            if (themeId) {
+              return '<a href="/i/' + row[param] + '?theme=' + themeId + '">' + x + '</a>';
+            } else {
+              return '<a href="/i/' + row[param] + '">' + x + '</a>';
+            }
           } else {
             return x;
           }
@@ -84,7 +88,11 @@ export class DescriptorBase {
         return (x: any, row: any) => {
           let term = row[param];
           if (term) {
-            return '<a href="/s/?q=' + encodeURIComponent(term) + '">' + x + '</a>';
+            if (themeId) {
+              return '<a href="/s/?q=' + encodeURIComponent(term) + '&theme=' + themeId + '">' + x + '</a>';
+            } else {
+              return '<a href="/s/?q=' + encodeURIComponent(term) + '">' + x + '</a>';
+            }
           } else {
             return x;
           }
@@ -105,7 +113,7 @@ export class DescriptorBase {
     return (x: any, row: any) => func2(func(x, row), row);
   }
 
-  private processHeadersFormatters(question: Question): any {
+  private processHeadersFormatters(question: Question, themeId: string): any {
     if (question.originalHeaders) {
       // Don't process the same question twice
       return;
@@ -124,7 +132,7 @@ export class DescriptorBase {
             let idx = header.search(modifier);
             let mod = header.slice(idx + 1);
             header = header.slice(0, idx);
-            _funcs.push(this.getFormatter(mod));
+            _funcs.push(this.getFormatter(mod, themeId));
             found = true;
             break;
           }
@@ -161,9 +169,11 @@ export class DescriptorBase {
       this.style = style;
       this.questions = questions;
       this.visualizationTemplates = visualizationTemplates || {};
+    }
 
-      for (let question of questions) {
-        this.processHeadersFormatters(question);
+    public init(themeId: string) {
+      for (let question of this.questions) {
+        this.processHeadersFormatters(question, themeId);
       }
   }
 

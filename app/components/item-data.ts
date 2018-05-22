@@ -108,10 +108,10 @@ export class ItemQuestionsComponent implements OnDestroy {
           'csv',
           this.store.currentQuestion.originalHeaders
       );
-    this.downloadUrl =
+    this.downloadUrlXlsx =
       this.itemService.getDownloadUrl(
           this.store.dataQuery,
-          'xslx',
+          'xlsx',
           this.store.currentQuestion.originalHeaders
       );
     this.isSearching = true;
