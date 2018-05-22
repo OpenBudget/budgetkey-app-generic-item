@@ -39,7 +39,6 @@ export class QuestionsService {
         if (question.parameters.hasOwnProperty(name)) {
           if (_.values(question.parameters[name]).length > 0) {
             let fragment = s.substr(0, match.index);
-            console.log('MMM', fragment, lastText);
             if (fragment !== '') {
               if (lastText) {
                 lastText.value += fragment;
@@ -60,12 +59,9 @@ export class QuestionsService {
               values: question.parameters[name]
             });
             s = s.substr(match.index + match[0].length);
-          } else {
-            console.log('XXX', name, lastText);
           }
         } else {
           let fragment = s.substr(0, match.index + match[0].length);
-          console.log('OOO', fragment, lastText);
           if (fragment !== '') {
             if (lastText) {
               lastText.value += fragment;

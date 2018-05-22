@@ -5,7 +5,8 @@
   "SELECT order_date as \"תאריך הזמנה\",",
   "       purchase_method->>0 as \"אופן התקשרות\",",
   "       purchasing_unit->>0 as \"יחידה רוכשת\",",
-  "       'contract-spending/' || order_id || '/' || budget_code || '#' || purpose as \"מטרה\",",
+  "       purpose as \"מטרה\",",
+  "       'contract-spending/' || order_id || '/' || budget_code || '/' || publisher_name as item_id,",
   "       start_date as \"תאריך תחילה\",",
   "       volume as \"היקף\",",
   "       executed as \"ביצוע\",",
@@ -22,7 +23,8 @@
         "2015": "2015,2015",
         "2016": "2016,2016",
         "2017": "2017,2017",
-        "2018": "2018,2018"
+        "2018": "2018,2018",
+        "2019": "2019,2019"
       }
     },
     "defaults": {
@@ -30,15 +32,15 @@
     },
     "headers": [
       "יחידה רוכשת",
-      "מטרה",
+      "מטרה:item_link(item_id)",
+      "אופן התקשרות",
       "תאריך הזמנה",
       "תאריך תחילה",
       "תאריך סיום",
-      "היקף",
-      "ביצוע"
-    ],
-    "formatters": {
-      "מטרה": "_budgetItemTitleFormatter"
-    }
+      "היקף:number",
+      "ביצוע:number",
+      "מטבע",
+      "תיאור"
+    ]
   }
 ]

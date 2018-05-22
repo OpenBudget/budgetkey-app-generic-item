@@ -18,9 +18,10 @@ export class BudgetKeyItemService {
       encodeURIComponent(query);
   }
 
-  getDownloadUrl(query: string, format: string): string {
-    return '//next.obudget.org/api/download?query=' +
-      encodeURIComponent(query) + '&format=' + format;
+  getDownloadUrl(query: string, format: string, headers: string[]): string {
+    return '//next.obudget.org/api/download?query=' + encodeURIComponent(query) +
+      '&format=' + format +
+      '&headers=' + encodeURIComponent(headers.join(';'));
   }
 
   getItem(itemId: string): Promise<Item> {
@@ -99,7 +100,7 @@ export class BudgetKeyItemService {
         (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
-  getItemData(query: string, headersOrder: string[], formatters: object): Promise<object> {
+  getItemData(query: string, headersOrder: string[], formatters: any[]): Promise<object> {
     const url = '//next.obudget.org/api/query?query=' + encodeURIComponent(query);
 
     return new Promise<any>((resolve, reject) => {
@@ -110,13 +111,13 @@ export class BudgetKeyItemService {
             let items: object[] = [];
             let rows = res.rows;
             let total = res.total;
-            let headers = rows.length > 0 ? _.union(headersOrder, _.keys(_.first(rows))) : [];
+            let headers = headersOrder;
 
             _.each(rows, (row) => {
               let newItem: any[] = [];
 
-              _.each(headers, (header) => {
-                let item = formatters[header] ? this[formatters[header]](row[header]) : row[header];
+              _.each(formatters, (formatter) => {
+                let item = formatter(row);
                 newItem.push(item);
               });
               items.push(newItem);

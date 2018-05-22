@@ -102,8 +102,18 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.preparedQuestions = this.store.preparedQuestions;
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
-    this.downloadUrl = this.itemService.getDownloadUrl(this.store.dataQuery, 'csv');
-    this.downloadUrlXlsx = this.itemService.getDownloadUrl(this.store.dataQuery, 'xlsx');
+    this.downloadUrl =
+      this.itemService.getDownloadUrl(
+          this.store.dataQuery,
+          'csv',
+          this.store.currentQuestion.originalHeaders
+      );
+    this.downloadUrl =
+      this.itemService.getDownloadUrl(
+          this.store.dataQuery,
+          'xslx',
+          this.store.currentQuestion.originalHeaders
+      );
     this.isSearching = true;
   }
 

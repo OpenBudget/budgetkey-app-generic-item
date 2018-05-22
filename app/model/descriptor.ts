@@ -1,10 +1,13 @@
+import { format_number } from "../pipes";
+
 export class Question {
-  text: string = '';
-  query: string | string[] = '';
+  text: string;
+  query: string | string[];
   parameters: object = {};
   defaults: object | null = {};
-  headers: string[] | null = [];
-  formatters: object | null = {};
+  headers: string[];
+  formatters: any[] = [];
+  originalHeaders: string[] | null;
 }
 
 export class PreparedQuestionTextFragment {
@@ -38,15 +41,132 @@ export class DescriptorBase {
   style: string;
   questions: Questions;
 
-  constructor(pathPrefix: string,
-              style: string,
-              questions: Questions,
-              visualizationTemplates?: any) {
-    this.pathPrefix = pathPrefix;
-    this.style = style;
-    this.questions = questions;
-    this.visualizationTemplates = visualizationTemplates || {};
+  private SIMPLE_MODIFIER = /:([a-z_]+)$/;
+  private PARAMETER_MODIFIER = /:([a-z_]+\([a-z_]+\))$/;
+
+  private getFormatter(mod: string) {
+    // Simple modifiers first
+    if (mod === 'number') {
+      return (x: any, row: any) => {
+        x = parseFloat(x);
+
+        return isFinite(x)
+          ? format_number(x)
+          : '-';
+      }
+    } else if (mod === 'budget_code') {
+      return (x: any, row: any) => {
+        if (!x) {
+          return '';
+        }
+        x = x.slice(2);
+        let code = '';
+        while (x.length > 0) {
+          code += '.' + x.slice(0, 2);
+          x = x.slice(2);
+        }
+        return code.slice(1);
+      }
+    } else { // Parametrized modifiers next
+      let parts = mod.split('(');
+      mod = parts[0];
+      let param = parts[1].slice(0, parts[1].length - 1);
+      if (mod === 'item_link') {
+        return (x: any, row: any) => {
+          let item_id = row[param];
+          if (item_id) {
+            return '<a href="/i/' + row[param] + '">' + x + '</a>';
+          } else {
+            return x;
+          }
+        }
+      } else if (mod === 'search_term') {
+        return (x: any, row: any) => {
+          let term = row[param];
+          if (term) {
+            return '<a href="/s/?q=' + encodeURIComponent(term) + '">' + x + '</a>';
+          } else {
+            return x;
+          }
+        }
+      } else {
+        throw('Unknown formatter ' + mod);
+      }
+    }
   }
+
+  private getRowGetter(header: string) {
+    return (x: any, row: any) => {
+      return row[header];
+    }
+  }
+
+  private compose(func: any, func2: any) {
+    return (x: any, row: any) => func2(func(x, row), row);
+  }
+
+  private processHeadersFormatters(question: Question): any {
+    if (question.originalHeaders) {
+      // Don't process the same question twice
+      return;
+    }
+    question.originalHeaders = question.headers;
+
+    let _headers = [];
+    let _formatters = [];
+
+    for (let header of question .headers) {
+      let _funcs: any[] = [];
+      while (header.length > 0) {
+        let found = false;
+        for (let modifier of [this.SIMPLE_MODIFIER, this.PARAMETER_MODIFIER]) {
+          if (modifier.test(header)) {
+            let idx = header.search(modifier);
+            let mod = header.slice(idx + 1);
+            header = header.slice(0, idx);
+            _funcs.push(this.getFormatter(mod));
+            found = true;
+            break;
+          }
+        }
+        if (found) {
+          continue;
+        }
+
+        _funcs.push(this.getRowGetter(header));
+        let func: any = null;
+        while (_funcs.length > 0) {
+          if (func === null ) {
+            func = _funcs.pop();
+          } else {
+            let func2 = _funcs.pop();
+            func = this.compose(func, func2);
+          }
+        }
+
+        _headers.push(header);
+        _formatters.push((row: any) => func('', row));
+        break;
+      }
+    }
+    question.headers = _headers;
+    question.formatters = _formatters;
+  }
+
+  constructor(pathPrefix: string,
+    style: string,
+    questions: Questions,
+    visualizationTemplates?: any) {
+      this.pathPrefix = pathPrefix;
+      this.style = style;
+      this.questions = questions;
+      this.visualizationTemplates = visualizationTemplates || {};
+
+      for (let question of questions) {
+        this.processHeadersFormatters(question);
+      }
+  }
+
 }
 
 export class SimpleDescriptor extends DescriptorBase {

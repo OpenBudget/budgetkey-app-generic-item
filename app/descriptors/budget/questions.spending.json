@@ -2,10 +2,15 @@
 
   {
     "text": " כלל התמיכות מתקציב זה ש <phase> ב <period>",
-    "query": ["SELECT :phase AS \"שנה\", supporting_ministry AS \"משרד\", request_type AS \"סוג תמיכה\", ", 
-              "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type || '#' || support_title AS \"נושא\", ", 
-              "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"מקבל התמיכה\", ",
-              "sum(amount_paid) as \"סה״כ שולם\" FROM raw_supports WHERE :phase :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5",
+    "query": ["SELECT :phase AS \"שנה\",",
+              "supporting_ministry AS \"משרד\",",
+              "request_type AS \"סוג תמיכה\", ", 
+              "support_title AS \"נושא\", ", 
+              "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type AS item_id, ", 
+              "entity_name as \"מקבל התמיכה\", ",
+              "'org/' || entity_kind || '/' || entity_id as entity_item_id, ",
+              "sum(amount_paid) as \"סה״כ שולם\"",
+              "FROM raw_supports WHERE :phase :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6, 7",
               "order by :phase desc"],
     "parameters": {
       "phase": {
@@ -24,27 +29,33 @@
         "2015": "=2015",
         "2016": "=2016",
         "2017": "=2017",
-        "2018": "=2018"
+        "2018": "=2018",
+        "2019": "=2019"
       }
     },
     "defaults": {
       "phase": "אושרו",
       "period": "כל השנים"
     },
-    "headers": ["נושא", "משרד", "סוג תמיכה", "מקבל התמיכה"],
-    "formatters": {
-      "סה״כ שולם": "_budgetNumberFormatter",
-      "נושא": "_budgetItemTitleFormatter",
-      "מקבל התמיכה": "_budgetItemTitleFormatter"
-    }
+    "headers": [
+      "נושא:item_link(item_id)", 
+      "משרד", 
+      "סוג תמיכה", 
+      "מקבל התמיכה:item_link(entity_item_id)",
+      "שנה",
+      "סה״כ שולם:number"
+    ]
   },
   {
     "text": "סך התמיכות מתקציב זה, לפי מקבל התמיכה ש<phase> עבור בקשות מ <period>",
-    "query": ["SELECT SUPPORT_TITLE AS \"נושא\", ", 
-              "budget_code || '#budget#' || budget_code AS \"מספר תקנה\", ", 
-              "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"מקבל התמיכה\", ",
-              "sum(:phase) as \"סה״כ\", min(year_requested) || '-' || max(year_requested)  as \"תקופה\" ", 
-              "FROM raw_supports WHERE year_requested :period AND  budget_code like ':code%%' GROUP BY 1, 2, 3 ORDER BY 4 DESC nulls last"],
+    "query": ["SELECT support_title AS \"נושא\", ", 
+              "budget_code,", 
+              "budget_code AS \"מספר תקנה\", ", 
+              "entity_name as \"מקבל התמיכה\", ",
+              "'org/' || entity_kind || '/' || entity_id as item_id, ",
+              "sum(:phase) as \"סה״כ\",",
+              "min(year_requested) || '-' || max(year_requested)  as \"תקופה\" ", 
+              "FROM raw_supports WHERE year_requested :period AND  budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5 ORDER BY 4 DESC nulls last"],
     "parameters": {
       "phase": {
         "שולמו": "amount_paid",
@@ -62,28 +73,36 @@
         "2015": "=2015",
         "2016": "=2016",
         "2017": "=2017",
-        "2018": "=2018"
+        "2018": "=2018",
+        "2019": "=2019"
       }
     },
     "defaults": {
       "phase": "אושרו",
       "period": "כל השנים"
     },
-    "formatters": {
-      "סה״כ": "_budgetNumberFormatter",
-      "מספר תקנה": "_budgetSearchTitleFormatter",
-      "מקבל התמיכה": "_budgetItemTitleFormatter"
-    }
+    "headers": [
+      "נושא",
+      "מספר תקנה:budget_code:search_term(budget_code)",
+      "מקבל התמיכה:item_link(item_id)",
+      "תקופה",
+      "סה״כ:number"
+    ]
   },
   {
     "text": " סך ההתקשרויות מתקציב זה לפי ספק מ <period>",
     "query": [
-              "SELECT sum(volume) AS \"סה״כ היקף\", sum(executed) AS \"סה״כ בוצע\", currency AS \"מטבע\", ", 
-              "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", purchase_method->>0 AS \"אופן הרכישה\", ", 
-              "'org/' || entity_kind || '/' || entity_id || '#' || entity_name as \"ספק\", ",
-              "min(min_year)||' - '||max(max_year) AS \"תקופה\" FROM contract_spending ", 
+              "SELECT sum(volume) AS \"סה״כ היקף\",",
+              "sum(executed) AS \"סה״כ בוצע\",",
+              "currency AS \"מטבע\", ", 
+              "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\",",
+              "purchase_method->>0 AS \"אופן הרכישה\", ", 
+              "entity_name as \"ספק\", ",
+              "'org/' || entity_kind || '/' || entity_id as item_id, ",
+              "min(min_year)||' - '||max(max_year) AS \"תקופה\"",
+              "FROM contract_spending ", 
               "WHERE budget_code like ':code%%' AND ((:period <= min_year) OR (min_year IS NULL AND :period <= max_year)) ", 
-              "GROUP BY 3,4,5,6 ORDER BY 1 DESC nulls LAST"
+              "GROUP BY 3,4,5,6,7 ORDER BY 1 DESC nulls LAST"
             ],
     "parameters": {
       "period": {
@@ -98,35 +117,40 @@
         "2015": "2015",
         "2016": "2016",
         "2017": "2017",
-        "2018": "2018"
+        "2018": "2018",
+        "2019": "2019"
       }
     },
     "defaults": {
       "period": "כל השנים"
     },
-    "formatters": {
-      "סה״כ היקף": "_budgetNumberFormatter",
-      "סה״כ בוצע": "_budgetNumberFormatter",
-      "ספק": "_budgetItemTitleFormatter"
-    },
     "headers": [
         "היחידה הרוכשת",
-        "ספק",        
+        "ספק:item_link(item_id)",
         "אופן הרכישה",
         "מטבע",
-        "סה״כ היקף",
-        "סה״כ בוצע",
+        "סה״כ היקף:number",
+        "סה״כ בוצע:number",
         "תקופה"
     ]
   },
   {
     "text": " כלל ההתקשרויות מתקציב זה לפי ספק ב <period>",
     "query": [
-              "SELECT volume AS \"היקף\", executed AS \"ביצוע\", currency AS \"מטבע\", min_year||'-'||max_year AS \"תקופה\", ", 
-              "'contract-spending/' || order_id || '/' || budget_code || '#' || purpose AS \"תיאור\", ", 
-              "case when entity_name is null then supplier_name->>0 else ('org/' || entity_kind || '/' || entity_id || '#' || entity_name) end as \"ספק\", ",
-              "purchase_method->>0 AS \"אופן רכישה\", ((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ", 
-              "order_date AS \"תאריך הזמנה\", start_date AS \"תאריך התחלה\", end_date AS \"תאריך סיום\" FROM contract_spending ", 
+              "SELECT volume AS \"היקף\",",
+              "executed AS \"ביצוע\",",
+              "currency AS \"מטבע\",",
+              "min_year||'-'||max_year AS \"תקופה\", ", 
+              "purpose AS \"תיאור\", ", 
+              "'contract-spending/' || order_id || '/' || budget_code || '/' || publisher_name AS cs_item_id, ", 
+              "case when entity_name is null then supplier_name->>0 else entity_name end as \"ספק\", ",
+              "case when entity_id is null then null else ('org/' || entity_kind || '/' || entity_id) end as e_item_id, ",
+              "purchase_method->>0 AS \"אופן רכישה\",",
+              "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\", ", 
+              "order_date AS \"תאריך הזמנה\",",
+              "start_date AS \"תאריך התחלה\",",
+              "end_date AS \"תאריך סיום\"",
+              "FROM contract_spending ", 
               "WHERE budget_code like ':code%%' AND ((:period BETWEEN min_year AND max_year) or (min_year is null and :period <= max_year) or ", 
               "(max_year is null and :period >= min_year) or (:period is null))",
               "ORDER BY order_date desc nulls last"
@@ -138,7 +162,8 @@
         "2015": "2015",
         "2016": "2016",
         "2017": "2017",
-        "2018": "2018"
+        "2018": "2018",
+        "2019": "2019"
       }
     },
     "defaults": {
@@ -146,18 +171,15 @@
     },
     "headers": [
       "היחידה הרוכשת",
-      "ספק",        
-      "תיאור",
+      "ספק:item_link(e_item_id)",        
+      "תיאור:item_link(cs_item_id)",
       "אופן רכישה",
-      "היקף",
-      "ביצוע",
-      "מטבע"
-    ],
-    "formatters": {
-      "היקף": "_budgetNumberFormatter",
-      "ביצוע": "_budgetNumberFormatter",
-      "תיאור": "_budgetItemTitleFormatter",
-      "ספק": "_budgetItemTitleFormatter"
-    }
+      "היקף:number",
+      "ביצוע:number",
+      "מטבע",
+      "תאריך הזמנה",
+      "תאריך התחלה",
+      "תאריך סיום"
+    ]
   }
 ]
