@@ -6,7 +6,7 @@
   "       purchase_method->>0 as \"אופן התקשרות\",",
   "       purchasing_unit->>0 as \"יחידה רוכשת\",",
   "       purpose as \"מטרה\",",
-  "       'contract-spending/' || order_id || '/' || budget_code || '/' || publisher_name as item_id,",
+  "       'contract-spending/' || publisher_name || '/' || order_id || '/' || budget_code as item_id,",
   "       start_date as \"תאריך תחילה\",",
   "       volume as \"היקף\",",
   "       executed as \"ביצוע\",",
