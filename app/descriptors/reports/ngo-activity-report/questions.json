@@ -16,7 +16,7 @@
       "__last_updated_at AS \"תאריך בדיקה אחרונה\"",
       "FROM guidestar_processed JOIN ids USING (id) FULL JOIN ad USING (id)",
       "WHERE :status AND association_field_of_activity=':details.field_of_activity'",
-      "GROUP BY 1,2,3,4,5,7,8,9,10"
+      "GROUP BY 1,2,3,4,5,6,8,9,10"
     ],
     "parameters": {
       "status": {
@@ -42,7 +42,6 @@
       "שם הארגון:item_link(item_id)",
       "מספר ארגון",
       "מחזור כספי שנתי:number",
-      "מספר עובדים",
       "מספר עובדים",
       "מספר מתנדבים",
       "מחוזות פעילות",
