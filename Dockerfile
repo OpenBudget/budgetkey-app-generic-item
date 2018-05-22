@@ -1,7 +1,8 @@
 FROM node:8-alpine
 
-COPY . /app/
 RUN apk add --update git
+
+COPY . /app/
 RUN cd /app/ && \
     npm install --no-audit && \
     # uncomment the following line to enable integration with custom budgetkey-ng2-components
