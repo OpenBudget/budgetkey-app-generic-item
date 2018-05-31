@@ -88,11 +88,11 @@ export class DescriptorBase {
         return (x: any, row: any) => {
           let term = row[param];
           if (term) {
-            if (themeId) {
-              return '<a href="/s/?q=' + encodeURIComponent(term) + '&theme=' + themeId + '">' + x + '</a>';
-            } else {
-              return '<a href="/s/?q=' + encodeURIComponent(term) + '">' + x + '</a>';
-            }
+            // if (themeId) {
+            //   return '<a href="/s/?q=' + encodeURIComponent(term) + '&theme=' + themeId + '">' + x + '</a>';
+            // } else {
+            return '<a href="/s/?q=' + encodeURIComponent(term) + '" title="חיפוש ד' + x + ' במפתח התקציב">' + x + '</a>';
+            // }
           } else {
             return x;
           }
