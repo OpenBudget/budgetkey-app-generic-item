@@ -1,0 +1,249 @@
+.style-procure procure-item-info {
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1015px;	
+    border: 2px solid rgba(0,0,0,0.02);	
+    border-radius: 3px;	
+    background-color: #FFFBF2;	
+    box-shadow: 0 1px 2px 0 rgba(189,189,189,0.6);
+    flex-flow: column;
+
+    font-family: "Abraham TRIAL";	
+    font-size: 18px;
+    font-weight: normal;
+    color: #512C0A;
+
+    label, th {
+        padding-top: 13px;
+        font-weight: bold;
+        color: #19008F;
+        white-space: nowrap;
+    }
+
+    .marquee {
+        width: 100%;
+        height: 26px;
+        display: flex;
+        flex-flow: row;
+        border-bottom: 2px solid rgba(0,0,0,0.04);
+
+        span {
+            width: auto;
+            color: #512C0A;	
+            padding-left: 8px;
+            padding-right: 8px;
+            font-family: "Abraham TRIAL";	
+            font-size: 16px;
+        }
+
+        .status-alert {
+            font-weight: bold;
+            background-color: #FFF37B;
+        }
+
+        .status-alert {
+        }
+
+        .status-timestamp {
+        }
+
+        .created-timestamp {
+            margin-right: auto;
+            text-align: left;
+        }
+    }
+
+    .header {
+        padding-top: 26px;
+        padding-bottom: 26px;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-bottom: 2px solid rgba(0,0,0,0.04);
+        display: flex;
+        flex-flow: row;
+
+        .titles {
+            width: 70%;
+            
+            .title {
+                font-family: "Miriam Libre";	
+                font-size: 26px;	
+                font-weight: bold;
+                color: #19008F;
+
+                .tender-type-tag {
+                    display: inline-block;
+                    border-radius: 4px;	
+                    background-color: #19008F;
+                    color: #FFFBF2;	
+                    font-family: "Abraham TRIAL";	
+                    font-size: 13px;	
+                    font-weight: 500;
+                    margin-right: 10px;
+                    padding: 0 3px;
+                    vertical-align: middle;
+                }
+            }
+
+            .parties {
+                color: #19008F;	
+                font-family: "Miriam Libre";	
+                font-size: 26px;
+
+                .from {
+                    font-weight: bold;
+                }
+
+                .to {
+
+                }
+
+                .to-entity-id {
+                    display: none;
+                }
+            }
+
+            .tags {
+                .tag {
+                    color: #512C0A;	
+                    font-family: "Abraham TRIAL";	
+                    font-size: 14px;
+                    border: 1px solid #512C0A;	
+                    opacity: 0.25;	
+                    border-radius: 6px;	
+                    background-color: #FFFBF2;
+                }
+            }
+        }
+
+        .amount {
+            width: 30%;
+            text-align: left;
+            padding-top: 10px;
+
+            .progress-text {
+                color: #19008F;	
+                font-family: "Abraham TRIAL";	
+                font-size: 16px;
+            }
+
+            .volume {
+                color: #19008F;
+                font-family: "Miriam Libre";
+                font-size: 26px;
+                font-weight: bold;
+            }
+        }
+    }
+
+
+    .details {
+        padding-top: 26px;
+        padding-bottom: 26px;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-bottom: 2px solid rgba(0,0,0,0.04);
+        display: flex;
+        flex-flow: column;
+        width: 75%;
+
+        .timeline {
+            table {
+                margin-top: 26px;
+                width: 100%;
+                border-collapse:separate; 
+                border-spacing:0 22px;
+                tr {
+                    height: 25px;
+                }
+                tr.major {
+                    background-color: rgba(81,44,10, 0.05);
+                }
+                td:last-child {
+                    width: 75%;
+                }
+                th, td {
+                    padding-left: 15px;
+                }
+                td:nth-child(2) {
+                    white-space: nowrap;
+                }
+                td:nth-child(4) {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+        }
+    
+        .awardees {
+            table {
+                width: 100%;
+                thead {
+                    height: 30px;
+                }
+                tr:nth-child(2n+1) {
+                    background-color: rgba(81,44,10, 0.05);
+                }
+                th, td {
+                    padding-left: 15px;
+                }
+                td:nth-child(2),td:nth-child(3),td:nth-child(4) {
+                    // text-align: left;
+                    white-space: nowrap;
+                }
+            }
+        }    
+    }
+
+    .attachments {
+        padding-top: 26px;
+        padding-bottom: 26px;
+        padding-left: 50px;
+        padding-right: 50px;
+        background-color: rgba(0,0,0,0.02);
+
+        .file-list {
+            display: flex;
+            flex-flow: row wrap;
+
+            .attachment {
+                position: relative;
+                width: ~"calc(33% - 38px)";
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                padding-right: 23px;
+                padding-left: 10px;
+                margin: 19px;
+                margin-top: 35px;
+                min-height: 63px;
+                border-radius: 4px;	
+                background-color: rgba(81,44,10, 0.04);
+
+                .update-time {
+                    position: absolute;
+                    top: -16px;
+                    right: 0px;
+                    opacity: 0.5;	
+                    color: #512C0A;	
+                    font-family: "Abraham TRIAL";
+                    font-size: 14px;
+                }
+                .filename {
+                    margin-right: 5px;
+                    padding: 10px 0;
+                }
+
+                .icon {
+                    margin-right: auto;
+                    font-size: 43px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+}

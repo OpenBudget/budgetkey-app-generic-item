@@ -1,0 +1,113 @@
+<div class='marquee'>
+    <span class='status-alert' *ngIf='0'>{{ 'TODO' }}</span>
+    <span class='status-text'>{{ statusText() }}</span>
+    <span class='status-timestamp'>עדכון אחרון: {{ item.last_update_date }}</span>
+    <span class='created-timestamp'>דיווח ראשון: {{ item.start_date }}</span>
+</div>
+<div class='header'>
+    <div class='titles'>
+        <div class='title'>
+            {{ item.description }}
+            <span class='tender-type-tag'>
+                {{ statusText() }}
+            </span>
+        </div>
+        <div class='parties'>
+            <span class='from'>{{ item.publisher }} &larr;</span>
+            <ng-container *ngIf='item.awardees.length'>
+                <span class='to'>
+                    {{ item.awardees[0].entity_name }}
+                    <span *ngIf='item.awardees.length > 1'>
+                        +{{ item.awardees.length - 1 }}
+                    </span>
+                </span>
+                <span *ngIf='item.awardees.length == 1' class='to-entity-id'>
+                    {{ item.awardees[0].entity_id }}
+                </span>
+            </ng-container>
+        </div>
+        <div class='tags'>
+            <span class='tag' *ngFor='let tag of item.subject_list'>
+                {{ tag }}
+            </span>
+        </div>
+    </div>
+    <div class='amount' *ngIf='item.contract_volume'>
+        <div class='progress-text'>
+            <span>עד כה שולמו</span>
+            <span class='figure' [innerHtml]='number(item.contract_executed)'></span>
+            <span>שהם</span>
+            <span class='figure' [innerHtml]='percent(item.contract_executed / item.contract_volume)'></span>
+            <span>מתוך:</span>
+        </div>
+        <div class='volume'>
+            <span class='figure' [innerHtml]='number(item.contract_volume) + "₪"'></span>
+        </div>
+    </div>
+</div>
+<div class='details'>
+    <div *ngIf='item.tender_type != "office"'>
+        <label>תיאור:</label><br/>
+        <span class='label-text'>{{ 'השתלמות 3 עובדים בהכשרה לחירום.' }}</span>
+    </div>
+    <label>פרטי המכרז:</label>
+    <span class='label-text'>{{item.tender_id}}: {{tenderType()}}</span>
+    <span class='label-text'>מועד סגירה: {{ item.claim_date }}</span>
+    <span class='label-text' *ngIf='item.contact'>אנשי קשר: {{ item.contact }}</span>
+    <div class='awardees' *ngIf='item.awardees.length && item.contract_executed'>
+        <table>
+            <thead>
+                <th>הזוכים במכרז</th>
+                <th>סכום ההתקשרות</th>
+                <th>עד כה שולם</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let awardee of item.awardees'>
+                    <td>{{ awardee.entity_name }}</td>
+                    <td [innerHtml]='number(awardee.volume) + "₪"'></td>
+                    <td [innerHtml]='number(awardee.executed) + "₪"'></td>
+                    <td [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'></td>
+                    <td><i class='glyphicon glyphicon-circle-arrow-left'></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='timeline' *ngIf='item.timeline'>
+        <table>
+            <tbody>
+                <tr *ngFor='let event of item.timeline; let i = index'
+                    [class]="event.major ? 'major' : 'minor' ">
+                    <td><timeline-part [size]='25' 
+                                       [padding]='22' 
+                                       [major]='event.major'
+                                       [last]='i == (item.timeline.length - 1)'>
+                        </timeline-part></td>
+                    <td>{{ event.timestamp }}</td>
+                    <td><i *ngIf='event.url' class='glyphicon glyphicon-paperclip'></i></td>
+                    <td>{{ event.title }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class='attachments'>
+    <label>קבצים מצורפים:</label>
+    <div class='file-list'>
+        <div class='attachment' *ngFor='let attachment of item.documents'>
+            <div class='update-time'>
+                {{ attachment.update_time }}
+            </div>
+            <div class='paperclip'>
+                <i class='glyphicon glyphicon-paperclip'></i>
+            </div>
+            <div class='filename'>
+                <a [href]='attachment.link'>{{ attachment.description }}</a>
+            </div>
+            <div class='icon'>
+                <i class='glyphicon glyphicon-file'></i>
+            </div>
+        </div>
+    </div>
+</div>

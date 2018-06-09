@@ -46,6 +46,11 @@ import {
 
   OrgItemComponent,
   OrgItemInfoComponent,
+
+  ProcureItemInfoComponent,
+  ProcureItemComponent,
+  
+  TimelinePartComponent,
 } from './components';
 
 import { SafeHtmlPipe } from './components/charts';
@@ -115,8 +120,13 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 
     OrgItemComponent,
     OrgItemInfoComponent,
-  ],
-  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent ],
+
+    ProcureItemInfoComponent,
+    ProcureItemComponent,
+
+    TimelinePartComponent,
+],
+  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent ],
   providers: providers,
   bootstrap: [
     AppComponent

@@ -224,3 +224,9 @@ export class ReportDescriptor extends DescriptorBase {
     this.titleOtherURLPrefix = x.titleOtherURLPrefix;
   }
 }
+
+export class ProcureDescriptor extends DescriptorBase {
+  constructor(x: any) {
+    super(x.pathPrefix, 'procure', x.questions);
+  }
+}

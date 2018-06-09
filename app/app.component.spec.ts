@@ -49,7 +49,12 @@ import {
 
   OrgItemInfoComponent,
   OrgItemComponent,
+
+  ProcureItemInfoComponent,
+  ProcureItemComponent,
+
   SafeHtmlPipe,
+  TimelinePartComponent,
 } from './components';
 
 import {defaultTheme, THEME_TOKEN} from './config';
@@ -104,6 +109,11 @@ describe('AppComponent', function () {
 
         OrgItemInfoComponent,
         OrgItemComponent,
+
+        ProcureItemInfoComponent,
+        ProcureItemComponent,
+
+        TimelinePartComponent,
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
