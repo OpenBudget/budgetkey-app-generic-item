@@ -43,6 +43,7 @@
     "glslify-loader": "^1.0.2",
     "lodash": "^4.17.2",
     "mapbox-gl": "^0.41.0",
+    "moment": "^2.22.2",
     "mushonkey": "^0.1.0",
     "nunjucks": "^3.0.1",
     "plotly.js": "^1.37.1",

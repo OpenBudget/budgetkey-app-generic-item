@@ -1,5 +1,5 @@
 <div class='marquee'>
-    <span class='status-alert' *ngIf='0'>{{ 'TODO' }}</span>
+    <span class='status-alert' *ngIf='alertText()'>{{ alertText() }}</span>
     <span class='status-text'>{{ statusText() }}</span>
     <span class='status-timestamp'>עדכון אחרון: {{ item.last_update_date }}</span>
     <span class='created-timestamp'>דיווח ראשון: {{ item.start_date }}</span>
@@ -14,7 +14,12 @@
         </div>
         <div class='parties'>
             <span class='from'>{{ item.publisher }} &larr;</span>
-            <ng-container *ngIf='item.awardees.length'>
+            <ng-container *ngIf='toText()'>
+                <span class='to'>
+                    {{ toText() }}
+                </span>
+            </ng-container>
+            <ng-container *ngIf='!toText() && item.awardees.length'>
                 <span class='to'>
                     {{ item.awardees[0].entity_name }}
                     <span *ngIf='item.awardees.length > 1'>
@@ -52,7 +57,9 @@
     </div>
     <label>פרטי המכרז:</label>
     <span class='label-text'>{{item.tender_id}}: {{tenderType()}}</span>
-    <span class='label-text'>מועד סגירה: {{ item.claim_date }}</span>
+    <span class='label-text'>מועד סגירה: 
+        <span [innerHtml]='relative(item.claim_date)'></span>
+    </span>
     <span class='label-text' *ngIf='item.contact'>אנשי קשר: {{ item.contact }}</span>
     <div class='awardees' *ngIf='item.awardees.length && item.contract_executed'>
         <table>
@@ -96,8 +103,7 @@
     <label>קבצים מצורפים:</label>
     <div class='file-list'>
         <div class='attachment' *ngFor='let attachment of item.documents'>
-            <div class='update-time'>
-                {{ attachment.update_time }}
+            <div class='update-time' [innerHtml]='relative(attachment.update_time)'>
             </div>
             <div class='paperclip'>
                 <i class='glyphicon glyphicon-paperclip'></i>

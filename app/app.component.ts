@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BudgetKeyItemService, StoreService } from './services';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 const gtag: any = window['gtag'];
 
@@ -96,6 +97,6 @@ export class AppComponent implements OnInit {
       this.itemService.getItem(itemId)
         .then(item => { thiz.handleItem(item); });
     }
-
+    moment.locale('he');
   }
 }
