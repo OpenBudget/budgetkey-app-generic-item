@@ -9,7 +9,7 @@
         <div class='title'>
             {{ item.description }}
             <span class='tender-type-tag'>
-                {{ statusText() }}
+                {{ tagText() }}
             </span>
         </div>
         <div class='parties'>
@@ -39,11 +39,20 @@
     </div>
     <div class='amount' *ngIf='item.contract_volume'>
         <div class='progress-text'>
-            <span>עד כה שולמו</span>
-            <span class='figure' [innerHtml]='number(item.contract_executed)'></span>
-            <span>שהם</span>
-            <span class='figure' [innerHtml]='percent(item.contract_executed / item.contract_volume)'></span>
-            <span>מתוך:</span>
+
+            <timeline-part [size]='13'
+                           [percent]='100 * item.contract_executed / item.contract_volume'
+                           [padding]='0' 
+                           [major]='true'
+                           [last]='true'>
+            </timeline-part>
+            <span>
+                <span>עד כה שולמו</span>
+                <!--span class='figure' [innerHtml]='number(item.contract_executed)'></span>
+                <span>שהם</span-->
+                <span class='figure' [innerHtml]='percent(item.contract_executed / item.contract_volume)'></span>
+                <span>מתוך:</span>
+            </span>
         </div>
         <div class='volume'>
             <span class='figure' [innerHtml]='number(item.contract_volume) + "₪"'></span>
@@ -76,7 +85,12 @@
                     <td [innerHtml]='number(awardee.volume) + "₪"'></td>
                     <td [innerHtml]='number(awardee.executed) + "₪"'></td>
                     <td [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'></td>
-                    <td><i class='glyphicon glyphicon-circle-arrow-left'></i></td>
+                    <td>
+                        <a *ngIf='awardee.entity_id'
+                           [href]='entityLink(awardee)'>
+                            <i class='glyphicon glyphicon-circle-arrow-left'></i>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -89,10 +103,16 @@
                     <td><timeline-part [size]='25' 
                                        [padding]='22' 
                                        [major]='event.major'
-                                       [last]='i == (item.timeline.length - 1)'>
+                                       [last]='i == (item.timeline.length - 1)'
+                                       [percent]='event.percent'
+                                       >
                         </timeline-part></td>
                     <td>{{ event.timestamp }}</td>
-                    <td><i *ngIf='event.url' class='glyphicon glyphicon-paperclip'></i></td>
+                    <td>
+                        <a [href]='event.url' *ngIf='event.url'>
+                            <i class='glyphicon glyphicon-paperclip'></i>                        
+                        </a>
+                    </td>
                     <td>{{ event.title }}</td>
                 </tr>
             </tbody>

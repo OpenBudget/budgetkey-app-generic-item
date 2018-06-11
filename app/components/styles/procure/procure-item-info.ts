@@ -29,6 +29,25 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     return 'N/A';
   }
 
+  tagText() {
+    let decision: string = this.item['decision'];
+    if (decision === 'הסתיים') {
+      let awardees = this.item['awardees'];
+      if (!awardees || awardees.length == 0) {
+        return 'הושלם תהליך הרכש - לא החלה התקשרות';
+      } else if (awardees.length > 0) {
+        for (let awardee of awardees) {
+          if (awardee.active) {
+            return 'הושלם תהליך הרכש - החלה התקשרות';
+          }
+        }
+        return 'הושלם תהליך הרכש והושלמה ההתקשרות';
+      }
+    } else {
+      return this.statusText();
+    }
+  }
+
   toText() {
     let decision: string = this.item['decision'];
     if (decision === 'בוטל') {
@@ -66,5 +85,14 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   relative(x: string) {
     return '<span title="' + x + '">' + moment(x).fromNow() + '</span>';
+  }
+
+  entityLink(awardee: any) {
+    let ret = '/i/entity/' + awardee.entity_kind + '/' + awardee.entity_id;
+    if (this.ngComponentsTheme.themeId) {
+      return ret + '?theme=' + this.ngComponentsTheme.themeId ;
+    } else {
+      return ret;
+    }
   }
 }

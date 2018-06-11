@@ -23,6 +23,10 @@
         white-space: nowrap;
     }
 
+    a {
+        color: #512C0A;
+    }
+
     .marquee {
         width: 100%;
         height: 26px;
@@ -128,6 +132,18 @@
                 color: #19008F;	
                 font-family: "Abraham TRIAL";	
                 font-size: 16px;
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                justify-content: flex-end;    
+                
+                timeline-part {
+                    div {
+                        display: inline-block;
+                    }
+                    padding-top: 6px;
+                    padding-left: 3px;
+                }
             }
 
             .volume {
