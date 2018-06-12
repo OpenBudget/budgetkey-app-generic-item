@@ -27,6 +27,12 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       return 'מכרז שנסגר';
     } else if (decision === 'בוטל') {
       return 'מכרז שבוטל';
+    } else if (decision === 'עתידי') {
+      return 'עתידי';
+    } else if (decision === 'פורסם וממתין לתוצאות') {
+      return 'פתוח';
+    } else if (decision === 'לא בתוקף') {
+      return 'הושלם תהליך הרכש';
     } else if (!decision) {
       return null;
     }
@@ -36,7 +42,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
   tagText() {
     let decision: string = this.item['decision'];
     if (decision) {
-      if (decision === 'הסתיים') {
+      if (decision === 'הסתיים' || decision === 'בתוקף') {
         let awardees = this.item['awardees'];
         if (!awardees || awardees.length == 0) {
           return 'הושלם תהליך הרכש - לא החלה התקשרות';
@@ -91,6 +97,16 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     }[this.item['tender_type']];
   }
 
+  description(): string {
+    if (this.item['tender_type'] === 'office') {
+      return null;
+    }
+    if (this.item['tender_type'] === 'central') {
+      return null;
+    }
+    return null;
+  }
+
   alertText() {
     let lastWeek = moment().subtract(7, 'days');
     if (this.item['start_date'] && 
@@ -117,6 +133,9 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     if (this.item['payments']) {
       return this.item['payments'][this.item['payments'].length - 1]['date'];
     }
+    if (this.item['__last_modified_at']) {
+      return moment(this.item['__last_modified_at']).format('YYYY-MM-DD');
+    }
   }
 
   firstUpdateDate() {
@@ -128,6 +147,9 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     }
     if (this.item['payments']) {
       return this.item['payments'][0]['date'];
+    }
+    if (this.item['__created_at']) {
+      return moment(this.item['__created_at']).format('YYYY-MM-DD');
     }
   }
 

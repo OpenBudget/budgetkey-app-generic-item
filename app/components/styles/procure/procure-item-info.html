@@ -1,8 +1,12 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()'>{{ alertText() }}</span>
     <span class='status-text' *ngIf='statusText()'>{{ statusText() }}</span>
-    <span class='status-timestamp'>עדכון אחרון: {{ lastUpdateDate() }}</span>
-    <span class='created-timestamp'>דיווח ראשון: {{ firstUpdateDate() }}</span>
+    <span class='status-timestamp' *ngIf='lastUpdateDate()'>
+        עדכון אחרון: {{ lastUpdateDate() }}
+    </span>
+    <span class='created-timestamp' *ngIf='firstUpdateDate()'>
+        דיווח ראשון: {{ firstUpdateDate() }}
+    </span>
 </div>
 <div class='header'>
     <div class='titles'>
@@ -71,13 +75,13 @@
     </div>
     
     <ng-container *ngIf='item.tender_type'>
-        <div *ngIf='item.tender_type != "office"'>
+        <div *ngIf='description()'>
             <label>תיאור:</label><br/>
-            <span class='label-text'>{{ 'השתלמות 3 עובדים בהכשרה לחירום.' }}</span>
+            <span class='label-text'>{{ description() }}</span>
         </div>
         <label>פרטי המכרז:</label>
         <span class='label-text'>{{item.tender_id}}: {{tenderType()}}</span>
-        <span class='label-text'>מועד סגירה: 
+        <span class='label-text' *ngIf='item.claim_date'>מועד סגירה: 
             <span [innerHtml]='relative(item.claim_date)'></span>
         </span>
     </ng-container>
@@ -178,7 +182,7 @@
         </table>
     </div>
 </div>
-<div class='attachments' *ngIf='item.documents'>
+<div class='attachments' *ngIf='item.documents && item.documents.length > 0'>
     <label>קבצים מצורפים:</label>
     <div class='file-list'>
         <div class='attachment' *ngFor='let attachment of item.documents'>

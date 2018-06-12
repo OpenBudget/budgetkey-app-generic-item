@@ -1,4 +1,4 @@
-import { ProcureDescriptor } from '../../model';
+import { ProcureDescriptor } from '../../../model';
 
 export default new ProcureDescriptor({
   pathPrefix: 'tenders/office',
