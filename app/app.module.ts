@@ -36,6 +36,7 @@ import {
   SpendomatChartComponent,
   SpendomatChartComponentRow,
   AdamKeyChartWrapperComponent,
+  ContractPaymentsChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -110,6 +111,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     SpendomatChartComponent,
     SpendomatChartComponentRow,
     AdamKeyChartWrapperComponent,
+    ContractPaymentsChartComponent,
 
     SimpleItemInfoComponent,
     SimpleItemVisualizationsComponent,

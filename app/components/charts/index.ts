@@ -9,3 +9,4 @@ export * from './pointatron-chart';
 export * from './comparatron-chart';
 export * from './spendomat-chart';
 export * from './adamkey-chart-wrapper';
+export * from './contract-payments-chart';

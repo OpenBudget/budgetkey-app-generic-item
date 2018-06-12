@@ -39,6 +39,7 @@ import {
   ComparatronChartComponent,
   SpendomatChartComponent,
   SpendomatChartComponentRow,
+  ContractPaymentsChartComponent,
 
   SimpleItemInfoComponent,
   SimpleItemVisualizationsComponent,
@@ -99,6 +100,7 @@ describe('AppComponent', function () {
         ComparatronChartComponent,
         SpendomatChartComponent,
         SpendomatChartComponentRow,
+        ContractPaymentsChartComponent,
 
         SimpleItemInfoComponent,
         SimpleItemVisualizationsComponent,

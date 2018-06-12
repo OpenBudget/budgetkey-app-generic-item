@@ -1,11 +1,6 @@
-import { SimpleDescriptor } from '../../model';
+import { ProcureDescriptor } from '../../model';
 
-export default new SimpleDescriptor({
-  pathPrefix: 'contract-spending/',
-  titleTemplate: require('./title-template.html'),
-  preTitleTemplate: require('./pretitle-template.html'),
-  amountTemplate: require('./amount-template.html'),
-  subtitleTemplate: require('./subtitle-template.html'),
-  textTemplate: require('./text-template.html'),
+export default new ProcureDescriptor({
+  pathPrefix: 'contract-spending',
   questions: require('./questions.json')
 });
