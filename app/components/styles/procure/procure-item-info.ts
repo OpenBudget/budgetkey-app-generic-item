@@ -33,6 +33,14 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       return 'פתוח';
     } else if (decision === 'לא בתוקף') {
       return 'הושלם תהליך הרכש';
+    } else if (decision.indexOf('אושר ') === 0) {
+      return 'הושלם תהליך הרכש';
+    } else if (decision.indexOf('לא אושר ') === 0) {
+      return 'לא אושר';
+    } else if (decision.indexOf('התקשרות בדיעבד ') === 0) {
+      return 'הושלם תהליך הרכש';
+    } else if (this.item['tender_type'] === 'exemptions') {
+      return 'בתהליך';
     } else if (!decision) {
       return null;
     }
@@ -67,11 +75,14 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       if (decision === 'בוטל') {
         return 'המכרז בוטל';
       }
-    } else {
+    }
+    if (!this.item['awardees'] || this.item['awardees'].length === 0) {
       if (this.item['entity_name']) {
         return this.item['entity_name'];
-      } else {
+      } else if (this.item['supplier_name']) {
         return this.item['supplier_name'][0];
+      } else if (this.item['supplier']) {
+        return this.item['supplier'];
       }
     }
   }
@@ -95,16 +106,6 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       central: 'מכרז מרכזי',
       exemption: 'בקשת פטור ממכרז',
     }[this.item['tender_type']];
-  }
-
-  description(): string {
-    if (this.item['tender_type'] === 'office') {
-      return null;
-    }
-    if (this.item['tender_type'] === 'central') {
-      return null;
-    }
-    return null;
   }
 
   alertText() {

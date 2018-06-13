@@ -10,7 +10,7 @@ import descriptorBudget2Dig from './budget/budget2dig';
 import descriptorBudget4Dig from './budget/budget4dig';
 import descriptorBudget6Dig from './budget/budget6dig';
 import descriptorBudget8Dig from './budget/budget8dig';
-// import descriptorTendersExemptions from './tenders/exemptions';
+import descriptorTendersExemptions from './tenders/exemptions';
 import descriptorTendersCentral from './tenders/central';
 import descriptorTendersOffice from './tenders/office';
 import descriptorContractSpending from './contract-spending';
@@ -31,7 +31,7 @@ let descriptors: DescriptorBase[] = [
   descriptorBudget4Dig,
   descriptorBudget6Dig,
   descriptorBudget8Dig,
-  // descriptorTendersExemptions,
+  descriptorTendersExemptions,
   descriptorTendersCentral,
   descriptorTendersOffice,
   descriptorContractSpending,

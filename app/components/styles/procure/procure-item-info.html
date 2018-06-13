@@ -75,15 +75,19 @@
     </div>
     
     <ng-container *ngIf='item.tender_type'>
-        <div *ngIf='description()'>
-            <label>תיאור:</label><br/>
-            <span class='label-text'>{{ description() }}</span>
+        <div *ngIf='item.tender_type == "exemptions"'>
+            <label>מצב נוכחי</label><br/>
+            <span class='label-text'>{{ item.description }}, {{ item.decision }}</span><br/>
+            <label>סיבות בקשת הפטור:</label>
+            <span class='label-text'>{{ item.reason }}</span>
         </div>
-        <label>פרטי המכרז:</label>
-        <span class='label-text'>{{item.tender_id}}: {{tenderType()}}</span>
-        <span class='label-text' *ngIf='item.claim_date'>מועד סגירה: 
-            <span [innerHtml]='relative(item.claim_date)'></span>
-        </span>
+        <div *ngIf='item.tender_type !== "exemptions"'>
+            <label>פרטי המכרז</label><br/>
+            <span class='label-text'>{{item.tender_id}}: {{tenderType()}}</span>
+            <span class='label-text' *ngIf='item.claim_date'>מועד סגירה: 
+                <span [innerHtml]='relative(item.claim_date)'></span>
+            </span>
+        </div>
     </ng-container>
 
     <span class='label-text' *ngIf='item.contact'>אנשי קשר: {{ item.contact }}</span>
@@ -136,7 +140,8 @@
     <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_executed'>
         <table>
             <thead>
-                <th>הזוכים במכרז</th>
+                <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>
+                <th *ngIf='item.tender_type != "exemptions"'>הזוכים במכרז</th>
                 <th>סכום ההתקשרות</th>
                 <th>עד כה שולם</th>
                 <th></th>
