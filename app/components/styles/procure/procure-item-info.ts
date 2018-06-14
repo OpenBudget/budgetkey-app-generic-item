@@ -23,7 +23,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     let decision: string = this.item['decision'];
     if (decision === 'חדש' || decision === 'עודכן') {
       return 'מכרז פתוח';
-    } else if (decision === 'הסתיים') {
+    } else if (decision === 'הסתיים' || decision === 'בתוקף') {
       return 'מכרז שנסגר';
     } else if (decision === 'בוטל') {
       return 'מכרז שבוטל';
@@ -33,6 +33,8 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       return 'פתוח';
     } else if (decision === 'לא בתוקף') {
       return 'הושלם תהליך הרכש';
+    } else if (!decision) {
+      return null;
     } else if (decision.indexOf('אושר ') === 0) {
       return 'הושלם תהליך הרכש';
     } else if (decision.indexOf('לא אושר ') === 0) {
@@ -41,8 +43,6 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       return 'הושלם תהליך הרכש';
     } else if (this.item['tender_type'] === 'exemptions') {
       return 'בתהליך';
-    } else if (!decision) {
-      return null;
     }
     return 'N/A';
   }
