@@ -1,2 +1,3 @@
 export * from './procure-item';
-export * from './procure-item-info';
+export * from './contract-item-info';
+export * from './tender-item-info';

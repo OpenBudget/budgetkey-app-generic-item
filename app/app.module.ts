@@ -48,7 +48,8 @@ import {
   OrgItemComponent,
   OrgItemInfoComponent,
 
-  ProcureItemInfoComponent,
+  TenderItemInfoComponent,
+  ContractItemInfoComponent,
   ProcureItemComponent,
   
   TimelinePartComponent,
@@ -123,7 +124,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     OrgItemComponent,
     OrgItemInfoComponent,
 
-    ProcureItemInfoComponent,
+    TenderItemInfoComponent,
+    ContractItemInfoComponent,
     ProcureItemComponent,
 
     TimelinePartComponent,

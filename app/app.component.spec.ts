@@ -51,7 +51,8 @@ import {
   OrgItemInfoComponent,
   OrgItemComponent,
 
-  ProcureItemInfoComponent,
+  TenderItemInfoComponent,
+  ContractItemInfoComponent,
   ProcureItemComponent,
 
   SafeHtmlPipe,
@@ -112,7 +113,8 @@ describe('AppComponent', function () {
         OrgItemInfoComponent,
         OrgItemComponent,
 
-        ProcureItemInfoComponent,
+        TenderItemInfoComponent,
+        ContractItemInfoComponent,
         ProcureItemComponent,
 
         TimelinePartComponent,

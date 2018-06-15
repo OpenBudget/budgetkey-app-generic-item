@@ -1,4 +1,4 @@
-.style-procure procure-item-info {
+.style-procure tender-item-info, .style-procure contract-item-info {
     display: flex;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -166,6 +166,11 @@
         border-bottom: 2px solid rgba(0,0,0,0.04);
         display: flex;
         flex-flow: column;
+        width: 75%;
+
+        &.wide {
+            width: 100%;
+        }
 
         .timeline {
             table {
@@ -263,6 +268,7 @@
                 min-height: 63px;
                 border-radius: 4px;	
                 background-color: rgba(81,44,10, 0.04);
+                cursor: pointer;
 
                 .update-time {
                     position: absolute;
