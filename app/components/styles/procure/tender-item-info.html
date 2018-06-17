@@ -18,26 +18,17 @@
         </div>
         <div class='parties'>
             <span class='from'>{{ publisher() }} &larr;</span>
-            <ng-container *ngIf='toText()'>
+            <ng-container *ngIf='item.awardees_text'>
                 <span class='to'>
-                    {{ toText() }}
-                </span>
-            </ng-container>
-            <ng-container *ngIf='!toText() && item.awardees && item.awardees.length'>
-                <span class='to'>
-                    {{ item.awardees[0].entity_name }}
-                    <span *ngIf='item.awardees.length > 1'>
-                        +{{ item.awardees.length - 1 }}
-                    </span>
-                </span>
-                <span *ngIf='item.awardees.length == 1' class='to-entity-id'>
-                    {{ item.awardees[0].entity_id }}
+                    {{ item.awardees_text }}
                 </span>
             </ng-container>
         </div>
         <div class='tags'>
-            <span class='tag' *ngFor='let tag of item.subject_list'>
-                {{ tag }}
+            <span>
+                <span class='tag' *ngFor='let tag of item.subject_list'>
+                    {{ tag }}
+                </span>
             </span>
         </div>
     </div>
@@ -115,7 +106,7 @@
         </span>
     </div>
     
-    <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_executed'>
+    <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_volume'>
         <table>
             <thead>
                 <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>
@@ -128,11 +119,13 @@
             <tbody>
                 <tr *ngFor='let awardee of item.awardees'>
                     <td>{{ awardee.entity_name }}</td>
-                    <td [innerHtml]='number(awardee.volume) + "₪"'></td>
-                    <td [innerHtml]='number(awardee.executed) + "₪"'></td>
-                    <td [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'
-                        *ngIf='item.awardees.length > 1'
-                    ></td>
+                    <td [innerHtml]='number(awardee.volume) + (awardee.volume ? "₪" : "")'></td>
+                    <td [innerHtml]='number(awardee.executed) + (awardee.executed ? "₪" : "")'></td>
+                    <td>
+                        <span [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'
+                              *ngIf='item.awardees.length > 1 && item.contract_executed'>
+                        </span>
+                    </td>
                     <td>
                         <a *ngIf='awardee.entity_id'
                            [href]='entityLink(awardee)'>
