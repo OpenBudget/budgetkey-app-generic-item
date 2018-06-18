@@ -51,8 +51,9 @@ import {
   TenderItemInfoComponent,
   ContractItemInfoComponent,
   ProcureItemComponent,
-  
   TimelinePartComponent,
+
+  PeopleItemComponent,
 } from './components';
 
 import { SafeHtmlPipe } from './components/charts';
@@ -129,8 +130,10 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ProcureItemComponent,
 
     TimelinePartComponent,
+
+    PeopleItemComponent
 ],
-  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent ],
+  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent],
   providers: providers,
   bootstrap: [
     AppComponent

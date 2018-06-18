@@ -230,3 +230,9 @@ export class ProcureDescriptor extends DescriptorBase {
     super(x.pathPrefix, 'procure', x.questions);
   }
 }
+
+export class PeopleDescriptor extends DescriptorBase {
+  constructor(x: any) {
+    super(x.pathPrefix, 'people', x.questions);
+  }
+}

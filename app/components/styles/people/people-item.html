@@ -1,0 +1,31 @@
+<div class='header'>
+  <div class='titles'>
+    <div class='title'>
+      {{ item.page_title }}
+    </div>
+  </div>
+</div>
+<div class="details">
+  <div class='timeline' *ngIf='item.details && item.details.length'>
+    <table>
+      <tbody>
+      <tr *ngFor='let event of item.details; let i = index'>
+        <td>
+          <timeline-part [size]='25'
+                           [padding]='0'
+                           [major]='false'
+                         [last]='i === (item.details.length - 1)'> </timeline-part>
+        </td>
+        <td [class]="'date'">{{ event.when }}</td>
+        <td>
+          <a [href]='event.sources[0].proof_url' *ngIf='event.sources.length && event.sources[0].proof_url'>
+            <i class='glyphicon glyphicon-paperclip'></i>
+          </a>
+        </td>
+        <td [class]="'title'">{{ event.title }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
