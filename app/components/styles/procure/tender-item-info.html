@@ -1,6 +1,6 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()'>{{ alertText() }}</span>
-    <span class='status-text' *ngIf='statusText()'>{{ statusText() }}</span>
+    <span class='status-text' *ngIf='item.simple_decision'>{{ item.simple_decision }}</span>
     <span class='status-timestamp' *ngIf='lastUpdateDate()'>
         עדכון אחרון: {{ lastUpdateDate() }}
     </span>
@@ -13,7 +13,7 @@
         <div class='title'>
             {{ itemTitle() }}
             <span class='tender-type-tag'>
-                {{ tagText() }}
+                {{ item.extended_status }}
             </span>
         </div>
         <div class='parties'>

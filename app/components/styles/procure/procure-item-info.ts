@@ -45,7 +45,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
   }
 
   entityLink(awardee: any) {
-    let ret = '/i/entity/' + awardee.entity_kind + '/' + awardee.entity_id;
+    let ret = '/i/org/' + awardee.entity_kind + '/' + awardee.entity_id;
     if (this.ngComponentsTheme.themeId) {
       return ret + '?theme=' + this.ngComponentsTheme.themeId ;
     } else {
