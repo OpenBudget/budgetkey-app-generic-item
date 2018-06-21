@@ -35,7 +35,7 @@
     "adamkey": "0.0.2",
     "angular-in-memory-web-api": "~0.1.15",
     "bluebird": "^3.5.0",
-    "budgetkey-ng2-components": "^0.2.12",
+    "budgetkey-ng2-components": "^0.2.20",
     "core-js": "^2.4.1",
     "d3-hierarchy": "^1.1.5",
     "d3-scale": "^2.0.0",
