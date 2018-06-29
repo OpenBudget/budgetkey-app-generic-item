@@ -1,6 +1,7 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()'>{{ alertText() }}</span>
     <span class='status-text' *ngIf='item.simple_decision'>{{ item.simple_decision }}</span>
+    <span class='status-text' *ngIf='item.tender_type=="exemptions"'>פטור ממכרז</span>
     <span class='status-timestamp' *ngIf='lastUpdateDate()'>
         עדכון אחרון: {{ lastUpdateDate() }}
     </span>
@@ -111,8 +112,8 @@
             <thead>
                 <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>
                 <th *ngIf='item.tender_type != "exemptions"'>הזוכים במכרז</th>
-                <th>סכום ההתקשרות</th>
-                <th>עד כה שולם</th>
+                <th>היקף ההתקשרות</th>
+                <th>סה״כ ביצוע</th>
                 <th></th>
                 <th></th>
             </thead>
@@ -132,6 +133,13 @@
                             <i class='glyphicon glyphicon-circle-arrow-left'></i>
                         </a>
                     </td>
+                </tr>
+                <tr class='total' *ngIf='item.awardees.length > 1 && item.contract_executed'>
+                    <td>סך הכל</td>
+                    <td [innerHtml]='number(item.contract_volume) + (item.contract_volume ? "₪" : "")'></td>
+                    <td [innerHtml]='number(item.contract_executed) + (item.contract_executed ? "₪" : "")'></td>
+                    <td>100%</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
