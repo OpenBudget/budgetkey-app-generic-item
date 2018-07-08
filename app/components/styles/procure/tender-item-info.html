@@ -166,6 +166,9 @@
                         <a [href]='event.url' *ngIf='event.url' target='_blank'>
                             {{ event.title }}
                         </a>
+                        <ng-container *ngIf='!event.url'>
+                            {{ event.title }}
+                        </ng-container>
                     </td>
                 </tr>
             </tbody>
