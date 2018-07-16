@@ -99,6 +99,15 @@ export class ItemQuestionsComponent implements OnDestroy {
   }
 
   private onStoreChanged() {
+    if (!this.store.currentQuestion) {
+      this.currentQuestion = undefined;
+      this.redashUrl = '';
+      this.downloadUrl = '';
+      this.downloadUrlXlsx = '';
+      this.isDropDownVisible = false;
+      return;
+    }
+
     this.preparedQuestions = this.store.preparedQuestions;
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
@@ -185,31 +194,40 @@ export class ItemDataTableComponent {
   }
 
   private onStoreChanged() {
-    let query = this.store.dataQuery;
-    if (query !== this.query) {
-      this.query = query;
-      let headersOrder = this.store.currentQuestion.headers;
-      let formatters = this.store.currentQuestion.formatters;
-      this.itemService.getItemData(this.query, headersOrder, formatters)
-        .then((data: any) => {
-          if (data.query === this.query) {
-            this.headers = data.headers;
-            this.data = data.items;
-            this.total = data.total;
-          }
-        })
-        .catch((err) => {
-          this.headers.length = 0;
-          this.data.length = 0;
-          this.total = 0;
-          this.err = err;
-        })
-        .done(() => {
-          this.store.onDataReady.emit();
-        });
-    } else {
-      this.store.onDataReady.emit();
-    }
+    Promise.resolve(null)
+      .then( () => {
+        if (!this.store.currentQuestion) {
+          return;
+        }
+        let query = this.store.dataQuery;
+        if (query === this.query) {
+          return;
+        }
+        this.query = query;
+        this.headers.length = 0;
+        this.data.length = 0;
+        this.total = 0;
+        let headersOrder = this.store.currentQuestion.headers;
+        let formatters = this.store.currentQuestion.formatters;
+        return this.itemService.getItemData(this.query, headersOrder, formatters);
+      })
+      .then((data: any) => {
+        if (data && data.query === this.query) {
+          this.headers = data.headers;
+          this.data = data.items;
+          this.total = data.total;
+        }
+      })
+      .catch((err) => {
+        this.headers.length = 0;
+        this.data.length = 0;
+        this.total = 0;
+        this.err = err;
+      })
+      .then(() => {
+        this.store.onDataReady.emit();
+      });
+
   }
 
   constructor(private store: StoreService, private itemService: BudgetKeyItemService,
