@@ -2,7 +2,7 @@
   <div class="col-xs-1"></div>
   <div class="col-xs-8">
     <div class="budgetkey-item-questions" [ngClass]="{expanded: isDropDownVisible}">
-      <div class="current">
+      <div class="current" *ngIf="currentQuestion">
         <ng-container *ngFor="let fragment of currentQuestion.parsed">
           <span *ngIf="fragment.isText" (click)="toggleDropDown()"
                 [innerHtml]="fragment.value"></span>

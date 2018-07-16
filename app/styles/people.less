@@ -1,0 +1,147 @@
+.style-people people-item {
+  display: flex;
+  margin: 30px auto;
+
+  width: 100%;
+  border: 2px solid rgba(0,0,0,0.02);
+  border-radius: 3px;
+  background-color: #FFFBF2;
+  box-shadow: 0 1px 2px 0 rgba(189,189,189,0.6);
+  flex-flow: column;
+
+  font-family: "Abraham TRIAL", "Alef Hebrew", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #512C0A;
+
+  label, th {
+    padding-top: 13px;
+    font-weight: bold;
+    color: #19008F;
+    white-space: nowrap;
+  }
+
+  a {
+    color: #512C0A;
+  }
+
+  .header {
+    padding: 26px 50px;
+
+    border-bottom: 2px solid rgba(0,0,0,0.04);
+
+
+    .titles {
+      width: 70%;
+
+      .title {
+        font-family:  "Miriam Libre", sans-serif;;
+        font-size: 26px;
+        font-weight: bold;
+        color: #19008F;
+      }
+
+    }
+
+  }
+
+  .disclaimer {
+    width: 70%;
+    font-size: 12px;
+    font-weight: normal;
+    color: #FF5A5F;
+  }
+
+  .details {
+    padding: 26px 50px;
+    border-bottom: 2px solid rgba(0,0,0,0.04);
+    width: 100%;
+
+    .timeline {
+      table {
+        margin-top: 26px;
+        width: 100%;
+        border-collapse:separate;
+        border-spacing:0 22px;
+        tr {
+          height: 25px;
+        }
+
+        th, td {
+          padding-left: 15px;
+        }
+
+        .title {
+          max-width: 75%;
+        }
+        .date {
+          max-width: 15%;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .awardees {
+      table {
+        width: 100%;
+        thead {
+          height: 30px;
+        }
+        tr:nth-child(2n+1) {
+          background-color: rgba(81,44,10, 0.05);
+        }
+        th, td {
+          padding-left: 15px;
+        }
+        td:nth-child(2),td:nth-child(3),td:nth-child(4) {
+          // text-align: left;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .attachments {
+    padding: 26px 50px;
+    background-color: rgba(0,0,0,0.02);
+
+    .file-list {
+      display: flex;
+      flex-flow: row wrap;
+
+      .attachment {
+        position: relative;
+        width: ~"calc(33% - 38px)";
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        padding-right: 23px;
+        padding-left: 10px;
+        margin: 35px 19px 19px 19px;
+        min-height: 63px;
+        border-radius: 4px;
+        background-color: rgba(81,44,10, 0.04);
+
+        .update-time {
+          position: absolute;
+          top: -16px;
+          right: 0;
+          opacity: 0.5;
+          color: #512C0A;
+          font-family: "Abraham TRIAL", "Alef Hebrew", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 14px;
+        }
+        .filename {
+          margin-right: 5px;
+          padding: 10px 0;
+        }
+
+        .icon {
+          margin-right: auto;
+          font-size: 43px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+}
