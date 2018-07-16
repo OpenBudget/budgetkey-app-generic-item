@@ -1,9 +1,7 @@
 .style-people people-item {
   display: flex;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px auto;
+
   width: 100%;
   border: 2px solid rgba(0,0,0,0.02);
   border-radius: 3px;
@@ -11,7 +9,7 @@
   box-shadow: 0 1px 2px 0 rgba(189,189,189,0.6);
   flex-flow: column;
 
-  font-family: "Abraham TRIAL";
+  font-family: "Abraham TRIAL", "Alef Hebrew", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   font-weight: normal;
   color: #512C0A;
@@ -28,10 +26,8 @@
   }
 
   .header {
-    padding-top: 26px;
-    padding-bottom: 26px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 26px 50px;
+
     border-bottom: 2px solid rgba(0,0,0,0.04);
 
 
@@ -39,7 +35,7 @@
       width: 70%;
 
       .title {
-        font-family: "Miriam Libre";
+        font-family:  "Miriam Libre", sans-serif;;
         font-size: 26px;
         font-weight: bold;
         color: #19008F;
@@ -49,12 +45,15 @@
 
   }
 
+  .disclaimer {
+    width: 70%;
+    font-size: 12px;
+    font-weight: normal;
+    color: #FF5A5F;
+  }
 
   .details {
-    padding-top: 26px;
-    padding-bottom: 26px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 26px 50px;
     border-bottom: 2px solid rgba(0,0,0,0.04);
     width: 100%;
 
@@ -103,10 +102,7 @@
   }
 
   .attachments {
-    padding-top: 26px;
-    padding-bottom: 26px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 26px 50px;
     background-color: rgba(0,0,0,0.02);
 
     .file-list {
@@ -121,8 +117,7 @@
         align-items: center;
         padding-right: 23px;
         padding-left: 10px;
-        margin: 19px;
-        margin-top: 35px;
+        margin: 35px 19px 19px 19px;
         min-height: 63px;
         border-radius: 4px;
         background-color: rgba(81,44,10, 0.04);
@@ -130,10 +125,10 @@
         .update-time {
           position: absolute;
           top: -16px;
-          right: 0px;
+          right: 0;
           opacity: 0.5;
           color: #512C0A;
-          font-family: "Abraham TRIAL";
+          font-family: "Abraham TRIAL", "Alef Hebrew", "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-size: 14px;
         }
         .filename {
