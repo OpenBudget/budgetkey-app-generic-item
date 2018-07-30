@@ -5,6 +5,9 @@ import * as moment from 'moment';
 import { format_absolute_percent, format_number } from '../../../pipes/render-template';
 import { ProcureItemInfoComponent } from './procure-item-info';
 
+const tooltips = require('./tooltips.json');
+
+
 @Component({
   selector: 'tender-item-info',
   template: require('./tender-item-info.html'),
@@ -83,4 +86,15 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
   open_document(attachment: any) {
     window.open(attachment.link, '_blank');
   }
+
+  tooltip(content: string) {
+    for (let k of Object.keys(tooltips)) {
+      if (content.indexOf(k) >= 0) {
+        let tooltip = `<span class='bk-tooltip-anchor'>${k}<span class='bk-tooltip'>${tooltips[k]}</span></span>`;
+        content = content.replace(k, tooltip);
+      }
+    }
+    return content;
+  };
+
 }

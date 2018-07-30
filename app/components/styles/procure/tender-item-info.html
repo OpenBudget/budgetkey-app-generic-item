@@ -12,10 +12,8 @@
 <div class='header'>
     <div class='titles'>
         <div class='title'>
-            {{ itemTitle() }}
-            <span class='tender-type-tag'>
-                {{ item.extended_status }}
-            </span>
+            <span [innerHtml]='tooltip(itemTitle())'></span>
+            <span class='tender-type-tag' [innerHtml]='tooltip(item.extended_status)'></span>
         </div>
         <div class='parties'>
             <span class='from'>{{ publisher() }} &larr;</span>
@@ -58,9 +56,9 @@
 <div class='details'>   
     <div *ngIf='item.tender_type == "exemptions"'>
         <label>מצב נוכחי:</label>
-        <span class='label-text'>{{ item.decision }}</span><br/>
+        <span class='label-text' [innerHtml]='tooltip(item.decision)'></span><br/>
         <label>סיבות בקשת הפטור:</label>
-        <span class='label-text'>{{ item.reason }}</span><br/>
+        <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
     </div>
     <div *ngIf='item.tender_type == "office"'>
         <label>פרטי המכרז</label><br/>
@@ -71,17 +69,17 @@
         </span><br/>
         <ng-container *ngIf='item.description && item.description.length>34'>
             <span class='label-text'>תיאור:
-                {{item.description}}
+                <span [innerHtml]='tooltip(item.description)'></span>
             </span><br/>
         </ng-container>
         <span class='label-text'>סטטוס:
-            {{item.page_title}}
+            <span [innerHtml]='tooltip(item.page_title)'></span>
         </span><br/>
     </div>
     <div *ngIf='item.tender_type == "central"'>
         <label>פרטי המכרז</label><br/>
         <span class='label-text'>סוג המכרז:
-            מרכזי, {{item.regulation}}
+            מרכזי, <span [innerHtml]='tooltip(item.regulation)'></span>
         </span><br/>
         <span class='label-text'>מספר המכרז: 
             {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
@@ -90,7 +88,7 @@
             {{item.description}}
         </span><br/>
         <span class='label-text'>סטטוס:
-            {{item.page_title}}
+            <span [innerHtml]='tooltip(item.page_title)'></span>
         </span><br/>
     </div>
 
