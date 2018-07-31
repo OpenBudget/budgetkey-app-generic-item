@@ -48,60 +48,62 @@
         </div>
     </div>
 </div>
-<div class='details wide'>
-    <div *ngIf='item.budget_code'>
-        <label>סעיף תקציבי:</label><br/>
-        <span class='label-text'>{{ item.budget_title }} ({{ item.budget_code }})</span>
-    </div>
-    <div *ngIf='item.purchase_method'>
-        <label>אופן רכישה:</label><br/>
-        <span class='label-text'>{{ item.purchase_method }}</span>
-    </div>
-    
-    <div class='payments' *ngIf='paymentsTable()'>
-        <label>דיווחים רבעוניים על תשלומים שבוצעו</label>
-        <table>
-            <thead>
-                <th></th>
-                <th></th>
-                <th>ינואר - מרץ</th>
-                <th></th>
-                <th>אפריל - יוני</th>
-                <th></th>
-                <th>יולי - ספטמבר</th>
-                <th></th>
-                <th>אוקטובר - דצמבר</th>
-            </thead>
-            <tbody>
-                <tr *ngFor='let row of paymentsTable()'>
-                    <td>{{ row.year }}</td>
-                    <ng-container *ngFor='let period of ["1","2","3","4"]'>
-                        <td>
-                            <ng-container *ngIf='row[period]'>
-                                <a class='bk-tooltip-anchor' 
-                                [href]='row[period].url' 
-                                target='_blank'
-                                *ngIf='row[period].url && row[period].diff != 0'>
-                                    <i class='glyphicon glyphicon-paperclip'></i>
-                                    <span class='bk-tooltip'>להורדת הדו"ח הרבעוני</span>
-                                </a>
-                            </ng-container>
-                        </td>
-                        <td>
-                            <ng-container *ngIf='row[period]'>
-                                <span *ngIf='row[period].diff != 0'
-                                    [innerHtml]="number(row[period].diff) + '₪'">
-                                </span>
-                                <span *ngIf='row[period].diff == 0'>
-                                    &#8212;
-                                </span>
-                            </ng-container>
-                        </td>
-                    </ng-container>
-                </tr>
-            </tbody>
-        </table>
+<div class='hero'>
+    <div class='details'>
+        <div *ngIf='item.budget_code'>
+            <label>סעיף תקציבי:</label><br/>
+            <span class='label-text'>{{ item.budget_title }} ({{ item.budget_code }})</span>
+        </div>
+        <div *ngIf='item.purchase_method'>
+            <label>אופן רכישה:</label><br/>
+            <span class='label-text'>{{ item.purchase_method }}</span>
+        </div>
+        
+        <div class='payments' *ngIf='paymentsTable()'>
+            <label>דיווחים רבעוניים על תשלומים שבוצעו</label>
+            <table>
+                <thead>
+                    <th></th>
+                    <th></th>
+                    <th>ינואר - מרץ</th>
+                    <th></th>
+                    <th>אפריל - יוני</th>
+                    <th></th>
+                    <th>יולי - ספטמבר</th>
+                    <th></th>
+                    <th>אוקטובר - דצמבר</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let row of paymentsTable()'>
+                        <td>{{ row.year }}</td>
+                        <ng-container *ngFor='let period of ["1","2","3","4"]'>
+                            <td>
+                                <ng-container *ngIf='row[period]'>
+                                    <a class='bk-tooltip-anchor' 
+                                    [href]='row[period].url' 
+                                    target='_blank'
+                                    *ngIf='row[period].url && row[period].diff != 0'>
+                                        <i class='glyphicon glyphicon-paperclip'></i>
+                                        <span class='bk-tooltip'>להורדת הדו"ח הרבעוני</span>
+                                    </a>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf='row[period]'>
+                                    <span *ngIf='row[period].diff != 0'
+                                        [innerHtml]="number(row[period].diff) + '₪'">
+                                    </span>
+                                    <span *ngIf='row[period].diff == 0'>
+                                        &#8212;
+                                    </span>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
 
+        </div>
     </div>
 </div>
 <div class='payments-graph'>
