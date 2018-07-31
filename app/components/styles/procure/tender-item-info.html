@@ -13,7 +13,9 @@
     <div class='titles'>
         <div class='title'>
             <span [innerHtml]='tooltip(itemTitle())'></span>
-            <span class='tender-type-tag' [innerHtml]='tooltip(item.extended_status)'></span>
+            <span *ngIf='item.simple_decision_long' 
+                  class='tender-type-tag' 
+                  [innerHtml]='tooltip(item.simple_decision_long)'></span>
         </div>
         <div class='parties'>
             <span class='from'>{{ publisher() }} &larr;</span>
