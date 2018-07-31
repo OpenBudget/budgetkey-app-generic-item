@@ -60,8 +60,10 @@
             <span class='label-text'>פטור ממכרז</span><br/>
             <label>מספר הפרסום:</label>
             <span class='label-text' [innerHtml]='item.publication_id'></span><br/>
-            <label>מצב נוכחי:</label>
-            <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
+            <ng-container *ngIf='item.extended_status'>
+                <label>מצב נוכחי:</label>
+                <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
+            </ng-container>
             <ng-container *ngIf='item.reason'>
                 <label>סיבות בקשת הפטור:</label>
                 <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
