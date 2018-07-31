@@ -70,7 +70,7 @@
         flex-flow: row;
 
         .titles {
-            width: 70%;
+            flex: 7;
             
             .title {
                 font-family: "Miriam Libre";	
@@ -127,7 +127,7 @@
         }
 
         .amount {
-            width: 30%;
+            flex: 3;
             text-align: left;
             padding-top: 10px;
 
@@ -158,99 +158,128 @@
         }
     }
 
-
-    .details {
-        padding-top: 26px;
-        padding-bottom: 26px;
-        padding-left: 50px;
-        padding-right: 50px;
-        border-bottom: 2px solid rgba(0,0,0,0.04);
+    .hero {
         display: flex;
-        flex-flow: column;
-        width: 75%;
-
-        &.wide {
-            width: 100%;
-        }
-
-        .timeline {
-            table {
-                margin-top: 26px;
-                width: 100%;
-                border-collapse:separate; 
-                border-spacing:0 22px;
-                tr {
-                    height: 25px;
-                }
-                tr.major {
-                    background-color: rgba(81,44,10, 0.05);
-                }
-                td:last-child {
-                    width: 75%;
-                }
-                th, td {
-                    padding-left: 15px;
-                }
-                td:nth-child(2) {
-                    white-space: nowrap;
-                }
-                td:nth-child(4) {
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                }
-            }
-        }
+        flex-flow: row;
+          
+        .details {
+            padding-top: 26px;
+            padding-bottom: 26px;
+            padding-left: 50px;
+            padding-right: 50px;
+            border-bottom: 2px solid rgba(0,0,0,0.04);
+            display: flex;
+            flex-flow: column;
+            flex: 5;
     
-        .awardees {
-            table {
-                width: 100%;
-                thead {
-                    height: 30px;
-                }
-                tr:nth-child(2n+1) {
-                    background-color: rgba(81,44,10, 0.05);
-                }
-                th, td {
-                    padding-left: 15px;
-                }
-                td:nth-child(2),td:nth-child(3),td:nth-child(4) {
-                    // text-align: left;
-                    white-space: nowrap;
-                }
-                tr.total {
-                    border-top: solid 1px #444;
-                    td {
-                        font-weight: bold;
+            .timeline {
+                table {
+                    margin-top: 26px;
+                    width: 100%;
+                    border-collapse:separate; 
+                    border-spacing:0 22px;
+                    tr {
+                        height: 25px;
+                    }
+                    tr.major {
+                        background-color: rgba(81,44,10, 0.05);
+                    }
+                    td:last-child {
+                        width: 75%;
+                    }
+                    th, td {
+                        padding-left: 15px;
+                    }
+                    td:nth-child(2) {
+                        white-space: nowrap;
+                    }
+                    td:nth-child(4) {
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
                     }
                 }
             }
-        }    
+        
+            .awardees {
+                table {
+                    width: 100%;
+                    thead {
+                        height: 30px;
+                    }
+                    tr:nth-child(2n+1) {
+                        background-color: rgba(81,44,10, 0.05);
+                    }
+                    th, td {
+                        padding-left: 15px;
+                    }
+                    td:nth-child(2),td:nth-child(3),td:nth-child(4) {
+                        // text-align: left;
+                        white-space: nowrap;
+                    }
+                    tr.total {
+                        border-top: solid 1px #444;
+                        td {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }    
+    
+            .payments {
+                table {
+                    width: 100%;
+                    tr, thead {
+                        height: 30px;
+                    }
+                    th, td {
+                        color: #512C0A;	
+                        font-family: "Abraham TRIAL";	
+                        font-size: 18px;	
+                        font-weight: 300;
+                    }
+                    td:nth-child(2n) {
+                        text-align: left;
+                        width: 55px;
+                        padding-left: 5px;
+                    }
+                    td:nth-child(2n+3) {
+                        font-weight: 500;
+                    }
+                }
+            }    
+        }
+    
+        .tips {
+            flex: 2;
+            display: flex;
+            flex-flow: column;
 
-        .payments {
-            table {
-                width: 100%;
-                tr, thead {
-                    height: 30px;
-                }
-                th, td {
-                    color: #512C0A;	
-                    font-family: "Abraham TRIAL";	
-                    font-size: 18px;	
+            .tip {
+                border: 4px dashed rgba(0,0,0,0.25);	
+                border-radius: 10px;
+                background-color: #FFFBF2;
+                padding: 20px;
+                margin: 25px 50px;
+                margin-right: 0px;
+
+                span, a {
+                    font-family: "Abraham TRIAL";
+                    color: #512C0A;
+                    font-size: 16px;
+                    line-height: 20px;
                     font-weight: 300;
+                    display: block;
                 }
-                td:nth-child(2n) {
+                a {
+                    color: #19008F;
                     text-align: left;
-                    width: 55px;
-                    padding-left: 5px;
-                }
-                td:nth-child(2n+3) {
-                    font-weight: 500;
+                    font-weight: bold;
                 }
             }
-        }    
+        }
     }
-
+   
     .attachments {
         padding-top: 26px;
         padding-bottom: 26px;

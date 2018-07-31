@@ -53,134 +53,142 @@
         </div>
     </div>
 </div>
-<div class='details'>   
-    <div *ngIf='item.tender_type == "exemptions"'>
-        <label>סוג הליך רכש:</label>
-        <span class='label-text'>פטור ממכרז</span><br/>
-        <label>מספר הפרסום:</label>
-        <span class='label-text' [innerHtml]='item.publication_id'></span><br/>
-        <label>מצב נוכחי:</label>
-        <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
-        <ng-container *ngIf='item.reason'>
-            <label>סיבות בקשת הפטור:</label>
-            <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
-        </ng-container>
-        <ng-container *ngIf='item.regulation'>
-            <label>הסתמכות על תקנה:</label>
-            <span class='label-text' [innerHtml]='tooltip(item.regulation)'></span><br/>
-        </ng-container>
-    </div>
-    <div *ngIf='item.tender_type == "office"'>
-        <label>פרטי המכרז</label><br/>
-        <span class='label-text'>סוג המכרז: משרדי
-        </span><br/>
-        <span class='label-text'>מספר המכרז: 
-            {{item.publication_id}}
-        </span><br/>
-        <ng-container *ngIf='item.description && item.description.length>34'>
-            <span class='label-text'>תיאור:
-                <span [innerHtml]='tooltip(item.description)'></span>
+<div class='hero'>
+    <div class='details'>   
+        <div *ngIf='item.tender_type == "exemptions"'>
+            <label>סוג הליך רכש:</label>
+            <span class='label-text'>פטור ממכרז</span><br/>
+            <label>מספר הפרסום:</label>
+            <span class='label-text' [innerHtml]='item.publication_id'></span><br/>
+            <label>מצב נוכחי:</label>
+            <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
+            <ng-container *ngIf='item.reason'>
+                <label>סיבות בקשת הפטור:</label>
+                <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
+            </ng-container>
+            <ng-container *ngIf='item.regulation'>
+                <label>הסתמכות על תקנה:</label>
+                <span class='label-text' [innerHtml]='tooltip(item.regulation)'></span><br/>
+            </ng-container>
+        </div>
+        <div *ngIf='item.tender_type == "office"'>
+            <label>פרטי המכרז</label><br/>
+            <span class='label-text'>סוג המכרז: משרדי
             </span><br/>
-        </ng-container>
-        <span class='label-text'>סטטוס:
-            <span [innerHtml]='tooltip(item.page_title)'></span>
-        </span><br/>
-    </div>
-    <div *ngIf='item.tender_type == "central"'>
-        <label>פרטי המכרז</label><br/>
-        <span class='label-text'>סוג המכרז:
-            מרכזי, <span [innerHtml]='tooltip(item.regulation)'></span>
-        </span><br/>
-        <span class='label-text'>מספר המכרז: 
-            {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
-        </span><br/>
-        <span class='label-text'>תיאור:
-            {{item.description}}
-        </span><br/>
-        <span class='label-text'>סטטוס:
-            <span [innerHtml]='tooltip(item.page_title)'></span>
-        </span><br/>
-    </div>
+            <span class='label-text'>מספר המכרז: 
+                {{item.publication_id}}
+            </span><br/>
+            <ng-container *ngIf='item.description && item.description.length>34'>
+                <span class='label-text'>תיאור:
+                    <span [innerHtml]='tooltip(item.description)'></span>
+                </span><br/>
+            </ng-container>
+            <span class='label-text'>סטטוס:
+                <span [innerHtml]='tooltip(item.page_title)'></span>
+            </span><br/>
+        </div>
+        <div *ngIf='item.tender_type == "central"'>
+            <label>פרטי המכרז</label><br/>
+            <span class='label-text'>סוג המכרז:
+                מרכזי, <span [innerHtml]='tooltip(item.regulation)'></span>
+            </span><br/>
+            <span class='label-text'>מספר המכרז: 
+                {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
+            </span><br/>
+            <span class='label-text'>תיאור:
+                {{item.description}}
+            </span><br/>
+            <span class='label-text'>סטטוס:
+                <span [innerHtml]='tooltip(item.page_title)'></span>
+            </span><br/>
+        </div>
 
-    <div *ngIf='item.contact'>
-        <span class='label-text'>אנשי קשר: {{ item.contact }}</span>
+        <div *ngIf='item.contact'>
+            <span class='label-text'>אנשי קשר: {{ item.contact }}</span>
+        </div>
+        <div  *ngIf='item.page_url'>
+            <br/>
+            <span class='label-text'>
+                <a [href]='item.page_url' target='_blank'>
+                    קישור לפרסום המקורי
+                    &nbsp;&gt;&gt;
+                </a>
+            </span>
+        </div>
+        
+        <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_volume'>
+            <table>
+                <thead>
+                    <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>
+                    <th *ngIf='item.tender_type != "exemptions"'>הזוכים במכרז</th>
+                    <th>היקף ההתקשרות</th>
+                    <th>סה״כ ביצוע</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let awardee of item.awardees'>
+                        <td>{{ awardee.entity_name }}</td>
+                        <td [innerHtml]='number(awardee.volume) + (awardee.volume ? "₪" : "")'></td>
+                        <td [innerHtml]='number(awardee.executed) + (awardee.executed ? "₪" : "")'></td>
+                        <td>
+                            <span [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'
+                                *ngIf='item.awardees.length > 1 && item.contract_executed'>
+                            </span>
+                        </td>
+                        <td>
+                            <a *ngIf='awardee.entity_id'
+                            [href]='entityLink(awardee)'>
+                                <i class='glyphicon glyphicon-circle-arrow-left'></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class='total' *ngIf='item.awardees.length > 1 && item.contract_executed'>
+                        <td>סך הכל</td>
+                        <td [innerHtml]='number(item.contract_volume) + (item.contract_volume ? "₪" : "")'></td>
+                        <td [innerHtml]='number(item.contract_executed) + (item.contract_executed ? "₪" : "")'></td>
+                        <td>100%</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='timeline' *ngIf='item.timeline'>
+            <table>
+                <tbody>
+                    <tr *ngFor='let event of item.timeline; let i = index'
+                        [class]="event.major ? 'major' : 'minor' ">
+                        <td><timeline-part [size]='25' 
+                                        [padding]='22' 
+                                        [major]='event.major'
+                                        [last]='i == (item.timeline.length - 1)'
+                                        [percent]='event.percent'
+                                        >
+                            </timeline-part></td>
+                        <td>{{ event.timestamp }}</td>
+                        <td>
+                            <a [href]='event.url' *ngIf='event.url' target='_blank'>
+                                <i class='glyphicon glyphicon-paperclip'></i>                        
+                            </a>
+                        </td>
+                        <td>
+                            <a [href]='event.url' *ngIf='event.url' target='_blank'>
+                                {{ event.title }}
+                            </a>
+                            <ng-container *ngIf='!event.url'>
+                                {{ event.title }}
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div  *ngIf='item.page_url'>
-        <br/>
-        <span class='label-text'>
-            <a [href]='item.page_url' target='_blank'>
-                קישור לפרסום המקורי
-                &nbsp;&gt;&gt;
-            </a>
-        </span>
-    </div>
-    
-    <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_volume'>
-        <table>
-            <thead>
-                <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>
-                <th *ngIf='item.tender_type != "exemptions"'>הזוכים במכרז</th>
-                <th>היקף ההתקשרות</th>
-                <th>סה״כ ביצוע</th>
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr *ngFor='let awardee of item.awardees'>
-                    <td>{{ awardee.entity_name }}</td>
-                    <td [innerHtml]='number(awardee.volume) + (awardee.volume ? "₪" : "")'></td>
-                    <td [innerHtml]='number(awardee.executed) + (awardee.executed ? "₪" : "")'></td>
-                    <td>
-                        <span [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'
-                              *ngIf='item.awardees.length > 1 && item.contract_executed'>
-                        </span>
-                    </td>
-                    <td>
-                        <a *ngIf='awardee.entity_id'
-                           [href]='entityLink(awardee)'>
-                            <i class='glyphicon glyphicon-circle-arrow-left'></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr class='total' *ngIf='item.awardees.length > 1 && item.contract_executed'>
-                    <td>סך הכל</td>
-                    <td [innerHtml]='number(item.contract_volume) + (item.contract_volume ? "₪" : "")'></td>
-                    <td [innerHtml]='number(item.contract_executed) + (item.contract_executed ? "₪" : "")'></td>
-                    <td>100%</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class='timeline' *ngIf='item.timeline'>
-        <table>
-            <tbody>
-                <tr *ngFor='let event of item.timeline; let i = index'
-                    [class]="event.major ? 'major' : 'minor' ">
-                    <td><timeline-part [size]='25' 
-                                       [padding]='22' 
-                                       [major]='event.major'
-                                       [last]='i == (item.timeline.length - 1)'
-                                       [percent]='event.percent'
-                                       >
-                        </timeline-part></td>
-                    <td>{{ event.timestamp }}</td>
-                    <td>
-                        <a [href]='event.url' *ngIf='event.url' target='_blank'>
-                            <i class='glyphicon glyphicon-paperclip'></i>                        
-                        </a>
-                    </td>
-                    <td>
-                        <a [href]='event.url' *ngIf='event.url' target='_blank'>
-                            {{ event.title }}
-                        </a>
-                        <ng-container *ngIf='!event.url'>
-                            {{ event.title }}
-                        </ng-container>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class='tips' *ngIf='actionables()'>
+        <div class='tip' *ngFor='let tip of actionables()'>
+            <span [innerHtml]='tooltip(tip[0])'></span>
+            <a *ngIf='tip[1]' [href]='tip[1]'>פרטים נוספים</a>
+        </div>
     </div>
 </div>
 <div class='attachments' *ngIf='item.documents && item.documents.length > 0'>

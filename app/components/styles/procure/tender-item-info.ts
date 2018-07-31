@@ -80,7 +80,7 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   actionables() {
-    return this.item['awardees'];
+    return this.item['actionable_tips'];
   }
 
   open_document(attachment: any) {
