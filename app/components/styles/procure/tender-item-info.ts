@@ -88,10 +88,14 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   tooltip(content: string) {
+    if (!content) {
+      return content;
+    }
     for (let k of Object.keys(tooltips)) {
       if (content.indexOf(k) >= 0) {
         let tooltip = `<span class='bk-tooltip-anchor'>${k}<span class='bk-tooltip'>${tooltips[k]}</span></span>`;
         content = content.replace(k, tooltip);
+        break;
       }
     }
     return content;
