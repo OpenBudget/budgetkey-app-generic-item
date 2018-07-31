@@ -55,10 +55,16 @@
 </div>
 <div class='details'>   
     <div *ngIf='item.tender_type == "exemptions"'>
+        <label>סוג הליך רכש:</label>
+        <span class='label-text'>פטור ממכרז</span><br/>
+        <label>מספר הפרסום:</label>
+        <span class='label-text' [innerHtml]='item.publication_id'></span><br/>
         <label>מצב נוכחי:</label>
-        <span class='label-text' [innerHtml]='tooltip(item.decision)'></span><br/>
+        <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
         <label>סיבות בקשת הפטור:</label>
         <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
+        <label>הסתמכות על תקנה:</label>
+        <span class='label-text' [innerHtml]='tooltip(item.regulation)'></span><br/>
     </div>
     <div *ngIf='item.tender_type == "office"'>
         <label>פרטי המכרז</label><br/>
