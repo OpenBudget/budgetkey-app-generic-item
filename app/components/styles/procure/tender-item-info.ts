@@ -6,7 +6,7 @@ import { format_absolute_percent, format_number } from '../../../pipes/render-te
 import { ProcureItemInfoComponent } from './procure-item-info';
 
 const tooltips = require('./tooltips.json');
-
+console.log('TOOLTIPS:', tooltips);
 
 @Component({
   selector: 'tender-item-info',
