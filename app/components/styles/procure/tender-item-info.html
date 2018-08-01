@@ -88,7 +88,7 @@
                 </span><br/>
             </ng-container>
             <span class='label-text'>סטטוס:
-                <span [innerHtml]='tooltip(item.page_title)'></span>
+                <span [innerHtml]='tooltip(item.extended_status)'></span>
             </span><br/>
         </div>
         <div *ngIf='item.tender_type == "central"'>
@@ -103,7 +103,7 @@
                 {{item.description}}
             </span><br/>
             <span class='label-text'>סטטוס:
-                <span [innerHtml]='tooltip(item.page_title)'></span>
+                <span [innerHtml]='tooltip(item.extended_status)'></span>
             </span><br/>
         </div>
 
