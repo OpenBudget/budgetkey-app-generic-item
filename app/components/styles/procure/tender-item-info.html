@@ -86,22 +86,23 @@
                     <span [innerHtml]='tooltip(item.description)'></span>
                 </span><br/>
             </ng-container>
-            <span class='label-text'>סטטוס:
+            <span class='label-text' *ngIf='item.extended_status'>סטטוס:
                 <span [innerHtml]='tooltip(item.extended_status)'></span>
             </span><br/>
         </div>
         <div *ngIf='item.tender_type == "central"'>
             <label>פרטי המכרז</label><br/>
             <span class='label-text'>סוג המכרז:
-                מרכזי, <span [innerHtml]='tooltip(item.regulation)'></span>
+                מרכזי 
+                <span *ngIf='item.regulation' [innerHtml]='" - " + tooltip(item.regulation)'></span>
             </span><br/>
             <span class='label-text'>מספר המכרז: 
                 {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
             </span><br/>
-            <span class='label-text'>תיאור:
+            <span class='label-text' *ngIf="item.description">תיאור:
                 <span [innerHtml]='tooltip(item.description)'></span>
             </span><br/>
-            <span class='label-text'>סטטוס:
+            <span class='label-text' *ngIf="item.extended_status">סטטוס:
                 <span [innerHtml]='tooltip(item.extended_status)'></span>
             </span><br/>
         </div>
