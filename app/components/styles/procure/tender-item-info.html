@@ -1,6 +1,6 @@
 <div class='marquee'>
-    <span class='status-alert' *ngIf='alertText()'>{{ alertText() }}</span>
-    <span class='status-text' *ngIf='item.simple_decision'>{{ item.simple_decision }}</span>
+    <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
+    <span class='status-text' *ngIf='item.simple_decision' [innerHtml]="tooltip(item.simple_decision)"></span>
     <span class='status-text' *ngIf='item.tender_type=="exemptions"'>פטור ממכרז</span>
     <span class='status-timestamp' *ngIf='lastUpdateDate()'>
         עדכון אחרון: {{ lastUpdateDate() }}
@@ -18,10 +18,9 @@
                   [innerHtml]='tooltip(item.simple_decision_long)'></span>
         </div>
         <div class='parties'>
-            <span class='from'>{{ publisher() }} &larr;</span>
+            <span class='from' [innerHtml]='tooltip(publisher()) + " &larr;"'></span>
             <ng-container *ngIf='item.awardees_text'>
-                <span class='to'>
-                    {{ item.awardees_text }}
+                <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
                 </span>
             </ng-container>
         </div>
@@ -100,7 +99,7 @@
                 {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
             </span><br/>
             <span class='label-text'>תיאור:
-                {{item.description}}
+                <span [innerHtml]='tooltip(item.description)'></span>
             </span><br/>
             <span class='label-text'>סטטוס:
                 <span [innerHtml]='tooltip(item.extended_status)'></span>
@@ -177,10 +176,10 @@
                         </td>
                         <td>
                             <a [href]='event.url' *ngIf='event.url' target='_blank'>
-                                {{ event.title }}
+                                <span [innerHtml]='tooltip(event.title)'></span>
                             </a>
                             <ng-container *ngIf='!event.url'>
-                                {{ event.title }}
+                                <span [innerHtml]='tooltip(event.title)'></span>
                             </ng-container>
                         </td>
                     </tr>
@@ -205,8 +204,7 @@
             <div class='paperclip'>
                 <i class='glyphicon glyphicon-paperclip'></i>
             </div>
-            <div class='filename'>
-                {{ attachment.description }}
+            <div class='filename' [innerHtml]='tooltip(attachment.description)'>
             </div>
             <div class='icon'>
                 <i class='glyphicon glyphicon-file'></i>
