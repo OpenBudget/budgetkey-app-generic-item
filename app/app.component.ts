@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { BudgetKeyItemService, StoreService } from './services';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import * as _ from 'lodash';
@@ -37,8 +37,8 @@ const gtag: any = window['gtag'];
     Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
   ],
 })
-export class AppComponent implements OnInit {
-  loaded: boolean;
+export class AppComponent implements AfterViewInit  {
+  loaded: boolean = true;
   style: string;
 
   @ViewChild('questionsPanel') questionsPanel: ElementRef;
@@ -50,16 +50,23 @@ export class AppComponent implements OnInit {
       if (questionsPanelBounds.bottom === window.innerHeight) {
         let dataTableBounds = this.dataTable.nativeElement.getBoundingClientRect();
         let questionsPanelHeight = questionsPanelBounds.bottom - questionsPanelBounds.top;
-        window.scrollTo(0, window.scrollY + dataTableBounds.top - questionsPanelHeight);
+        window.scrollTo({left: 0, top: window.scrollY + dataTableBounds.top - questionsPanelHeight, behavior: 'smooth'});
       }
     }
   }
 
   constructor(
-    private itemService: BudgetKeyItemService, private store: StoreService,
+    private itemService: BudgetKeyItemService, 
+    private store: StoreService,
     private location: Location
   ) {
-    this.loaded = false;
+    if (window['prefetchedItem']) {
+      console.log(window['prefetchedItem']);
+      this.handleItem(window['prefetchedItem']);
+      this.loaded = true;
+    } else {
+      this.loaded = false;
+    }
   }
 
   handleItem(item: any): void {
@@ -73,7 +80,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loaded = false;
     let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
     let searchResultsLocation = window.location.search;
     if (searchResultsLocation) {
@@ -89,14 +95,19 @@ export class AppComponent implements OnInit {
         }
       }
     }
-    console.log(window['prefetchedItem']);
-    if (window['prefetchedItem']) {
-      this.handleItem(window['prefetchedItem']);
-    } else {
-      let thiz = this;
+    if (!window['prefetchedItem']) {
       this.itemService.getItem(itemId)
-        .then(item => { thiz.handleItem(item); });
+        .then(item => { this.handleItem(item); });
     }
     moment.locale('he');
   }
+
+  ngAfterViewInit() {
+    if (window.location.hash === '#questions') {
+      window.setTimeout(() => {
+        this.scrollToTable();
+      }, 3000);
+    }
+  }
+
 }
