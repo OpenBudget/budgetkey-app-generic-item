@@ -207,7 +207,7 @@ export class ItemDataTableComponent {
         this.headers.length = 0;
         this.data.length = 0;
         this.total = 0;
-        let headersOrder = this.store.currentQuestion.headers;
+        let headersOrder = Array.from(this.store.currentQuestion.headers);
         let formatters = this.store.currentQuestion.formatters;
         return this.itemService.getItemData(this.query, headersOrder, formatters);
       })
