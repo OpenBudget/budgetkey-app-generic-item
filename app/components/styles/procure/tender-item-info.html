@@ -190,7 +190,7 @@
     </div>
     <div class='tips' *ngIf='actionables()'>
         <div class='tip' *ngFor='let tip of actionables()'>
-            <span [innerHtml]='tooltip(tip[0])'></span>
+            <div [innerHtml]='tooltip(tip[0])'></div>
             <a *ngIf='tip[1]' [href]='tip[1]'>פרטים נוספים</a>
         </div>
     </div>
