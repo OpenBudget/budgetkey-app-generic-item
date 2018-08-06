@@ -6,13 +6,15 @@
               "supporting_ministry AS \"משרד\",",
               "request_type AS \"סוג תמיכה\", ", 
               "support_title AS \"נושא\", ", 
+              "budget_code,", 
+              "budget_code AS \"מספר תקנה\", ", 
               "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type AS item_id, ", 
               "entity_name as \"מקבל התמיכה\", ",
               "entity_id as \"מספר תאגיד\", ",
               "'org/' || entity_kind || '/' || entity_id as entity_item_id, ",
               "sum(amount_approved) as \"סה״כ אושר\",",
               "sum(amount_paid) as \"סה״כ שולם\"",
-              "FROM raw_supports WHERE year_requested :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6, 7, 8",
+              "FROM raw_supports WHERE year_requested :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
               "order by year_requested desc"],
     "parameters": {
       "period": {
@@ -36,6 +38,7 @@
     },
     "headers": [
       "נושא:item_link(item_id)", 
+      "מספר תקנה:budget_code:search_term(budget_code)",
       "משרד", 
       "סוג תמיכה", 
       "מקבל התמיכה:item_link(entity_item_id)",
