@@ -94,7 +94,7 @@
             <label>פרטי המכרז</label><br/>
             <span class='label-text'>סוג המכרז:
                 מרכזי 
-                <span *ngIf='item.regulation' [innerHtml]='" - " + tooltip(item.regulation)'></span>
+                <span *ngIf='item.regulation && item.regulation !== "מכרז"' [innerHtml]='" - " + tooltip(item.regulation)'></span>
             </span><br/>
             <span class='label-text'>מספר המכרז: 
                 {{(item.publication_id && item.publication_id != '0') ? item.publication_id : item.tender_id }}
