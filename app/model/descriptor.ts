@@ -67,6 +67,10 @@ export class DescriptorBase {
         }
         return code.slice(1);
       };
+    } else if (mod === 'yesno') {
+      return (x: any, row: any) => {
+        return x ? 'כן' : 'לא';
+      };
     } else { // Parametrized modifiers next
       let parts = mod.split('(');
       mod = parts[0];

@@ -1,22 +1,20 @@
 [
 
   {
-    "text": " כלל התמיכות מתקציב זה ש <phase> ב <period>",
-    "query": ["SELECT :phase AS \"שנה\",",
+    "text": " פירוט כל התמיכות מתקציב זה שאושרו ב <period>",
+    "query": ["SELECT year_requested AS \"שנה\",",
               "supporting_ministry AS \"משרד\",",
               "request_type AS \"סוג תמיכה\", ", 
               "support_title AS \"נושא\", ", 
               "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type AS item_id, ", 
               "entity_name as \"מקבל התמיכה\", ",
+              "entity_id as \"מספר תאגיד\", ",
               "'org/' || entity_kind || '/' || entity_id as entity_item_id, ",
+              "sum(amount_approved) as \"סה״כ אושר\",",
               "sum(amount_paid) as \"סה״כ שולם\"",
-              "FROM raw_supports WHERE :phase :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6, 7",
-              "order by :phase desc"],
+              "FROM raw_supports WHERE year_requested :period AND budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6, 7, 8",
+              "order by year_requested desc"],
     "parameters": {
-      "phase": {
-        "שולמו": "year_paid",
-        "אושרו": "year_requested"
-      },
       "period": {
         "כל השנים": ">0",
         "2008": "=2008",
@@ -34,7 +32,6 @@
       }
     },
     "defaults": {
-      "phase": "אושרו",
       "period": "כל השנים"
     },
     "headers": [
@@ -42,25 +39,25 @@
       "משרד", 
       "סוג תמיכה", 
       "מקבל התמיכה:item_link(entity_item_id)",
+      "מספר תאגיד",
       "שנה",
+      "סה״כ אושר:number",
       "סה״כ שולם:number"
     ]
   },
   {
-    "text": "סך התמיכות מתקציב זה, לפי מקבל התמיכה ש<phase> עבור בקשות מ <period>",
+    "text": "סיכום התמיכות מתקציב זה, לפי מקבל התמיכה עבור בקשות שאושרו ב <period>",
     "query": ["SELECT support_title AS \"נושא\", ", 
               "budget_code,", 
               "budget_code AS \"מספר תקנה\", ", 
               "entity_name as \"מקבל התמיכה\", ",
+              "entity_id as \"מספר תאגיד\", ",
               "'org/' || entity_kind || '/' || entity_id as item_id, ",
-              "sum(:phase) as \"סה״כ\",",
+              "sum(amount_approved) as \"סה״כ אושר\",",
+              "sum(amount_paid) as \"סה״כ שולם\",",
               "min(year_requested) || '-' || max(year_requested)  as \"תקופה\" ", 
-              "FROM raw_supports WHERE year_requested :period AND  budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5 ORDER BY 4 DESC nulls last"],
+              "FROM raw_supports WHERE year_requested :period AND  budget_code like ':code%%' GROUP BY 1, 2, 3, 4, 5, 6 ORDER BY 4 DESC nulls last"],
     "parameters": {
-      "phase": {
-        "שולמו": "amount_paid",
-        "אושרו": "amount_approved"
-      },
       "period": {
         "כל השנים": ">0",
         "2008": "=2008",
@@ -78,7 +75,6 @@
       }
     },
     "defaults": {
-      "phase": "אושרו",
       "period": "כל השנים"
     },
     "headers": [
@@ -86,11 +82,12 @@
       "מספר תקנה:budget_code:search_term(budget_code)",
       "מקבל התמיכה:item_link(item_id)",
       "תקופה",
-      "סה״כ:number"
+      "סה״כ אושר:number",
+      "סה״כ שולם:number"
     ]
   },
   {
-    "text": " סך ההתקשרויות מתקציב זה לפי ספק מ <period>",
+    "text": " סיכום ההתקשרויות מתקציב זה לפי ספק מ <period>",
     "query": [
               "SELECT sum(volume) AS \"סה״כ היקף\",",
               "sum(executed) AS \"סה״כ בוצע\",",
@@ -135,7 +132,7 @@
     ]
   },
   {
-    "text": " כלל ההתקשרויות מתקציב זה לפי ספק ב <period>",
+    "text": " פירוט כל ההתקשרויות מתקציב זה לפי ספק ב <period>",
     "query": [
               "SELECT volume AS \"היקף\",",
               "executed AS \"ביצוע\",",

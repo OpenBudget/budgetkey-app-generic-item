@@ -94,10 +94,8 @@ export class StoreService {
     _.each(this.currentParameters, (value, key) => {
       parameters[key] = this.currentQuestion.parameters[key][value];
     });
-    return this.questionsService.formatQuery(
-      this.currentQuestion.query,
-      _.extend({}, this.item, parameters)
-    );
+    let query = this.questionsService.formatQuery(this.currentQuestion.query, parameters);
+    return this.questionsService.formatQuery(query, this.item);
   }
 
 }

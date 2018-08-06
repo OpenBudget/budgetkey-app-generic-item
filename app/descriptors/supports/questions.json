@@ -1,22 +1,19 @@
 [
   {
-  "text": " כלל התמיכות שאותו הארגון קיבל ש <phase> ב <period>",
+  "text": " פירוט כלל התמיכות שאותו הארגון קיבל שאושרו ב <period>",
   "query": [
-    "SELECT :phase AS \"שנה\", ",
+    "SELECT year_requested AS \"שנה\", ",
     "supporting_ministry AS \"משרד\", ",
     "request_type AS \"סוג תמיכה\", ",
     "support_title AS \"נושא\", ",
+    "sum(amount_approved) as \"סה״כ אושר\", ",
     "sum(amount_paid) as \"סה״כ שולם\" ",
     "FROM raw_supports ",
-    "WHERE :phase :period ",
+    "WHERE year_requested :period ",
     "AND entity_id=':entity_id' ",
     "GROUP BY 1, 2, 3, 4"
   ],
   "parameters": {
-    "phase": {
-      "שולמו": "year_paid",
-      "אושרו": "year_requested"
-    },
     "period": {
       "כל השנים": ">0",
       "2008": "=2008",
@@ -34,14 +31,14 @@
     }
   },
   "defaults": {
-    "phase": "אושרו",
     "period": "כל השנים"
   },
   "headers": [
     "שנה",
     "משרד",
     "נושא",
-    "סה״כ שולם"
+    "סה״כ אושר:number",
+    "סה״כ שולם:number"
   ]
 }
 ]

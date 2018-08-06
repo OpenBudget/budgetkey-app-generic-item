@@ -1,6 +1,6 @@
 [
   {
-    "text": " כלל ההתקשרויות עם אותו הספק ב <period>",
+    "text": " פירוט כל ההתקשרויות עם אותו הספק ב <period>",
     "query": [
   "SELECT order_date as \"תאריך הזמנה\",",
   "       purchase_method->>0 as \"אופן התקשרות\",",
