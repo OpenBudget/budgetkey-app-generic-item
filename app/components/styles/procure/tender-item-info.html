@@ -115,8 +115,8 @@
             <span class='label-text'>
                 <a [href]='item.page_url' target='_blank'>
                     קישור לפרסום המקורי
-                    &nbsp;&gt;&gt;
                 </a>
+                &nbsp;&gt;&gt;
             </span>
         </div>
         
@@ -128,23 +128,25 @@
                     <th>היקף ההתקשרות</th>
                     <th>סה״כ ביצוע</th>
                     <th></th>
-                    <th></th>
                 </thead>
                 <tbody>
                     <tr *ngFor='let awardee of item.awardees'>
-                        <td>{{ awardee.entity_name }}</td>
+                        <td>
+                            <a *ngIf='awardee.entity_id'
+                                [href]='entityLink(awardee)'>
+                                {{ awardee.entity_name }}
+                            </a>
+                            <span *ngIf='!awardee.entity_id'>
+                                {{ awardee.entity_name }}
+                            </span>
+                        </td>
                         <td [innerHtml]='number(awardee.volume) + (awardee.volume ? "₪" : "")'></td>
                         <td [innerHtml]='number(awardee.executed) + (awardee.executed ? "₪" : "")'></td>
                         <td>
-                            <span [innerHtml]='"(" + percent(awardee.executed/item.contract_executed) + ")"'
-                                *ngIf='item.awardees.length > 1 && item.contract_executed'>
-                            </span>
-                        </td>
-                        <td>
-                            <a *ngIf='awardee.entity_id'
-                            [href]='entityLink(awardee)'>
-                                <i class='glyphicon glyphicon-circle-arrow-left'></i>
-                            </a>
+                            <ng-container *ngIf='item.awardees.length > 1 && item.contract_executed'>
+                            (<span [innerHtml]='percent(awardee.executed/item.contract_executed)'></span>
+                             <span *ngIf='awardee.count == 1'>בהתקשרות בודדת</span><span *ngIf='awardee.count > 1'>ב-{{awardee.count}} התקשרויות</span>)
+                            </ng-container>
                         </td>
                     </tr>
                     <tr class='total' *ngIf='item.awardees.length > 1 && item.contract_executed'>
@@ -152,7 +154,6 @@
                         <td [innerHtml]='number(item.contract_volume) + (item.contract_volume ? "₪" : "")'></td>
                         <td [innerHtml]='number(item.contract_executed) + (item.contract_executed ? "₪" : "")'></td>
                         <td>100%</td>
-                        <td></td>
                     </tr>
                 </tbody>
             </table>
