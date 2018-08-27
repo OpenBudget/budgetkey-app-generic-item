@@ -7,6 +7,18 @@
   .title-container {
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 25%, #F3EFFA 25%, #F3EFFA 100%);
 
+    &.company {
+      background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 25%, rgba(181,223,255,0.5) 25%, rgba(181,223,255,0.5) 100%);
+
+      .title-row {
+        .pretitle {
+          color: #E8F5FF;
+          background-color: #3E4E59;
+        }
+      }
+    }
+
+
     .title-row {
       margin-top: 45px;
       height: 50px;	
@@ -37,6 +49,7 @@
         font-weight: 400;	
         line-height: 17px;	
         border-radius: 4px;	
+        white-space: nowrap;
       }
 
       .title {
@@ -112,4 +125,12 @@
     }
   }
 
+}
+
+.objective {
+  padding-bottom: 20px;
+}
+
+.row.text {
+  padding: 20px 0 ;
 }

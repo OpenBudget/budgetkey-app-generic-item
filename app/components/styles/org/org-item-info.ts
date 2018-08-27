@@ -7,7 +7,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 @Component({
   selector: 'org-item-info',
   template: `  
-  <div class='row-container title-container'>
+  <div class='row-container title-container' [ngClass]='item ? item.kind : ""'>
     <div class="title-row row">
       <div class="col-md-1">
           <span class="pretitle"

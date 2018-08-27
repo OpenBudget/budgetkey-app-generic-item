@@ -8,7 +8,7 @@ let safe: any = env.getFilter('safe');
 export function format_number(x: number) {
   if (x) {
     let fracDigits = 0;
-    if (x < 1000) {
+    if (x < 1000 && x > -1000) {
       fracDigits = 2;
     }
     return '<span class="number">' +

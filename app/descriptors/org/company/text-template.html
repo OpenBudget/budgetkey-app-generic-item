@@ -1,9 +1,9 @@
-{% if details.description %}
+{% if details.description or details.goal %}
 <label class="field-label">
     תיאור ומטרת החברה:
 </label>
 <div class="objective">
-    {{ details.description }}
+    {{ details.description or details.goal }}
 </div>
 {% endif %}
 <div>
@@ -14,21 +14,29 @@
 </div>
 <div>
     <label class="field-label">
-{% if details.address_lines %}
-        כתובת:
+        סוג החברה:
     </label>
-    {{ details.address_lines | join('<br/>') | safe }}
+    {{ details.type }}
 </div>
-{% endif %}
 <div>
     <label class="field-label">
         סטטוס:
     </label>
     {{ details.status }}
 </div>
-
+<br/>
+<div>
+    <label class="field-label">
+{% if details.address_lines %}
+        כתובת:
+    </label>
+    <br/>
+    {{ details.address_lines | join('<br/>') | safe }}
+</div>
+{% endif %}
 {% if details.government_company_info %}
 <div>
+    <br/>
     <label class="field-label">
         תחום פעילות:
     </label>

@@ -1,0 +1,25 @@
+<div class='chart-container'>
+    <div>
+        <span class='label'>הארגון בסטטוס:</span>
+        <span class='simple'>{{ details.org_status }}</span>
+    </div>
+    <div>
+        <span class='label'>הארגון הוקם בשנת:</span>
+        <span class='simple'>{{ details.year_established }}</span>
+    </div>
+    <div>
+        <span class='label'>מטרות הארגון:</span><br/>
+        <span class='simple'>{{ details.objective }}</span>
+    </div>
+    {% if details.address %}
+    <div>
+        <span class='label'>כתובת:</span><br/>
+        <span class='simple'>{{ details.address }}</span>
+    </div>
+    {% endif %}
+    <div class='moreinfo-container'>
+        <span class='moreinfo'>
+            לעוד מידע על הארגון ב<a href='http://www.guidestar.org.il/he/organization/{{ id }}' target="_blank">אתר גיידסטאר</a>
+        </span>
+    </div>
+</div>
