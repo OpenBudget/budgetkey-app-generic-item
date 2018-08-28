@@ -60,7 +60,6 @@ let COLORSCHEME_2 = {
 
       <div class="small-spendomat-rows"
            [ngClass]="{selected: selected}"
-           [style.height]="(selected ? 20 * row.spending.length : 0) + 'px'"
            (mouseleave)="hoverIndex = -1"
         >
         <div class="small spendomat-row" *ngFor="let s of row.spending; let i = index"
@@ -171,6 +170,9 @@ let COLORSCHEME_2 = {
     font-size: 16px;	
     font-weight: bold;	
     line-height: 22px;  
+
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .small .payer-label {
@@ -182,7 +184,8 @@ let COLORSCHEME_2 = {
   .amount-label {
     left: 0;
     text-align: left;
-    width: 20%;
+    padding: 0 4px;
+    white-space: nowrap;
 
     font-size: 14px;	
     line-height: 19px;
@@ -231,24 +234,28 @@ let COLORSCHEME_2 = {
   }
   
   .spendomat-tags {
-    height: 30px;
+    min-height: 30px;
     overflow-y: hidden;
     transition-property: height;
     transition-duration: 200ms;
+    margin: 6px 0;
   }
 
   .spendomat-tags.selected {
-    height: 6px;
+    height: 0.1px;
+    min-height: 0px;
   }
 
   .tag {
     display: inline-block;
-    margin: 6px 4px;
+    margin: 0 4px;
     padding: 0px 2px;
     font-family: "Abraham TRIAL";	
     font-size: 12px;	
     line-height: 16px;
     border-radius: 4px;	
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .tag.hovered {
@@ -257,8 +264,11 @@ let COLORSCHEME_2 = {
 
   .small-spendomat-rows {
     overflow: hidden;
-    transition-property: height;
-    transition-duration: 200ms;
+    height: 0px;
+  }
+
+  .small-spendomat-rows.selected {
+    height: auto;
   }
 `,
 `
