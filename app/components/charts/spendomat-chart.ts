@@ -2,10 +2,26 @@ import { Component, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { format_number } from '../../pipes/render-template';
 
+let COLORSCHEME_1 = {
+  primaryBorder: '5D40D4',  // primary box hover and border
+  primaryBg: 'B6A5EB',  // primary box background
+  tagBg: 'f6f3fa',  // tag background
+  tagBorder: 'B3AADE',  // tag border
+  text: '3E4E59'   // text color
+};
+
+let COLORSCHEME_2 = {
+  primaryBorder: '80C8FF',  // primary box hover and border
+  primaryBg: 'CEE7FD',  // primary box background
+  tagBg: 'F0F6FA',  // tag background
+  tagBorder: 'B5DFFF',  // tag border
+  text: '3E4E59'   // text color
+};
+
 @Component({
   selector: 'budgetkey-chart-spendomat-row',
   template: `
-    <div class="spendomat-container">
+    <div class="spendomat-container" [ngClass]="theme">
       <div class="spendomat-row"
            (mouseleave)="hoverIndex = -1">
         <div class="row-bg"></div>
@@ -111,24 +127,15 @@ import { format_number } from '../../pipes/render-template';
     top: 0;
     right: 0;
     height: 100%;
-    border: 1px solid #5D40D4;	
     border-radius: 0px 10px 10px 0px;
-    background-color: #B6A5EB;    
   }
 
   .row-part.hovered {
-    background-color: #5D40D4;
     color: #ffffff;
   }
 
   .small .row-part {
     border-radius: 0px 4px 4px 0px;
-    background-color: #f6f3fa;    
-    border: 1px solid #B3AADE;	
-  }
-
-  .small .row-part.hovered {
-    background-color: #5D40D4;
   }
 
   .row-bg {
@@ -137,12 +144,10 @@ import { format_number } from '../../pipes/render-template';
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid #5D40D4;	
     opacity: 0.5;	
     border-radius: 10px;	
-    background-color: #B6A5EB;    
   }
-
+  
   .small .row-bg {
     border-radius: 4px;
   }
@@ -155,11 +160,10 @@ import { format_number } from '../../pipes/render-template';
     flex-flow: column;
     justify-content: center;
     padding: 0 19px;
-    color: #3E4E59;	
     font-family: "Miriam Libre";	
     pointer-events: none;
   }
-  
+
   .payer-label {
     right: 0;
 
@@ -217,7 +221,6 @@ import { format_number } from '../../pipes/render-template';
     height: 0;
     border-style: solid;
     border-width: 7px 7px 7px 0;
-    border-color: transparent #5D40D4 transparent transparent;
     transition-property: transform;
     transition-duration: 200ms;
     transform: rotate(0);
@@ -242,21 +245,14 @@ import { format_number } from '../../pipes/render-template';
     display: inline-block;
     margin: 6px 4px;
     padding: 0px 2px;
-    color: #3E4E59;	
     font-family: "Abraham TRIAL";	
     font-size: 12px;	
     line-height: 16px;
     border-radius: 4px;	
-    // border: 1px solid #5D40D4;	
-    // background-color: #F6F7F0;
-
-    background-color: #f6f3fa;    
-    border: 1px solid #B3AADE;	
   }
 
   .tag.hovered {
     color: #ffffff;
-    background-color: #5D40D4;
   }
 
   .small-spendomat-rows {
@@ -264,12 +260,97 @@ import { format_number } from '../../pipes/render-template';
     transition-property: height;
     transition-duration: 200ms;
   }
-    `
+`,
+`
+  .theme-1 .row-part {
+    border: 1px solid #${COLORSCHEME_1.primaryBorder};	
+    background-color: #${COLORSCHEME_1.primaryBg};
+  }
+
+  .theme-1 .row-part.hovered {
+    background-color: #${COLORSCHEME_1.primaryBorder};
+  }
+
+  .theme-1 .small .row-part {
+    background-color: #${COLORSCHEME_1.tagBg};    
+    border: 1px solid #${COLORSCHEME_1.tagBorder};
+  }
+
+  .theme-1 .small .row-part.hovered {
+    background-color: #${COLORSCHEME_1.primaryBorder};
+  }
+
+  .theme-1 .row-bg {
+    border: 1px solid #${COLORSCHEME_1.primaryBorder};	
+    background-color: #${COLORSCHEME_1.primaryBg};    
+  }
+
+  .theme-1 .row-label {
+    color: #${COLORSCHEME_1.text};	
+  }
+
+  .theme-1 .chevron {
+    border-color: transparent #${COLORSCHEME_1.primaryBorder} transparent transparent;
+  }
+
+  .theme-1 .tag {
+    color: #${COLORSCHEME_1.text};	
+    background-color: #${COLORSCHEME_1.tagBg};    
+    border: 1px solid #${COLORSCHEME_1.tagBorder};	
+  }
+
+  .theme-1 .tag.hovered {
+    background-color: #${COLORSCHEME_1.primaryBorder};
+  }
+  `,
+  `
+  .theme-2 .row-part {
+    border: 1px solid #${COLORSCHEME_2.primaryBorder};	
+    background-color: #${COLORSCHEME_2.primaryBg};
+  }
+
+  .theme-2 .row-part.hovered {
+    background-color: #${COLORSCHEME_2.primaryBorder};
+  }
+
+  .theme-2 .small .row-part {
+    background-color: #${COLORSCHEME_2.tagBg};    
+    border: 1px solid #${COLORSCHEME_2.tagBorder};
+  }
+
+  .theme-2 .small .row-part.hovered {
+    background-color: #${COLORSCHEME_2.primaryBorder};
+  }
+
+  .theme-2 .row-bg {
+    border: 1px solid #${COLORSCHEME_2.primaryBorder};	
+    background-color: #${COLORSCHEME_2.primaryBg};    
+  }
+
+  .theme-2 .row-label {
+    color: #${COLORSCHEME_2.text};	
+  }
+
+  .theme-2 .chevron {
+    border-color: transparent #${COLORSCHEME_2.primaryBorder} transparent transparent;
+  }
+
+  .theme-2 .tag {
+    color: #${COLORSCHEME_2.text};	
+    background-color: #${COLORSCHEME_2.tagBg};    
+    border: 1px solid #${COLORSCHEME_2.tagBorder};	
+  }
+
+  .theme-2 .tag.hovered {
+    background-color: #${COLORSCHEME_2.primaryBorder};
+  }
+  `
   ]
 })
 export class SpendomatChartComponentRow {
 
   @Input() public row: any;
+  @Input() theme: string;
   hoverIndex_: number = -1;
   selected: boolean = false;
 
@@ -295,7 +376,7 @@ export class SpendomatChartComponentRow {
   selector: 'budgetkey-chart-spendomat',
   template: `
     <ng-container *ngFor="let row of rows">
-      <budgetkey-chart-spendomat-row [row]="row"></budgetkey-chart-spendomat-row>
+      <budgetkey-chart-spendomat-row [row]="row" [theme]="data.theme || 'theme-1'"></budgetkey-chart-spendomat-row>
     </ng-container>
   `,
   styles: [
