@@ -7,7 +7,7 @@
       "entity_id,",
       "'org/' || entity_kind || '/' || entity_id as entity_link, ",
       "purpose as \"כותרת התקשרות\",",
-      "'contract-spending/' || order_id || '/' || budget_code || '/' || publisher_name as contract_link, ",
+      "'contract-spending/' || publisher_name || '/' || order_id || '/' || budget_code  as contract_link, ",
       "publisher_name as \"הגורם המזמין\",",
       "purchase_method->>0 as \"סוג הרכש\",",
       "contract_is_active as \"התקשרות פעילה\",",
