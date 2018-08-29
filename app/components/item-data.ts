@@ -216,16 +216,20 @@ export class ItemDataTableComponent {
           this.headers = data.headers;
           this.data = data.items;
           this.total = data.total;
+          return true;
         }
       })
       .catch((err) => {
+        console.log('err', err);
         this.headers.length = 0;
         this.data.length = 0;
         this.total = 0;
         this.err = err;
       })
-      .then(() => {
-        this.store.onDataReady.emit();
+      .then((emit) => {
+        if (emit) {
+          this.store.onDataReady.emit();
+        }
       });
 
   }
