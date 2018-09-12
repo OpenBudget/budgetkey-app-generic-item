@@ -61,16 +61,16 @@ export class SimpleItemVisualizationsComponent implements OnInit {
   private current: any = null;
   private currentSub: any = null;
 
-  private charts: any = {};
+  private charts: any = [];
   private subcharts: any = null;
-  private chart_: any = {};
+  private chart_: any = null;
 
   ngOnInit() {
     this.item = this.store.item;
     this.charts = {};
     this.current = null;
     this.charts = this.item.charts;
-    if (this.charts) {
+    if (this.charts && this.charts.length > 0) {
       this.showTab(this.charts[0]);
     }
   }
