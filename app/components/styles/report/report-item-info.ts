@@ -38,10 +38,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
         </div>
       </div>
       <div class='indicator-carousel'>
-        <div class='indicator-carousel-main'
-             (swipeLeft)='nextIndicator()'
-             (swipeRight)='prevIndicator()'
-          >
+        <div class='indicator-carousel-main'>
           <span (click)='prevIndicator()'>
             <i class='glyphicon glyphicon-chevron-right'></i>
           </span>
@@ -58,7 +55,9 @@ import { BaseItemInfoComponent } from '../../base-item-info';
         <div class='indicator-carousel-dots'>
           <div class='dot' 
                *ngFor='let ind of descriptor.indicators; let idx = index'
-               [ngClass]='{active: selectedIndicator===idx}'></div>
+               [ngClass]='{active: selectedIndicator===idx}'
+               (click)='selectedIndicator=idx'
+          ></div>
         </div>
       </div>
       <div class="suffix" [innerHTML]="descriptor.suffixTemplate | renderTemplate:item:ngComponentsTheme.themeId"></div>

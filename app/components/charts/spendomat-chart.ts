@@ -106,11 +106,25 @@ let COLORSCHEME_2 = {
     border-bottom: 1px solid rgba(0,0,0,0.03);
   }
 
+  @media only screen and (max-width: 600px) {
+    .spendomat-container {
+      padding-top: 0;
+      border-bottom: none;
+    }
+  }
+
   .spendomat-row {
     position: relative;
     height: 78px;	
     width: 100%;	
     border-radius: 10px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .spendomat-row {
+      height: 37px;
+      margin-top: 45px;
+    }
   }
 
   .spendomat-row.small {
@@ -161,6 +175,17 @@ let COLORSCHEME_2 = {
     padding: 0 19px;
     font-family: "Miriam Libre";	
     pointer-events: none;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .row-label {
+      top: -45px;
+      padding: 0;
+    }
+
+    .payer-label {
+      font-size: 13px;
+    }
   }
 
   .payer-label {
@@ -217,6 +242,12 @@ let COLORSCHEME_2 = {
     flex-flow: column;
     justify-content: center;
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .chevron-container {
+      display: none;
+    }  
   }
 
   .chevron {

@@ -34,6 +34,12 @@ table {
   font-size: 14px;
 }
 
+@media only screen and (max-width: 600px) {
+  table {
+    width: 100%;
+  }
+}
+
 tr {
   height: 57px;
 }

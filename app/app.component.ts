@@ -21,6 +21,11 @@ const gtag: any = window['gtag'];
         <div #dataTable class="data-table">
           <budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table>
         </div>
+        <div class='desktop-notification'>
+          <span>
+              מידע ונתונים נוספים זמינים בגרסת הדסקטופ
+          </span>
+        </div>
       </div>  
     </budgetkey-container>
   `,
@@ -32,6 +37,8 @@ const gtag: any = window['gtag'];
       bottom: 0;
       z-index: 9000;
     }
+
+    
   `],
   providers: [
     Location, {provide: LocationStrategy, useClass: PathLocationStrategy}

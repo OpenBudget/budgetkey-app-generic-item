@@ -8,14 +8,16 @@ import {StoreService} from '../../../services/store';
   template: `
     <div class="budgetkey-item-visualizations-wrapper row" *ngIf="item.charts">
       <div class="tabs" *ngIf="charts.length > 1">
-        <div class="row">
+        <div class="tabs-row" (scroll)='tabsScroll($event)'>
           <ng-container>
             <div *ngFor="let tab of charts"
-                [style.width]="(100 / charts.length) + '%'"
                 class="tab-header"
-                [ngClass]="{active: tab == current}">
-                <a href="javascript:void(0)" 
-                (click)="showTab(tab)">{{ tab.title }}</a>          
+                [ngClass]="{active: tab == current}"
+                (click)="showTab(tab)">
+                <span class='tab-title' 
+                      (click)="showTab(tab)">
+                      {{ tab.title }}
+                </span> 
             </div>
           </ng-container>
         </div>
@@ -28,8 +30,7 @@ import {StoreService} from '../../../services/store';
           <div class="subtab-row">
             <div class="subtab" *ngFor="let subtab of subcharts"
                 [ngClass]="{active: subtab === currentSub}"
-                (click)="showSubTab(subtab)"
-                [style.width]="(100 / subcharts.length) + '%'">
+                (click)="showSubTab(subtab)">
                 <input type="radio" [checked]="subtab === currentSub"/>
                 <label [innerHtml]="subtab.title"></label>
             </div>
@@ -105,6 +106,14 @@ export class SimpleItemVisualizationsComponent implements OnInit {
   }
 
   constructor(private store: StoreService) {
+  }
+
+  tabsScroll(event: any) {
+    const center = event.target.offsetWidth / 2;
+    const scrollCenter = event.target.scrollLeft + center;
+    const itemWidth = event.target.scrollWidth / this.charts.length;
+    const visibleItem = this.charts.length - Math.floor(scrollCenter / itemWidth) - 1;
+    this.showTab(this.charts[visibleItem]);
   }
 
 }
