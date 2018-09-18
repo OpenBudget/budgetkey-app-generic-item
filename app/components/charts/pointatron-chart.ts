@@ -30,6 +30,18 @@ import { hierarchy, pack } from 'd3-hierarchy';
   justify-content: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .pointatron-container {
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .pointatron {
+    padding: 20px 0;
+  }
+}
+
+
 .pointatron {
   display: inline-block;
   text-align: center;

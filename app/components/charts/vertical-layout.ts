@@ -17,12 +17,25 @@ import { Component, Input } from '@angular/core';
   border-bottom: 1px solid #979797;
 }
 
+@media only screen and (max-width: 600px) {
+  .vertical-part {
+    padding: 0;
+  }
+}
+
 .title {
   color: #4A4A4A;	
   font-family: "Miriam Libre";	
   font-size: 20px;	
   font-weight: bold;
   mergin-bottom: 44px;
+}
+
+@media only screen and (max-width: 600px) {
+  .title {
+    font-size: 16px;
+    text-align: center;
+  }
 }
 `
   ]
