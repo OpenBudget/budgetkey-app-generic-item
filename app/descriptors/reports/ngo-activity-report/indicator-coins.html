@@ -1,8 +1,6 @@
 {% if details.total_received_in_field %}
-סך כספי הממשלה
-שהועברו לארגונים אלו בשלוש השנים האחרונות
+סך כספי הממשלה שהועברו באופן ישיר לארגונים
 {{ details.total_received_in_field | format_number }}₪
-כ-{{ (details.total_received_in_field / (details.report.total.yearly_turnover_total_in_field*3)) | format_absolute_percent }} מהמחזור הכספי השנתי הכולל המוערך לתחום בשלוש השנים האחרונות.
 {% else %}
 ארגונים בתחום זה לא קיבלו כספי ממשלה בשלוש השנים האחרונות
 {% endif %}
