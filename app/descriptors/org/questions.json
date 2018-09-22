@@ -84,7 +84,7 @@
               "volume as \"היקף\",", 
               "description as \"תיאור\", ", 
               "'tenders/' || tender_type || '/' || publication_id || '/' || tender_id as item_id, ", 
-              "claim_date as \"מועד סיום התהליך\",",
+              "date(claim_date) as \"מועד סיום התהליך\",",
               "start_date as \"תחילת ההתקשרות\",",
               "end_date as \"סיום ההתקשרות\"",
               "from procurement_tenders_processed where entity_id=':id'"],
