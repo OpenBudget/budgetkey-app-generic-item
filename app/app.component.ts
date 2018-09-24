@@ -25,6 +25,11 @@ const gtag: any = window['gtag'];
           <span>
               מידע ונתונים נוספים זמינים בגרסת הדסקטופ
           </span>
+          <a class="btn btn-primary btn-lg"
+             [href]="mailto()" target='_blank'>
+             <i class='glyphicon glyphicon-share-alt'></i>&nbsp;
+             שלחו לעצמכם תזכורת או שתפו
+          </a>
         </div>
       </div>  
     </budgetkey-container>
@@ -38,7 +43,14 @@ const gtag: any = window['gtag'];
       z-index: 9000;
     }
 
-    
+    .desktop-notification a {
+      background-color: #734DE5;
+    }
+
+    .desktop-notification a i {
+      transform: scaleX(-1);
+    }
+  
   `],
   providers: [
     Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
@@ -115,6 +127,20 @@ export class AppComponent implements AfterViewInit  {
         this.scrollToTable();
       }, 3000);
     }
+  }
+
+  mailto() {
+    const subject = 'קישור למידע מאתר "המפה החברתית"';
+    const body = `שלום.
+
+    העמוד ״` + document.title + `״ נשלח אליכם ממכשיר נייד.
+    לחצו ` + window.location.href + ` לצפייה בעמוד.
+    
+    `;
+    return 'mailto:?' +
+      'subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body)
+    ;
   }
 
 }
