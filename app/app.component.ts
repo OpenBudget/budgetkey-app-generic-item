@@ -22,6 +22,7 @@ const gtag: any = window['gtag'];
           <budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table>
         </div>
         <div class='desktop-notification'>
+          <img src='assets/img/desktop.svg' title='Computer by Juan Manuel Corredor from the Noun Project'/>
           <span>
               מידע ונתונים נוספים זמינים בגרסת הדסקטופ
           </span>
@@ -41,6 +42,15 @@ const gtag: any = window['gtag'];
       top: 0;
       bottom: 0;
       z-index: 9000;
+    }
+
+    .desktop-notification img {
+      width: 90px;
+    }
+
+    .desktop-notification span {
+      display: inline-block;
+      padding: 10px 0;
     }
 
     .desktop-notification a {
