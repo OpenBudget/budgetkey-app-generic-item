@@ -142,11 +142,9 @@ export class AppComponent implements AfterViewInit  {
   mailto() {
     const subject = 'קישור למידע מאתר "המפה החברתית"';
     const body = `שלום.
-
-    העמוד ״` + document.title + `״ נשלח אליכם ממכשיר נייד.
-    לחצו ` + window.location.href + ` לצפייה בעמוד.
     
-    `;
+העמוד ״${document.title}״ נשלח אליכם ממכשיר נייד.
+לחצו <a href='${window.location.href}'>כאן</a> לצפייה בעמוד.`;
     return 'mailto:?' +
       'subject=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(body)
