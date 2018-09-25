@@ -93,8 +93,10 @@ export class ItemQuestionsComponent implements OnDestroy {
   }
 
   selectQuestion(question: PreparedQuestion) {
-    this.store.currentQuestion = question;
-    this.store.currentParameters = question.defaults;
+    if (this.store.currentQuestion !== question) {
+      this.store.currentQuestion = question;
+      this.store.currentParameters = question.defaults;
+    }
     this.isDropDownVisible = false;
   }
 
@@ -188,6 +190,7 @@ export class ItemDataTableComponent {
   private data: any[] = [];
   private total: number = 0;
   private err: any;
+  private loading: boolean = false;
 
   toggleTable() {
     this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
@@ -207,6 +210,7 @@ export class ItemDataTableComponent {
         this.headers.length = 0;
         this.data.length = 0;
         this.total = 0;
+        this.loading = true;
         let headersOrder = Array.from(this.store.currentQuestion.headers);
         let formatters = this.store.currentQuestion.formatters;
         return this.itemService.getItemData(this.query, headersOrder, formatters);
@@ -216,6 +220,7 @@ export class ItemDataTableComponent {
           this.headers = data.headers;
           this.data = data.items;
           this.total = data.total;
+          this.loading = false;
           return true;
         }
       })
@@ -225,6 +230,7 @@ export class ItemDataTableComponent {
         this.data.length = 0;
         this.total = 0;
         this.err = err;
+        this.loading = false;
       })
       .then((emit) => {
         if (emit) {
