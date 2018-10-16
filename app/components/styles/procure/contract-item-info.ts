@@ -12,8 +12,8 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
   toText() {
     if (this.item['entity_name']) {
       return this.item['entity_name'];
-    } else if (this.item['supplier']) {
-      return this.item['supplier'];
+    } else if (this.item['supplier_name']) {
+      return this.item['supplier_name'][0];
     }
   }
 
