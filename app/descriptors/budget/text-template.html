@@ -1,7 +1,7 @@
-בשנת {{year}} תקציב {{title}} עומד על ₪{{net_allocated | format_number}}.
+בשנת {{year}} תקציב {{title}} עומד על {{net_allocated | format_number}}₪.
 {% if total_direction_income < 0 %}
 <br/>
-יחד עם הכנסות עצמיות של ₪{{ -total_direction_income | format_number}}, סך ההוצאות תחת סעיף זה הן ₪{{ total_direction_expense | format_number }}.
+יחד עם הכנסות עצמיות של {{ -total_direction_income | format_number}}₪, סך ההוצאות תחת סעיף זה הן {{ total_direction_expense | format_number }}₪.
 {% endif %}
 <br/>
 
@@ -48,7 +48,7 @@
 , ובנוסף
 {% endif %}
 {% if contractors_allocated %}
-{{contractors_allocated | format_number}} חודשי עבודה בלתי צמיתה (יועצים וקבלנים)
+{{contractors_allocated | format_number}} חודשי עבודה בלתי צמיתה (יועצים וקבלנ!ים)
 {% endif %}.
 <br/>
 {% endif %}
