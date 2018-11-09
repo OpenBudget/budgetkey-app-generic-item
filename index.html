@@ -3,21 +3,21 @@
   <head>
     <!-- COMMON TAGS -->
     <meta charset="utf-8">
-    <title>מפתח התקציב - {{title}}</title>
+    <title>{{title}}</title>
     <!-- Search Engine -->
     <link rel="search" type="application/opensearchdescription+xml" title="מפתח התקציב" href="/opensearch.xml">
     <meta name="referrer" content="origin" />
     <meta name="image" content="https://next.obudget.org/assets/img/obudget_key.png">
     <!-- Schema.org for Google -->
-    <meta itemprop="name" content="מפתח התקציב - {{title}}">
+    <meta itemprop="name" content="{{title}}">
     <meta itemprop="image" content="https://next.obudget.org/assets/img/obudget_key 2@2x.png">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="מפתח התקציב - {{title}}">
+    <meta name="twitter:title" content="{{title}}">
     <meta name="twitter:site" content="@hasadna">
     <!-- Open Graph general (Facebook, Pinterest & Google+) -->
     <meta property="og:url" content="https://next.obudget.org{{base}}{{doc_id}}">
-    <meta property="og:title" content="מפתח התקציב - {{title}}">
+    <meta property="og:title" content="{{title}}">
     <meta property="og:description" content="{{title}}">
     <meta property="og:image" content="https://next.obudget.org/assets/img/obudget_key 2@2x.png">
     <meta property="og:site_name" content="מפתח התקציב">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="assets/styles/budgetkey-ng2-components.css">
     <script>
       window.prefetchedItem = {{ prefetchedItem | safe }};
-      {{ themeScript | safe }}
+      {{ injectedScript | safe }}
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10203855-10"></script>
     <script>

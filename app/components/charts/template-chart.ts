@@ -1,5 +1,5 @@
 import { Component, Input, Inject } from '@angular/core';
-import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import {THEME_TOKEN} from 'budgetkey-ng2-components';
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -25,6 +25,6 @@ export class TemplateChartComponent {
 
   @Input() public data: any;
 
-  constructor(@Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
+  constructor(@Inject(THEME_TOKEN) private ngComponentsTheme: any) {
   }
 }

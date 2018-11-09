@@ -5,12 +5,12 @@ import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
 import { Item, DescriptorBase } from '../model';
-import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import {THEME_TOKEN} from 'budgetkey-ng2-components';
 import { format_number } from '../pipes';
 
 @Injectable()
 export class BudgetKeyItemService {
-  constructor(private http: Http, @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
+  constructor(private http: Http, @Inject(THEME_TOKEN) private ngComponentsTheme: any) {
     for (let descriptor of descriptors) {
       descriptor.init(this.ngComponentsTheme.themeId);
     }

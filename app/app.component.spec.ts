@@ -59,8 +59,6 @@ import {
   TimelinePartComponent,
 } from './components';
 
-import {defaultTheme, THEME_TOKEN} from './config';
-
 describe('AppComponent', function () {
   let comp: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -121,7 +119,6 @@ describe('AppComponent', function () {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
-        {provide: THEME_TOKEN, useValue: defaultTheme},
         BudgetKeyItemService,
         QuestionsService,
         StoreService,

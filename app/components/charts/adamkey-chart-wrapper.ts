@@ -1,6 +1,6 @@
 import { Component, Input, Inject } from '@angular/core';
 
-import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import {THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Component({
   selector: 'budgetkey-chart-adamkey-wrapper',
@@ -27,7 +27,7 @@ export class AdamKeyChartWrapperComponent  {
 
   @Input() public data: any;
 
-  constructor(@Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
+  constructor(@Inject(THEME_TOKEN) private ngComponentsTheme: any) {
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import { Component, Input, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 
-import {THEME_TOKEN as NG_COMPONENTS_THEME_TOKEN} from 'budgetkey-ng2-components';
+import {THEME_TOKEN} from 'budgetkey-ng2-components';
 
 @Component({
   selector: 'budgetkey-chart-horizontal-barchart',
@@ -102,7 +102,7 @@ export class HorizontalBarchartChartComponent {
   maxValue: number = 1;
 
   constructor(private location: Location,
-              @Inject(NG_COMPONENTS_THEME_TOKEN) private ngComponentsTheme: any) {
+              @Inject(THEME_TOKEN) private ngComponentsTheme: any) {
   }
 
   ngOnInit() {

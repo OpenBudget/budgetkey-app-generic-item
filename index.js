@@ -33,25 +33,35 @@ app.get(basePath + '*', function(req, res) {
     }
   }
 
-  var theme = typeof(req.query.theme) !== "undefined" ? req.query.theme : '';
-  var themeFileName = theme !== '' ? 'theme.'+req.query.theme+'.json' : null;
-  var themeScript = '';
+  let injectedScript = '';
+
+  // set language
+  var lang = typeof(req.query.lang) !== "undefined" ? req.query.lang : 'he';
+  var langScript = '';
+  injectedScript += `BUDGETKEY_LANG=${JSON.stringify(lang)};`;
+
+  var theme = typeof(req.query.theme) !== "undefined" ? req.query.theme : 'budgetkey';
+  var themeFileName = `theme.${theme}.${lang}.json`;
+  let themeJson = null;
   if (themeFileName) {
-    var themeJson = null;
     // try the themes root directory first - this allows mount multiple themes in a single shared docker volume
     if (fs.existsSync(path.resolve('/themes', themeFileName))) {
       themeJson = JSON.parse(fs.readFileSync(path.resolve('/themes', themeFileName)));
-    // fallback to local file - for local development / testing
+      // fallback to local file - for local development / testing
     } else if (fs.existsSync(path.resolve(__dirname, themeFileName))) {
       themeJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, themeFileName)));
     }
     if (themeJson) {
       for (var key in themeJson) {
-        themeScript += key+"="+JSON.stringify(themeJson[key])+";";
+        injectedScript += `${key}=${JSON.stringify(themeJson[key])};`;
       }
-      themeScript += "BUDGETKEY_THEME_ID=" + JSON.stringify(req.query.theme) + ";";
+      injectedScript += `BUDGETKEY_THEME_ID=${JSON.stringify(req.query.theme)};`;
     }
   }
+
+  var siteName = (themeJson && themeJson.BUDGETKEY_APP_GENERIC_ITEM_THEME) ?
+                 themeJson.BUDGETKEY_APP_GENERIC_ITEM_THEME.siteName :
+                 'מפתח התקציב';
 
   let doc_id = req.params[0];
   request({
@@ -66,8 +76,8 @@ app.get(basePath + '*', function(req, res) {
         res.render('index.html', {
           base: basePath,
           prefetchedItem: JSON.stringify(body),
-          title: body.page_title,
-          themeScript: themeScript,
+          title: siteName + ' - ' + body.page_title,
+          injectedScript: injectedScript,
           doc_id: doc_id
         });
       }
