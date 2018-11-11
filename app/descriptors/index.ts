@@ -6,6 +6,7 @@ import descriptorOrgMunicipality from './org/municipality';
 import descriptorOrg from './org';
 import descriptorBudgetFunc from './budget/budgetFunc';
 import descriptorBudgetFuncDetail from './budget/budgetFuncDetail';
+import descriptorBudget0Dig from './budget/budget0dig';
 import descriptorBudget2Dig from './budget/budget2dig';
 import descriptorBudget4Dig from './budget/budget4dig';
 import descriptorBudget6Dig from './budget/budget6dig';
@@ -29,6 +30,7 @@ let descriptors: DescriptorBase[] = [
   descriptorOrg,
   descriptorBudgetFunc,
   descriptorBudgetFuncDetail,
+  descriptorBudget0Dig,
   descriptorBudget2Dig,
   descriptorBudget4Dig,
   descriptorBudget6Dig,
