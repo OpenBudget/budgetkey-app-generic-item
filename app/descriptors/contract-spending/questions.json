@@ -26,9 +26,9 @@
         "בכל מצב": "true"
       },
       "filter": {
-        "של אותו המפרסם עם אותו הספק": "(entity_id = ':entity_id') and (publisher_name = ':publisher_name')",
+        "של אותו הגורם המזמין עם אותו הספק": "(entity_id = ':entity_id') and (publisher_name = ':publisher_name')",
         "עם אותו הספק": "(entity_id = ':entity_id')",
-        "של אותו המפרסם": "(publisher_name = ':publisher_name')",
+        "של אותו הגורם המזמין": "(publisher_name = ':publisher_name')",
         "מאותה תקנה תקציבית": "(budget_code = ':budget_code')"
       },
       "years": {
@@ -41,7 +41,7 @@
     },
     "defaults": {
       "activeness": "בכל מצב",
-      "filter": "של אותו המפרסם עם אותו הספק",
+      "filter": "של אותו הגורם המזמין עם אותו הספק",
       "years": "כל השנים"
     },
     "headers": [
