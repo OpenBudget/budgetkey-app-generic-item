@@ -11,5 +11,9 @@ export default new OrgDescriptor({
   visualizationTemplates: {
     org_status: require('./org-status.html'),
     org_credentials: require('./org-credentials.html'),
-  }
+  },
+  tips: [
+    require('./guidestar.html'),
+    require('./registrar.html'),
+  ]
 });
