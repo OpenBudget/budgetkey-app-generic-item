@@ -1,5 +1,4 @@
 import { format_number } from '../pipes';
-import { splitAtPeriod } from '@angular/compiler/src/util';
 
 export class Question {
   text: string;
