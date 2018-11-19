@@ -1,4 +1,5 @@
 import { format_number } from '../pipes';
+import { splitAtPeriod } from '@angular/compiler/src/util';
 
 export class Question {
   text: string;
@@ -197,6 +198,15 @@ export class SimpleDescriptor extends DescriptorBase {
     this.subtitleTemplate = x.subtitleTemplate;
     this.textTemplate = x.textTemplate;
     this.amountTemplate = x.amountTemplate;
+  }
+}
+
+export class OrgDescriptor extends SimpleDescriptor {
+  tips: string[] = [];
+
+  constructor(x: any) {
+    super(x, 'org');
+    this.tips = x.tips;
   }
 }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SimpleDescriptor, DescriptorBase } from '../../../model';
+import { DescriptorBase, OrgDescriptor } from '../../../model';
 
 import * as _ from 'lodash';
 import { BaseItemInfoComponent } from '../../base-item-info';
@@ -31,14 +31,18 @@ import { BaseItemInfoComponent } from '../../base-item-info';
     <div class="text"
         [innerHTML]="descriptor.textTemplate | renderTemplate:item:ngComponentsTheme.themeId">
     </div>
+    <div class='tips'>
+      <div class='tip' *ngFor='let tip of descriptor.tips' [innerHTML]='tip | renderTemplate:item:ngComponentsTheme.themeId'>
+      </div>
+    </div>
   </div>
 `
 })
 export class OrgItemInfoComponent extends BaseItemInfoComponent {
 
-  private descriptor: SimpleDescriptor;
+  private descriptor: OrgDescriptor;
 
   setDescriptor(descriptor: DescriptorBase) {
-    this.descriptor = <SimpleDescriptor>this.store.descriptor;
+    this.descriptor = <OrgDescriptor>this.store.descriptor;
   }
 }

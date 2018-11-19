@@ -194,6 +194,42 @@
     font-family: "Abraham TRIAL";	
     font-size: 20px;
 
+    display: flex;
+    flex-flow: row;
+
+    .text {
+      flex: 1 0 auto;
+    }
+
+    .tips {
+      margin-right: auto;
+      flex: 0 0 auto;
+      display: flex;
+      flex-flow: column;
+
+      .tip {
+        border: 4px dashed rgba(0,0,0,0.25);	
+        border-radius: 10px;
+        background-color: #F0F6FA;
+        padding: 20px;
+        margin: 10px 0px;
+        max-width: 25vw;
+
+        div, a {
+            font-family: "Abraham TRIAL";
+            color: #512C0A;
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 300;
+        }
+        a {
+            color: #19008F;
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+    }
+
     .tag {
       display: inline-block;
       margin: 5px;
@@ -212,7 +248,14 @@
     @media only screen and (max-width: 600px) {
       font-size: 16px;
       margin: 20px 0;
-      
+      flex-flow: column;
+
+      .tips {
+        .tip {
+          max-width: 100vw;
+        }  
+      }
+
       .tag {
         display: none
       }

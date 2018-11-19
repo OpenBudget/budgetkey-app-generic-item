@@ -1,6 +1,6 @@
-import { SimpleDescriptor } from '../../../model';
+import { OrgDescriptor } from '../../../model';
 
-export default new SimpleDescriptor({
+export default new OrgDescriptor({
   pathPrefix: 'org/association/',
   titleTemplate: require('../title-template.html'),
   preTitleTemplate: require('../pretitle-template.html'),
@@ -12,4 +12,4 @@ export default new SimpleDescriptor({
     org_status: require('./org-status.html'),
     org_credentials: require('./org-credentials.html'),
   }
-}, 'org');
+});
