@@ -1,0 +1,19 @@
+{% if procedure_number %}
+<div><label>
+החלטת ממשלה {{ procedure_number }}
+</label></div>
+{% endif %}
+<div><label>
+פורסם ב-{{publish_date}}
+</label></div>
+{% if office %}
+משרד: {{ office }}
+{% endif %}
+{% if linked_documents %}
+<div>
+מסמכים:
+{% for doc in linked_documents %}
+<div><a href='{{doc.href}}'>{{doc.title}}</a></div>
+{% endfor %}
+</div>
+{% endif %}
