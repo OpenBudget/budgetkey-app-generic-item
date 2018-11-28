@@ -9,7 +9,7 @@
 {% if office %}
 משרד: {{ office }}
 {% endif %}
-{% if linked_documents %}
+{% if linked_documents.length > 0 %}
 <div>
 מסמכים:
 {% for doc in linked_documents %}
