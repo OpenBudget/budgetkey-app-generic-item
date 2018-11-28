@@ -34,6 +34,10 @@ env.addFilter('format_number', function(x: number) {
   return safe(format_number(x));
 });
 
+env.addFilter('format_date', function(x: string) {
+  return x.slice(0, 10);
+});
+
 env.addFilter('format_relative_percent', function(x: number) {
   if (x >= 0) {
     if (x > 1) {
