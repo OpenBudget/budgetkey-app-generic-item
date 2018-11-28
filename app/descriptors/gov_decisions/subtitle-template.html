@@ -12,7 +12,7 @@
 {% if linked_documents.length > 0 %}
 <div>
 מסמכים:
-{% for doc in linked_documents %}
+{% for doc in linked_docs %}
 <div><a href='{{doc.href}}'>{{doc.title}}</a></div>
 {% endfor %}
 </div>
