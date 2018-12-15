@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 import { BudgetKeyItemService, StoreService } from './services';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {THEME_TOKEN} from 'budgetkey-ng2-components';
+
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -87,7 +89,8 @@ export class AppComponent implements AfterViewInit  {
   constructor(
     private itemService: BudgetKeyItemService, 
     private store: StoreService,
-    private location: Location
+    private location: Location,
+    @Inject(THEME_TOKEN) private ngComponentsTheme: any
   ) {
     if (window['prefetchedItem']) {
       console.log(window['prefetchedItem']);
@@ -140,7 +143,7 @@ export class AppComponent implements AfterViewInit  {
   }
 
   mailto() {
-    const subject = 'קישור למידע מאתר "המפה החברתית"';
+    const subject = `קישור למידע מאתר "${this.ngComponentsTheme.siteName}"`;
     const body = `שלום.
 
 העמוד ״${document.title}״ נשלח אליכם ממכשיר נייד.
