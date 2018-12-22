@@ -18,9 +18,9 @@ import { THEME_TOKEN } from 'budgetkey-ng2-components';
   `,
   styles: [`
     .item-questions-parameter {
-      position: relative;      
+      position: relative;
     }
-    
+
     .item-questions-parameter .value {
       cursor: pointer;
     }
@@ -33,7 +33,7 @@ export class ItemQuestionParameterComponent implements OnDestroy {
   @Input() public values: any[];
   @Output() public change = new EventEmitter<any>();
 
-  private isDropDownVisible: boolean = false;
+  isDropDownVisible = false;
 
   constructor(private events: EventsService) {
     this.eventSubscriptions = [
@@ -131,7 +131,7 @@ export class ItemQuestionsComponent implements OnDestroy {
     return this.store.currentParameters;
   }
   setParameter(key: string, value: string) {
-    let params = _.clone(this.store.currentParameters);
+    const params = _.clone(this.store.currentParameters);
     params[key] = value;
     this.store.currentParameters = params;
   }
@@ -167,7 +167,7 @@ export class ItemQuestionsComponent implements OnDestroy {
   selector: 'budgetkey-item-data-table',
   templateUrl: './item-data-table.html',
 })
-export class ItemDataTableComponent {
+export class ItemDataTableComponent implements OnDestroy {
 
   private tableState = 'hidden';
 
@@ -190,7 +190,7 @@ export class ItemDataTableComponent {
         if (!this.store.currentQuestion) {
           return;
         }
-        let query = this.store.dataQuery;
+        const query = this.store.dataQuery;
         if (query === this.query) {
           return;
         }
@@ -199,8 +199,8 @@ export class ItemDataTableComponent {
         this.data.length = 0;
         this.total = 0;
         this.loading = true;
-        let headersOrder = Array.from(this.store.currentQuestion.headers);
-        let formatters = this.store.currentQuestion.formatters;
+        const headersOrder = Array.from(this.store.currentQuestion.headers);
+        const formatters = this.store.currentQuestion.formatters;
         return this.itemService.getItemData(this.query, headersOrder, formatters);
       })
       .then((data: any) => {

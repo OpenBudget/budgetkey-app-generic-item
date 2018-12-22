@@ -10,7 +10,7 @@ import { StoreService } from '../../../services';
 })
 export class ProcureItemComponent {
 
-    private isTender: boolean
+    isTender: boolean;
 
     constructor(private store: StoreService) {
         this.isTender = !!store.item['tender_id'];

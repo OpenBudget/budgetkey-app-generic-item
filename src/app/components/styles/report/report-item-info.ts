@@ -19,7 +19,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
             >
               <div class='report-dropdown-bg' (click)='dropdownHidden=true' (touchmove)='false'></div>
               <div class='report-dropdown-scroll'>
-                <span *ngFor="let other of item.others">
+                <span *ngFor="let other of item['others']">
                   <a [href]="href(other)">{{other}}</a>
                 </span>
               </div>
@@ -66,9 +66,9 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 })
 export class ReportItemInfoComponent extends BaseItemInfoComponent {
 
-  private descriptor: ReportDescriptor;
-  private dropdownHidden: boolean = true;
-  private selectedIndicator = 0;
+  descriptor: ReportDescriptor;
+  dropdownHidden = true;
+  selectedIndicator = 0;
 
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <ReportDescriptor>this.store.descriptor;

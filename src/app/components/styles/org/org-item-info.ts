@@ -40,7 +40,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 })
 export class OrgItemInfoComponent extends BaseItemInfoComponent {
 
-  private descriptor: OrgDescriptor;
+  descriptor: OrgDescriptor;
 
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <OrgDescriptor>this.store.descriptor;

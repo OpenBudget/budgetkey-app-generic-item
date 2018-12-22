@@ -41,7 +41,7 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   alertText() {
-    let lastWeek = moment().subtract(7, 'days');
+    const lastWeek = moment().subtract(7, 'days');
     if (this.item['start_date'] &&
         moment(this.item['start_date']).isAfter(lastWeek)) {
       return 'חדש!';
