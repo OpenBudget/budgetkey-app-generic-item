@@ -4,7 +4,13 @@
     "outDir": "../out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "paths": {
+      "moment": [
+        "../node_modules/moment/min/moment.min.js"
+        ,"../node_modules/moment/locale/he.js"
+      ]
+    }
   },
   "exclude": [
     "test.ts",

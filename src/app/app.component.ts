@@ -102,12 +102,10 @@ export class AppComponent implements AfterViewInit, OnInit  {
 
   handleItem(item: any): void {
     this.store.item = item;
-    this.itemService.getItemDescriptor(item.doc_id)
-      .then(descriptor => {
-        this.store.descriptor = descriptor;
-        this.style = descriptor.style;
-        this.loaded = true;
-      });
+    const descriptor = this.itemService.getItemDescriptor(item.doc_id);
+    this.store.descriptor = descriptor;
+    this.style = descriptor.style;
+    this.loaded = true;
   }
 
   ngOnInit(): void {
@@ -126,11 +124,7 @@ export class AppComponent implements AfterViewInit, OnInit  {
         }
       }
     }
-    if (!window['prefetchedItem']) {
-      this.itemService.getItem(itemId)
-        .then(item => { this.handleItem(item); });
-    }
-    moment.locale('he');
+   moment.locale('he');
   }
 
   ngAfterViewInit() {

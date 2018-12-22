@@ -1,12 +1,13 @@
 import {Inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import descriptors from '../descriptors';
 
 import { Item, DescriptorBase } from '../model';
 import {THEME_TOKEN} from 'budgetkey-ng2-components';
 import { format_number } from '../pipes';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class BudgetKeyItemService {
@@ -28,26 +29,22 @@ export class BudgetKeyItemService {
       '&headers=' + encodeURIComponent(headers.join(';'));
   }
 
-  getItem(itemId: string): Promise<Item> {
+  getItem(itemId: string): Observable<Item> {
     const url = 'https://next.obudget.org/get/' + itemId;
-    return new Promise<Item>((resolve, reject) => {
-      this.http.get(url)
-        .subscribe(
-          (res: any) => resolve(res.value),
-          () => reject(new Error('Cannot load ' + url))
+    return this.http.get(url)
+        .pipe(
+          map((res: any) => res.value)
         );
-    });
   }
 
-  getItemDescriptor(path: string): Promise<DescriptorBase> {
+  getItemDescriptor(path: string): DescriptorBase {
     path = path.replace(/^[/]+/, '').replace(/[/]+$/, '');
     for (const descriptor of descriptors) {
       const searchPattern = new RegExp('^' + descriptor.pathPrefix);
       if (searchPattern.test(path)) {
-        return Promise.resolve(descriptor);
+        return descriptor;
       }
     }
-    Promise.reject(new Error('No layout for ' + path));
   }
 
   private _budgetNumberFormatter(value: any) {
@@ -103,31 +100,29 @@ export class BudgetKeyItemService {
         (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
-  getItemData(query: string, headersOrder: string[], formatters: any[]): Promise<object> {
+  getItemData(query: string, headersOrder: string[], formatters: any[]): Observable<object> {
     const url = 'https://next.obudget.org/api/query?query=' + encodeURIComponent(query);
 
-    return new Promise<any>((resolve, reject) => {
-      this.http.get(url)
-        .subscribe(
-          (res: any) => {
-            const items: object[] = [];
-            const rows = res.rows;
-            const total = res.total;
-            const headers = headersOrder;
+    return this.http.get(url)
+        .pipe(
+          map(
+            (res: any) => {
+              const items: object[] = [];
+              const rows = res.rows;
+              const total = res.total;
+              const headers = headersOrder;
 
-            _.each(rows, (row) => {
-              const newItem: any[] = [];
+              _.each(rows, (row) => {
+                const newItem: any[] = [];
 
-              _.each(formatters, (formatter) => {
-                const item = formatter(row);
-                newItem.push(item);
+                _.each(formatters, (formatter) => {
+                  const item = formatter(row);
+                  newItem.push(item);
+                });
+                items.push(newItem);
               });
-              items.push(newItem);
-            });
-            resolve({query, headers, items, total});
-          },
-          () => reject(new Error('Cannot load ' + url))
+              return {query, headers, items, total};
+            }),
         );
-    });
   }
 }

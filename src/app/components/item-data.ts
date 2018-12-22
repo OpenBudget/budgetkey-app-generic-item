@@ -185,47 +185,40 @@ export class ItemDataTableComponent implements OnDestroy {
   }
 
   private onStoreChanged() {
-    Promise.resolve(null)
-      .then( () => {
-        if (!this.store.currentQuestion) {
-          return;
-        }
-        const query = this.store.dataQuery;
-        if (query === this.query) {
-          return;
-        }
-        this.query = query;
-        this.headers.length = 0;
-        this.data.length = 0;
-        this.total = 0;
-        this.loading = true;
-        const headersOrder = Array.from(this.store.currentQuestion.headers);
-        const formatters = this.store.currentQuestion.formatters;
-        return this.itemService.getItemData(this.query, headersOrder, formatters);
-      })
-      .then((data: any) => {
-        if (data && data.query === this.query) {
-          this.headers = data.headers;
-          this.data = data.items;
-          this.total = data.total;
+    if (!this.store.currentQuestion) {
+      return;
+    }
+    const query = this.store.dataQuery;
+    if (query === this.query) {
+      return;
+    }
+    this.query = query;
+    this.headers.length = 0;
+    this.data.length = 0;
+    this.total = 0;
+    this.loading = true;
+    const headersOrder = Array.from(this.store.currentQuestion.headers);
+    const formatters = this.store.currentQuestion.formatters;
+    this.itemService.getItemData(this.query, headersOrder, formatters)
+      .subscribe({
+        next: (data: any) => {
+          if (data && data.query === this.query) {
+            this.headers = data.headers;
+            this.data = data.items;
+            this.total = data.total;
+            this.loading = false;
+            this.store.onDataReady.emit();
+          }
+        },
+        error: (err) => {
+          console.log('err', err);
+          this.headers.length = 0;
+          this.data.length = 0;
+          this.total = 0;
+          this.err = err;
           this.loading = false;
-          return true;
-        }
-      })
-      .catch((err) => {
-        console.log('err', err);
-        this.headers.length = 0;
-        this.data.length = 0;
-        this.total = 0;
-        this.err = err;
-        this.loading = false;
-      })
-      .then((emit) => {
-        if (emit) {
-          this.store.onDataReady.emit();
         }
       });
-
   }
 
   constructor(private store: StoreService, private itemService: BudgetKeyItemService,
