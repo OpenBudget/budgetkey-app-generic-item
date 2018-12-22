@@ -1,6 +1,3 @@
-import 'karma-test-shim';
-import './rxjs-extensions';
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {BudgetKeyCommonModule} from 'budgetkey-ng2-components';
