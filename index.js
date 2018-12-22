@@ -8,7 +8,7 @@ const request = require("request");
 const urlencode = require('urlencode');
 
 const basePath = process.env.BASE_PATH || '/';
-const rootPath = path.resolve(__dirname, './dist');
+const rootPath = path.resolve(__dirname, './dist/budgetkey-app-generic-item');
 const disableCache = process.env.DISABLE_CACHE || false;
 
 const app = express();
