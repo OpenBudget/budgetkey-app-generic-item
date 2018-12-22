@@ -6,7 +6,7 @@ import { SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItem
 @Component({
     selector: 'budgetkey-item-container',
     template: `
-                    <ng-template item-host></ng-template>
+                    <ng-template itemHost></ng-template>
               `
 })
 export class ItemContainerComponent implements OnInit {
