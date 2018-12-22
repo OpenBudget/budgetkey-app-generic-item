@@ -11,7 +11,7 @@ import { format_number } from '../pipes';
 @Injectable()
 export class BudgetKeyItemService {
   constructor(private http: HttpClient, @Inject(THEME_TOKEN) private ngComponentsTheme: any) {
-    for (let descriptor of descriptors) {
+    for (const descriptor of descriptors) {
       descriptor.init(this.ngComponentsTheme.themeId);
     }
   }
@@ -29,7 +29,7 @@ export class BudgetKeyItemService {
   }
 
   getItem(itemId: string): Promise<Item> {
-    let url = 'https://next.obudget.org/get/' + itemId;
+    const url = 'https://next.obudget.org/get/' + itemId;
     return new Promise<Item>((resolve, reject) => {
       this.http.get(url)
         .subscribe(
@@ -41,8 +41,8 @@ export class BudgetKeyItemService {
 
   getItemDescriptor(path: string): Promise<DescriptorBase> {
     path = path.replace(/^[/]+/, '').replace(/[/]+$/, '');
-    for (let descriptor of descriptors) {
-      let searchPattern = new RegExp('^' + descriptor.pathPrefix);
+    for (const descriptor of descriptors) {
+      const searchPattern = new RegExp('^' + descriptor.pathPrefix);
       if (searchPattern.test(path)) {
         return Promise.resolve(descriptor);
       }
@@ -69,7 +69,7 @@ export class BudgetKeyItemService {
     if (!value) {
       return '';
     }
-    let parts = value.split('#', 2);
+    const parts = value.split('#', 2);
     if (parts.length < 2) {
       return value;
     }
@@ -80,7 +80,7 @@ export class BudgetKeyItemService {
     if (!value) {
       return '';
     }
-    let parts = value.split('#', 2);
+    const parts = value.split('#', 2);
     if (parts.length < 2) {
       return value;
     }
@@ -94,7 +94,7 @@ export class BudgetKeyItemService {
     if (!value) {
       return '';
     }
-    let parts = value.split('#', 3);
+    const parts = value.split('#', 3);
     if (parts.length < 3) {
       return value;
     }
@@ -110,16 +110,16 @@ export class BudgetKeyItemService {
       this.http.get(url)
         .subscribe(
           (res: any) => {
-            let items: object[] = [];
-            let rows = res.rows;
-            let total = res.total;
-            let headers = headersOrder;
+            const items: object[] = [];
+            const rows = res.rows;
+            const total = res.total;
+            const headers = headersOrder;
 
             _.each(rows, (row) => {
-              let newItem: any[] = [];
+              const newItem: any[] = [];
 
               _.each(formatters, (formatter) => {
-                let item = formatter(row);
+                const item = formatter(row);
                 newItem.push(item);
               });
               items.push(newItem);

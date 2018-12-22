@@ -28,9 +28,9 @@ export class ItemContainerComponent implements OnInit {
     }
 
     loadComponent() {
-        let item = this.components[this.style];
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(item);
-        let viewContainerRef = this.itemHost.viewContainerRef;
+        const item = this.components[this.style];
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(item);
+        const viewContainerRef = this.itemHost.viewContainerRef;
         viewContainerRef.clear();
         viewContainerRef.createComponent(componentFactory);
   }

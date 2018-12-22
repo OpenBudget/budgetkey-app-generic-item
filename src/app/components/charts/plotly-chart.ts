@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, Input} from '@angular/core';
+import {Component, ViewChild, ElementRef, Input, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 
 declare const Plotly: any;
@@ -11,7 +11,7 @@ declare const window: any;
     </div>
   `
 })
-export class PlotlyChartComponent {
+export class PlotlyChartComponent implements OnInit {
 
   @Input() public data: any;
   @Input() public layout: any;
@@ -22,7 +22,7 @@ export class PlotlyChartComponent {
   }
 
   ngOnInit() {
-    let layout = Object.assign({
+    const layout = Object.assign({
       height: 600,
       font: {
         size: 10

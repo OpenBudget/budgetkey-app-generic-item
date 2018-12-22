@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { hierarchy, pack } from 'd3-hierarchy';
 
@@ -49,7 +49,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
 }
 
 .svg-container {
-  display: inline-block;  
+  display: inline-block;
   line-height: 200px;
 }
 
@@ -58,26 +58,26 @@ svg {
 }
 
 .title {
-  font-family: "Abraham TRIAL";	
-  font-size: 14px;	
+  font-family: "Abraham TRIAL";
+  font-size: 14px;
   line-height: 24px;
 }
 
 .amount {
-  font-family: "Miriam Libre";	
-  font-size: 20px;	
-  font-weight: bold;	
+  font-family: "Miriam Libre";
+  font-size: 20px;
+  font-weight: bold;
   line-height: 26px;
 }
 
 circle {
-  stroke: white; 
+  stroke: white;
   stroke-width: 1;
 }
     `
   ]
 })
-export class PointatronChartComponent {
+export class PointatronChartComponent implements OnInit {
 
   @Input() public data: any;
 
@@ -88,23 +88,23 @@ export class PointatronChartComponent {
   constructor() {}
 
   ngOnInit() {
-    for (let v of this.data.values) {
+    for (const v of this.data.values) {
       let amount = v.amount;
       if (amount > this.MAX_AMOUNT) {
         amount = this.MAX_AMOUNT;
       }
-      let nodes: any = [];
+      const nodes: any = [];
       for (let i = 0 ; i < amount ; i ++) {
         nodes.push({value: 0.75 + 0.5 * Math.random(), i: i});
       }
-      let root_ = {
+      const root_ = {
         children: nodes
       };
-      let root = hierarchy(root_);
+      const root = hierarchy(root_);
       root.sum((d: any) => d.value).sort((a: any, b: any) => b.value - a.value);
-      let layout = pack().size([200, 200]);
+      const layout = pack().size([200, 200]);
       layout(root);
-      let radius = root.children[root.children.length - 1]['r'];
+      const radius = root.children[root.children.length - 1]['r'];
       root.sort((a: any, b: any) => b.i - a.i);
       layout(root);
       let scale = 1;

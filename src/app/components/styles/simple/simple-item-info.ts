@@ -6,12 +6,12 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 
 @Component({
   selector: 'simple-item-info',
-  template: `  
+  template: `
     <div class="row budgetkey-item-title-wrapper">
       <div class="col-md-1"></div>
       <div class="col-md-11">
         <div class="row">
-          <div class="col-md-2 text-left"><small 
+          <div class="col-md-2 text-left"><small
             [innerHTML]="descriptor.preTitleTemplate | renderTemplate:item:ngComponentsTheme.themeId"></small></div>
           <div class="col-md-6">
             <h1 [innerHTML]="descriptor.titleTemplate | renderTemplate:item:ngComponentsTheme.themeId"></h1>

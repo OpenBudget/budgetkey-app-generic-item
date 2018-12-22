@@ -34,7 +34,7 @@ const gtag: any = window['gtag'];
              שלחו לעצמכם תזכורת או שתפו
           </a>
         </div>
-      </div>  
+      </div>
     </budgetkey-container>
   `,
   styles: [`
@@ -62,14 +62,13 @@ const gtag: any = window['gtag'];
     .desktop-notification a i {
       transform: scaleX(-1);
     }
-  
   `],
   providers: [
     Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
   ],
 })
-export class AppComponent implements AfterViewInit  {
-  loaded: boolean = true;
+export class AppComponent implements AfterViewInit, OnInit  {
+  loaded = true;
   style: string;
 
   @ViewChild('questionsPanel') questionsPanel: ElementRef;
@@ -77,17 +76,17 @@ export class AppComponent implements AfterViewInit  {
 
   scrollToTable() {
     if (_.isObject(window) && _.isFunction(window.scrollTo)) {
-      let questionsPanelBounds = this.questionsPanel.nativeElement.getBoundingClientRect();
+      const questionsPanelBounds = this.questionsPanel.nativeElement.getBoundingClientRect();
       if (questionsPanelBounds.bottom === window.innerHeight) {
-        let dataTableBounds = this.dataTable.nativeElement.getBoundingClientRect();
-        let questionsPanelHeight = questionsPanelBounds.bottom - questionsPanelBounds.top;
+        const dataTableBounds = this.dataTable.nativeElement.getBoundingClientRect();
+        const questionsPanelHeight = questionsPanelBounds.bottom - questionsPanelBounds.top;
         window.scrollTo({left: 0, top: window.scrollY + dataTableBounds.top - questionsPanelHeight, behavior: 'smooth'});
       }
     }
   }
 
   constructor(
-    private itemService: BudgetKeyItemService, 
+    private itemService: BudgetKeyItemService,
     private store: StoreService,
     private location: Location,
     @Inject(THEME_TOKEN) private ngComponentsTheme: any
@@ -112,13 +111,13 @@ export class AppComponent implements AfterViewInit  {
   }
 
   ngOnInit(): void {
-    let itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
-    let searchResultsLocation = window.location.search;
+    const itemId = this.location.path().replace(/^\//, '').replace(/\/$/, '');
+    const searchResultsLocation = window.location.search;
     if (searchResultsLocation) {
-      let li = /li=(\d+)/;
-      let match = li.exec(searchResultsLocation);
+      const li = /li=(\d+)/;
+      const match = li.exec(searchResultsLocation);
       if (match && match.length > 1) {
-        let position = parseInt(match[1], 10);
+        const position = parseInt(match[1], 10);
         if (gtag) {
           gtag('event', 'view_item', {
             'event_label': itemId,

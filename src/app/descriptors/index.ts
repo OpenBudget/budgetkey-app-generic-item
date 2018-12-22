@@ -24,7 +24,7 @@ import descriptorGovDecisions from './gov_decisions';
 
 import {DescriptorBase} from '../model/descriptor';
 
-let descriptors: DescriptorBase[] = [
+const descriptors: DescriptorBase[] = [
   descriptorOrgAssociation,
   descriptorOrgCompany,
   descriptorOrgMunicipality,

@@ -11,16 +11,16 @@ export class Question {
 }
 
 export class PreparedQuestionTextFragment {
-  isText: boolean = false;
-  isParameter: boolean = false;
-  value: string = '';
+  isText = false;
+  isParameter = false;
+  value = '';
 }
 
 export class PreparedQuestionParameterFragment {
-  isText: boolean = false;
-  isParameter: boolean = false;
-  name: string = '';
-  value: string = '';
+  isText = false;
+  isParameter = false;
+  name = '';
+  value = '';
   values: object = {};
 }
 
@@ -72,12 +72,12 @@ export class DescriptorBase {
         return x ? 'כן' : 'לא';
       };
     } else { // Parametrized modifiers next
-      let parts = mod.split('(');
+      const parts = mod.split('(');
       mod = parts[0];
-      let param = parts[1].slice(0, parts[1].length - 1);
+      const param = parts[1].slice(0, parts[1].length - 1);
       if (mod === 'item_link') {
         return (x: any, row: any) => {
-          let item_id = row[param];
+          const item_id = row[param];
           if (item_id) {
             if (themeId) {
               return '<a href="/i/' + row[param] + '?theme=' + themeId + '">' + x + '</a>';
@@ -90,7 +90,7 @@ export class DescriptorBase {
         };
       } else if (mod === 'search_term') {
         return (x: any, row: any) => {
-          let term = row[param];
+          const term = row[param];
           if (term) {
             // if (themeId) {
             //   return '<a href="/s/?q=' + encodeURIComponent(term) + '&theme=' + themeId + '">' + x + '</a>';
@@ -102,7 +102,7 @@ export class DescriptorBase {
           }
         };
       } else {
-        throw('Unknown formatter ' + mod);
+        throw Error('Unknown formatter ' + mod);
       }
     }
   }
@@ -124,17 +124,17 @@ export class DescriptorBase {
     }
     question.originalHeaders = question.headers;
 
-    let _headers = [];
-    let _formatters = [];
+    const _headers = [];
+    const _formatters = [];
 
     for (let header of question .headers) {
-      let _funcs: any[] = [];
+      const _funcs: any[] = [];
       while (header.length > 0) {
         let found = false;
-        for (let modifier of [this.SIMPLE_MODIFIER, this.PARAMETER_MODIFIER]) {
+        for (const modifier of [this.SIMPLE_MODIFIER, this.PARAMETER_MODIFIER]) {
           if (modifier.test(header)) {
-            let idx = header.search(modifier);
-            let mod = header.slice(idx + 1);
+            const idx = header.search(modifier);
+            const mod = header.slice(idx + 1);
             header = header.slice(0, idx);
             _funcs.push(this.getFormatter(mod, themeId));
             found = true;
@@ -151,7 +151,7 @@ export class DescriptorBase {
           if (func === null ) {
             func = _funcs.pop();
           } else {
-            let func2 = _funcs.pop();
+            const func2 = _funcs.pop();
             func = this.compose(func, func2);
           }
         }
@@ -176,7 +176,7 @@ export class DescriptorBase {
     }
 
     public init(themeId: string) {
-      for (let question of this.questions) {
+      for (const question of this.questions) {
         this.processHeadersFormatters(question, themeId);
       }
   }
@@ -184,11 +184,11 @@ export class DescriptorBase {
 }
 
 export class SimpleDescriptor extends DescriptorBase {
-  preTitleTemplate: string = '';
-  titleTemplate: string = '';
-  subtitleTemplate: string = '';
-  textTemplate: string = '';
-  amountTemplate: string = '';
+  preTitleTemplate = '';
+  titleTemplate = '';
+  subtitleTemplate = '';
+  textTemplate = '';
+  amountTemplate = '';
 
   constructor(x: any, style?: string) {
     super(x.pathPrefix, style || 'simple', x.questions, x.visualizationTemplates);
@@ -221,11 +221,11 @@ export class Indicator {
 
 export class ReportDescriptor extends DescriptorBase {
   indicators: Indicator[] = [];
-  titlePrefix: string = '';
-  titleSuffix: string = '';
-  titleField: string = '';
-  titleOtherURLPrefix: string = '';
-  suffixTemplate: string = '';
+  titlePrefix = '';
+  titleSuffix = '';
+  titleField = '';
+  titleOtherURLPrefix = '';
+  suffixTemplate = '';
 
   constructor(x: any) {
     super(x.pathPrefix, 'report', x.questions);

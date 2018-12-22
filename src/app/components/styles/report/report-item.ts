@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'report-item',
     template: `
                     <report-item-info></report-item-info>
-                    <simple-item-visualizations></simple-item-visualizations>  
+                    <simple-item-visualizations></simple-item-visualizations>
               `
 })
 export class ReportItemComponent {

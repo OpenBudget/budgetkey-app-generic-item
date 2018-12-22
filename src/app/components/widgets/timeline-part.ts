@@ -1,4 +1,4 @@
-import {Component, Input } from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'timeline-part',
@@ -8,12 +8,12 @@ import {Component, Input } from '@angular/core';
      [style.width]="size + 'px'">
     <svg [attr.height]="(size + padding) + 'px'"
          [attr.width]="size + 'px'">
-        <path *ngIf='!last' 
+        <path *ngIf='!last'
               class='connector'
               [attr.d]='path()'>
         </path>
-        <circle [attr.cx]='size/2' 
-                [attr.cy]='size/2' 
+        <circle [attr.cx]='size/2'
+                [attr.cy]='size/2'
                 [attr.r]='radius'
                 [style.fill]='fill'
                 [style.stroke]='stroke'
@@ -53,7 +53,7 @@ path.arc {
 `
     ]
 })
-export class TimelinePartComponent {
+export class TimelinePartComponent implements OnInit {
     @Input() size: number;
     @Input() padding: number;
     @Input() major: boolean;
@@ -80,19 +80,19 @@ export class TimelinePartComponent {
     }
 
     path() {
-        let x = this.size / 2;
-        let y = this.size;
+        const x = this.size / 2;
+        const y = this.size;
         return `M${x},${y}L${x},${y + this.padding}`;
     }
 
     arc() {
-        let rad = Math.PI * this.percent / 50;
-        let large = this.percent >= 50 ? 1 : 0;
-        let c = this.size / 2;
+        const rad = Math.PI * this.percent / 50;
+        const large = this.percent >= 50 ? 1 : 0;
+        const c = this.size / 2;
         let d = `M ${c} ${c - this.radius} `;
         d += `A ${this.radius} ${this.radius} 0 ${large} 1 `;
-        let endX = c + this.radius * Math.sin(rad);
-        let endY = c - this.radius * Math.cos(rad);
+        const endX = c + this.radius * Math.sin(rad);
+        const endY = c - this.radius * Math.cos(rad);
         d += `${endX} ${endY} `;
         d += `L ${c} ${c}`;
         return d;

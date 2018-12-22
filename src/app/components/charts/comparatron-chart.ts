@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { hierarchy, pack } from 'd3-hierarchy';
 
@@ -52,7 +52,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
     .comparatron-container {
       width: 400px;
       position: relative;
-      border-bottom: 1px solid #979797;      
+      border-bottom: 1px solid #979797;
     }
 
     .main-bar {
@@ -63,10 +63,10 @@ import { hierarchy, pack } from 'd3-hierarchy';
 
     .main-amount {
       text-align: center;
-      color: #3C4948;	
+      color: #3C4948;
       font-family: "Miriam Libre";
-      font-size: 18px;	
-      font-weight: bold;	
+      font-size: 18px;
+      font-weight: bold;
       line-height: 24px;
       white-space: nowrap;
     }
@@ -82,8 +82,8 @@ import { hierarchy, pack } from 'd3-hierarchy';
       margin-top: 15px;
       width: 100px;
       text-align: center;
-      color: #3C4948;	
-      font-family: "Abraham TRIAL";	
+      color: #3C4948;
+      font-family: "Abraham TRIAL";
       font-size: 14px;
     }
 
@@ -97,7 +97,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
     }
 
     .compare-amount {
-      color: #4A4A4A;	
+      color: #4A4A4A;
       font-family: "Miriam Libre";
       font-size: 14px;
       font-weight: bold;
@@ -105,8 +105,8 @@ import { hierarchy, pack } from 'd3-hierarchy';
 
     .compare-label {
       display: block;
-      color: #757575;	
-      font-family: "Abraham TRIAL";	
+      color: #757575;
+      font-family: "Abraham TRIAL";
       font-size: 12px;
       text-indent: 145px;
 
@@ -127,7 +127,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
     `
   ]
 })
-export class ComparatronChartComponent {
+export class ComparatronChartComponent implements OnInit {
 
   @Input() public data: any;
 
@@ -137,10 +137,10 @@ export class ComparatronChartComponent {
   constructor() {}
 
   ngOnInit() {
-    let max_num = 
+    const max_num =
       this.data.compare.amount > this.data.main.amount ?
           this.data.compare.amount : this.data.main.amount;
-    let scale = max_num / (this.HEIGHT - 20);
+    const scale = max_num / (this.HEIGHT - 20);
     this.data.main['height'] = this.data.main.amount / scale;
     this.data.main['top'] = this.HEIGHT - this.TEXT_SIZE - this.data.main['height'];
     this.data.compare['top'] = this.HEIGHT -  this.data.compare.amount / scale;

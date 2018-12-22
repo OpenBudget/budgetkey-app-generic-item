@@ -39,7 +39,7 @@ import {
   PointatronChartComponent,
   ComparatronChartComponent,
   SpendomatChartComponent,
-  SpendomatChartComponentRow,
+  SpendomatChartRowComponent,
   ContractPaymentsChartComponent,
 
   SimpleItemInfoComponent,
@@ -99,7 +99,7 @@ describe('AppComponent', function () {
         PointatronChartComponent,
         ComparatronChartComponent,
         SpendomatChartComponent,
-        SpendomatChartComponentRow,
+        SpendomatChartRowComponent,
         ContractPaymentsChartComponent,
 
         SimpleItemInfoComponent,

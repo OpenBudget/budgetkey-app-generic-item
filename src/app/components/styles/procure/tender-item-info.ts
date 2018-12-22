@@ -90,20 +90,19 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
       return content;
     }
     for (let i = 0 ; i < tooltips.length ; i++ ) {
-      let k = tooltips[i][0];
-      let repl = 'TTT' + i + 'PPP';
+      const k = tooltips[i][0];
+      const repl = 'TTT' + i + 'PPP';
       if (content.indexOf(k) >= 0) {
         content = content.replace(k, repl);
       }
     }
     for (let i = 0 ; i < tooltips.length ; i++ ) {
-      let k = 'TTT' + i + 'PPP';
-      let repl = `<span class='bk-tooltip-anchor'>${tooltips[i][0]}<span class='bk-tooltip'>${tooltips[i][1]}</span></span>`;
+      const k = 'TTT' + i + 'PPP';
+      const repl = `<span class='bk-tooltip-anchor'>${tooltips[i][0]}<span class='bk-tooltip'>${tooltips[i][1]}</span></span>`;
       if (content.indexOf(k) >= 0) {
         content = content.replace(k, repl);
       }
     }
     return content;
-  };
-
+  }
 }

@@ -20,25 +20,25 @@ export class QuestionsService {
 
   parseQuestions(questions: Questions, parameters: object): PreparedQuestions {
     return _.map(questions, (question: Question) => {
-      let result = new PreparedQuestion();
+      const result = new PreparedQuestion();
       if (_.isArray(question.query)) {
         question.query = (<string[]>question.query).join(' ');
       }
       _.extend(result, question);
 
       let s = this.formatQuery(question.text, parameters);
-      let parsed = [];
+      const parsed = [];
       let lastText: any = null;
       while (true) {
-        let pattern = /<([a-z0-9-_]+)>/ig;
-        let match = pattern.exec(s);
+        const pattern = /<([a-z0-9-_]+)>/ig;
+        const match = pattern.exec(s);
         if (match === null) {
           break;
         }
-        let name = match[1];
+        const name = match[1];
         if (question.parameters.hasOwnProperty(name)) {
           if (_.values(question.parameters[name]).length > 0) {
-            let fragment = s.substr(0, match.index);
+            const fragment = s.substr(0, match.index);
             if (fragment !== '') {
               if (lastText) {
                 lastText.value += fragment;
@@ -61,7 +61,7 @@ export class QuestionsService {
             s = s.substr(match.index + match[0].length);
           }
         } else {
-          let fragment = s.substr(0, match.index + match[0].length);
+          const fragment = s.substr(0, match.index + match[0].length);
           if (fragment !== '') {
             if (lastText) {
               lastText.value += fragment;

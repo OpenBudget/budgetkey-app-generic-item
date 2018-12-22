@@ -48,11 +48,11 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
 
   paymentsTable(): Array<any> {
     if (!this._paymentsTable) {
-      let r: Array<any> = [];
+      const r: Array<any> = [];
       let year = '';
       let period = '';
       let executed = 0;
-      for (let p of this.item['payments']) {
+      for (const p of this.item['payments']) {
         if (!p.period) { continue; }
         if (p.year !== year) {
           year = p.year;
@@ -71,11 +71,11 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
         executed = p.executed;
         r[0][p.period] = p;
       }
-      for (let p of this.item['payments']) {
+      for (const p of this.item['payments']) {
         if (!p.period) { continue; }
-        let period = parseInt(p.period, 10);
-        while (period > 1) {
-          period--;
+        let periodNum = parseInt(p.period, 10);
+        while (periodNum > 1) {
+          periodNum--;
           this.item['payments'].unshift({
             'selected': true,
             'executed': 0,

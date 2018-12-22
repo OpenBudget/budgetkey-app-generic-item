@@ -6,7 +6,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 
 @Component({
   selector: 'report-item-info',
-  template: `  
+  template: `
     <div class="container">
       <div class="title">
         <small [innerHtml]="descriptor.titlePrefix"></small><br/>
@@ -45,7 +45,9 @@ import { BaseItemInfoComponent } from '../../base-item-info';
           <div class='indicator'>
             <div>
               <img [src]="'assets/img/' + descriptor.indicators[selectedIndicator].asset"/>
-              <div class="indicator-text" [innerHTML]="descriptor.indicators[selectedIndicator].template | renderTemplate:item:ngComponentsTheme.themeId"></div>
+              <div class="indicator-text"
+                   [innerHTML]="descriptor.indicators[selectedIndicator].template | renderTemplate:item:ngComponentsTheme.themeId">
+              </div>
             </div>
           </div>
           <span (click)='nextIndicator()'>
@@ -53,7 +55,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
           </span>
         </div>
         <div class='indicator-carousel-dots'>
-          <div class='dot' 
+          <div class='dot'
                *ngFor='let ind of descriptor.indicators; let idx = index'
                [ngClass]='{active: selectedIndicator===idx}'
                (click)='selectedIndicator=idx'
@@ -75,7 +77,7 @@ export class ReportItemInfoComponent extends BaseItemInfoComponent {
   }
 
   href(other: string) {
-    let href = '//next.obudget.org/i/' + 
+    let href = '//next.obudget.org/i/' +
       this.descriptor.titleOtherURLPrefix +
       other;
     if (this.ngComponentsTheme.themeId) {
@@ -86,12 +88,12 @@ export class ReportItemInfoComponent extends BaseItemInfoComponent {
   }
 
   nextIndicator() {
-    const l = this.descriptor.indicators.length
+    const l = this.descriptor.indicators.length;
     this.selectedIndicator = (this.selectedIndicator + l + 1) % l;
   }
 
   prevIndicator() {
-    const l = this.descriptor.indicators.length
+    const l = this.descriptor.indicators.length;
     this.selectedIndicator = (this.selectedIndicator + l - 1) % l;
   }
 }

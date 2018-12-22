@@ -2,8 +2,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as nunjucks from 'nunjucks';
 import * as _ from 'lodash';
 
-let env = new nunjucks.Environment();
-let safe: any = env.getFilter('safe');
+const env = new nunjucks.Environment();
+const safe: any = env.getFilter('safe');
 
 export function format_number(x: number) {
   if (x) {
@@ -120,7 +120,7 @@ env.addFilter('links_to_item', function(list, docIdTemplate: string) {
   return _.map(
     list,
     (term: string) => {
-      let docId = docIdTemplate.replace(':term', term);
+      const docId = docIdTemplate.replace(':term', term);
       return safe(env.renderString('{{ term | item_link(docId) }}', {term: term, docId: docId}));
     }
   );

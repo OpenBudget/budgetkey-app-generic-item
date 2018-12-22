@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
 import { MushonKeyChart, MushonKeyFlowGroup, MushonKeyFlow } from 'mushonkey';
 import { Location } from '@angular/common';
 import * as d3 from 'd3';
@@ -19,7 +19,7 @@ declare const window: any;
         direction: ltr;
       }
 
-      :host >>> .centerpiece { 
+      :host >>> .centerpiece {
           /*stroke: lightgray;*/
           /*stroke-width: 2;*/
           fill: url('#centerPiece');
@@ -44,7 +44,7 @@ declare const window: any;
 
 `]
 })
-export class MushonKeyChartComponent {
+export class MushonKeyChartComponent implements OnInit {
 
   @Input() public data: any;
 
@@ -63,14 +63,14 @@ export class MushonKeyChartComponent {
   ngOnInit() {
     this.chartHeight = this.data.height;
     setTimeout(() => {
-      let groups: Array<MushonKeyFlowGroup> = [];
-      for (let group of this.data.groups) {
-        let flows: Array<MushonKeyFlow> = [];
-        for (let flow of group.flows) {
+      const groups: Array<MushonKeyFlowGroup> = [];
+      for (const group of this.data.groups) {
+        const flows: Array<MushonKeyFlow> = [];
+        for (const flow of group.flows) {
           flows.unshift(new MushonKeyFlow(flow.size, flow.label, flow.context));
         }
 
-        let mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
+        const mkfg = new MushonKeyFlowGroup(group.leftSide, flows, group.class, group.offset, group.width, group.slope, group.roundness);
         mkfg.labelTextSize = group.labelTextSize;
         groups.push(mkfg);
       }
@@ -82,10 +82,10 @@ export class MushonKeyChartComponent {
         this.data.directionLeft
       );
       setTimeout(() => {
-        let svg = d3.select(this.mushonkey.nativeElement).select('svg');
-        let lg = svg.append('defs')
-                    .append('linearGradient')
-                    .attr('id', 'centerPiece');
+        const svg = d3.select(this.mushonkey.nativeElement).select('svg');
+        const lg = svg.append('defs')
+                      .append('linearGradient')
+                      .attr('id', 'centerPiece');
         lg.append('stop')
           .attr('stop-color', 'lightblue')
           .attr('offset', '10%');

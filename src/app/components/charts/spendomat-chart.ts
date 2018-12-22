@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { format_number } from '../../pipes/render-template';
 
-let COLORSCHEME_1 = {
+const COLORSCHEME_1 = {
   primaryBorder: '5D40D4',  // primary box hover and border
   primaryBg: 'B6A5EB',  // primary box background
   tagBg: 'f6f3fa',  // tag background
@@ -10,7 +10,7 @@ let COLORSCHEME_1 = {
   text: '3E4E59'   // text color
 };
 
-let COLORSCHEME_2 = {
+const COLORSCHEME_2 = {
   primaryBorder: '80C8FF',  // primary box hover and border
   primaryBg: 'CEE7FD',  // primary box background
   tagBg: 'F0F6FA',  // tag background
@@ -25,8 +25,8 @@ let COLORSCHEME_2 = {
       <div class="spendomat-row"
            (mouseleave)="hoverIndex = -1">
         <div class="row-bg"></div>
-        <div class="row-part" 
-             *ngFor="let s of row.spending.slice().reverse(); let i = index;" 
+        <div class="row-part"
+             *ngFor="let s of row.spending.slice().reverse(); let i = index;"
              [style.width]='s.acc_width + "%"'
              [ngClass]="{hovered: i == row.spending.length - 1 - hoverIndex}"
              (mouseover)="hoverIndex = row.spending.length - 1 - i"
@@ -49,12 +49,12 @@ let COLORSCHEME_2 = {
            [ngClass]="{selected: selected}"
            (mouseleave)="hoverIndex = -1"
       >
-        <div class="tag" 
+        <div class="tag"
              *ngFor="let s of row.spending.slice(0, 4); let i = index"
              [ngClass]="{hovered: i == hoverIndex}"
              (mouseover)="hoverIndex = i"
              >
-          {{ s.tag }} 
+          {{ s.tag }}
         </div>
       </div>
 
@@ -66,7 +66,7 @@ let COLORSCHEME_2 = {
              (mouseover)="hoverIndex = i"
         >
           <div class="row-bg"></div>
-          <div class="row-part" 
+          <div class="row-part"
               [style.width]='aw + "%"' *ngFor='let aw of s.amount_widths'
               [ngClass]="{hovered: i == hoverIndex}"
           ></div>
@@ -101,7 +101,7 @@ let COLORSCHEME_2 = {
     `
   .spendomat-container {
     padding-top: 23px;
-    width: 100%;	
+    width: 100%;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(0,0,0,0.03);
   }
@@ -115,11 +115,11 @@ let COLORSCHEME_2 = {
 
   .spendomat-row {
     position: relative;
-    height: 78px;	
-    width: 100%;	
+    height: 78px;
+    width: 100%;
     border-radius: 10px;
   }
-  
+
   @media only screen and (max-width: 600px) {
     .spendomat-row {
       height: 37px;
@@ -129,8 +129,8 @@ let COLORSCHEME_2 = {
 
   .spendomat-row.small {
     position: relative;
-    height: 16px;	
-    width: 60%;	
+    height: 16px;
+    width: 60%;
     border-radius: 4px;
     margin-bottom: 5px;
   }
@@ -157,10 +157,10 @@ let COLORSCHEME_2 = {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.5;	
-    border-radius: 10px;	
+    opacity: 0.5;
+    border-radius: 10px;
   }
-  
+
   .small .row-bg {
     border-radius: 4px;
   }
@@ -173,7 +173,7 @@ let COLORSCHEME_2 = {
     flex-flow: column;
     justify-content: center;
     padding: 0 19px;
-    font-family: "Miriam Libre";	
+    font-family: "Miriam Libre";
     pointer-events: none;
   }
 
@@ -192,18 +192,18 @@ let COLORSCHEME_2 = {
     right: 0;
 
     width: 80%;
-    font-size: 16px;	
-    font-weight: bold;	
-    line-height: 22px;  
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
 
     white-space: nowrap;
     overflow: hidden;
   }
 
   .small .payer-label {
-    font-size: 12px;	
-    font-weight: normal;	
-    line-height: 16px;      
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 16px;
   }
 
   .amount-label {
@@ -212,7 +212,7 @@ let COLORSCHEME_2 = {
     padding: 0 4px;
     white-space: nowrap;
 
-    font-size: 14px;	
+    font-size: 14px;
     line-height: 19px;
   }
 
@@ -221,13 +221,13 @@ let COLORSCHEME_2 = {
     text-align: right;
     width: 200px;
 
-    font-size: 10px;	
+    font-size: 10px;
     line-height: 18px;
     display: inline-block;
   }
 
   .small .amount-label {
-    font-size: 10px;	
+    font-size: 10px;
     line-height: 13px;
     text-align: right;
   }
@@ -247,11 +247,11 @@ let COLORSCHEME_2 = {
   @media only screen and (max-width: 600px) {
     .chevron-container {
       display: none;
-    }  
+    }
   }
 
   .chevron {
-    width: 0; 
+    width: 0;
     height: 0;
     border-style: solid;
     border-width: 7px 7px 7px 0;
@@ -263,7 +263,7 @@ let COLORSCHEME_2 = {
   .selected .chevron {
     transform: rotate(-90deg);
   }
-  
+
   .spendomat-tags {
     min-height: 30px;
     overflow-y: hidden;
@@ -281,10 +281,10 @@ let COLORSCHEME_2 = {
     display: inline-block;
     margin: 0 4px;
     padding: 0px 2px;
-    font-family: "Abraham TRIAL";	
-    font-size: 12px;	
+    font-family: "Abraham TRIAL";
+    font-size: 12px;
     line-height: 16px;
-    border-radius: 4px;	
+    border-radius: 4px;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -304,7 +304,7 @@ let COLORSCHEME_2 = {
 `,
 `
   .theme-1 .row-part {
-    border: 1px solid #${COLORSCHEME_1.primaryBorder};	
+    border: 1px solid #${COLORSCHEME_1.primaryBorder};
     background-color: #${COLORSCHEME_1.primaryBg};
   }
 
@@ -313,7 +313,7 @@ let COLORSCHEME_2 = {
   }
 
   .theme-1 .small .row-part {
-    background-color: #${COLORSCHEME_1.tagBg};    
+    background-color: #${COLORSCHEME_1.tagBg};
     border: 1px solid #${COLORSCHEME_1.tagBorder};
   }
 
@@ -322,12 +322,12 @@ let COLORSCHEME_2 = {
   }
 
   .theme-1 .row-bg {
-    border: 1px solid #${COLORSCHEME_1.primaryBorder};	
-    background-color: #${COLORSCHEME_1.primaryBg};    
+    border: 1px solid #${COLORSCHEME_1.primaryBorder};
+    background-color: #${COLORSCHEME_1.primaryBg};
   }
 
   .theme-1 .row-label {
-    color: #${COLORSCHEME_1.text};	
+    color: #${COLORSCHEME_1.text};
   }
 
   .theme-1 .chevron {
@@ -335,9 +335,9 @@ let COLORSCHEME_2 = {
   }
 
   .theme-1 .tag {
-    color: #${COLORSCHEME_1.text};	
-    background-color: #${COLORSCHEME_1.tagBg};    
-    border: 1px solid #${COLORSCHEME_1.tagBorder};	
+    color: #${COLORSCHEME_1.text};
+    background-color: #${COLORSCHEME_1.tagBg};
+    border: 1px solid #${COLORSCHEME_1.tagBorder};
   }
 
   .theme-1 .tag.hovered {
@@ -346,7 +346,7 @@ let COLORSCHEME_2 = {
   `,
   `
   .theme-2 .row-part {
-    border: 1px solid #${COLORSCHEME_2.primaryBorder};	
+    border: 1px solid #${COLORSCHEME_2.primaryBorder};
     background-color: #${COLORSCHEME_2.primaryBg};
   }
 
@@ -355,7 +355,7 @@ let COLORSCHEME_2 = {
   }
 
   .theme-2 .small .row-part {
-    background-color: #${COLORSCHEME_2.tagBg};    
+    background-color: #${COLORSCHEME_2.tagBg};
     border: 1px solid #${COLORSCHEME_2.tagBorder};
   }
 
@@ -364,12 +364,12 @@ let COLORSCHEME_2 = {
   }
 
   .theme-2 .row-bg {
-    border: 1px solid #${COLORSCHEME_2.primaryBorder};	
-    background-color: #${COLORSCHEME_2.primaryBg};    
+    border: 1px solid #${COLORSCHEME_2.primaryBorder};
+    background-color: #${COLORSCHEME_2.primaryBg};
   }
 
   .theme-2 .row-label {
-    color: #${COLORSCHEME_2.text};	
+    color: #${COLORSCHEME_2.text};
   }
 
   .theme-2 .chevron {
@@ -377,9 +377,9 @@ let COLORSCHEME_2 = {
   }
 
   .theme-2 .tag {
-    color: #${COLORSCHEME_2.text};	
-    background-color: #${COLORSCHEME_2.tagBg};    
-    border: 1px solid #${COLORSCHEME_2.tagBorder};	
+    color: #${COLORSCHEME_2.text};
+    background-color: #${COLORSCHEME_2.tagBg};
+    border: 1px solid #${COLORSCHEME_2.tagBorder};
   }
 
   .theme-2 .tag.hovered {
@@ -388,12 +388,12 @@ let COLORSCHEME_2 = {
   `
   ]
 })
-export class SpendomatChartComponentRow {
+export class SpendomatChartRowComponent {
 
   @Input() public row: any;
   @Input() theme: string;
-  hoverIndex_: number = -1;
-  selected: boolean = false;
+  hoverIndex_ = -1;
+  selected = false;
 
   constructor() {}
 
@@ -403,9 +403,6 @@ export class SpendomatChartComponentRow {
 
   public get hoverIndex(): number {
     return this.hoverIndex_;
-  }
-
-  ngOnInit() {
   }
 
 }
@@ -425,7 +422,7 @@ export class SpendomatChartComponentRow {
     `
   ]
 })
-export class SpendomatChartComponent {
+export class SpendomatChartComponent implements OnInit {
 
   @Input() public data: any;
 
@@ -434,27 +431,27 @@ export class SpendomatChartComponent {
   constructor() {}
 
   ngOnInit() {
-    let data = this.data.data;
+    const data = this.data.data;
     this.rows = data;
-    let sum = _.sum(
+    const sum = _.sum(
       _.map(this.rows, (r) => r['amount'])
     );
     _.each(
       this.rows,
       (r) => {
         r['amount_fmt'] = format_number(r['amount']) + ' ₪';
-        let width = 100 * r['amount'] / sum;
+        const width = 100 * r['amount'] / sum;
         let acc = 0;
         _.each(r['spending'], (s) => {
           s['amount_fmt'] = format_number(s['amount']) + ' ₪';
-          let s_width = s['amount'] / r['amount'];
+          const s_width = s['amount'] / r['amount'];
           acc += s_width * width;
           s['acc_width'] = acc;
           s['width'] = s_width * 100;
 
           let inner_acc = 0;
           s['amount_widths'] = _.map(s['amounts'], (a: number) => {
-            let inner_w = a / s['amount'];
+            const inner_w = a / s['amount'];
             inner_acc += inner_w;
             return inner_acc * s['width'];
           });

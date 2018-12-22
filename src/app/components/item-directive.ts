@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[item-host]',
+  selector: '[itemHost]',
 })
 export class ItemDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }

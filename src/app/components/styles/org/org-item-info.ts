@@ -6,7 +6,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
 
 @Component({
   selector: 'org-item-info',
-  template: `  
+  template: `
   <div class='title-container' [ngClass]='item ? item.kind : ""'>
     <div class="title-row">
       <span class="pretitle-wrapper">
@@ -19,7 +19,7 @@ import { BaseItemInfoComponent } from '../../base-item-info';
               [innerHTML]="descriptor.titleTemplate | renderTemplate:item:ngComponentsTheme.themeId">
         </span>
       </span>
-      <span class="org-id invert" 
+      <span class="org-id invert"
             [innerHTML]="descriptor.subtitleTemplate | renderTemplate:item:ngComponentsTheme.themeId">
       </span>
       <span class="amount invert"

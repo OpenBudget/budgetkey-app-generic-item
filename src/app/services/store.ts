@@ -90,11 +90,11 @@ export class StoreService {
   }
 
   get dataQuery(): string {
-    let parameters = {};
+    const parameters = {};
     _.each(this.currentParameters, (value, key) => {
       parameters[key] = this.currentQuestion.parameters[key][value];
     });
-    let query = this.questionsService.formatQuery(this.currentQuestion.query, parameters);
+    const query = this.questionsService.formatQuery(this.currentQuestion.query, parameters);
     return this.questionsService.formatQuery(query, this.item);
   }
 

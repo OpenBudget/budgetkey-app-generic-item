@@ -14,14 +14,14 @@ import {StoreService} from '../../../services/store';
                 class="tab-header"
                 [ngClass]="{active: tab == current}"
                 (click)="showTab(tab)">
-                <span class='tab-title' 
+                <span class='tab-title'
                       (click)="showTab(tab)">
                       {{ tab.title }}
-                </span> 
+                </span>
             </div>
           </ng-container>
         </div>
-      </div>  
+      </div>
       <div class="tab-contents" *ngIf="chart">
         <div class="chart-title" [innerHtml]="current['long_title'] || current.title"></div>
         <div class="chart-description" *ngIf="current.description"
@@ -47,7 +47,7 @@ import {StoreService} from '../../../services/store';
             <ng-container *ngIf="subtab == currentSub">
               <div class="subtab-title" *ngIf="subtab.long_title" [innerHtml]="subtab.long_title"></div>
               <budgetkey-chart-router [chart]="chart">
-              </budgetkey-chart-router> 
+              </budgetkey-chart-router>
             </ng-container>
           </ng-container>
         </ng-container>

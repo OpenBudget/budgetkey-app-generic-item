@@ -25,28 +25,28 @@ import { format_number } from '../../pipes';
       fill: none;
     }
     ::ng-deep rect.bar-executed {
-      opacity: 0.5;	
+      opacity: 0.5;
     }
     ::ng-deep rect.bar-diff {
-      opacity: 1;	
+      opacity: 1;
     }
     ::ng-deep .text-year {
       text-anchor: end;
       fill: #512C0A;
-      font-family: "Abraham TRIAL";	
+      font-family: "Abraham TRIAL";
       font-size: 18;
     }
     ::ng-deep .text-amount {
       position: absolute;
       display: inline-block;
       text-align: center;
-      color: #512C0A;	
-      font-family: "Abraham TRIAL";	
+      color: #512C0A;
+      font-family: "Abraham TRIAL";
       font-size: 18px;
     }
     ::ng-deep .grid {
       stroke-width: 1;
-      stroke: #512C0A;	
+      stroke: #512C0A;
       opacity: 0.25;
     }
     ::ng-deep .grid-25 {
@@ -60,9 +60,9 @@ import { format_number } from '../../pipes';
     }
     ::ng-deep .grid-text {
       text-anchor: end;
-      opacity: 0.5;	
-      color: #512C0A;	
-      font-family: "Abraham TRIAL";	
+      opacity: 0.5;
+      color: #512C0A;
+      font-family: "Abraham TRIAL";
       font-size: 12px;
     }
     `
@@ -90,7 +90,7 @@ export class ContractPaymentsChartComponent implements AfterViewInit {
       (p) => p.selected
     );
     if (this.data.length === 0) { return; }
-    let volume = this.data[this.data.length - 1].volume;
+    const volume = this.data[this.data.length - 1].volume;
     if (volume <= 0) { return; }
     let max = _.max(_.map(this.data, (p) => p.executed));
     max = _.max([max, volume]);
@@ -101,7 +101,7 @@ export class ContractPaymentsChartComponent implements AfterViewInit {
              .domain([0, max])
              .range([this.HEIGHT - this.TEXT_SIZE, this.TEXT_SIZE]);
 
-    let svg = select(this.container.nativeElement)
+    const svg = select(this.container.nativeElement)
               .append('svg')
               .attr('width', this.width + 'px')
               .attr('height', this.HEIGHT + 'px');
@@ -122,7 +122,7 @@ export class ContractPaymentsChartComponent implements AfterViewInit {
        .attr('x1', this.x(0))
        .attr('x2', this.x(this.data.length))
        .attr('y1', (d) => this.y(volume * d / 100))
-       .attr('y2', (d) => this.y(volume * d / 100))
+       .attr('y2', (d) => this.y(volume * d / 100));
     svg.selectAll('.grid-text')
        .data([50, 100])
        .enter()
@@ -158,7 +158,7 @@ export class ContractPaymentsChartComponent implements AfterViewInit {
        .attr('x', (p, i) => this.x(i))
        .attr('y', (p) => this.y(0))
        .attr('dy', this.TEXT_SIZE)
-       .text((p) => p.period === '1' ? p.year : null)
+       .text((p) => p.period === '1' ? p.year : null);
     select(this.container.nativeElement).append('span')
        .attr('class', 'text-amount')
        .style('left', this.x(this.data.length - 1) + 'px')

@@ -1,4 +1,4 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 
 import {THEME_TOKEN} from 'budgetkey-ng2-components';
 
@@ -10,20 +10,20 @@ import {THEME_TOKEN} from 'budgetkey-ng2-components';
   styles: [
     `
     ::ng-deep .label-col a {
-      color: #5A32D1;	
-      font-family: "Abraham TRIAL";	
+      color: #5A32D1;
+      font-family: "Abraham TRIAL";
       font-size: 14px;
-      text-align: right; 
+      text-align: right;
     }
 
     ::ng-deep .selected .label-col a {
-      color: #FFFFF;	
+      color: #FFFFF;
     }
 
 `
   ]
 })
-export class AdamKeyChartWrapperComponent  {
+export class AdamKeyChartWrapperComponent implements OnInit  {
 
   @Input() public data: any;
 
@@ -31,7 +31,7 @@ export class AdamKeyChartWrapperComponent  {
   }
 
   ngOnInit() {
-    for (let v of this.data.values) {
+    for (const v of this.data.values) {
       if (this.ngComponentsTheme.themeId) {
         v.label = v.label.replace('theme=budgetkey', 'theme=' + this.ngComponentsTheme.themeId);
       }

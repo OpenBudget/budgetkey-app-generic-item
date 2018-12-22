@@ -35,7 +35,7 @@ import {
   PointatronChartComponent,
   ComparatronChartComponent,
   SpendomatChartComponent,
-  SpendomatChartComponentRow,
+  SpendomatChartRowComponent,
   AdamKeyChartWrapperComponent,
   ContractPaymentsChartComponent,
 
@@ -113,7 +113,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     PointatronChartComponent,
     ComparatronChartComponent,
     SpendomatChartComponent,
-    SpendomatChartComponentRow,
+    SpendomatChartRowComponent,
     AdamKeyChartWrapperComponent,
     ContractPaymentsChartComponent,
 

@@ -1,4 +1,4 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import {THEME_TOKEN} from 'budgetkey-ng2-components';
@@ -45,23 +45,23 @@ tr {
 }
 
 .cell-index {
-  opacity: 0.8;	
-  color: #C3C3C3;	
-  font-family: "Abraham TRIAL";	
-  font-size: 18px;	
+  opacity: 0.8;
+  color: #C3C3C3;
+  font-family: "Abraham TRIAL";
+  font-size: 18px;
   text-align: right;
   padding-left: 5px;
 }
 
 .cell-label {
-  color: #4A4A4A;	
+  color: #4A4A4A;
   font-family: "Abraham TRIAL";
   font-weight: bold;
   border-left: solid #888 1px ;
 }
 
 .cell-bar {
-  color: #3E4E59;	
+  color: #3E4E59;
   font-family: "Miriam Libre";
   width: 85%;
   position: relative;
@@ -74,7 +74,7 @@ tr {
   display: inline-block;
   width: 100%;
   height: 30px;
-  opacity: 0.23;	
+  opacity: 0.23;
   background-color: #E5E5E5;
 }
 
@@ -96,17 +96,17 @@ tr {
     `
   ]
 })
-export class HorizontalBarchartChartComponent {
+export class HorizontalBarchartChartComponent implements OnInit {
 
   @Input() public data: any;
-  maxValue: number = 1;
+  maxValue = 1;
 
   constructor(private location: Location,
               @Inject(THEME_TOKEN) private ngComponentsTheme: any) {
   }
 
   ngOnInit() {
-    for (let v of this.data.values) {
+    for (const v of this.data.values) {
       if (v.value > this.maxValue) {
         this.maxValue = v.value;
       }

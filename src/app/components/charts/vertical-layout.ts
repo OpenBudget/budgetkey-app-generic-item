@@ -24,9 +24,9 @@ import { Component, Input } from '@angular/core';
 }
 
 .title {
-  color: #4A4A4A;	
-  font-family: "Miriam Libre";	
-  font-size: 20px;	
+  color: #4A4A4A;
+  font-family: "Miriam Libre";
+  font-size: 20px;
   font-weight: bold;
   mergin-bottom: 44px;
 }
