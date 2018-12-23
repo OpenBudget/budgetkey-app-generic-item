@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <!-- Search Engine -->
+    <link rel="search" type="application/opensearchdescription+xml" title="מפתח התקציב" href="/opensearch.xml">
+    <meta name="referrer" content="origin" />
+    <meta name="image" content="https://next.obudget.org/assets/img/obudget_key.png">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="{{title}}">
+    <meta itemprop="image" content="https://next.obudget.org/assets/img/obudget_key 2@2x.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:site" content="@hasadna">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta property="og:url" content="https://next.obudget.org{{base}}{{doc_id}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{title}}">
+    <meta property="og:image" content="https://next.obudget.org/assets/img/obudget_key 2@2x.png">
+    <meta property="og:site_name" content="מפתח התקציב">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:type" content="website">
+    <meta property="fb:app_id" content="966242223397117" />
+    <!-- END TAGS -->
+    <base href="{{ base }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://next.obudget.org{{base}}{{doc_id}}">
+    <script>
+      window.prefetchedItem = {{ prefetchedItem | safe }};
+      {{ injectedScript | safe }}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10203855-10"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10203855-10');
+    </script>
+    <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//next.obudget.org/_fonts/stylesheet.css"></link>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+  </head>
+
+  <body>
+    <budgetkey-app-generic-item>Loading...</budgetkey-app-generic-item>
+  </body>
+</html>
