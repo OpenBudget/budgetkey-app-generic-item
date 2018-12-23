@@ -31,7 +31,9 @@
               "node_modules/budgetkey-ng2-components/budgetkey-ng2-components.less",
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+              "src/scripts/plotly-latest.min.js"
+            ]
           },
           "configurations": {
             "production": {
