@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {BudgetKeyCommonModule} from 'budgetkey-ng2-components';
+import {BudgetKeyCommonModule, THEME_TOKEN} from 'budgetkey-ng2-components';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MushonkeyModule } from 'mushonkey';
@@ -117,6 +117,7 @@ describe('AppComponent', function () {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
+        {provide: THEME_TOKEN, useValue: {}},
         BudgetKeyItemService,
         QuestionsService,
         StoreService,
