@@ -9,35 +9,25 @@ const urlencode = require('urlencode');
 
 const basePath = process.env.BASE_PATH || '/';
 const rootPath = path.resolve(__dirname, './dist/budgetkey-app-generic-item');
-const disableCache = process.env.DISABLE_CACHE || false;
 
 const app = express();
-if (disableCache) {
-  app.disable('view cache');
-}
+app.use(basePath, express.static(rootPath, {
+  index: false,
+  maxAge: '1d',
+}));
 
 nunjucks.configure(rootPath, {
   autoescape: true,
-  noCache: disableCache,
   express: app
 });
 
 app.set('port', process.env.PORT || 8000);
 
 app.get(basePath + '*', function(req, res) {
-  var filePath = path.resolve(rootPath, req.params[0]);
-  if (fs.existsSync(filePath)) {
-    var stats = fs.lstatSync(filePath);
-    if (stats.isFile()) {
-      return res.sendFile(filePath);
-    }
-  }
-
   let injectedScript = '';
 
   // set language
   var lang = typeof(req.query.lang) !== "undefined" ? req.query.lang : 'he';
-  var langScript = '';
   injectedScript += `BUDGETKEY_LANG=${JSON.stringify(lang)};`;
 
   var theme = typeof(req.query.theme) !== "undefined" ? req.query.theme : 'budgetkey';
