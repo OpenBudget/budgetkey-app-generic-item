@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch": "ng build budgetkey-app-generic-item --watch",
-    "dist-serve": "npm run watch & npm start"
+    "dist-serve": "./download_themes.sh && npm run watch & npm start"
   },
   "private": true,
   "dependencies": {
