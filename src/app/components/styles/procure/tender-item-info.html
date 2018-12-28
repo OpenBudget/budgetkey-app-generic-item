@@ -19,7 +19,7 @@
         </div>
         <div class='parties'>
             <span class='from' [innerHtml]='tooltip(publisher()) + " &larr;"'></span>
-            <ng-container *ngIf='item.awardees_text'>
+            <ng-container *ngIf='item.awardees_text && item.simple_decision !== "פתוח"'>
                 <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
                 </span>
             </ng-container>
@@ -126,7 +126,7 @@
             </span>
         </div>
         
-        <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_volume'>
+        <div class='awardees' *ngIf='item.awardees && item.awardees.length && item.contract_volume && item.simple_decision !== "פתוח"'>
             <table>
                 <thead>
                     <th *ngIf='item.tender_type == "exemptions"'>ספק/ים</th>

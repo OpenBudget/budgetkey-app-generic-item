@@ -12,22 +12,6 @@ const tooltips = require('./tooltips.json');
 })
 export class TenderItemInfoComponent extends ProcureItemInfoComponent {
 
-  toText() {
-    const decision: string = this.item['decision'];
-    if (decision) {
-      if (decision === 'בוטל') {
-        return 'המכרז בוטל';
-      }
-    }
-    if (!this.item['awardees'] || this.item['awardees'].length === 0) {
-      if (this.item['entity_name']) {
-        return this.item['entity_name'];
-      } else if (this.item['supplier']) {
-        return this.item['supplier'];
-      }
-    }
-  }
-
   publisher() {
     return this.item['publisher'];
   }
