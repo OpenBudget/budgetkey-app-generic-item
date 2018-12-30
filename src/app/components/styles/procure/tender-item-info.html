@@ -151,7 +151,7 @@
                         <td>
                             <ng-container *ngIf='item.awardees.length > 1 && item.contract_executed'>
                             (<span [innerHtml]='percent(awardee.executed/item.contract_executed)'></span>
-                             <span *ngIf='awardee.count == 1'>בהתקשרות בודדת</span><span *ngIf='awardee.count > 1'>ב-{{awardee.count}} התקשרויות</span>)
+                             <span *ngIf='awardee.count == 1'>&nbsp;בהתקשרות בודדת</span><span *ngIf='awardee.count > 1'>&nbsp;ב-{{awardee.count}} התקשרויות</span>)
                             </ng-container>
                         </td>
                     </tr>
