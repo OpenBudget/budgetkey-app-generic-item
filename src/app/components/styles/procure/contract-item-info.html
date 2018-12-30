@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class='parties'>
-            <span class='from'>{{ publisher() }} &larr;</span>
+            <span class='from'>{{ publisher() }} &larr; </span>
             <ng-container *ngIf='toText()'>
                 <span class='to'>
                     {{ toText() }}
@@ -38,9 +38,9 @@
                            [last]='true'>
             </timeline-part>
             <span>
-                <span>עד כה שולמו</span>
+                <span>עד כה שולמו&nbsp;</span>
                 <span class='figure' [innerHtml]='percent(totalPaid() / totalAmount())'></span>
-                <span>מתוך:</span>
+                <span>&nbsp;מתוך:</span>
             </span>
         </div>
         <div class='volume'>
@@ -51,11 +51,11 @@
 <div class='hero'>
     <div class='details'>
         <div *ngIf='item.budget_code'>
-            <label>סעיף תקציבי:</label><br/>
+            <label>סעיף תקציבי:&nbsp;</label><br/>
             <span class='label-text'>{{ item.budget_title }} ({{ item.budget_code }})</span>
         </div>
         <div *ngIf='item.purchase_method'>
-            <label>אופן רכישה:</label><br/>
+            <label>אופן רכישה:&nbsp;</label><br/>
             <span class='label-text'>{{ item.purchase_method }}</span>
         </div>
         

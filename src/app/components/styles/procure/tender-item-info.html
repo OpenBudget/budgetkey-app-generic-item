@@ -18,7 +18,7 @@
                   [innerHtml]='tooltip(item.simple_decision_long)'></span>
         </div>
         <div class='parties'>
-            <span class='from' [innerHtml]='tooltip(publisher()) + " &larr;"'></span>
+            <span class='from' [innerHtml]='tooltip(publisher()) + " &larr; "'></span>
             <ng-container *ngIf='item.awardees_text && item.simple_decision !== "פתוח"'>
                 <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
                 </span>
@@ -63,20 +63,20 @@
 <div class='hero'>
     <div class='details'>   
         <div *ngIf='item.tender_type == "exemptions"'>
-            <label>סוג הליך רכש:</label>
+            <label>סוג הליך רכש:&nbsp;</label>
             <span class='label-text'>פטור ממכרז</span><br/>
-            <label>מספר הפרסום:</label>
+            <label>מספר הפרסום:&nbsp;</label>
             <span class='label-text' [innerHtml]='item.publication_id'></span><br/>
             <ng-container *ngIf='item.extended_status'>
-                <label>מצב נוכחי:</label>
+                <label>מצב נוכחי:&nbsp;</label>
                 <span class='label-text' [innerHtml]='tooltip(item.extended_status)'></span><br/>
             </ng-container>
             <ng-container *ngIf='item.reason'>
-                <label>סיבות בקשת הפטור:</label>
+                <label>סיבות בקשת הפטור:&nbsp;</label>
                 <span class='label-text' [innerHtml]='tooltip(item.reason)'></span><br/>
             </ng-container>
             <ng-container *ngIf='item.regulation'>
-                <label>הסתמכות על תקנה:</label>
+                <label>הסתמכות על תקנה:&nbsp;</label>
                 <span class='label-text' [innerHtml]='tooltip(item.regulation)'></span><br/>
             </ng-container>
         </div>
@@ -203,7 +203,7 @@
     </div>
 </div>
 <div class='attachments' *ngIf='item.documents && item.documents.length > 0'>
-    <label>קבצים מצורפים:</label>
+    <label>קבצים מצורפים:&nbsp;</label>
     <div class='file-list'>
         <div class='attachment' *ngFor='let attachment of item.documents'
             (click)='open_document(attachment)'>
