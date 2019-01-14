@@ -10,6 +10,12 @@ To read on how it's used, please take a look [here](https://github.com/OpenBudge
 3. `npm run dist-serve`
 4. example app url which should be available: http://localhost:8000/org/association/580050789
 
+Note: The used port is 8000, if you are already running another app on that port (for example the Open Budget Data API)
+you can define a different port
+```
+export PORT=9000
+```
+
 You should make sure you use the correct node version, at time of writing it's v8.3.0. If you have [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation) installed, 
 you can just run `nvm install` and you will have the correct version.
 

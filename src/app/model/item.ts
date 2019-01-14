@@ -15,6 +15,9 @@ export class Item {
   charts: Chart[];
 
   page_title?: string;
+  title?: string;
+  max_year?: string;
+  min_year?: string;
 
   simple_decision?: string;
   tender_type?: string;

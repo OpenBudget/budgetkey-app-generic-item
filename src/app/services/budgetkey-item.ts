@@ -23,9 +23,10 @@ export class BudgetKeyItemService {
       encodeURIComponent(query);
   }
 
-  getDownloadUrl(query: string, format: string, headers: string[]): string {
+  getDownloadUrl(query: string, format: string, headers: string[], fileName: string): string {
     return '//next.obudget.org/api/download?query=' + encodeURIComponent(query) +
       '&format=' + format +
+      '&filename=' + fileName +
       '&headers=' + encodeURIComponent(headers.join(';'));
   }
 
