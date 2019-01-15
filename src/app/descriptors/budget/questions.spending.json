@@ -97,7 +97,7 @@
               "currency AS \"מטבע\", ", 
               "((publisher->>0) || '/' || (purchasing_unit->>0)) AS \"היחידה הרוכשת\",",
               "purchase_method->>0 AS \"אופן הרכישה\", ", 
-              "entity_name as \"ספק\", ",
+              "coalesce(entity_name, supplier_name->>0) as \"ספק\", ",
               "'org/' || entity_kind || '/' || entity_id as item_id, ",
               "min(min_year)||' - '||max(max_year) AS \"תקופה\"",
               "FROM contract_spending ", 
