@@ -90,16 +90,7 @@ export class DescriptorBase {
         };
       } else if (mod === 'search_term') {
         return (x: any, row: any) => {
-          const term = row[param];
-          if (term) {
-            // if (themeId) {
-            //   return '<a href="/s/?q=' + encodeURIComponent(term) + '&theme=' + themeId + '">' + x + '</a>';
-            // } else {
-            return '<a href="/s/?q=' + encodeURIComponent(term) + '" title="חיפוש ד' + x + ' במפתח התקציב">' + x + '</a>';
-            // }
-          } else {
-            return x;
-          }
+          return '<a href="/s/?q=' + encodeURIComponent(x) + '" title="חיפוש מידע נוסף על  ' + x + '">' + x + '</a>';
         };
       } else {
         throw Error('Unknown formatter ' + mod);
