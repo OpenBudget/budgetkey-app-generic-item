@@ -77,7 +77,7 @@
   },
   {
     "text": "כלל המכרזים והפטורים ממכרז עם הארגון",
-    "query": ["select case when tender_type = 'exemptions' then 'פטור ממכרז' else tender_type end as \"סוג הליך הרכש\",",
+    "query": ["select tender_type_he as \"סוג הליך הרכש\",",
               "page_title as \"כותרת\",",
               "regulation as \"תקנהֿ\",",
               "publisher as \"מפרסם\",",
