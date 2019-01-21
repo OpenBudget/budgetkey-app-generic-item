@@ -78,7 +78,7 @@
   {
     "text": "כלל המכרזים והפטורים ממכרז עם הארגון",
     "query": ["select tender_type_he as \"סוג הליך הרכש\",",
-              "page_title as \"כותרת\",",
+              "coalesce(page_title, description) as \"כותרת\",",
               "regulation as \"תקנהֿ\",",
               "publisher as \"מפרסם\",",
               "volume as \"היקף\",", 
@@ -87,7 +87,9 @@
               "date(claim_date) as \"מועד סיום התהליך\",",
               "start_date as \"תחילת ההתקשרות\",",
               "end_date as \"סיום ההתקשרות\"",
-              "from procurement_tenders_processed where entity_id=':id'"],
+              "from procurement_tenders_processed",
+              "where entity_id=':id' or",
+              "awardees::text like '%%:id%%'"],
     "headers": [
       "סוג הליך הרכש",
       "כותרת:item_link(item_id)",

@@ -1,4 +1,4 @@
-בשנת {{year}} תקציב {{title}} עומד על ₪{{net_allocated | format_number}}.
+בשנת {{year}} תקציב {{title}} עומד על {{net_allocated | format_number}}₪.
 <br/>
 זוהי תקנת
 {{direction[0]}}
@@ -7,19 +7,19 @@
 
 {% if (history[(year-1)].net_executed) %}
 הביצוע בשנת {{year-1}} עמד על
-₪{{history[year-1].net_executed | format_number}}
+{{history[year-1].net_executed | format_number}}₪
 <br/>
 {% elif (history[(year-2)].net_executed) %}
 הביצוע בשנת {{year-2}} עמד על
-₪{{history[year-2].net_executed | format_number}}
+{{history[year-2].net_executed | format_number}}₪
 <br/>
 {% elif (history[(year-3)].net_executed) %}
 הביצוע בשנת {{year-3}} עמד על
-₪{{history[year-3].net_executed | format_number}}
+{{history[year-3].net_executed | format_number}}₪
 <br/>
 {% elif (history[(year-4)].net_executed) %}
 הביצוע בשנת {{year-4}} עמד על
-₪{{history[year-4].net_executed | format_number}}
+{{history[year-4].net_executed | format_number}}₪
 <br/>
 {% endif %}
 
