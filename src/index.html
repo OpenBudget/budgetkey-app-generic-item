@@ -28,23 +28,32 @@
     <base href="{{ base }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="canonical" href="https://next.obudget.org{{base}}{{doc_id}}">
+    <link rel="stylesheet" type="text/css" href="//next.obudget.org/_fonts/stylesheet.css"></link>
     <script>
       window.prefetchedItem = {{ prefetchedItem | safe }};
       {{ injectedScript | safe }}
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10203855-10"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-10203855-10');
-    </script>
-    <link rel="stylesheet" type="text/css" href="//next.obudget.org/_fonts/stylesheet.css"></link>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
   </head>
 
   <body>
     <budgetkey-app-generic-item>Loading...</budgetkey-app-generic-item>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
   </body>
+  <script type="text/javascript">
+    /* Fontawesome */
+    var fa = document.createElement('link');
+    fa.rel = 'stylesheet';
+    fa.href = '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
+    fa.type = 'text/css';
+    var defer = document.getElementsByTagName('link')[0];
+    godefer.parentNode.insertBefore(fa, defer);
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10203855-10"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-10203855-10');
+  </script>
 </html>
