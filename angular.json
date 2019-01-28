@@ -32,7 +32,6 @@
               "src/styles.less"
             ],
             "scripts": [
-              "src/scripts/plotly-latest.min.js"
             ]
           },
           "configurations": {
