@@ -18,10 +18,10 @@ const gtag: any = window['gtag'];
         </budgetkey-item-container>
 
         <div #questionsPanel class="sticky questions-panel" (click)="scrollToTable()">
-          <budgetkey-item-questions *ngIf="loaded"></budgetkey-item-questions>
+          <budgetkey-item-questions *ngIf="loaded && showQuestions"></budgetkey-item-questions>
         </div>
         <div #dataTable class="data-table">
-          <budgetkey-item-data-table *ngIf="loaded"></budgetkey-item-data-table>
+          <budgetkey-item-data-table *ngIf="loaded && showQuestions"></budgetkey-item-data-table>
         </div>
         <div class='desktop-notification'>
           <img src='assets/img/desktop.svg' title='Computer by Juan Manuel Corredor from the Noun Project'/>
@@ -69,6 +69,7 @@ const gtag: any = window['gtag'];
 })
 export class AppComponent implements AfterViewInit, OnInit  {
   loaded = true;
+  showQuestions = false;
   style: string;
 
   @ViewChild('questionsPanel') questionsPanel: ElementRef;
@@ -117,14 +118,21 @@ export class AppComponent implements AfterViewInit, OnInit  {
       if (match && match.length > 1) {
         const position = parseInt(match[1], 10);
         if (gtag) {
-          gtag('event', 'view_item', {
-            'event_label': itemId,
-            'value': position
-          });
+          window.setTimeout(
+            () => {
+              gtag('event', 'view_item', {
+                'event_label': itemId,
+                'value': position
+              });
+            }, 5000
+          );
         }
       }
     }
-   moment.locale('he');
+    moment.locale('he');
+    window.setTimeout(() => {
+      this.showQuestions = true;
+    }, 3000);
   }
 
   ngAfterViewInit() {
