@@ -48,6 +48,7 @@ app.get(basePath + '*', function(req, res) {
     } else if (fs.existsSync(path.resolve(__dirname, themeFileName))) {
       themeJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, themeFileName)));
     }
+    toInject = '';
     if (themeJson) {
       for (var key in themeJson) {
         toInject += `${key}=${JSON.stringify(themeJson[key])};`;
