@@ -20,8 +20,16 @@
         <div class='parties'>
             <span class='from' [innerHtml]='tooltip(publisher()) + " &larr; "'></span>
             <ng-container *ngIf='item.awardees_text && item.simple_decision !== "פתוח"'>
-                <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
-                </span>
+                <ng-container *ngIf='!item.entity_id'>
+                    <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf='item.entity_id'>
+                    <a [href]='"/i/" + item.entity_kind + "/" + item.entity_id'>
+                        <span class='to' [innerHtml]='tooltip(item.awardees_text)'>
+                        </span>
+                    </a>
+                </ng-container>
             </ng-container>
         </div>
         <div class='tags'>
