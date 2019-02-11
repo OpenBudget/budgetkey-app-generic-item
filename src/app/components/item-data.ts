@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnDestroy, EventEmitter, Inject} from '@angular/core';
+import {Component, Input, Output, OnDestroy, EventEmitter, Inject, ViewChild, ElementRef, HostListener} from '@angular/core';
 import * as _ from 'lodash';
 
 import { BudgetKeyItemService, StoreService, EventsService } from '../services';
@@ -83,6 +83,17 @@ export class ItemQuestionsComponent implements OnDestroy {
   downloadUrlXlsx: string;
 
   isDropDownVisible = false;
+
+  @ViewChild('btnToggleItemQuest') btnToggleItemQuest: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  onClickOutOfDropdown(event: any) {
+    const isClickedOnDropdown = this.btnToggleItemQuest.nativeElement.contains(event.target);
+
+    if (this.isDropDownVisible && !isClickedOnDropdown) {
+      this.isDropDownVisible = false;
+    }
+  }
 
   toggleDropDown() {
     this.isDropDownVisible = !this.isDropDownVisible;

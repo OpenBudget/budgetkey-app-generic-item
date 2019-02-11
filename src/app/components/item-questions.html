@@ -18,9 +18,10 @@
           ></item-questions-parameter>
         </ng-container>
         &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
-        <div class="toggle" (click)="toggleDropDown()">
-          <i class="glyphicon glyphicon-chevron-down" *ngIf="!isDropDownVisible"></i>
-          <i class="glyphicon glyphicon-chevron-up" *ngIf="isDropDownVisible"></i>
+        <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
+          <i class="glyphicon" 
+            [ngClass]="{'glyphicon-chevron-down': !isDropDownVisible, 'glyphicon-chevron-up': isDropDownVisible}">
+          </i>
         </div>
       </div>
       <div *ngIf="isDropDownVisible" class="questions">
