@@ -26,7 +26,7 @@ export class PlotlyChartComponent implements OnInit {
   }
 
   checkPlotly() {
-    if (Plotly) {
+    if (window['Plotly']) {
       const layout = Object.assign({
         height: 600,
         font: {
