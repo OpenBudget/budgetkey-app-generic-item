@@ -7,5 +7,5 @@ export default new SimpleDescriptor({
   amountTemplate: require('../amount-template.html'),
   subtitleTemplate: require('./subtitle-template.html'),
   textTemplate: require('./text-template.html'),
-  questions: require('../questions.spending.json')
+  questions: [].concat(require('../questions.json'), require('../questions.spending.json'))
 });
