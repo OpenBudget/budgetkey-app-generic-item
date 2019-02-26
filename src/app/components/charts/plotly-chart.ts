@@ -22,13 +22,21 @@ export class PlotlyChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    const layout = Object.assign({
-      height: 600,
-      font: {
-        size: 10
-      }
-    }, this.layout);
+    this.checkPlotly();
+  }
 
-    Plotly.plot(this.plot.nativeElement, this.data, layout);
+  checkPlotly() {
+    if (Plotly) {
+      const layout = Object.assign({
+        height: 600,
+        font: {
+          size: 10
+        }
+      }, this.layout);
+
+      Plotly.plot(this.plot.nativeElement, this.data, layout);
+    } else {
+      setTimeout(() => this.checkPlotly(), 100);
+    }
   }
 }
