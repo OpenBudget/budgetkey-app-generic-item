@@ -55,6 +55,8 @@ import {
 
   SafeHtmlPipe,
   TimelinePartComponent,
+  CallForBidsItemInfoComponent,
+  SupportCriteriaItemInfoComponent,
 } from './components';
 
 describe('AppComponent', function () {
@@ -112,6 +114,8 @@ describe('AppComponent', function () {
         TenderItemInfoComponent,
         ContractItemInfoComponent,
         ProcureItemComponent,
+        CallForBidsItemInfoComponent,
+        SupportCriteriaItemInfoComponent,
 
         TimelinePartComponent,
       ],

@@ -1,4 +1,4 @@
-.style-procure tender-item-info, .style-procure contract-item-info {
+.style-procure tender-item-info, .style-procure contract-item-info, .style-procure call-for-bids-item-info {
     display: flex;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -72,25 +72,25 @@
 
         .titles {
             flex: 7;
-            
+
+            .process-type-tag {
+                display: inline-block;
+                border-radius: 4px;	
+                background-color: #19008F;
+                color: #FFFBF2;	
+                font-family: "Abraham TRIAL";	
+                font-size: 13px;	
+                font-weight: 500;
+                margin: 0 10px;
+                padding: 0 3px;
+                vertical-align: middle;
+            }
+
             .title {
                 font-family: "Miriam Libre";	
                 font-size: 26px;	
                 font-weight: bold;
                 color: #19008F;
-
-                .tender-type-tag {
-                    display: inline-block;
-                    border-radius: 4px;	
-                    background-color: #19008F;
-                    color: #FFFBF2;	
-                    font-family: "Abraham TRIAL";	
-                    font-size: 13px;	
-                    font-weight: 500;
-                    margin-right: 10px;
-                    padding: 0 3px;
-                    vertical-align: middle;
-                }
             }
 
             .parties {
@@ -255,27 +255,44 @@
             flex: 2;
             display: flex;
             flex-flow: column;
+            padding-left: 50px;
 
             .tip {
-                border: 4px dashed rgba(0,0,0,0.25);	
+                border: solid 1px rgba(189, 189, 189, 0.6);
+                // border: 4px dashed rgba(0,0,0,0.25);	
                 border-radius: 10px;
                 background-color: #FFFBF2;
-                padding: 20px;
-                margin: 25px 50px;
-                margin-right: 0px;
+                margin: 25px 0px;
+                padding: 0;
+                display: flex;
+                flex-flow: column;
+                align-items: stretch;
 
                 div, a {
+                    padding: 20px;
+                    margin: 0;
                     font-family: "Abraham TRIAL";
                     color: #512C0A;
-                    font-size: 16px;
-                    line-height: 20px;
+                    font-size: 18px;
+                    line-height: 1.33;
                     font-weight: 300;
                     display: block;
                 }
-                a {
+                a, a:visited {
+                    border-top: solid 1px rgba(189, 189, 189, 0.6);
+                    font-size: 18px;
+                    font-weight: normal;
+                    font-style: normal;
+                    text-decoration: none;
+                    display: block;
+                    padding: 10px;
+                    margin: 0;
                     color: #19008F;
-                    text-align: left;
-                    font-weight: bold;
+                    text-align: center;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
         }
@@ -340,5 +357,40 @@
     .bk-tooltip {
         width: 150px;
         margin-left: -145px !important;
+    }
+
+}
+
+.style-procure call-for-bids-item-info {
+    label {
+        color: #235000;
+    }
+
+    .header {
+        .titles {
+            .process-type-tag {
+                background-color: #235000;
+            }
+
+            .title {
+                color: #235000;
+                font-weight: normal;
+            }
+
+            .parties {
+                color: #235000;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .hero {
+        .tips {
+            .tip {
+                a, a:visited {
+                    color: #ff5a5f;
+                }
+            }
+        }    
     }
 }

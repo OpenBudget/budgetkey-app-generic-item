@@ -52,6 +52,9 @@ import {
   TenderItemInfoComponent,
   ContractItemInfoComponent,
   ProcureItemComponent,
+  CallForBidsItemInfoComponent,
+  SupportCriteriaItemInfoComponent,
+
   TimelinePartComponent,
 
   PeopleItemComponent,
@@ -130,6 +133,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     TenderItemInfoComponent,
     ContractItemInfoComponent,
     ProcureItemComponent,
+    CallForBidsItemInfoComponent,
+    SupportCriteriaItemInfoComponent,
 
     TimelinePartComponent,
 
