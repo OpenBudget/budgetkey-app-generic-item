@@ -3,7 +3,6 @@ import { ProcureItemInfoComponent } from './procure-item-info';
 
 import * as moment from 'moment';
 
-const tooltips = require('./tooltips.json');
 
 @Component({
   selector: 'call-for-bids-item-info',
@@ -58,27 +57,6 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
 
   open_document(attachment: any) {
     window.open(attachment.link, '_blank');
-  }
-
-  tooltip(content: string) {
-    if (!content) {
-      return content;
-    }
-    for (let i = 0 ; i < tooltips.length ; i++ ) {
-      const k = tooltips[i][0];
-      const repl = 'TTT' + i + 'PPP';
-      if (content.indexOf(k) >= 0) {
-        content = content.replace(k, repl);
-      }
-    }
-    for (let i = 0 ; i < tooltips.length ; i++ ) {
-      const k = 'TTT' + i + 'PPP';
-      const repl = `<span class='bk-tooltip-anchor'>${tooltips[i][0]}<span class='bk-tooltip'>${tooltips[i][1]}</span></span>`;
-      if (content.indexOf(k) >= 0) {
-        content = content.replace(k, repl);
-      }
-    }
-    return content;
   }
 
 }

@@ -5,6 +5,9 @@ import * as moment from 'moment';
 import { BaseItemInfoComponent } from '../../base-item-info';
 import { format_absolute_percent, format_number } from '../../../pipes/render-template';
 
+const tooltips = require('./tooltips.json');
+
+
 export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   private descriptor: DescriptorBase;
@@ -52,4 +55,26 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       return ret;
     }
   }
+
+  tooltip(content: string) {
+    if (!content) {
+      return content;
+    }
+    for (let i = 0 ; i < tooltips.length ; i++ ) {
+      const k = tooltips[i][0];
+      const repl = 'TTT' + i + 'PPP';
+      if (content.indexOf(k) >= 0) {
+        content = content.replace(k, repl);
+      }
+    }
+    for (let i = 0 ; i < tooltips.length ; i++ ) {
+      const k = 'TTT' + i + 'PPP';
+      const repl = `<span class='bk-tooltip-anchor'>${tooltips[i][0]}<span class='bk-tooltip'>${tooltips[i][1]}</span></span>`;
+      if (content.indexOf(k) >= 0) {
+        content = content.replace(k, repl);
+      }
+    }
+    return content;
+  }
+
 }

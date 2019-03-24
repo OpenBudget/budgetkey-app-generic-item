@@ -1,93 +1,62 @@
 import { Component } from '@angular/core';
 import { ProcureItemInfoComponent } from './procure-item-info';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'support-criteria-item-info',
   templateUrl: './support-criteria-item-info.html',
 })
 export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
 
-  private _paymentsTable: Array<any> = null;
-
-  toText() {
-    if (this.item['entity_name']) {
-      return this.item['entity_name'];
-    } else if (this.item['supplier_name']) {
-      return this.item['supplier_name'][0];
-    }
-  }
 
   publisher() {
-    if (this.item['publisher']) {
-      if (this.item['purchasing_unit']) {
-        if (this.item['purchasing_unit'][0].indexOf(this.item['publisher'][0]) === -1) {
-          return this.item['publisher'][0] + ', ' + this.item['purchasing_unit'][0];
-        } else {
-          return this.item['purchasing_unit'][0];
-        }
-      }
-      return this.item['publisher'];
-    }
+    return this.item['publisher'];
+  }
+
+  tenderType() {
+    return this.item['reason'] || 'קול קורא';
   }
 
   alertText() {
-    if (this.item['contract_is_active'] === true) {
-      return 'פעיל';
+    const lastWeek = moment().subtract(7, 'days');
+    if (this.item['start_date'] &&
+        moment(this.item['start_date']).isAfter(lastWeek)) {
+      return 'חדש!';
     } else {
-      return 'לא פעיל';
+      const lastUpdateDate = this.lastUpdateDate();
+      if (lastUpdateDate &&
+          moment(lastUpdateDate).isAfter(lastWeek)) {
+        return 'מעודכן!';
+      }
+    }
+    return null;
+  }
+
+  lastUpdateDate() {
+    if (this.item['__last_modified_at']) {
+      return moment(this.item['__last_modified_at']).format('YYYY-MM-DD');
     }
   }
 
-  totalPaid() {
-    return this.item['executed'];
+  itemTitle() {
+    return this.item['page_title'];
   }
 
-  totalAmount() {
-    return this.item['volume'];
-  }
-
-  paymentsTable(): Array<any> {
-    if (!this._paymentsTable) {
-      const r: Array<any> = [];
-      let year = '';
-      let period = '';
-      let executed = 0;
-      for (const p of this.item['payments']) {
-        if (!p.period) { continue; }
-        if (p.year !== year) {
-          year = p.year;
-          period = p.period;
-          r.unshift({
-            'year': year, '1': null, '2': null, '3': null, '4': null
-          });
-        } else {
-          if (p.period === period) {
-            continue;
-          }
-        }
-        period = p.period;
-        p.selected = true;
-        p.diff = p.executed - executed;
-        executed = p.executed;
-        r[0][p.period] = p;
+  actionables() {
+    const ret = [];
+    if (this.item['contact']) {
+      ret.push('<b>איך פונים?</b><br/>' + this.item['contact']);
+      if (this.item['contact_email']) {
+        ret.push(this.item['contact_email']);
+        ret.push('לפניה באימייל');
       }
-      for (const p of this.item['payments']) {
-        if (!p.period) { continue; }
-        let periodNum = parseInt(p.period, 10);
-        while (periodNum > 1) {
-          periodNum--;
-          this.item['payments'].unshift({
-            'selected': true,
-            'executed': 0,
-            'diff': 0,
-            'year': p.year,
-            'period': '' + period
-          });
-        }
-        break;
-      }
-      this._paymentsTable = r;
     }
-    return this._paymentsTable;
+    return [ret];
   }
+
+  open_document(attachment: any) {
+    window.open(attachment.link, '_blank');
+  }
+
 }
