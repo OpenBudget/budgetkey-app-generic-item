@@ -21,6 +21,6 @@ export class ProcureItemComponent {
         this.isTender = !!store.item['tender_id'];
         this.isContract = !!store.item['order_id'];
         this.isCallForBids = store.item['tender_type'] === 'call_for_bids';
-        this.isSupportCriteria = store.item['tender_type'] === 'support-criteria';
+        this.isSupportCriteria = store.item['tender_type'] === 'support_criteria';
     }
 }

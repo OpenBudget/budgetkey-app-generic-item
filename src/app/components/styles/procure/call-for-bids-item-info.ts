@@ -44,15 +44,17 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   actionables() {
-    const ret = [];
+    const rets = [];
     if (this.item['contact']) {
+      const ret = [];
       ret.push('<b>איך פונים?</b><br/>' + this.item['contact']);
       if (this.item['contact_email']) {
         ret.push(this.item['contact_email']);
         ret.push('לפניה באימייל');
       }
+      rets.push(ret);
     }
-    return [ret];
+    return rets;
   }
 
   open_document(attachment: any) {
