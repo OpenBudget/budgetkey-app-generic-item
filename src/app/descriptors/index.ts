@@ -14,7 +14,8 @@ import descriptorBudget8Dig from './budget/budget8dig';
 import descriptorTendersExemptions from './tenders/exemptions';
 import descriptorTendersCentral from './tenders/central';
 import descriptorTendersOffice from './tenders/office';
-import descriptorTendersCallsForBids from './tenders/calls_for_bids';
+import descriptorCallsForBids from './tenders/calls_for_bids';
+import descriptorSupportCriteria from './tenders/support_criteria';
 import descriptorContractSpending from './contract-spending';
 import descriptorBudgetChanges from './budget-changes';
 import descriptorSupports from './supports';
@@ -40,7 +41,8 @@ const descriptors: DescriptorBase[] = [
   descriptorTendersExemptions,
   descriptorTendersCentral,
   descriptorTendersOffice,
-  descriptorTendersCallsForBids,
+  descriptorCallsForBids,
+  descriptorSupportCriteria,
   descriptorContractSpending,
   descriptorBudgetChanges,
   descriptorSupports,
