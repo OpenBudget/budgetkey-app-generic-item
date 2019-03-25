@@ -49,7 +49,7 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
       const ret = [];
       ret.push('<b>איך פונים?</b><br/>' + this.item['contact']);
       if (this.item['contact_email']) {
-        ret.push(this.item['contact_email']);
+        ret.push('mailto:' + this.item['contact_email']);
         ret.push('לפניה באימייל');
       }
       rets.push(ret);
