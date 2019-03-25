@@ -12,7 +12,7 @@
     <div class='titles'>
         <div class='title'>
             <span [innerHtml]='tooltip(itemTitle())'></span>
-            <span class='process-type-tag'>{{item.tender_type_he}}</span>
+            <span class='process-type-tag' [innerHtml]='tooltip(item.tender_type_he)'></span>
         </div>
         <div class='parties'>
             <span class='from' [innerHtml]='tooltip(publisher()) + " &larr; "'></span>

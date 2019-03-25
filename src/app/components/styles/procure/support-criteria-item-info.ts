@@ -57,6 +57,10 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
     return rets;
   }
 
+  processTag() {
+    return this.item['tender_type_he'] || 'מבחן תמיכה';
+  }
+
   open_document(attachment: any) {
     window.open(attachment.link, '_blank');
   }

@@ -57,6 +57,10 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
     return rets;
   }
 
+  processTag() {
+    return this.item['tender_type_he'] || 'קול קורא';
+  }
+
   open_document(attachment: any) {
     window.open(attachment.link, '_blank');
   }
