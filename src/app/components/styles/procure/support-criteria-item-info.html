@@ -1,5 +1,6 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
+    <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
     <span class='status-timestamp' *ngIf='lastUpdateDate()'>
         עדכון אחרון: {{ lastUpdateDate() }}
     </span>
@@ -10,9 +11,7 @@
 <div class='header'>
     <div class='titles'>
         <div class='parties'>
-            <span class='process-type-tag' *ngIf='item.decision'>
-                {{ item.decision }}
-            </span>
+            <span class='process-type-tag'>מבחן תמיכה</span>
             <span class='from' [innerHtml]='tooltip(publisher())'></span>
         </div>
         <div class='title'>

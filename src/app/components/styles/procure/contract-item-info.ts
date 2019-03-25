@@ -30,7 +30,7 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
     }
   }
 
-  alertText() {
+  decisionText() {
     if (this.item['contract_is_active'] === true) {
       return 'פעיל';
     } else {

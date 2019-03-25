@@ -1,7 +1,6 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
-    <span class='status-text' *ngIf='item.simple_decision' [innerHtml]="tooltip(item.simple_decision)"></span>
-    <span class='status-text' *ngIf='item.tender_type=="exemptions"'>פטור ממכרז</span>
+    <span class='status-text decision' *ngIf='item.simple_decision_long' [innerHtml]="tooltip(item.simple_decision_long)"></span>
     <span class='status-timestamp' *ngIf='lastUpdateDate()'>
         עדכון אחרון: {{ lastUpdateDate() }}
     </span>
@@ -13,9 +12,7 @@
     <div class='titles'>
         <div class='title'>
             <span [innerHtml]='tooltip(itemTitle())'></span>
-            <span *ngIf='item.simple_decision_long' 
-                  class='process-type-tag' 
-                  [innerHtml]='tooltip(item.simple_decision_long)'></span>
+            <span class='process-type-tag'>{{item.tender_type_he}}</span>
         </div>
         <div class='parties'>
             <span class='from' [innerHtml]='tooltip(publisher()) + " &larr; "'></span>

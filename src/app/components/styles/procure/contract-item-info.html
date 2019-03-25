@@ -1,5 +1,5 @@
 <div class='marquee'>
-    <span class='status-alert'>{{ alertText() }}</span>
+    <span class='status-text decision'>{{ decisionText() }}</span>
     <span class='status-timestamp'>
         עדכון אחרון: {{ item.payments[item.payments.length - 1].date }}
     </span>
@@ -11,9 +11,7 @@
     <div class='titles'>
         <div class='title'>
             {{ item.purpose }}
-            <span class='process-type-tag'>
-                {{ item.purchase_method }}
-            </span>
+            <span class='process-type-tag'>התקשרות ממשלתית</span>
         </div>
         <div class='parties'>
             <span class='from'>{{ publisher() }} &larr; </span>
