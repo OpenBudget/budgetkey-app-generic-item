@@ -43,6 +43,13 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['page_title'];
   }
 
+  description() {
+    if (this.item['description']) {
+      return this.item['description'];
+    }
+    return 'פרסום זה כולל במקור המידע את הקבצים המצורפים, ללא מידע נוסף.';
+  }
+
   actionables() {
     let rets = null;
     if (this.item['contact']) {

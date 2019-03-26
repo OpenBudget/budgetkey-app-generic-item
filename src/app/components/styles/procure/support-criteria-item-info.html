@@ -28,7 +28,7 @@
 </div>
 <div class='hero'>
     <div class='details'>   
-        <span class='label-text' [innerHtml]='item.description' *ngIf='item.description'></span>
+        <span class='label-text' [innerHtml]='description()'></span>
 
         <ng-container *ngIf='item.partners'>
             <label>שותפים:&nbsp;</label>
