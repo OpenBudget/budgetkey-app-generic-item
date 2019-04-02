@@ -88,10 +88,12 @@ export class ItemQuestionsComponent implements OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onClickOutOfDropdown(event: any) {
-    const isClickedOnDropdown = this.btnToggleItemQuest.nativeElement.contains(event.target);
+    if (this.btnToggleItemQuest) {
+      const isClickedOnDropdown = this.btnToggleItemQuest.nativeElement.contains(event.target);
 
-    if (this.isDropDownVisible && !isClickedOnDropdown) {
-      this.isDropDownVisible = false;
+      if (this.isDropDownVisible && !isClickedOnDropdown) {
+        this.isDropDownVisible = false;
+      }
     }
   }
 
