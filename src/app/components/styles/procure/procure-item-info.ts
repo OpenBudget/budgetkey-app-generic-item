@@ -12,22 +12,26 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   private descriptor: DescriptorBase;
 
+  format_date(s) {
+    return moment(s).format('DD/MM/YYYY');
+  }
+
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = this.store.descriptor;
   }
 
   firstUpdateDate() {
     if (this.item['start_date']) {
-      return this.item['start_date'];
+      return this.format_date(this.item['start_date']);
     }
     if (this.item['order_date']) {
-      return this.item['order_date'];
+      return this.format_date(this.item['order_date']);
     }
     if (this.item['payments']) {
       return this.item['payments'][0]['date'];
     }
     if (this.item['__created_at']) {
-      return moment(this.item['__created_at']).format('YYYY-MM-DD');
+      return this.format_date(this.item['__created_at']);
     }
   }
 

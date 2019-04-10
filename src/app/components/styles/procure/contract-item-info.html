@@ -1,7 +1,7 @@
 <div class='marquee'>
     <span class='status-text decision'>{{ decisionText() }}</span>
     <span class='status-timestamp'>
-        עדכון אחרון: {{ item.payments[item.payments.length - 1].date }}
+        עדכון אחרון: {{ format_date(item.payments[item.payments.length - 1].date) }}
     </span>
     <span class='created-timestamp' *ngIf='firstUpdateDate()'>
         דיווח ראשון: {{ firstUpdateDate() }}

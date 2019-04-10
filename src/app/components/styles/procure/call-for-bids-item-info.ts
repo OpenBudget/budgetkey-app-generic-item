@@ -18,6 +18,10 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['reason'] || 'קול קורא';
   }
 
+  claim_date() {
+    return moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm');
+  }
+
   alertText() {
     const lastWeek = moment().subtract(7, 'days');
     if (this.item['start_date'] &&
@@ -35,7 +39,7 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
 
   lastUpdateDate() {
     if (this.item['__last_modified_at']) {
-      return moment(this.item['__last_modified_at']).format('YYYY-MM-DD');
+      return this.format_date(this.item['__last_modified_at']);
     }
   }
 

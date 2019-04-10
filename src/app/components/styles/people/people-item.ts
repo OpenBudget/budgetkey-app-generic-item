@@ -14,8 +14,9 @@ export class PeopleItemComponent extends BaseItemInfoComponent  {
   private descriptor: DescriptorBase;
 
   format_date(txt: string) {
-    return moment(txt, 'YYYY-MM-DD').format('DD-MM-YYYY');
+    return moment(txt, 'YYYY-MM-DD').format('DD/MM/YYYY');
   }
+
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = this.store.descriptor;
   }

@@ -39,10 +39,10 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
 
   lastUpdateDate() {
     if (this.item['last_update_date']) {
-      return this.item['last_update_date'];
+      return this.format_date(this.item['last_update_date']);
     }
     if (this.item['__last_modified_at']) {
-      return moment(this.item['__last_modified_at']).format('YYYY-MM-DD');
+      return this.format_date(this.item['__last_modified_at']);
     }
   }
 

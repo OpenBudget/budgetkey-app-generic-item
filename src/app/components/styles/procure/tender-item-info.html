@@ -181,7 +181,7 @@
                                         [percent]='event.percent'
                                         >
                             </timeline-part></td>
-                        <td>{{ event.timestamp }}</td>
+                        <td>{{ format_date(event.timestamp) }}</td>
                         <td>
                             <a [href]='event.url' *ngIf='event.url' target='_blank'>
                                 <i class='glyphicon glyphicon-paperclip'></i>                        

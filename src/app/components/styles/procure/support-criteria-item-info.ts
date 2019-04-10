@@ -35,7 +35,7 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
 
   lastUpdateDate() {
     if (this.item['__last_modified_at']) {
-      return moment(this.item['__last_modified_at']).format('YYYY-MM-DD');
+      return this.format_date(this.item['__last_modified_at']);
     }
   }
 
