@@ -1,11 +1,8 @@
 <div class='marquee'>
     <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
     <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
-    <span class='status-timestamp' *ngIf='lastUpdateDate()'>
-        עדכון אחרון: {{ lastUpdateDate() }}
-    </span>
-    <span class='created-timestamp' *ngIf='firstUpdateDate()'>
-        דיווח ראשון: {{ firstUpdateDate() }}
+    <span class='status-timestamp' *ngIf='firstUpdateDate()'>
+        פרסום ראשון: {{ firstUpdateDate() }}
     </span>
 </div>
 <div class='header'>
