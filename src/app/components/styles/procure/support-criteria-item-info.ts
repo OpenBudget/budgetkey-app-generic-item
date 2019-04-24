@@ -18,6 +18,10 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['reason'] || 'מבחני תמיכה';
   }
 
+  claim_date() {
+    return moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm');
+  }
+
   alertText() {
     const lastWeek = moment().subtract(7, 'days');
     if (this.item['start_date'] &&
