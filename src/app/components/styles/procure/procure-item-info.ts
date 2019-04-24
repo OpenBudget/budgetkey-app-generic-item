@@ -89,7 +89,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   actionables() {
     const a: any[] = this.actionables_aux();
-    if (a.length > 0) {
+    if (a && a.length > 0) {
       if (this.closingSoon()) {
         return a.slice(1);
       }
