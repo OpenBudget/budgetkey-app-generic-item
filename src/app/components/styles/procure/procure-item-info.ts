@@ -12,8 +12,10 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   private descriptor: DescriptorBase;
 
+  private FORMAT_STR = 'DD/MM/YYYY';
+
   format_date(s) {
-    return moment(s).format('DD/MM/YYYY');
+    return moment(s).format(this.FORMAT_STR);
   }
 
   setDescriptor(descriptor: DescriptorBase) {
@@ -79,6 +81,42 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
       }
     }
     return content;
+  }
+
+  actionables_aux() {
+    return [];
+  }
+
+  actionables() {
+    const a: any[] = this.actionables_aux();
+    if (a.length > 0) {
+      if (this.closingSoon()) {
+        return a.slice(1);
+      }
+    }
+    return a;
+  }
+
+  closingSoon() {
+    const a: any[] = this.actionables_aux();
+    return a.length > 0 && moment().diff(moment(this.item['claim_date'])) < 0;
+  }
+
+  closingSoonTitle() {
+    const days = -moment().diff(moment(this.item['claim_date']), 'days');
+    let ret = '';
+    if (days === 1) {
+      ret = 'נותר עוד יום אחד';
+    } else {
+      ret = 'נותרו עוד ' + days + ' ימים';
+    }
+    ret = `<strong>${ret} להגשה!</strong>&nbsp;`;
+    return ret;
+  }
+
+  closingSoonAction() {
+    const a: any[] = this.actionables_aux();
+    return a[0];
   }
 
 }

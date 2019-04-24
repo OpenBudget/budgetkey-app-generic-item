@@ -47,7 +47,7 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['page_title'];
   }
 
-  actionables() {
+  actionables_aux() {
     let rets = null;
     if (this.item['contact']) {
       rets = [];

@@ -54,7 +54,7 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
     return 'פרסום זה כולל במקור המידע את הקבצים המצורפים, ללא מידע נוסף.';
   }
 
-  actionables() {
+  actionables_aux() {
     let rets = null;
     if (this.item['contact']) {
       rets = [];

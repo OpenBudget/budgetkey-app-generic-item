@@ -61,7 +61,7 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['contract_executed'];
   }
 
-  actionables() {
+  actionables_aux() {
     return this.item['actionable_tips'];
   }
 

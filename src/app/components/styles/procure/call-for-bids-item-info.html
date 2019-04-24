@@ -1,92 +1,102 @@
-<div class='marquee'>
-    <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
-    <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
-    <span class='status-timestamp' *ngIf='firstUpdateDate()'>
-        פרסום ראשון: {{ firstUpdateDate() }}
-    </span>
+<div class='alert' *ngIf='closingSoon()'>
+    <div [innerHtml]='closingSoonTitle() + tooltip(closingSoonAction()[0])'></div>
+    <div *ngIf='closingSoonAction()[1]'
+         class='separator'></div>
+    <a *ngIf='closingSoonAction()[1]'
+       [href]='closingSoonAction()[1]'
+       [innerHtml]='closingSoonAction()[2]'></a>
 </div>
-<div class='header'>
-    <div class='titles'>
-        <div class='parties'>
-            <span class='process-type-tag' [innerHtml]='tooltip(processTag())'></span>
-            <span class='from' [innerHtml]='tooltip(publisher())'></span>
-        </div>
-        <div class='title'>
-            <span [innerHtml]='tooltip(itemTitle())'></span>
-        </div>
-        <div class='tags'>
-            <span>
-                <span class='tag' *ngFor='let tag of item.subject_list_keywords'>
-                    {{ tag }}
+<div class='procure-container'>
+    <div class='marquee'>
+        <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
+        <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
+        <span class='status-timestamp' *ngIf='firstUpdateDate()'>
+            פרסום ראשון: {{ firstUpdateDate() }}
+        </span>
+    </div>
+    <div class='header'>
+        <div class='titles'>
+            <div class='parties'>
+                <span class='process-type-tag' [innerHtml]='tooltip(processTag())'></span>
+                <span class='from' [innerHtml]='tooltip(publisher())'></span>
+            </div>
+            <div class='title'>
+                <span [innerHtml]='tooltip(itemTitle())'></span>
+            </div>
+            <div class='tags'>
+                <span>
+                    <span class='tag' *ngFor='let tag of item.subject_list_keywords'>
+                        {{ tag }}
+                    </span>
                 </span>
-            </span>
+            </div>
         </div>
     </div>
-</div>
-<div class='hero'>
-    <div class='details'>   
-        <span class='label-text' [innerHtml]='item.description' *ngIf='item.description'></span>
+    <div class='hero'>
+        <div class='details'>   
+            <span class='label-text' [innerHtml]='item.description' *ngIf='item.description'></span>
 
-        <ng-container *ngIf='item.partners'>
-            <label>שותפים:&nbsp;</label>
-            <ul>
-                <li *ngFor='let partner of item.partners'>
-                    <span class='label-text' [innerHtml]='partner'></span>
-                </li>
-            </ul>
-        </ng-container>
+            <ng-container *ngIf='item.partners'>
+                <label>שותפים:&nbsp;</label>
+                <ul>
+                    <li *ngFor='let partner of item.partners'>
+                        <span class='label-text' [innerHtml]='partner'></span>
+                    </li>
+                </ul>
+            </ng-container>
 
-        <ng-container *ngIf='item.target_audience || item.claim_date'>
-            <label>פרטי הפרסום:&nbsp;</label>
-            <span class='label-text' *ngIf='item.target_audience'><b>פתוח ל:</b>&nbsp;
-                {{ item.target_audience }}
-            </span>
-            <span class='label-text' *ngIf='item.claim_date'><b>מועד סגירה:</b>&nbsp;
-                {{ claim_date() }}
-            </span>
-        </ng-container>
+            <ng-container *ngIf='item.target_audience || item.claim_date'>
+                <label>פרטי הפרסום:&nbsp;</label>
+                <span class='label-text' *ngIf='item.target_audience'><b>פתוח ל:</b>&nbsp;
+                    {{ item.target_audience }}
+                </span>
+                <span class='label-text' *ngIf='item.claim_date'><b>מועד סגירה:</b>&nbsp;
+                    {{ claim_date() }}
+                </span>
+            </ng-container>
 
-        <ng-container *ngIf='item.required_documents'>
-            <label>מסמכים דרושים:&nbsp;</label>
-            <ul>
-                <li *ngFor='let doc of item.required_documents'>
-                    <span class='label-text' [innerHtml]='doc'></span>
-                </li>
-            </ul>
-        </ng-container>
+            <ng-container *ngIf='item.required_documents'>
+                <label>מסמכים דרושים:&nbsp;</label>
+                <ul>
+                    <li *ngFor='let doc of item.required_documents'>
+                        <span class='label-text' [innerHtml]='doc'></span>
+                    </li>
+                </ul>
+            </ng-container>
 
-        <div *ngIf='item.page_url'>
-            <br/>
-            <span class='label-text'>
-                <a [href]='item.page_url' target='_blank'>
-                    קישור לפרסום המקורי
-                </a>
-                &nbsp;&gt;&gt;
-            </span>
+            <div *ngIf='item.page_url'>
+                <br/>
+                <span class='label-text'>
+                    <a [href]='item.page_url' target='_blank'>
+                        קישור לפרסום המקורי
+                    </a>
+                    &nbsp;&gt;&gt;
+                </span>
+            </div>
+            
         </div>
-        
-    </div>
-    <div class='tips' *ngIf='actionables()'>
-        <div class='tip' *ngFor='let tip of actionables()'>
-            <div [innerHtml]='tooltip(tip[0])'></div>
-            <a *ngIf='tip[1]' [href]='tip[1]' [innerHtml]='tip[2]'></a>
+        <div class='tips' *ngIf='actionables()'>
+            <div class='tip' *ngFor='let tip of actionables()'>
+                <div [innerHtml]='tooltip(tip[0])'></div>
+                <a *ngIf='tip[1]' [href]='tip[1]' [innerHtml]='tip[2]'></a>
+            </div>
         </div>
     </div>
-</div>
-<div class='attachments' *ngIf='item.documents && item.documents.length > 0'>
-    <label>קבצים מצורפים:&nbsp;</label>
-    <div class='file-list'>
-        <div class='attachment' *ngFor='let attachment of item.documents'
-            (click)='open_document(attachment)'>
-            <div class='update-time' [innerHtml]='relative(attachment.update_time)'>
-            </div>
-            <div class='paperclip'>
-                <i class='glyphicon glyphicon-paperclip'></i>
-            </div>
-            <div class='filename' [innerHtml]='tooltip(attachment.description)'>
-            </div>
-            <div class='icon'>
-                <i class='glyphicon glyphicon-file'></i>
+    <div class='attachments' *ngIf='item.documents && item.documents.length > 0'>
+        <label>קבצים מצורפים:&nbsp;</label>
+        <div class='file-list'>
+            <div class='attachment' *ngFor='let attachment of item.documents'
+                (click)='open_document(attachment)'>
+                <div class='update-time' [innerHtml]='relative(attachment.update_time)'>
+                </div>
+                <div class='paperclip'>
+                    <i class='glyphicon glyphicon-paperclip'></i>
+                </div>
+                <div class='filename' [innerHtml]='tooltip(attachment.description)'>
+                </div>
+                <div class='icon'>
+                    <i class='glyphicon glyphicon-file'></i>
+                </div>
             </div>
         </div>
     </div>
