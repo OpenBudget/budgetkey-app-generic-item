@@ -89,17 +89,15 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   actionables() {
     const a: any[] = this.actionables_aux();
-    if (a && a.length > 0) {
-      if (this.closingSoon()) {
-        return a.slice(1);
-      }
+    if (this.closingSoon()) {
+      return a.slice(1);
     }
     return a;
   }
 
   closingSoon() {
     const a: any[] = this.actionables_aux();
-    return a.length > 0 && moment().diff(moment(this.item['claim_date'])) < 0;
+    return a && a.length > 0 && moment().diff(moment(this.item['claim_date'])) < 0;
   }
 
   closingSoonTitle() {
