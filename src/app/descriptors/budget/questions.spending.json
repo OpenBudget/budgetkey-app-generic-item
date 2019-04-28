@@ -53,7 +53,7 @@
     "query": ["SELECT support_title AS \"נושא\", ", 
               "budget_code,", 
               "budget_code AS \"מספר תקנה\", ", 
-              "entity_name as \"מקבל התמיכה\", ",
+              "coalesce(entity_name, recipient) as \"מקבל התמיכה\", ",
               "entity_id as \"מספר תאגיד\", ",
               "'org/' || entity_kind || '/' || entity_id as item_id, ",
               "sum(amount_approved) as \"סה״כ אושר\",",
