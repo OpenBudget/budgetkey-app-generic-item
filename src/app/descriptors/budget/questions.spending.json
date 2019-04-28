@@ -9,7 +9,7 @@
               "budget_code,", 
               "budget_code AS \"מספר תקנה\", ", 
               "'supports/' || budget_code || '/' || year_requested || '/' || recipient || '/' || request_type AS item_id, ", 
-              "entity_name as \"מקבל התמיכה\", ",
+              "coalesce(entity_name, recipient) as \"מקבל התמיכה\", ",
               "entity_id as \"מספר תאגיד\", ",
               "'org/' || entity_kind || '/' || entity_id as entity_item_id, ",
               "sum(amount_approved) as \"סה״כ אושר\",",
