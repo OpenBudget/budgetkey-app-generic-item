@@ -145,7 +145,7 @@ export class ItemQuestionsComponent implements OnDestroy {
       question = question + this.store.currentQuestion.parsed[i].value;
     }
 
-    const fileName = decodeURIComponent(entityName + '__' + question);
+    const fileName = entityName + '__' + question;
 
     this.downloadUrl =
       this.itemService.getDownloadUrl(
