@@ -125,17 +125,41 @@ export class ItemQuestionsComponent implements OnDestroy {
     this.preparedQuestions = this.store.preparedQuestions;
     this.currentQuestion = this.store.currentQuestion;
     this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
+
+    // Create a filename - item name + current question, so for example:
+    // wingate institute__annual summary of communications
+
+    // For the name, take either name, title, page title
+    let entityName = '';
+    if (this.store.item.name) {
+      entityName = this.store.item.name;
+    } else if (this.store.item.title) {
+      entityName = this.store.item.title;
+    } else if (this.store.item.page_title) {
+      entityName = this.store.item.page_title;
+    }
+
+    // Create the question
+    let question = '';
+    for (let i = 0; i < this.store.currentQuestion.parsed.length; i++) {
+      question = question + this.store.currentQuestion.parsed[i].value;
+    }
+
+    const fileName = entityName + '__' + question;
+
     this.downloadUrl =
       this.itemService.getDownloadUrl(
           this.store.dataQuery,
           'csv',
-          this.store.currentQuestion.originalHeaders
+          this.store.currentQuestion.originalHeaders,
+          fileName
       );
     this.downloadUrlXlsx =
       this.itemService.getDownloadUrl(
           this.store.dataQuery,
           'xlsx',
-          this.store.currentQuestion.originalHeaders
+          this.store.currentQuestion.originalHeaders,
+          fileName
       );
     this.isSearching = true;
   }
