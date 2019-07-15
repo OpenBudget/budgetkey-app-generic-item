@@ -3,31 +3,39 @@
   .row-container {
     padding: 0px 140px;
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 768px) {
       padding: 0 15px;
     }
   }
 
   .title-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 45px;
     // background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 25%, #F3EFFA 25%, #F3EFFA 100%);
     .title-row > span {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
       background-color: #F3EFFA;
     }
 
     .title-row {
-      margin-top: 45px;
-      height: 50px;	
+      // margin-top: 45px;
+      // height: 50px;
+      height: 100%;
       border-top: 1px solid #EAF9DE;
       border-bottom: 1px solid #EAF9DE;
-      display: flex;
-      flex-flow: row;
-      align-items: center;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: stretch;
 
-      @media only screen and (max-width: 600px) {
+      @media only screen and (max-width: 768px) {
         height: auto;
         flex-flow: column;
         align-items: flex-start;
         margin: 0 -15px;
+        flex-wrap: wrap;
       }
 
       .invert {
@@ -35,53 +43,55 @@
       }
 
       .pretitle-wrapper {
-        flex: 0 0 auto;
-        flex-flow: row;
         display: flex;
+        flex: 1 1 5%;
+        flex-flow: row;
+        display: inline-flex;
         align-items: center;
-        justify-content: flex-start;
-        height: 100%;
-        padding-left: 30px;
-        padding-right: 140px;
+        justify-content: center;
+        padding:0 78px 0 8px;
 
-        @media only screen and (max-width: 600px) {
+
+        @media only screen and (max-width: 768px) {
           width: 100%;
           padding: 0 30px;
           padding-top: 14px;
+          justify-content: flex-start
         }
 
         .pretitle {
           display: inline-block;
           padding: 1px 5px;
-          height: 17px;	
-          color: #FEE2DA;	
+          height: 17px;
+          color: #FEE2DA;
           background-color: #FE8255;
-          font-family: "Abraham TRIAL";	
-          font-size: 13px;	
-          font-weight: 400;	
-          line-height: 17px;	
-          border-radius: 4px;	
+          font-family: "Abraham TRIAL";
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 17px;
+          border-radius: 4px;
           white-space: nowrap;
         }
 
       }
 
       .title-wrapper {
-        flex: 2 0 auto;
-        height: 100%;
+        flex: 3 1 auto;
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         flex-flow: row;
         align-items: center;
         justify-content: flex-start;
 
         .title {
-          color: #180A42;	
-          font-family: "Miriam Libre";	
-          font-size: 28px;	
-          font-weight: bold;          
+          color: #180A42;
+          font-family: "Miriam Libre";
+          font-size: 28px;
+          font-weight: bold;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 768px) {
           width: 100%;
           padding: 9px 30px;
 
@@ -89,33 +99,36 @@
             font-size: 18px;
           }
         }
-  
+
       }
 
       .org-id {
 
-        flex: 1 0 auto;
+        flex: 1 1 10%;
         padding: 0 25px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
 
         small {
-          color: #180A42;	
-          font-family: "Abraham TRIAL";	
+          color: #180A42;
+          font-family: "Abraham TRIAL";
           font-size: 12px;
         }
         div {
-          color: #444;	
-          font-family: "Miriam Libre";	
-          font-size: 16px;	
+          color: #444;
+          font-family: "Miriam Libre";
+          font-size: 16px;
           font-weight: bold;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 768px) {
           display: flex;
           flex-flow: row;
 
           small, div {
-            color: #4A4A4A;	
-            font-family: "Abraham TRIAL";	
+            color: #4A4A4A;
+            font-family: "Abraham TRIAL";
             font-size: 14px;
             font-weight: normal;
             padding: 5px;
@@ -126,38 +139,40 @@
       .amount {
         margin-right: auto;
         display: flex;
+        flex-flow: row;
         align-items: center;
-        flex: 0 0 auto;
-        padding-left: 140px;
+        flex: 4 1 18%;
+        justify-content: center;
 
         small {
           display: inline-block;
           margin-left: 10px;
           text-align: left;
-          color: #180A42;	
-          font-family: "Abraham TRIAL";	
+          color: #180A42;
+          font-family: "Abraham TRIAL";
           font-size: 12px;
           line-height: 15px;
+          padding-left: 10px;
         }
 
-        .figure {        
-          color: #444;	
-          font-family: "Miriam Libre";	
-          font-size: 22px;	
+        .figure {
+          color: #444;
+          font-family: "Miriam Libre";
+          font-size: 22px;
           font-weight: bold;
           line-height: 29px;
           white-space: nowrap;
         }
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 768px) {
           display: flex;
           flex-flow: row;
           padding: 0 25px;
           margin: 0;
 
           small, .figure {
-            color: #4A4A4A;	
-            font-family: "Abraham TRIAL";	
+            color: #4A4A4A;
+            font-family: "Abraham TRIAL";
             font-size: 14px;
             font-weight: normal;
             padding: 5px;
@@ -167,7 +182,7 @@
 
       }
 
-    }  
+    }
 
     &.company {
 
@@ -175,7 +190,7 @@
         & > span {
           background-color: #D9EEFE;
         }
-  
+
         .pretitle {
           color: #E8F5FF;
           background-color: #3E4E59;
@@ -183,15 +198,15 @@
       }
     }
 
-  }   
+  }
 
   .text-container {
 
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05);
     margin-top: 15px;
 
-    color: #4A4A4A;	
-    font-family: "Abraham TRIAL";	
+    color: #4A4A4A;
+    font-family: "Abraham TRIAL";
     font-size: 20px;
 
     display: flex;
@@ -208,7 +223,7 @@
       flex-flow: column;
 
       .tip {
-        border: 4px dashed rgba(0,0,0,0.25);	
+        border: 4px dashed rgba(0,0,0,0.25);
         border-radius: 10px;
         background-color: #F0F6FA;
         padding: 20px;
@@ -237,7 +252,7 @@
       padding: 0px 5px;
       border: 1px solid rgba(66,81,54, 0.25);
       border-radius: 6px;
-      color: #425136;	
+      color: #425136;
       font-size: 14px;
     }
 
@@ -253,7 +268,7 @@
       .tips {
         .tip {
           max-width: 100vw;
-        }  
+        }
       }
 
       .tag {
