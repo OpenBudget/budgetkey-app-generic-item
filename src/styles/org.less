@@ -16,9 +16,8 @@
     .title-row > span {
       display: flex;
       flex-wrap: nowrap;
-      background-color: #F3EFFA;
       flex-direction: row;
-
+      background-color: #F3EFFA;
     }
 
     .title-row {
@@ -44,12 +43,11 @@
       .pretitle-wrapper {
         display: flex;
         flex: 1 1 5%;
-        flex-direction:row;
         flex-flow: row;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding-left: 10px;
+        padding:0 78px 0 8px;
 
 
         @media only screen and (max-width: 768px) {
@@ -81,7 +79,7 @@
       .title-wrapper {
         flex: 3 1 auto;
         display: flex;
-        flex-direction: row;
+        flex-wrap: wrap;
         flex-flow: row;
         align-items: center;
         justify-content: flex-start;
@@ -112,7 +110,9 @@
 
         flex: 1 1 10%;
         padding: 0 25px;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
 
         small {
           color: #180A42;
@@ -145,8 +145,8 @@
         display: flex;
         flex-flow: row;
         align-items: center;
-        flex: 2 1 30%;
-       padding: 0 25px;
+        flex: 4 1 18%;
+        justify-content: center;
 
         small {
           display: inline-block;
