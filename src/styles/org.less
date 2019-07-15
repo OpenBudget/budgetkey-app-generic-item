@@ -47,8 +47,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding:0 78px 0 8px;
-
+        padding:0 140px 0 8px;
+        @media only screen and (max-width: 1000px) {
+          padding:0 78px 0 17px;
+        }
 
         @media only screen and (max-width: 768px) {
           width: 100%;
@@ -146,7 +148,9 @@
         flex-flow: row;
         align-items: center;
         flex: 4 1 18%;
-        justify-content: center;
+        /* ie 11 fallback */
+        justify-content: space-around;
+        justify-content: space-evenly;
 
         small {
           display: inline-block;
