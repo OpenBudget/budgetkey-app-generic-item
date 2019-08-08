@@ -37,3 +37,10 @@
 {% endif %}.
 <br/>
 {% endif %}
+
+{% if year > charts[0].subcharts[0].chart[0].x[0] %}
+תקציב זה פעיל בין השנים:
+{{ charts[0].subcharts[0].chart[0].x[0] }} - {{ year }}.
+{% else %}
+תקציב זה היה פעיל בשנת: {{ year }} בלבד.
+{% endif %}
