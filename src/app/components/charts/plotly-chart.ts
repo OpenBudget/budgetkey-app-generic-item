@@ -16,10 +16,6 @@ export class PlotlyChartComponent implements OnInit {
   @Input() public data: any;
   @Input() public layout: any;
 
-  // Describe the range of years the budget item was active.
-  firstYear: number;
-  lastYear: number;
-
   @ViewChild('plot') plot: ElementRef;
 
   constructor(private location: Location) {
