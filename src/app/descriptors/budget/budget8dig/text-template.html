@@ -38,9 +38,14 @@
 <br/>
 {% endif %}
 
-{% if year > charts[0].subcharts[0].chart[0].x[0] %}
+<!-- Sort the history years by key, get first year from output dict pairs-->
+{% set years_sorted = history | dictsort %}
+{% set first_year = years_sorted[0][0] %}
+
+<!-- Output year range line the budget was active, or a single year line-->
+{% if year > first_year %}
 תקציב זה פעיל בין השנים:
-{{ charts[0].subcharts[0].chart[0].x[0] }} - {{ year }}.
+{{ first_year }} - {{ year }}.
 {% else %}
 תקציב זה היה פעיל בשנת: {{ year }} בלבד.
 {% endif %}
