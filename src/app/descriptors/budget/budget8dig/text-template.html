@@ -38,14 +38,18 @@
 <br/>
 {% endif %}
 
-<!-- Sort the history years by key, get first year from output dict pairs-->
-{% set years_sorted = history | dictsort %}
-{% set first_year = years_sorted[0][0] %}
+{% if history | length > 0 %}
 
-<!-- Output year range line the budget was active, or a single year line-->
-{% if year > first_year %}
-תקציב זה פעיל בין השנים:
-{{ first_year }} - {{ year }}.
-{% else %}
-תקציב זה היה פעיל בשנת: {{ year }} בלבד.
+  <!-- Sort the history years by key, get first year from output dict pairs-->
+  {% set years_sorted = history | dictsort %}
+  {% set first_year = years_sorted[0][0] %}
+
+  <!-- Output year range line the budget was active, or a single year line-->
+  {% if year > first_year %}
+  תקציב זה פעיל בין השנים:
+  {{ first_year }} - {{ year }}.
+  {% else %}
+  תקציב זה היה פעיל בשנת: {{ year }} בלבד.
+  {% endif %}
 {% endif %}
+
