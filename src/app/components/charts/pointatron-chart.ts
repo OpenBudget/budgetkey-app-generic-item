@@ -9,9 +9,11 @@ import { hierarchy, pack } from 'd3-hierarchy';
   <div *ngFor="let root of roots" class="pointatron">
     <div class='svg-container'>
       <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 200" [attr.width]="200 / root.scale" [attr.height]="200 / root.scale" version="1.1" *ngIf='root.children'>
-        <circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="root.radius"
-                [style.fill]="root.color" *ngFor="let c of root.children"/>
+          viewBox="0 0 200 200" [attr.width]="200 / root.scale" [attr.height]="200 / root.scale" version="1.1">
+        <ng-container  *ngIf='root.children'>
+          <circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="root.radius"
+                  [style.fill]="root.color" *ngFor="let c of root.children"/>
+        </ng-container>
       </svg>
     </div>
     <div class="title">
@@ -97,6 +99,7 @@ export class PointatronChartComponent implements OnInit {
         title: v.title,
         amount: v.amount,
         color: v.color,
+        scale: 1,
       };
       if (amount > 0) {
         const nodes: any = [];
@@ -109,7 +112,7 @@ export class PointatronChartComponent implements OnInit {
         const root__ = hierarchy(root_);
         root__.sum((d: any) => d.value).sort((a: any, b: any) => b.value - a.value);
         const layout = pack().size([200, 200]);
-        layout(root);
+        layout(root__);
         const radius = root__.children[root__.children.length - 1]['r'];
         root__.sort((a: any, b: any) => b.i - a.i);
         layout(root__);
