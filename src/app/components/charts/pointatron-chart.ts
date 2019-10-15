@@ -9,7 +9,7 @@ import { hierarchy, pack } from 'd3-hierarchy';
   <div *ngFor="let root of roots" class="pointatron">
     <div class='svg-container'>
       <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 200" [attr.width]="200 / root.scale" [attr.height]="200 / root.scale" version="1.1">
+          viewBox="0 0 200 200" [attr.width]="200 / root.scale" [attr.height]="200 / root.scale" version="1.1" *ngIf='root.children'>
         <circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="root.radius"
                 [style.fill]="root.color" *ngFor="let c of root.children"/>
       </svg>
@@ -93,29 +93,34 @@ export class PointatronChartComponent implements OnInit {
       if (amount > this.MAX_AMOUNT) {
         amount = this.MAX_AMOUNT;
       }
-      const nodes: any = [];
-      for (let i = 0 ; i < amount ; i ++) {
-        nodes.push({value: 0.75 + 0.5 * Math.random(), i: i});
-      }
-      const root_ = {
-        children: nodes
+      let root = {
+        title: v.title,
+        amount: v.amount,
+        color: v.color,
       };
-      const root = hierarchy(root_);
-      root.sum((d: any) => d.value).sort((a: any, b: any) => b.value - a.value);
-      const layout = pack().size([200, 200]);
-      layout(root);
-      const radius = root.children[root.children.length - 1]['r'];
-      root.sort((a: any, b: any) => b.i - a.i);
-      layout(root);
-      let scale = 1;
-      if (radius > this.MAX_RADIUS) {
-        scale = radius / this.MAX_RADIUS;
+      if (amount > 0) {
+        const nodes: any = [];
+        for (let i = 0 ; i < amount ; i ++) {
+          nodes.push({value: 0.75 + 0.5 * Math.random(), i: i});
+        }
+        const root_ = {
+          children: nodes
+        };
+        const root__ = hierarchy(root_);
+        root__.sum((d: any) => d.value).sort((a: any, b: any) => b.value - a.value);
+        const layout = pack().size([200, 200]);
+        layout(root);
+        const radius = root__.children[root__.children.length - 1]['r'];
+        root__.sort((a: any, b: any) => b.i - a.i);
+        layout(root__);
+        let scale = 1;
+        if (radius > this.MAX_RADIUS) {
+          scale = radius / this.MAX_RADIUS;
+        }
+        root = Object.assign(root, root__);
+        root['radius'] = radius;
+        root['scale'] = scale;
       }
-      root['radius'] = radius;
-      root['scale'] = scale;
-      root['color'] = v.color;
-      root['title'] = v.title;
-      root['amount'] = v.amount;
       this.roots.push(root);
     }
   }
