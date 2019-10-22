@@ -12,15 +12,20 @@ import { StoreService } from '../../../services';
 })
 export class ProcureItemComponent {
 
-    isTender: boolean;
-    isContract: boolean;
-    isCallForBids: boolean;
-    isSupportCriteria: boolean;
+    isTender = false;
+    isContract = false;
+    isCallForBids = false;
+    isSupportCriteria = false;
 
     constructor(private store: StoreService) {
-        this.isTender = !!store.item['tender_id'];
-        this.isContract = !!store.item['order_id'];
-        this.isCallForBids = store.item['tender_type'] === 'call_for_bids';
-        this.isSupportCriteria = store.item['tender_type'] === 'support_criteria';
+        if (!!store.item['order_id']) {
+            this.isContract = true;
+        } else if (store.item['tender_type'] === 'call_for_bids') {
+            this.isCallForBids = true;
+        } else if (store.item['tender_type'] === 'support_criteria') {
+            this.isSupportCriteria = true;
+        } else {
+            this.isTender = true;
+        }
     }
 }
