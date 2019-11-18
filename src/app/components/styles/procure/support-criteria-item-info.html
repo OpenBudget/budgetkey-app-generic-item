@@ -10,6 +10,7 @@
     <div class='marquee'>
         <span class='status-alert' *ngIf='alertText()' [innerHtml]="tooltip(alertText())"></span>
         <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
+        <span class='break'></span>
         <span class='status-timestamp' *ngIf='firstUpdateDate()'>
             פרסום ראשון: {{ firstUpdateDate() }}
         </span>
