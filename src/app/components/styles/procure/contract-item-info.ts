@@ -8,6 +8,10 @@ import { ProcureItemInfoComponent } from './procure-item-info';
 export class ContractItemInfoComponent extends ProcureItemInfoComponent {
 
   private _paymentsTable: Array<any> = null;
+  currentPaymentRowIndex = null;
+  currentPaymentRow = null;
+  nextPaymentRow = null;
+  prevPaymentRow = null;
 
   toText() {
     if (this.item['entity_name']) {
@@ -87,7 +91,16 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
         break;
       }
       this._paymentsTable = r;
+      this.updatePaymentRows(0);
     }
     return this._paymentsTable;
+  }
+
+  updatePaymentRows(index) {
+    this.currentPaymentRowIndex = index;
+    this.currentPaymentRow = this._paymentsTable[index];
+    this.prevPaymentRow = this._paymentsTable[index + 1];
+    this.nextPaymentRow = this._paymentsTable[index - 1];
+    console.log(this.currentPaymentRow);
   }
 }

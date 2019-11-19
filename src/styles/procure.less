@@ -353,7 +353,73 @@
                             font-weight: 500;
                         }
                     }
-                }    
+                }
+
+                .payments-mobile {
+                    display: none;
+                    table {
+                        width: 80%;
+                        tr {
+                            th, td {
+                                padding: 15px;
+                                color: #512c0a;
+                            }
+                            th:first-child {
+                                opacity: 0.36;
+                                font-size: 16px;
+                                font-weight: normal;
+                                color: #512c0a;
+                            }
+                            td:last-child {
+                                text-align: center;
+                            }
+                            th:last-child {
+                                min-width: 50%;
+                                & >div {
+                                    width: 100%;
+                                    display: flex;
+                                    flex-flow: row;
+                                    justify-content: space-evenly;
+                                    align-items: center;
+                                    .prevnext {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        background-color: rgba(0, 0, 0, 0.05);
+                                        width: 34px;
+                                        height: 34px;
+                                        border-radius: 20px;
+                                        cursor: pointer;
+                                        &.disabled {
+                                            color: rgba(0, 0, 0, 0.11);
+                                            cursor: inherit;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .points {
+                        display: flex;
+                        flex-flow: row-reverse;
+                        justify-content: center;
+                        align-items: center;
+
+                        .point {
+                            display: block;
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 3px;
+                            border: none;
+                            background-color: rgba(0, 0, 0, 0.11);
+                            margin: 0 9px;
+
+                            &.active {
+                                background-color: #512c0a;
+                            }
+                        }
+                    }
+                }
             }
         
             .tips {
@@ -553,6 +619,12 @@
                             }
                         }
                     }
+                    .payments {
+                        display: none;
+                    }
+                    .payments-mobile {
+                        display: block;
+                    }
                 }
 
                 .tips {
@@ -585,6 +657,10 @@
                     }
                 }
 
+            }
+
+            .payments-graph {
+                display: none;
             }
         }
     }

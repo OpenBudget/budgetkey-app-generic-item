@@ -102,7 +102,46 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
 
+            <div class='payments-mobile' *ngIf='currentPaymentRow'>
+                <label>דיווחים רבעוניים על תשלומים שבוצעו</label>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>חודשים/שנים</th>
+                            <th>
+                                <div>
+                                    <span class='prevnext' [class.disabled]='!prevPaymentRow' (click)='prevPaymentRow && updatePaymentRows(currentPaymentRowIndex+1)'>
+                                        <i class='glyphicon glyphicon-chevron-right'></i>
+                                    </span>
+                                    <span class='year'>{{currentPaymentRow.year}}</span>
+                                    <span class='prevnext' [class.disabled]='!nextPaymentRow' (click)='nextPaymentRow && updatePaymentRows(currentPaymentRowIndex-1)'>
+                                        <i class='glyphicon glyphicon-chevron-left'></i>
+                                    </span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let period of ["ינואר - מרץ", "אפריל - יוני", "יולי - ספטמבר", "אוקטובר - דצמבר"]; let i = index'>
+                            <td>{{period}}</td>
+                            <td>
+                                <ng-container *ngIf='currentPaymentRow[i]'>
+                                    <span *ngIf='currentPaymentRow[i].diff != 0'
+                                        [innerHtml]="number(currentPaymentRow[i].diff) + '₪'">
+                                    </span>
+                                    <span *ngIf='currentPaymentRow[i].diff == 0'>
+                                        &#8212;
+                                    </span>
+                                </ng-container>                            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='points'>
+                    <div class='point' *ngFor='let row of paymentsTable(); let i=index;' [class.active]='i == currentPaymentRowIndex'></div>
+                </div>
             </div>
         </div>
     </div>
