@@ -182,7 +182,7 @@
                 <label>הזוכים במכרז</label>
                 <table>
                     <tbody>
-                        <tr *ngFor='let awardee of item.awardees'>
+                        <tr *ngFor='let awardee of sliced_awardees()'>
                             <td>
                                 <a *ngIf='awardee.entity_id'
                                     [href]='entityLink(awardee)'>
@@ -207,6 +207,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <ng-container *ngIf='item.awardees && item.awardees.length > 3'>
+                    <label *ngIf='awardees_expanded' (click)='awardees_expanded = false'><i class='glyphicon glyphicon-chevron-down'></i>&nbsp;מזעור זוכים</label>
+                    <label *ngIf='!awardees_expanded' (click)='awardees_expanded = true'><i class='glyphicon glyphicon-chevron-up'></i>&nbsp;הצגת {{item.awardees.length - 3}} זוכים נוספים</label>
+                </ng-container>
             </div>
 
             <div class='timeline' *ngIf='item.timeline'>

@@ -226,6 +226,43 @@
                 display: flex;
                 flex-flow: column;
                 flex: 5;
+
+                .description {
+                    &.readmore {
+                        max-height: 400px;
+                        overflow-y: hidden;
+                        position: relative;
+
+                        .readmore-overlay {
+                            position: absolute;
+                            width: 100%;
+                            display: flex;
+                            flex-flow: column;
+                            align-items: center;
+                            justify-content: center;
+                            bottom: 0;
+                            padding-top: 100px;
+                            padding-bottom: 10px;
+                            background: rgb(255,251,242);
+                            background: linear-gradient(180deg, rgba(255,251,242,0) 0%, rgba(255,251,242,1) 100%);
+
+                            .readmore-button {
+                                font-family: "Abraham TRIAL";	
+                                font-size: 16px;
+                                font-weight: normal;
+                                font-style: normal;
+                                line-height: 1.5;
+                                color: #512c0a;
+                                border-radius: 5px;
+                                border: solid 1px #512c0a;
+                                padding: 3px 10px;
+                                background: rgb(255,251,242);
+                                cursor: pointer;
+                            }
+                        }
+
+                    }
+                }
         
                 .timeline {
                     table {
@@ -430,6 +467,12 @@
 
     @media only screen and (max-width: 600px) {
         .procure-container {
+            font-size: 16px;
+
+            label {
+                font-size: 16px;
+            }
+            
             .marquee {
                 flex-wrap: wrap;
                 .break {
@@ -484,6 +527,11 @@
                     .awardees-mobile {
                         display: flex;
                         flex-flow: column;
+                        label:last-child {
+                            color: #512c0a;
+                            cursor: pointer;
+                            text-decoration: underline;
+                        }
                     }
                     .timeline {
                         table {

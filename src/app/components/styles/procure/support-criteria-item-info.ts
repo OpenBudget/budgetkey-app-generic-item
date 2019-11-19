@@ -9,6 +9,7 @@ import * as moment from 'moment';
 })
 export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
 
+  description_expanded = false;
 
   publisher() {
     return this.item['publisher'];

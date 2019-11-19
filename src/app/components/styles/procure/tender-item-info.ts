@@ -12,6 +12,8 @@ const tooltips = require('./tooltips.json');
 })
 export class TenderItemInfoComponent extends ProcureItemInfoComponent {
 
+  awardees_expanded = false;
+
   publisher() {
     return this.item['publisher'];
   }
@@ -63,6 +65,14 @@ export class TenderItemInfoComponent extends ProcureItemInfoComponent {
 
   actionables_aux() {
     return this.item['actionable_tips'];
+  }
+
+  sliced_awardees() {
+    const awardees = this.item['awardees'];
+    if (awardees && awardees.length > 3 && !this.awardees_expanded) {
+      return awardees.slice(0, 3);
+    }
+    return awardees;
   }
 
   open_document(attachment: any) {

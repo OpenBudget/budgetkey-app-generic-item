@@ -18,12 +18,12 @@ export class ProcureItemComponent {
     isSupportCriteria = false;
 
     constructor(private store: StoreService) {
-        if (!!store.item['order_id']) {
-            this.isContract = true;
-        } else if (store.item['tender_type'] === 'call_for_bids') {
+        if (store.item['tender_type'] === 'call_for_bids') {
             this.isCallForBids = true;
         } else if (store.item['tender_type'] === 'support_criteria') {
             this.isSupportCriteria = true;
+        } else if (!!store.item['order_id']) {
+            this.isContract = true;
         } else {
             this.isTender = true;
         }

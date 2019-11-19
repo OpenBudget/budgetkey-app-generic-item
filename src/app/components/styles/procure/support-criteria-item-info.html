@@ -35,7 +35,14 @@
     </div>
     <div class='hero'>
         <div class='details'>   
-            <span class='label-text' [innerHtml]='description()'></span>
+            <div class='description' [class.readmore]='item.description.length > 1000 && !description_expanded'>
+                <span class='label-text' [innerHtml]='item.description' *ngIf='item.description'></span>
+                <div class='readmore-overlay' *ngIf='!description_expanded' (click)='description_expanded=true'>
+                    <div class='readmore-button'>
+                        קראו עוד
+                    </div>
+                </div>
+            </div>
 
             <ng-container *ngIf='item.partners'>
                 <label>שותפים:&nbsp;</label>
