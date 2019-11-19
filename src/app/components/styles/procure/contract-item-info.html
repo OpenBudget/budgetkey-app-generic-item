@@ -140,7 +140,11 @@
                     </tbody>
                 </table>
                 <div class='points'>
-                    <div class='point' *ngFor='let row of paymentsTable(); let i=index;' [class.active]='i == currentPaymentRowIndex'></div>
+                    <div class='point'
+                         *ngFor='let row of paymentsTable(); let i=index;'
+                         [class.active]='i == currentPaymentRowIndex'
+                         (click)='updatePaymentRows(i)'
+                    ></div>
                 </div>
             </div>
         </div>
