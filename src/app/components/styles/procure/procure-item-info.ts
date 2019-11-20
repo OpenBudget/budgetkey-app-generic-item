@@ -64,7 +64,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   tooltip(content: string) {
     if (!content) {
-      return content;
+      return '';
     }
     for (let i = 0 ; i < tooltips.length ; i++ ) {
       const k = tooltips[i][0];
@@ -89,15 +89,14 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   actionables() {
     const a: any[] = this.actionables_aux();
-    if (this.closingSoon()) {
+    if (a && this.closingSoon()) {
       return a.slice(1);
     }
     return a;
   }
 
   closingSoon() {
-    const a: any[] = this.actionables_aux();
-    return a && a.length > 0 && moment().diff(moment(this.item['claim_date'])) < 0;
+    return moment().diff(moment(this.item['claim_date'])) < 0;
   }
 
   closingSoonTitle() {
@@ -114,7 +113,11 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
 
   closingSoonAction() {
     const a: any[] = this.actionables_aux();
-    return a[0];
+    if (a && a[0]) {
+      return a[0];
+    } else {
+      return [];
+    }
   }
 
 }
