@@ -96,7 +96,7 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
   }
 
   closingSoon() {
-    return moment().diff(moment(this.item['claim_date'])) < 0;
+    return this.item['claim_date'] && moment().diff(moment(this.item['claim_date'])) < 0;
   }
 
   closingSoonTitle() {

@@ -21,7 +21,7 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   claim_date() {
-    return moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm');
+    return this.item['claim_date'] ? moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm') : 'לא ידוע';
   }
 
   alertText() {
