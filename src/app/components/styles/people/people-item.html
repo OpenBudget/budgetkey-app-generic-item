@@ -18,7 +18,9 @@
           <timeline-part [size]='25'
                          [padding]='0'
                          [major]='false'
-                         [last]='i === (item.details.length - 1)'> </timeline-part>
+                         [first]='i === 0'>
+                         [last]='i === (item.details.length - 1)'>
+          </timeline-part>
         </td>
         <td [class]="'date'">{{ format_date(event.when) }}</td>
         <td>

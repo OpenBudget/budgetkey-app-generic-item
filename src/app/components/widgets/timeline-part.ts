@@ -1,17 +1,22 @@
 import {Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'timeline-part',
     template: `
-<div class='timeline-part'
-     [style.height]="size + 'px'"
-     [style.width]="size + 'px'">
-    <svg [attr.height]="(size + padding) + 'px'"
+<div class='timeline-part'>
+    <div *ngIf='!first' 
+        class='connector'
+        [style.height]='sanitizer.bypassSecurityTrustStyle("calc(50% - " + size/2 + "px)")'
+        [style.top]='0'>
+    </div>
+    <div *ngIf='!last'
+        class='connector'
+        [style.height]='sanitizer.bypassSecurityTrustStyle("calc(50% + " + (padding - size/2) + "px)")'
+        [style.top]='sanitizer.bypassSecurityTrustStyle("calc(50% + " + size/2 + "px)")'>
+    </div>
+    <svg [attr.height]="size + 'px'"
          [attr.width]="size + 'px'">
-        <path *ngIf='!last'
-              class='connector'
-              [attr.d]='path()'>
-        </path>
         <circle [attr.cx]='size/2'
                 [attr.cy]='size/2'
                 [attr.r]='radius'
@@ -30,22 +35,32 @@ import {Component, Input, OnInit } from '@angular/core';
 </div>`,
     styles: [
     `
+:host {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
 .timeline-part {
     position: relative;
     overflow: visible;
-    top: -1px;
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
 }
 svg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
 }
 circle {
     stroke-width: 2;
 }
-path.connector {
-    stroke: rgba(81,44,10,0.5);
-    stroke-width: 2;
+div.connector {
+    position: absolute;
+    top: 50%;
+    width: 0px;
+    border: 1px solid rgba(81,44,10,0.5);
 }
 path.arc {
     stroke-width: 0;
@@ -57,15 +72,20 @@ export class TimelinePartComponent implements OnInit {
     @Input() size: number;
     @Input() padding: number;
     @Input() major: boolean;
+    @Input() first: boolean;
     @Input() last: boolean;
     @Input() percent: number;
 
     radius: number;
     fill: string;
+    bg: string;
     stroke: string;
     strokeWidth: number;
 
+    constructor(public sanitizer: DomSanitizer) {}
+
     ngOnInit() {
+        this.bg = '#FFFBF2';
         if (this.major) {
             this.radius = (this.size - 2) / 2;
             this.fill = '#FFFBF2';

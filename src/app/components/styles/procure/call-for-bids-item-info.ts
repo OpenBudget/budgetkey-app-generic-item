@@ -20,6 +20,10 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['reason'] || 'קול קורא';
   }
 
+  start_date() {
+    return this.item['claim_date'] ? moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm') : 'לא ידוע';
+  }
+  
   claim_date() {
     return this.item['claim_date'] ? moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm') : 'לא ידוע';
   }

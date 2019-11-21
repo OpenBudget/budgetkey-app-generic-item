@@ -12,7 +12,7 @@
         <span class='status-text decision' *ngIf='item.decision' [innerHtml]="tooltip(item.decision)"></span>
         <span class='break'></span>
         <span class='status-timestamp' *ngIf='firstUpdateDate()'>
-            פרסום ראשון: {{ firstUpdateDate() }}
+            פרסום באתר: {{ firstUpdateDate() }}
         </span>
     </div>
     <div class='header'>
@@ -56,6 +56,9 @@
             <label>פרטי הפרסום:&nbsp;</label>
             <span class='label-text' *ngIf='item.target_audience'><b>פתוח ל:</b>&nbsp;
                 {{ item.target_audience }}
+            </span>
+            <span class='label-text'><b>מועד פרסום:</b>&nbsp;
+                {{ start_date() }}
             </span>
             <span class='label-text'><b>מועד סגירה:</b>&nbsp;
                 {{ claim_date() }}

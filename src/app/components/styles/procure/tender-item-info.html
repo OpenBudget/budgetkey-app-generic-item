@@ -52,6 +52,7 @@
                             [percent]='100 * totalPaid() / totalAmount()'
                             [padding]='0' 
                             [major]='true'
+                            [first]='true'
                             [last]='true'>
                 </timeline-part>
                 <span>
@@ -221,6 +222,7 @@
                             <td><timeline-part [size]='25' 
                                             [padding]='22' 
                                             [major]='event.major'
+                                            [first]='i == 0'
                                             [last]='i == (item.timeline.length - 1)'
                                             [percent]='event.percent'
                                             >

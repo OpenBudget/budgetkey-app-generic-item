@@ -270,12 +270,13 @@
         
                 .timeline {
                     table {
+                        height: 1px;
                         margin-top: 26px;
                         width: 100%;
                         border-collapse:separate; 
                         border-spacing:0 22px;
                         tr {
-                            height: 25px;
+                            height: 100%;
                         }
                         tr.major {
                             background-color: rgba(81,44,10, 0.05);
@@ -284,14 +285,18 @@
                             width: 75%;
                         }
                         th, td {
+                            height: 100%;
                             padding-left: 15px;
+                            timeline-part {
+                                height: 100%;
+                            }
                         }
                         td:nth-child(2) {
                             white-space: nowrap;
                         }
                         td:nth-child(4) {
-                            text-overflow: ellipsis;
-                            overflow: hidden;
+                            // text-overflow: ellipsis;
+                            // overflow: hidden;
                             // white-space: nowrap;
                         }
                     }
@@ -534,6 +539,10 @@
     .bk-tooltip {
         width: 150px;
         margin-left: -145px !important;
+
+        .mobile-tooltip-instruction {
+            display: none;
+        }
     }
 
     @media only screen and (max-width: 600px) {
@@ -552,6 +561,13 @@
             &:after {
                 display: none;
             }
+
+            .mobile-tooltip-instruction {
+                display: block;
+                margin-top: 10px;
+                text-align: left;
+                font-size: 80%;
+            }    
         }
 
         .alert {
@@ -629,23 +645,27 @@
                         }
                     }
                     .timeline {
+                        
                         table {
                             td {
+                                height: 100%;
                                 width: 0;
                                 font-size: 14px;
                                 white-space: nowrap;
                             }
                             td:last-child {
-                                position: relative;
-                                &>a, &>span {
-                                    position: absolute;
-                                    top: 3px;
-                                    width: 100%;
-                                    white-space: nowrap;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                }
+                                white-space: normal;                            
                             }
+                            //     position: relative;
+                            //     &>a, &>span {
+                            //         position: absolute;
+                            //         top: 3px;
+                            //         width: 100%;
+                            //         white-space: nowrap;
+                            //         overflow: hidden;
+                            //         text-overflow: ellipsis;
+                            //     }
+                            // }
                         }
                     }
                     .payments {
