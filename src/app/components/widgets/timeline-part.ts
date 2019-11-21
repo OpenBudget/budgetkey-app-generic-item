@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     selector: 'timeline-part',
     template: `
 <div class='timeline-part'>
-    <div *ngIf='!first' 
+    <div *ngIf='!first'
         class='connector'
         [style.height]='sanitizer.bypassSecurityTrustStyle("calc(50% - " + size/2 + "px)")'
         [style.top]='0'>
