@@ -54,7 +54,7 @@ export class CallForBidsItemInfoComponent extends ProcureItemInfoComponent {
   }
 
   actionables_aux() {
-    const rets = this.item['actionable_tips'] || [];
+    const rets = (this.item['actionable_tips'] || []).slice();
     if (this.item['contact']) {
       const ret = [];
       ret.push('<b>איך פונים?</b><br/>' + this.item['contact']);
