@@ -70,6 +70,11 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
       }
       rets.push(ret);
     }
+    rets.push([
+      'עוד על קבלת תמיכות ממשרדי הממשלה',
+      'http://haogdan.migzar3.org.il/%D7%AA%D7%9E%D7%99%D7%9B%D7%94_%D7%9E%D7%9E%D7%A9%D7%A8%D7%93_%D7%9E%D7%9E%D7%A9%D7%9C%D7%AA%D7%99',
+      'באתר האוגדן',
+    ]);
     return rets;
   }
 
