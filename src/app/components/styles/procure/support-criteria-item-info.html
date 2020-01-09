@@ -68,7 +68,7 @@
                 <label>תקנות תקציביות רלוונטיות:&nbsp;</label>
                 <ul>
                     <li *ngFor='let b of item.resolved_budget_codes'>
-                        <a class='label-text' [href]='"/i/" + b.doc_id'>{{ b.code.slice(2) }} - {{ b.title }}</span>
+                        <a class='label-text' [href]='"/i/" + b.doc_id'>{{ b.code.slice(2) }} - {{ b.title }}</a>
                     </li>
                 </ul>
             </ng-container>
