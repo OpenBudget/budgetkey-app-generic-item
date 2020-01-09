@@ -90,6 +90,33 @@
     ]
   },
   {
+    "text": "מבחני תמיכה הקשורים לסעיף תקציבי זה",
+    "query": [
+    "WITH a AS",
+      "(SELECT 'support_criteria/' || tender_type || '/' || publication_id || '/' || tender_id AS doc_id,",
+              "start_date,",
+              "publisher,",
+              "page_title,",
+              "jsonb_array_elements(resolved_budget_codes)->>'code' AS code",
+       "FROM support_criteria",
+       "WHERE length(resolved_budget_codes::text) > 4)",
+    "SELECT doc_id,",
+           "start_date as \"מועד פרסום\",",
+           "publisher as \"משרד\",",
+           "page_title as \"שם מבחן התמיכה\"",
+    "FROM a",
+    "WHERE code like ':code%%'",
+    "ORDER BY start_date DESC"
+    ],
+    "parameters": {},
+    "defaults": {},
+    "headers": [
+      "משרד",
+      "שם מבחן התמיכה:item_link(doc_id)",
+      "מועד פרסום"
+    ]
+  },
+  {
     "text": " סיכום ההתקשרויות מתקציב זה לפי ספק מ <period>",
     "query": [
               "SELECT sum(volume) AS \"סה״כ היקף\",",
