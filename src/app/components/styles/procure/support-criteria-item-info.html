@@ -64,6 +64,15 @@
                 {{ claim_date() }}
             </span>
 
+            <ng-container *ngIf='item.resolved_budget_codes'>
+                <label>תקנות תקציביות רלוונטיות:&nbsp;</label>
+                <ul>
+                    <li *ngFor='let b of item.resolved_budget_codes'>
+                        <a class='label-text' [href]='"/i/" + b.doc_id'>{{ b.code.slice(2) }} - {{ b.title }}</span>
+                    </li>
+                </ul>
+            </ng-container>
+
             <ng-container *ngIf='item.required_documents'>
                 <label>מסמכים דרושים:&nbsp;</label>
                 <ul>
