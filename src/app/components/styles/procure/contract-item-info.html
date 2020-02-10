@@ -51,9 +51,13 @@
     </div>
     <div class='hero'>
         <div class='details'>
-            <div *ngIf='item.budget_code'>
+            <div *ngIf='item.resolved_budget_codes'>
                 <label>סעיף תקציבי:&nbsp;</label><br/>
-                <span class='label-text'>{{ item.budget_title }} ({{ item.budget_code }})</span>
+                <span class='label-text'>
+                    <a [href]='"/i/" + item.resolved_budget_codes[0].doc_id'>
+                    {{ item.resolved_budget_codes[0].title }} ({{ item.resolved_budget_codes[0].code.slice(2) }})
+                    </a>
+                </span>
             </div>
             <div *ngIf='item.purchase_method'>
                 <label>אופן רכישה:&nbsp;</label><br/>
