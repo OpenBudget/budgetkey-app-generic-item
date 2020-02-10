@@ -23,10 +23,6 @@ export class SupportCriteriaItemInfoComponent extends ProcureItemInfoComponent {
     return this.item['start_date'] ? moment(this.item['start_date']).format('DD/MM/YYYY') : 'לא ידוע';
   }
 
-  claim_date() {
-    return this.item['claim_date'] ? moment(this.item['claim_date']).format('DD/MM/YYYY hh:mm') : 'לא ידוע';
-  }
-
   alertText() {
     const lastWeek = moment().subtract(7, 'days');
     if (this.item['start_date'] &&
