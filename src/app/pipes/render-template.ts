@@ -5,6 +5,18 @@ import * as _ from 'lodash';
 const env = new nunjucks.Environment();
 const safe: any = env.getFilter('safe');
 
+export function format_integer(x: number) {
+  if (x) {
+    const fracDigits = 0;
+    return '<span class="number">' +
+              x.toLocaleString('en-US', {style: 'decimal',
+                                         maximumFractionDigits: fracDigits}) +
+           '</span>';
+  } else {
+    return '-';
+  }
+}
+
 export function format_number(x: number) {
   if (x) {
     let fracDigits = 0;
@@ -29,6 +41,10 @@ export function format_absolute_percent(x: number) {
     return '?%';
   }
 }
+
+env.addFilter('format_integer', function(x: number) {
+  return safe(format_number(x));
+});
 
 env.addFilter('format_number', function(x: number) {
   return safe(format_number(x));

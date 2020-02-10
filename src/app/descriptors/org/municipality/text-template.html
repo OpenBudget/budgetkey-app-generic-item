@@ -10,13 +10,13 @@
 </div>
 <div>
     <label class="field-label">
-        כמות תושבים:
+        מספר תושבים:
     </label>
-    {{ details['total_population_end_2015_1000s']*1000 }}
+    {{ (details['total_population_end_2015_1000s']*1000) | format_integer }}
   <label class="field-label">
      אחוז יהודים:
   </label>
-  {{ details['jews_pct_2015']}}
+  %{{ details['jews_pct_2015'] | format_number}}
 </div>
 <div>
   <label class="field-label">
@@ -28,11 +28,11 @@
   <label class="field-label">
     סה"כ הכנסות:
   </label>
-  {{ details['number_incl_income_of_municipality_1000s_nis_2015']*1000}}
+  {{ (details['number_incl_income_of_municipality_1000s_nis_2015']*1000) | format_number}}₪
   <label class="field-label">
-     מתוכם מהתקציב:
+     מתוכם מתקציב המדינה:
   </label>
-  {{ details['total_income_of_municipality_budget_regular_1000s_nis_2015']*1000}}
+  {{ (details['total_income_of_municipality_budget_regular_1000s_nis_2015']*1000) | format_number }}₪
 </div>
 <label class="up-to-date">
   *הנתונים נכונים לשנת 2015
