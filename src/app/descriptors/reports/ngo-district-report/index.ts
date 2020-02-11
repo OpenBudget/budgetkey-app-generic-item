@@ -5,7 +5,7 @@ const activeTooltip = 'ארגון מוגדר כפעיל אם הוצג עבורו
 export default new ReportDescriptor({
   pathPrefix: 'reports/ngo-district-report/',
   titlePrefix: `ארגונים
-  <span class='bk-tooltip-anchor'>הפעילים<span class='bk-tooltip'>` + activeTooltip + `</span></span>
+  הפעילים<span class='bk-tooltip-anchor'><img src='assets/img/help.svg'><span class='bk-tooltip'>${activeTooltip}</span></span>
    במחוז`,
   titleSuffix: '',
   titleField: 'district',

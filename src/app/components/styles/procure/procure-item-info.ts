@@ -75,14 +75,9 @@ export class ProcureItemInfoComponent extends BaseItemInfoComponent {
     }
     for (let i = 0 ; i < tooltips.length ; i++ ) {
       const k = 'TTT' + i + 'PPP';
-      const repl = `
-        <span class='bk-tooltip-anchor'>
-          ${tooltips[i][0]}
-          <span class='bk-tooltip'>
-            ${tooltips[i][1]}
-            <span class='mobile-tooltip-instruction'>לסגירה לחצו מחוץ לתיבה זו</span>
-          </span>
-        </span>`;
+      const repl = `${tooltips[i][0]}<span class='bk-tooltip-anchor'><img src='assets/img/help.svg'><span class='bk-tooltip'>` +
+            tooltips[i][1] +
+            `<span class='mobile-tooltip-instruction'>לסגירה לחצו מחוץ לתיבה זו</span></span></span>`;
       if (content.indexOf(k) >= 0) {
         content = content.replace(k, repl);
       }
