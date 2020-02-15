@@ -37,7 +37,7 @@
     }
   },
   {
-    "text": " פירוט כלל התמיכות שאושרו לארגון ב <period>",
+    "text": " פירוט כלל התמיכות לארגון שאושרו ב <period>",
     "query": ["SELECT year_requested AS \"שנה\",",
               "supporting_ministry AS \"משרד\",",
               "request_type AS \"סוג תמיכה\",",
