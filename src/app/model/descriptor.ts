@@ -80,9 +80,9 @@ export class DescriptorBase {
           const item_id = row[param];
           if (item_id) {
             if (themeId) {
-              return '<a href="/i/' + row[param] + '?theme=' + themeId + '">' + x + '</a>';
+              return '<a href="/i/' + row[param] + '?theme=' + themeId + '">' + (x || '---') + '</a>';
             } else {
-              return '<a href="/i/' + row[param] + '">' + x + '</a>';
+              return '<a href="/i/' + row[param] + '">' + (x || '---') + '</a>';
             }
           } else {
             return x;
