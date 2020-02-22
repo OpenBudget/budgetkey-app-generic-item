@@ -7,31 +7,31 @@
   </div>
   <div class="col-xs-8">
     <div class="budgetkey-item-questions" [ngClass]="{expanded: isDropDownVisible}">
-      <div class="current" *ngIf="currentQuestion">
-        <ng-container *ngFor="let fragment of currentQuestion.parsed">
-          <span *ngIf="fragment.isText" (click)="toggleDropDown()"
-                [innerHtml]="fragment.value"></span>
-          <item-questions-parameter *ngIf="fragment.isParameter"
-            [value]="currentParameters[fragment.name]"
-            [values]="fragment.values | keys"
-            (change)="setParameter(fragment.name, $event)"
-          ></item-questions-parameter>
-        </ng-container>
-        &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
-        <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
-          <i class="glyphicon" 
-            [ngClass]="{'glyphicon-chevron-down': !isDropDownVisible, 'glyphicon-chevron-up': isDropDownVisible}">
-          </i>
-        </div>
-      </div>
-      <div *ngIf="isDropDownVisible" class="questions">
+      <div class="questions">
         <div *ngFor="let question of preparedQuestions" class="item-questions-fragments-wrapper"
           [ngClass]="{active: question==currentQuestion}"
           (click)="selectQuestion(question)">
-          <ng-container *ngFor="let fragment of question.parsed">
-            <span *ngIf="fragment.isText"
-                  [innerHtml]="fragment.value"></span>
-            <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
+          <ng-container *ngIf='question==currentQuestion'>
+            <ng-container *ngFor="let fragment of currentQuestion.parsed">
+              <span *ngIf="fragment.isText" (click)="toggleDropDown()"
+                    [innerHtml]="fragment.value"></span>
+              <item-questions-parameter *ngIf="fragment.isParameter"
+                [value]="currentParameters[fragment.name]"
+                [values]="fragment.values | keys"
+                (change)="setParameter(fragment.name, $event)"
+              ></item-questions-parameter>
+            </ng-container>
+            &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
+            <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+            </div>
+          </ng-container>
+          <ng-container *ngIf='question!=currentQuestion'>
+            <ng-container *ngFor="let fragment of question.parsed">
+              <span *ngIf="fragment.isText"
+                    [innerHtml]="fragment.value"></span>
+              <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
+            </ng-container>
           </ng-container>
         </div>
       </div>

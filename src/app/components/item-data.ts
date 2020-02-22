@@ -82,34 +82,13 @@ export class ItemQuestionsComponent implements OnDestroy {
   downloadUrl: string;
   downloadUrlXlsx: string;
 
-  isDropDownVisible = false;
-
   @ViewChild('btnToggleItemQuest') btnToggleItemQuest: ElementRef;
-
-  @HostListener('document:click', ['$event'])
-  onClickOutOfDropdown(event: any) {
-    if (this.btnToggleItemQuest) {
-      const isClickedOnDropdown = this.btnToggleItemQuest.nativeElement.contains(event.target);
-
-      if (this.isDropDownVisible && !isClickedOnDropdown) {
-        this.isDropDownVisible = false;
-      }
-    }
-  }
-
-  toggleDropDown() {
-    this.isDropDownVisible = !this.isDropDownVisible;
-    if (this.isDropDownVisible) {
-      this.events.dropdownActivate.emit(this);
-    }
-  }
 
   selectQuestion(question: PreparedQuestion) {
     if (this.store.currentQuestion !== question) {
       this.store.currentQuestion = question;
       this.store.currentParameters = question.defaults;
     }
-    this.isDropDownVisible = false;
   }
 
   private onStoreChanged() {
@@ -118,7 +97,6 @@ export class ItemQuestionsComponent implements OnDestroy {
       this.redashUrl = '';
       this.downloadUrl = '';
       this.downloadUrlXlsx = '';
-      this.isDropDownVisible = false;
       return;
     }
 
@@ -181,13 +159,6 @@ export class ItemQuestionsComponent implements OnDestroy {
       this.store.itemChange.subscribe(() => this.onStoreChanged()),
       this.store.preparedQuestionsChange.subscribe(() => this.onStoreChanged()),
       this.store.dataQueryChange.subscribe(() => this.onStoreChanged()),
-      this.events.dropdownActivate.subscribe(
-        (dropdown: any) => {
-          if (dropdown !== this) {
-            this.isDropDownVisible = false;
-          }
-        }
-      ),
       this.store.onDataReady.subscribe(() => {this.isSearching = false; })
     ];
     this.onStoreChanged();
