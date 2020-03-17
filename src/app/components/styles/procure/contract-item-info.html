@@ -51,7 +51,7 @@
     </div>
     <div class='hero'>
         <div class='details'>
-            <div *ngIf='item.resolved_budget_codes'>
+            <div *ngIf='item.resolved_budget_codes && item.resolved_budget_codes.length'>
                 <label>סעיף תקציבי:&nbsp;</label><br/>
                 <span class='label-text'>
                     <a [href]='"/i/" + item.resolved_budget_codes[0].doc_id'>
