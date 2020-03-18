@@ -2,9 +2,9 @@
   {
     "text": "פירוט כל הכספים שהארגון קיבל ב <period>",
     "query": ["with a as (",
-    "select year_paid as \"שנה\", budget_code as \"תקנה תקציבית\", budget_code, amount_paid as \"סך כולל\", support_title as \"תיאור\", 'תמיכה' as \"סוג ההוצאה\"",
+    "select year_paid as \"שנה\", budget_code as \"תקנה תקציבית\", budget_code, supporting_ministry as \"משרד\", amount_paid as \"סך כולל\", support_title as \"תיאור\", 'תמיכה' as \"סוג ההוצאה\"",
     "from  supports_by_payment_year where entity_id = ':id' and amount_paid>0 and year_paid :period union",
-    "select min_year as \"שנה\", budget_code as \"תקנה תקציבית\", budget_code, executed as \"סך כולל\", purpose as \"תיאור\", 'רכש' as \"סוג ההוצאה\"",
+    "select min_year as \"שנה\", budget_code as \"תקנה תקציבית\", budget_code, publisher_name as \"משרד\", executed as \"סך כולל\", purpose as \"תיאור\", 'רכש' as \"סוג ההוצאה\"",
     "from contract_spending where entity_id = ':id' and executed > 0 and min_year :period)",
     "select * from a order by \"שנה\" desc, \"סך כולל\" desc"
     ],
@@ -32,6 +32,7 @@
     "headers": [
       "שנה",
       "תקנה תקציבית:budget_code:search_term(budget_code)",
+      "משרד", 
       "סך כולל:number",
       "תיאור",
       "סוג ההוצאה"
