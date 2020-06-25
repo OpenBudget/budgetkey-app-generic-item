@@ -1,4 +1,10 @@
-בשנת {{year}} תקציב {{title}} עומד על {{net_allocated | format_number}}₪.
+בשנת {{year}} תקציב {{title}} עמד על {{net_allocated | format_number}}₪.
+{% if (net_allocated != net_revised) %}
+<br />
+אחרי העברות תקציביות, התקציב עמד על {{net_revised | format_number}}₪
+{% endif %}
+
+
 {% if total_direction_income < 0 %}
 <br />
 יחד עם הכנסות עצמיות של {{ -total_direction_income | format_number}}₪, סך ההוצאות תחת סעיף זה הן
@@ -21,12 +27,8 @@
   </li>{% endif %}
 </ul>
 
-{% if (net_allocated != net_revised) %}
-אחרי העברות תקציביות, התקציב עמד על {{net_allocated | format_number}}₪
-<br />
-{% endif %}
-
 {% if (history[(year-1)].net_executed) %}
+<br />
 הביצוע בשנת {{year-1}} עמד על
 {{history[year-1].net_executed | format_number}}₪
 <br />
