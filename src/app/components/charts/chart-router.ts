@@ -57,9 +57,10 @@ export class ChartRouterComponent implements OnInit {
                 chart.chart = {};
             }
             if (!chart.chart.template) {
-                chart.chart = {};
                 chart.chart.template = this.visualizationTemplates[chart.template_id];
-                chart.chart.item = this.item;
+                if (!chart.chart.item) {
+                    chart.chart.item = this.item;
+                }
             }
         }
     }
