@@ -3,7 +3,7 @@
 <ul>
     {% for i in history %}
     <li>
-        בשנת {{ i.year }} התקציב המוקצה לשירות היה {{ i.allocated_budget | format_number }}.<br>
+        בשנת {{ i.year }} התקציב המוקצה לשירות היה {{ i.allocated_budget | format_number }}₪.<br>
         {% if i.num_beneficiaries %}
             מספר המוטבים בשנה זו היה: {{ i.num_beneficiaries }}
         {% endif %}
