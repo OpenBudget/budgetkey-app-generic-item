@@ -5,6 +5,14 @@
 המשמשת לצורך {{nice_econ_category}}.
 <br/>
 
+{% if covid19_expenses_revised > 0 %}
+<strong>
+תחת תקנה זו הוקצתה הוצאה מיוחדת להתמודדות עם מגיפת הקורונה בסך של 
+{{covid19_expenses_revised | format_number}}.
+</strong>
+<br />
+{% endif %}
+
 {% if (history[(year-1)].net_executed) %}
 הביצוע בשנת {{year-1}} עמד על
 {{history[year-1].net_executed | format_number}}₪

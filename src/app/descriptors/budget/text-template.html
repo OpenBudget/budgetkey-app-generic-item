@@ -12,6 +12,14 @@
 {% endif %}
 <br />
 
+{% if covid19_expenses_revised > 0 %}
+<strong>
+תחת סעיף זה הוקצתה הוצאה מיוחדת להתמודדות עם מגיפת הקורונה בסך של 
+{{covid19_expenses_revised | format_number}}.
+</strong>
+<br />
+{% endif %}
+
 בחלוקה לפי סוגי הוצאה עיקריים:
 <ul>
   {% if total_econ_cls_salaries > 0 %}
