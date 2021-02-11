@@ -2,7 +2,7 @@
 {% if (net_allocated != 0) %}
  עמד על {{net_allocated | format_number}}₪.
 {% endif %}
-{% if (net_allocated == 0) %}
+{% if (!net_allocated) %}
   לא הוקצה.
 {% endif %}
 
