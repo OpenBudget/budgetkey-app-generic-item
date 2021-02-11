@@ -1,4 +1,11 @@
-בשנת {{year}} תקציב {{title}} עמד על {{net_allocated | format_number}}₪.
+בשנת {{year}} תקציב {{title}}
+{% if (net_allocated != 0)}
+ עמד על {{net_allocated | format_number}}₪.
+{% endif %}
+{% if (net_allocated == 0)}
+  לא הוקצה.
+{% endif %}
+
 {% if (net_allocated != net_revised) %}
 <br />
 אחרי העברות תקציביות, התקציב עמד על {{net_revised | format_number}}₪
@@ -15,7 +22,7 @@
 {% if covid19_expenses_revised > 0 %}
 <strong>
 תחת סעיף זה הוקצתה הוצאה מיוחדת להתמודדות עם מגיפת הקורונה בסך של 
-{{covid19_expenses_revised | format_number}}.
+{{covid19_expenses_revised | format_number}}₪.
 </strong>
 <br />
 {% endif %}
