@@ -1,5 +1,5 @@
 בשנת {{year}} תקציב {{title}}
-{% if (net_allocated != 0) %}
+{% if net_allocated %}
  עמד על {{net_allocated | format_number}}₪.
 {% endif %}
 {% if not net_allocated %}
