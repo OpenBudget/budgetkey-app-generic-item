@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { BudgetKeyItemService, StoreService } from 'src/app/services';
 
 import {
     Question, Questions,
@@ -16,8 +17,13 @@ export class QuestionsManager {
   
     preparedQuestionsChange = new BehaviorSubject(null);
     dataQueryChange = new BehaviorSubject(null);
-    onDataReady = new EventEmitter();
+    dataReady = new BehaviorSubject<{headers, data, err?}>({headers: [], data: []});
+
+    loading = false;
+    total: number = 0;
   
+    constructor(private store: StoreService, private itemService: BudgetKeyItemService) {}
+
     set preparedQuestions(value) {
         this._preparedQuestions = value;
         if (value) {
@@ -33,7 +39,7 @@ export class QuestionsManager {
         if (value !== this._currentQuestion) {
             this._currentQuestion = value;
             if (value) {
-              this._currentParameters = value.defaults;
+              this.currentParameters = value.defaults;
             }
         }
     }
@@ -48,19 +54,48 @@ export class QuestionsManager {
     
     set currentParameters(value: object) {
         this._currentParameters = value;
-        this.dataQueryChange.next(null);    
+        
+        this.doQuery();
+        // this.dataQueryChange.next(null);    
     }
     
-    dataQuery(item): string {
+    get dataQuery(): string {
         const parameters = {};
-        const context = item || {};
+        const context = this.store.item || {};
         _.each(this._currentParameters, (value, key) => {
           parameters[key] = this.currentQuestion.parameters[key][value];
         });
         const query = this.formatQuery(this.currentQuestion.query, parameters);
         return this.formatQuery(query, context);
-      }
+    }
     
+    doQuery() {
+        if (!this.currentQuestion) {
+            return;
+          }
+          this.total = 0;
+          this.loading = true;
+          this.dataReady.next({headers: [], data: []});
+          const headersOrder = Array.from(this.currentQuestion.headers);
+          const formatters = this.currentQuestion.formatters;
+          this.itemService.getItemData(this.dataQuery, headersOrder, formatters)
+            .subscribe({
+              next: (data: any) => {
+                if (data && data.query === this.dataQuery) {
+                  this.total = data.total;
+                  this.loading = false;
+                  this.dataReady.next({headers: data.headers, data: data.items});
+                }
+              },
+              error: (err) => {
+                console.log('err', err);
+                this.total = 0;
+                this.loading = false;
+                this.dataReady.next({headers: [], data: [], err});
+              }
+        });
+    }
+
     formatQuery(query: string | string[], parameters: object): string {
         // TODO: Escape parameters (needs to be discussed)
         if (query instanceof Array) {
@@ -140,11 +175,11 @@ export class QuestionsManager {
 
         result.parsed = parsed;
         result.defaults = _.chain(parsed)
-        .filter(item => item.isParameter)
-        .map((item: any) => [item.name, item.value])
-        .fromPairs()
-        .extend(question.defaults)
-        .value();
+            .filter(item => item.isParameter)
+            .map((item: any) => [item.name, item.value])
+            .fromPairs()
+            .extend(question.defaults)
+            .value();
         return result;
     });
     }

@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { QuestionsManager } from '../components/questions/questions-manager';
 
 import { Item, PreparedQuestion, PreparedQuestions, DescriptorBase } from '../model';
+import { BudgetKeyItemService } from './budgetkey-item';
 
 class Store {
   item = new Item();
@@ -19,7 +20,7 @@ export class StoreService {
 
   itemChange = new EventEmitter<Item>();
   descriptorChange = new EventEmitter<DescriptorBase>();
-  questions = new QuestionsManager();
+  questions: QuestionsManager;
 
   private static processItem(item: Item): Item {
     return <Item>_.mapKeys(item, (value: any, key: string, obj: any) => {
@@ -28,7 +29,8 @@ export class StoreService {
   }
 
 
-  constructor() {
+  constructor(private itemService: BudgetKeyItemService) {
+    this.questions = new QuestionsManager(this, itemService);
   }
 
   get item(): Item {
@@ -51,26 +53,6 @@ export class StoreService {
       this.store.item
     );
     this.descriptorChange.emit(this.store.descriptor);
-  }
-
-  get preparedQuestions(): PreparedQuestions {
-    return this.questions.preparedQuestions;
-  }
-
-  get currentQuestion(): PreparedQuestion {
-    return this.questions.currentQuestion;
-  }
-
-  get currentParameters(): object {
-    return this.questions.currentParameters;
-  }
-
-  set currentParameters(value: object) {
-    this.questions.currentParameters = value;
-  }
-
-  get dataQuery(): string {
-    return this.questions.dataQuery(this.item);
   }
 
 }

@@ -9,13 +9,13 @@ import { QuestionsManager } from "../questions-manager";
 })
 export class ItemQuestionsComponent implements OnInit, OnDestroy {
 
+  @Input() label: string = 'הורדת<br/>נתונים';
+
   @Input() manager: QuestionsManager;
 
   private eventSubscriptions: any[] = [];
   isSearching: boolean;
 
-  preparedQuestions: PreparedQuestions;
-  currentQuestion: PreparedQuestion;
   redashUrl: string;
   downloadUrl: string;
   downloadUrlXlsx: string;
@@ -32,7 +32,7 @@ export class ItemQuestionsComponent implements OnInit, OnDestroy {
       this.store.itemChange.subscribe(() => this.onStoreChanged()),
       this.manager.preparedQuestionsChange.subscribe(() => this.onStoreChanged()),
       this.manager.dataQueryChange.subscribe(() => this.onStoreChanged()),
-      this.manager.onDataReady.subscribe(() => {this.isSearching = false; })
+      this.manager.dataReady.subscribe(() => {this.isSearching = false; })
     ];
     this.onStoreChanged();
   }
@@ -46,16 +46,13 @@ export class ItemQuestionsComponent implements OnInit, OnDestroy {
 
   private onStoreChanged() {
     if (!this.manager.currentQuestion) {
-      this.currentQuestion = undefined;
       this.redashUrl = '';
       this.downloadUrl = '';
       this.downloadUrlXlsx = '';
       return;
     }
 
-    this.preparedQuestions = this.store.preparedQuestions;
-    this.currentQuestion = this.store.currentQuestion;
-    this.redashUrl = this.itemService.getRedashUrl(this.store.dataQuery);
+    this.redashUrl = this.itemService.getRedashUrl(this.manager.dataQuery);
 
     // Create a filename - item name + current question, so for example:
     // wingate institute__annual summary of communications
@@ -80,16 +77,16 @@ export class ItemQuestionsComponent implements OnInit, OnDestroy {
 
     this.downloadUrl =
       this.itemService.getDownloadUrl(
-          this.store.dataQuery,
+          this.manager.dataQuery,
           'csv',
-          this.store.currentQuestion.originalHeaders,
+          this.manager.currentQuestion.originalHeaders,
           fileName
       );
     this.downloadUrlXlsx =
       this.itemService.getDownloadUrl(
-          this.store.dataQuery,
+          this.manager.dataQuery,
           'xlsx',
-          this.store.currentQuestion.originalHeaders,
+          this.manager.currentQuestion.originalHeaders,
           fileName
       );
     this.isSearching = true;

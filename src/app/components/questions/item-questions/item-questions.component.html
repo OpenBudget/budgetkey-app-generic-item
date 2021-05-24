@@ -1,21 +1,20 @@
 <div class="row budgetkey-item-questions-wrapper">
   <div class="col-xs-1">
-    <div class='download-data'>
-      הורדת<br/>
-      נתונים
+    <div class='download-data' [innerHtml]='label'>
     </div>
   </div>
   <div class="col-xs-8">
-    <div class="budgetkey-item-questions" [ngClass]="{expanded: isDropDownVisible}">
+    <div class="budgetkey-item-questions" [class.expanded]="isDropDownVisible">
       <div class="questions">
-        <div *ngFor="let question of preparedQuestions" class="item-questions-fragments-wrapper"
-          [ngClass]="{active: question==currentQuestion}"
+        <div *ngFor="let question of manager.preparedQuestions" class="item-questions-fragments-wrapper"
+          [class.active]="question===manager.currentQuestion"
           (click)="selectQuestion(question)">
-          <ng-container *ngIf='question==currentQuestion'>
-            <ng-container *ngFor="let fragment of currentQuestion.parsed">
+          <ng-container *ngIf='question===manager.currentQuestion'>
+            <ng-container *ngFor="let fragment of manager.currentQuestion.parsed">
               <span *ngIf="fragment.isText" (click)="toggleDropDown()"
                     [innerHtml]="fragment.value"></span>
-              <budgetkey-item-questions-parameter *ngIf="fragment.isParameter"
+              <budgetkey-item-questions-parameter 
+                *ngIf="fragment.isParameter"
                 [value]="currentParameters[fragment.name]"
                 [values]="fragment.values | keys"
                 (change)="setParameter(fragment.name, $event)"
@@ -26,7 +25,7 @@
               <i class="glyphicon glyphicon-chevron-left"></i>
             </div>
           </ng-container>
-          <ng-container *ngIf='question!=currentQuestion'>
+          <ng-container *ngIf='question!==manager.currentQuestion'>
             <ng-container *ngFor="let fragment of question.parsed">
               <span *ngIf="fragment.isText"
                     [innerHtml]="fragment.value"></span>

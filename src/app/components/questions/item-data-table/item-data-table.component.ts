@@ -20,7 +20,6 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
   data: any[] = [];
   total = 0;
   err: any;
-  loading = false;
 
   constructor(
     private store: StoreService, private itemService: BudgetKeyItemService,
@@ -30,9 +29,9 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.eventSubscriptions = [
-      this.manager.dataQueryChange.subscribe(() => this.onStoreChanged()),
+      this.manager.dataQueryChange.subscribe(() => this.onDataLoading()),
+      this.manager.dataReady.subscribe((ev) => this.onDataReady(ev)),
     ];
-    this.onStoreChanged();
   }
 
   ngOnDestroy() {
@@ -44,41 +43,15 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
     this.tableState = this.tableState === 'visible' ? 'hidden' : 'visible';
   }
 
-  private onStoreChanged() {
-    if (!this.manager.currentQuestion) {
-      return;
-    }
-    const query = this.manager.dataQuery(this.store.item);
-    if (query === this.query) {
-      return;
-    }
-    this.query = query;
+  private onDataLoading() {
     this.headers.length = 0;
     this.data.length = 0;
-    this.total = 0;
-    this.loading = true;
-    const headersOrder = Array.from(this.manager.currentQuestion.headers);
-    const formatters = this.manager.currentQuestion.formatters;
-    this.itemService.getItemData(this.query, headersOrder, formatters)
-      .subscribe({
-        next: (data: any) => {
-          if (data && data.query === this.query) {
-            this.headers = data.headers;
-            this.data = data.items;
-            this.total = data.total;
-            this.loading = false;
-            this.manager.onDataReady.emit();
-          }
-        },
-        error: (err) => {
-          console.log('err', err);
-          this.headers.length = 0;
-          this.data.length = 0;
-          this.total = 0;
-          this.err = err;
-          this.loading = false;
-        }
-      });
   }
 
+  private onDataReady(ev) {
+    const {headers, data, err} = ev;
+    this.headers = headers;
+    this.data = data;
+    this.err = err;
+  }
 }
