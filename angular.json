@@ -7,10 +7,11 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "budgetkey",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "less"
+          "styleext": "less",
+          "spec": false
         }
       },
       "architect": {

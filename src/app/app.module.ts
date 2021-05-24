@@ -18,6 +18,8 @@ import { BudgetKeyItemService, QuestionsService, StoreService, EventsService } f
 
 import {
   BeadcrumbsComponent,
+
+  QuestionsPanelComponent,
   ItemQuestionsComponent,
   ItemQuestionParameterComponent,
   ItemDataTableComponent,
@@ -58,9 +60,10 @@ import {
   TimelinePartComponent,
 
   PeopleItemComponent,
+
+  SafeHtmlPipe
 } from './components';
 
-import { SafeHtmlPipe } from './components/charts';
 
 declare let BUDGETKEY_NG2_COMPONENTS_THEME: any;
 declare const BUDGETKEY_THEME_ID: any;
@@ -138,7 +141,9 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 
     TimelinePartComponent,
 
-    PeopleItemComponent
+    PeopleItemComponent,
+
+    QuestionsPanelComponent,
 ],
   entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent],
   providers: providers,
