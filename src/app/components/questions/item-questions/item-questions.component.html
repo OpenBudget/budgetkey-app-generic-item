@@ -1,42 +1,40 @@
-<div class="row budgetkey-item-questions-wrapper">
-  <div class="col-xs-1">
+<div class="budgetkey-item-questions-wrapper">
+  <div class="">
     <div class='download-data' [innerHtml]='label'>
     </div>
   </div>
-  <div class="col-xs-8">
-    <div class="budgetkey-item-questions" [class.expanded]="isDropDownVisible">
-      <div class="questions">
-        <div *ngFor="let question of manager.preparedQuestions" class="item-questions-fragments-wrapper"
-          [class.active]="question===manager.currentQuestion"
-          (click)="selectQuestion(question)">
-          <ng-container *ngIf='question===manager.currentQuestion'>
-            <ng-container *ngFor="let fragment of manager.currentQuestion.parsed">
-              <span *ngIf="fragment.isText" (click)="toggleDropDown()"
-                    [innerHtml]="fragment.value"></span>
-              <budgetkey-item-questions-parameter 
-                *ngIf="fragment.isParameter"
-                [value]="currentParameters[fragment.name]"
-                [values]="fragment.values | keys"
-                (change)="setParameter(fragment.name, $event)"
-              ></budgetkey-item-questions-parameter>
-            </ng-container>
-            &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
-            <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
-              <i class="glyphicon glyphicon-chevron-left"></i>
-            </div>
+  <div class="budgetkey-item-questions" [class.expanded]="isDropDownVisible">
+    <div class="questions">
+      <div *ngFor="let question of manager.preparedQuestions" class="item-questions-fragments-wrapper"
+        [class.active]="question===manager.currentQuestion"
+        (click)="selectQuestion(question)">
+        <ng-container *ngIf='question===manager.currentQuestion'>
+          <ng-container *ngFor="let fragment of manager.currentQuestion.parsed">
+            <span *ngIf="fragment.isText" (click)="toggleDropDown()"
+                  [innerHtml]="fragment.value"></span>
+            <budgetkey-item-questions-parameter 
+              *ngIf="fragment.isParameter"
+              [value]="currentParameters[fragment.name]"
+              [values]="fragment.values | keys"
+              (change)="setParameter(fragment.name, $event)"
+            ></budgetkey-item-questions-parameter>
           </ng-container>
-          <ng-container *ngIf='question!==manager.currentQuestion'>
-            <ng-container *ngFor="let fragment of question.parsed">
-              <span *ngIf="fragment.isText"
-                    [innerHtml]="fragment.value"></span>
-              <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
-            </ng-container>
+          &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
+          <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+          </div>
+        </ng-container>
+        <ng-container *ngIf='question!==manager.currentQuestion'>
+          <ng-container *ngFor="let fragment of question.parsed">
+            <span *ngIf="fragment.isText"
+                  [innerHtml]="fragment.value"></span>
+            <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
           </ng-container>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
-  <div class="col-xs-2 item-questions-actions">
+  <div class="item-questions-actions">
     <a [href]="downloadUrl" title="הורדת טבלה" target="_blank">
       <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1"
         viewBox="0 0 24 32" width="20" height="25">
@@ -104,5 +102,4 @@
       </svg>
     </a>
   </div>
-  <div class="col-xs-1"></div>
 </div>

@@ -1,26 +1,29 @@
-<div class="row budgetkey-item-data-wrapper">
-  <div class="col-xs-1"></div>
-  <div class="col-xs-10">
-    <div class="no-data-available" *ngIf="manager.loading">בטעינה</div>
-    <div class="no-data-available" *ngIf="(data.length == 0) && !manager.loading && (!err)">לא התקבלו נתונים שעונים על שאלה זו</div>
-    <div class="no-data-available" *ngIf="(!!err)">שגיאה באחזור מידע מהשרת</div>
-    <table *ngIf="(data.length > 0) && (headers.length > 0)">
-      <thead>
-      <tr>
-        <td *ngFor="let header of headers">{{ header }}</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of data">
-        <td *ngFor="let value of row" [innerHTML]="value"></td>
-      </tr>
-      </tbody>
-    </table>
-    <div *ngIf='!manager.loading'>
-      מציג {{data.length}} תוצאות מתוך {{ total }}.
-      <strong *ngIf="total > data.length">ניתן להוריד את כל הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
-      <strong *ngIf="total <= data.length">ניתן להוריד את הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
-    </div>
+<div class="budgetkey-item-data-wrapper">
+  <div class="no-data-available" *ngIf="manager.loading">בטעינה</div>
+  <div class="no-data-available" *ngIf="(data.length == 0) && !manager.loading && (!err)">לא התקבלו נתונים שעונים על שאלה זו</div>
+  <div class="no-data-available" *ngIf="(!!err)">שגיאה באחזור מידע מהשרת</div>
+  <div class='graph-selector' *ngIf='graphAvailable'>
+    <span [class.active]='graphSelected' (click)='graphSelected=true'>הצגה כגרף</span>
+    <span [class.active]='!graphSelected' (click)='graphSelected=false'>הצגה כטבלה</span>
   </div>
-  <div class="col-xs-1"></div>
+  <ng-container *ngIf='graphSelected && graphLayout && graphData'>
+    <budgetkey-chart-plotly [data]='graphData' [layout]='graphLayout'></budgetkey-chart-plotly>
+  </ng-container>
+  <table *ngIf='(data.length > 0) && (headers.length > 0) && !graphSelected'>
+    <thead>
+    <tr>
+      <td *ngFor="let header of headers">{{ header }}</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngFor="let value of row" [innerHTML]="value"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf='!manager.loading'>
+    מציג {{data.length}} תוצאות מתוך {{ total }}.
+    <strong *ngIf="total > data.length">ניתן להוריד את כל הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
+    <strong *ngIf="total <= data.length">ניתן להוריד את הנתונים לקובץ באמצעות הכפתור למעלה.</strong>
+  </div>
 </div>

@@ -56,12 +56,15 @@ import {
   ProcureItemComponent,
   CallForBidsItemInfoComponent,
   SupportCriteriaItemInfoComponent,
+  
+  GovUnitItemComponent,
+  GovUnitItemInfoComponent,
 
   TimelinePartComponent,
 
   PeopleItemComponent,
 
-  SafeHtmlPipe
+  SafeHtmlPipe,
 } from './components';
 
 
@@ -101,6 +104,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     KeysPipe,
     AppComponent,
     BeadcrumbsComponent,
+    QuestionsPanelComponent,
     ItemQuestionsComponent,
     ItemQuestionParameterComponent,
     ItemDataTableComponent,
@@ -138,14 +142,15 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ProcureItemComponent,
     CallForBidsItemInfoComponent,
     SupportCriteriaItemInfoComponent,
+    
+    GovUnitItemComponent,
+    GovUnitItemInfoComponent,
 
     TimelinePartComponent,
 
     PeopleItemComponent,
-
-    QuestionsPanelComponent,
 ],
-  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent],
+  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent],
   providers: providers,
   bootstrap: [
     AppComponent

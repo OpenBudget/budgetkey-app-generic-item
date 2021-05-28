@@ -5,7 +5,8 @@ import { QuestionsManager } from "../questions-manager";
 
 @Component({
   selector: 'budgetkey-item-questions',
-  templateUrl: './item-questions.component.html'
+  templateUrl: './item-questions.component.html',
+  styleUrls: ['./item-questions.component.less'],
 })
 export class ItemQuestionsComponent implements OnInit, OnDestroy {
 

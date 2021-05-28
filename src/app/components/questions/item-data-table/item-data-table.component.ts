@@ -6,6 +6,7 @@ import { QuestionsManager } from '../questions-manager';
 @Component({
   selector: 'budgetkey-item-data-table',
   templateUrl: './item-data-table.component.html',
+  styleUrls: ['./item-data-table.component.less'],
 })
 export class ItemDataTableComponent implements OnInit, OnDestroy {
 
@@ -20,6 +21,10 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
   data: any[] = [];
   total = 0;
   err: any;
+  graphAvailable = true;
+  graphSelected = true;
+  graphLayout: any;
+  graphData: any;
 
   constructor(
     private store: StoreService, private itemService: BudgetKeyItemService,
@@ -49,9 +54,21 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
   }
 
   private onDataReady(ev) {
-    const {headers, data, err} = ev;
+    const {headers, data, err, total, graphData, graphLayout} = ev;
     this.headers = headers;
     this.data = data;
     this.err = err;
+    this.total = total;
+    this.graphData = graphData;
+    this.graphLayout = graphLayout;
+    if (headers.length) {
+      if (!graphLayout) {
+        this.graphAvailable = false;
+        this.graphSelected = false;  
+      } else {
+        this.graphAvailable = true;
+        this.graphSelected = true; 
+      }
+    }
   }
 }

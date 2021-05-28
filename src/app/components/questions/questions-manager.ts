@@ -17,10 +17,9 @@ export class QuestionsManager {
   
     preparedQuestionsChange = new BehaviorSubject(null);
     dataQueryChange = new BehaviorSubject(null);
-    dataReady = new BehaviorSubject<{headers, data, err?}>({headers: [], data: []});
+    dataReady = new BehaviorSubject<{headers, data, err?, total?, graphLayout?, graphData?}>({headers: [], data: []});
 
     loading = false;
-    total: number = 0;
   
     constructor(private store: StoreService, private itemService: BudgetKeyItemService) {}
 
@@ -32,7 +31,7 @@ export class QuestionsManager {
     }
 
     get preparedQuestions() {
-        return this._preparedQuestions;
+        return this._preparedQuestions || [];
     }
 
     set currentQuestion(value: PreparedQuestion) {
@@ -73,23 +72,25 @@ export class QuestionsManager {
         if (!this.currentQuestion) {
             return;
           }
-          this.total = 0;
           this.loading = true;
-          this.dataReady.next({headers: [], data: []});
+          this.dataReady.next({headers: [], data: [], total: 0});
           const headersOrder = Array.from(this.currentQuestion.headers);
           const formatters = this.currentQuestion.formatters;
           this.itemService.getItemData(this.dataQuery, headersOrder, formatters)
             .subscribe({
               next: (data: any) => {
                 if (data && data.query === this.dataQuery) {
-                  this.total = data.total;
-                  this.loading = false;
-                  this.dataReady.next({headers: data.headers, data: data.items});
+                    this.loading = false;
+                    if (data.total && this.currentQuestion.graphFormatter) {
+                        const {graphLayout, graphData} = this.getGraphFormatter(this.currentQuestion.graphFormatter)(data.rows);
+                        this.dataReady.next({headers: data.headers, data: data.items, total: data.total, graphLayout, graphData});
+                    } else {
+                        this.dataReady.next({headers: data.headers, data: data.items, total: data.total});
+                    }
                 }
               },
               error: (err) => {
                 console.log('err', err);
-                this.total = 0;
                 this.loading = false;
                 this.dataReady.next({headers: [], data: [], err});
               }
@@ -184,4 +185,21 @@ export class QuestionsManager {
     });
     }
     
+    getGraphFormatter(formatter: any) {
+        if (formatter.type === 'bars') {
+            return (items) => {
+                console.log('DATA', items);
+                const graphLayout = {barmode: 'stack'};
+                const graphData = formatter.series.map((s) => {
+                    return {
+                        type: 'bar',
+                        name: s.display || s.field,
+                        x: items.map((x) => x[formatter.x_field]),
+                        y: items.map((x) => x[s.field]),
+                    }
+                });
+                return {graphLayout, graphData};
+            }
+        }
+    }
 }
