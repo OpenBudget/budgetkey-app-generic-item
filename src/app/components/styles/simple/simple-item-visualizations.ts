@@ -1,4 +1,4 @@
-  import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Item} from '../../../model/item';
 import {StoreService} from '../../../services/store';
 
@@ -66,7 +66,17 @@ export class SimpleItemVisualizationsComponent implements OnInit {
   private subcharts: any = null;
   private chart_: any = null;
 
+  constructor(private store: StoreService) {
+    store.itemChange.subscribe(() => {
+      this.updateItem();
+    });
+  }
+
   ngOnInit() {
+    this.updateItem();
+  }
+
+  updateItem() {
     this.item = this.store.item;
     this.charts = {};
     this.current = null;
@@ -103,9 +113,6 @@ export class SimpleItemVisualizationsComponent implements OnInit {
 
   public get chart(): any {
     return this.chart_;
-  }
-
-  constructor(private store: StoreService) {
   }
 
   tabsScroll(event: any) {

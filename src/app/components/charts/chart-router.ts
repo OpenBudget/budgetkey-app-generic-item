@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StoreService } from '../../services';
+import { BudgetKeyItemService, StoreService } from '../../services';
 import { Item } from '../../model';
+import { QuestionsManager } from '../questions/questions-manager';
 
 @Component({
   selector: 'budgetkey-chart-router',
@@ -36,6 +37,10 @@ import { Item } from '../../model';
     <budgetkey-chart-spendomat            *ngIf="chart.type == 'spendomat'"
             [data]="chart.chart"
     ></budgetkey-chart-spendomat>
+    <ng-container *ngIf="chart.type == 'questions'">
+        <budgetkey-item-questions [manager]='questionsManager' [label]='chart.label'></budgetkey-item-questions>
+        <budgetkey-item-data-table [manager]='questionsManager'></budgetkey-item-data-table>
+    </ng-container>
 `
 })
 export class ChartRouterComponent implements OnInit {
@@ -44,8 +49,9 @@ export class ChartRouterComponent implements OnInit {
 
     item: Item;
     private visualizationTemplates: Map<string, string>;
+    questionsManager: QuestionsManager;
 
-    constructor(private store: StoreService) {
+    constructor(private store: StoreService, private itemService: BudgetKeyItemService) {
         this.item = this.store.item;
         this.visualizationTemplates = this.store.descriptor.visualizationTemplates;
     }
@@ -62,6 +68,14 @@ export class ChartRouterComponent implements OnInit {
                     chart.chart.item = this.item;
                 }
             }
+        }
+        if (chart.type === 'questions') {
+            this.questionsManager = new QuestionsManager(this.store, this.itemService);
+            this.questionsManager.preparedQuestions = this.questionsManager.parseQuestions(
+                this.chart.questions,
+                this.store.item
+            );
+
         }
     }
 }

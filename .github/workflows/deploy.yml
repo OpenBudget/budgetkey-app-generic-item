@@ -1,0 +1,28 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build projects
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+jobs:
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '10'
+    - name: Build
+      env:
+        TRAVIS_CI_OPERATOR: "1"
+        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}        
+        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+      run: |
+        ./ci.sh install
+        ./ci.sh script
+        ./ci.sh deploy
+        ./ci.sh bump

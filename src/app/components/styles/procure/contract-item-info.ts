@@ -101,6 +101,5 @@ export class ContractItemInfoComponent extends ProcureItemInfoComponent {
     this.currentPaymentRow = this._paymentsTable[index];
     this.prevPaymentRow = this._paymentsTable[index + 1];
     this.nextPaymentRow = this._paymentsTable[index - 1];
-    console.log(this.currentPaymentRow);
   }
 }

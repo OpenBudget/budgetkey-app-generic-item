@@ -122,8 +122,17 @@ export class BudgetKeyItemService {
                 });
                 items.push(newItem);
               });
-              return {query, headers, items, total};
+              return {query, headers, items, total, rows};
             }),
         );
+  }
+
+  getDatarecords(kind) {
+    return this.http.get(`https://data-input.obudget.org/api/datarecords/${kind}`)
+      .pipe(
+        map((result: any) => {
+          return result.result.map(x => x.value);
+        })
+      );
   }
 }

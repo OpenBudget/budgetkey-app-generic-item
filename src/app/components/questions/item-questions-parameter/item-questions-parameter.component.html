@@ -1,0 +1,7 @@
+<div class="item-questions-parameter">
+  <span class="value" (click)="toggleDropdown()">{{ value }}</span>
+  <ul class="values" *ngIf="isDropDownVisible">
+    <li *ngFor="let item of values" (click)="setValue(item)"
+      [ngClass]="{selected: item === value}">{{ item }}</li>
+  </ul>
+</div>

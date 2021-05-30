@@ -1,16 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
-import { QuestionsService } from './questions';
+import { QuestionsManager } from '../components/questions/questions-manager';
 
 import { Item, PreparedQuestion, PreparedQuestions, DescriptorBase } from '../model';
+import { BudgetKeyItemService } from './budgetkey-item';
 
 class Store {
   item = new Item();
   descriptor = new DescriptorBase('', '', []);
-  preparedQuestions: PreparedQuestions | null = null;
-  currentQuestion: PreparedQuestion | null = null;
-  currentParameters: object | null = null;
 }
 
 // Global state storage
@@ -22,9 +20,7 @@ export class StoreService {
 
   itemChange = new EventEmitter<Item>();
   descriptorChange = new EventEmitter<DescriptorBase>();
-  preparedQuestionsChange = new EventEmitter();
-  dataQueryChange = new EventEmitter();
-  onDataReady = new EventEmitter();
+  questions: QuestionsManager;
 
   private static processItem(item: Item): Item {
     return <Item>_.mapKeys(item, (value: any, key: string, obj: any) => {
@@ -32,7 +28,9 @@ export class StoreService {
     });
   }
 
-  constructor(private questionsService: QuestionsService) {
+
+  constructor(private itemService: BudgetKeyItemService) {
+    this.questions = new QuestionsManager(this, itemService);
   }
 
   get item(): Item {
@@ -42,7 +40,6 @@ export class StoreService {
   set item(value: Item) {
     this.store.item = StoreService.processItem(value);
     this.itemChange.emit(this.store.item);
-    this.dataQueryChange.emit();
   }
 
   get descriptor(): DescriptorBase {
@@ -51,51 +48,11 @@ export class StoreService {
 
   set descriptor(value: DescriptorBase) {
     this.store.descriptor = value;
-    this.store.preparedQuestions = null;
-    this.currentQuestion = null;
+    this.questions.preparedQuestions = this.questions.parseQuestions(
+      this.descriptor.questions,
+      this.store.item
+    );
     this.descriptorChange.emit(this.store.descriptor);
-    this.preparedQuestionsChange.emit();
-    this.dataQueryChange.emit();
-  }
-
-  get preparedQuestions(): PreparedQuestions {
-    if (this.store.preparedQuestions === null) {
-      this.store.preparedQuestions = this.questionsService.parseQuestions(
-        this.descriptor.questions,
-        this.store.item
-      );
-    }
-    return this.store.preparedQuestions;
-  }
-
-  get currentQuestion(): PreparedQuestion {
-    return this.store.currentQuestion || _.first(this.preparedQuestions);
-  }
-
-  set currentQuestion(value: PreparedQuestion) {
-    this.store.currentQuestion = value;
-    if (value) {
-      this.store.currentParameters = value.defaults;
-    }
-    this.dataQueryChange.emit();
-  }
-
-  get currentParameters(): object {
-    return this.store.currentParameters || this.currentQuestion.defaults;
-  }
-
-  set currentParameters(value: object) {
-    this.store.currentParameters = value;
-    this.dataQueryChange.emit();
-  }
-
-  get dataQuery(): string {
-    const parameters = {};
-    _.each(this.currentParameters, (value, key) => {
-      parameters[key] = this.currentQuestion.parameters[key][value];
-    });
-    const query = this.questionsService.formatQuery(this.currentQuestion.query, parameters);
-    return this.questionsService.formatQuery(query, this.item);
   }
 
 }

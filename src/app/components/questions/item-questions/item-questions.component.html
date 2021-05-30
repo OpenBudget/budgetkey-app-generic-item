@@ -1,43 +1,40 @@
-<div class="row budgetkey-item-questions-wrapper">
-  <div class="col-xs-1">
-    <div class='download-data'>
-      הורדת<br/>
-      נתונים
+<div class="budgetkey-item-questions-wrapper">
+  <div class="">
+    <div class='download-data' [innerHtml]='label'>
     </div>
   </div>
-  <div class="col-xs-8">
-    <div class="budgetkey-item-questions" [ngClass]="{expanded: isDropDownVisible}">
-      <div class="questions">
-        <div *ngFor="let question of preparedQuestions" class="item-questions-fragments-wrapper"
-          [ngClass]="{active: question==currentQuestion}"
-          (click)="selectQuestion(question)">
-          <ng-container *ngIf='question==currentQuestion'>
-            <ng-container *ngFor="let fragment of currentQuestion.parsed">
-              <span *ngIf="fragment.isText" (click)="toggleDropDown()"
-                    [innerHtml]="fragment.value"></span>
-              <item-questions-parameter *ngIf="fragment.isParameter"
-                [value]="currentParameters[fragment.name]"
-                [values]="fragment.values | keys"
-                (change)="setParameter(fragment.name, $event)"
-              ></item-questions-parameter>
-            </ng-container>
-            &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
-            <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
-              <i class="glyphicon glyphicon-chevron-left"></i>
-            </div>
+  <div class="budgetkey-item-questions" [class.expanded]="isDropDownVisible">
+    <div class="questions">
+      <div *ngFor="let question of manager.preparedQuestions" class="item-questions-fragments-wrapper"
+        [class.active]="question===manager.currentQuestion"
+        (click)="selectQuestion(question)">
+        <ng-container *ngIf='question===manager.currentQuestion'>
+          <ng-container *ngFor="let fragment of manager.currentQuestion.parsed">
+            <span *ngIf="fragment.isText" (click)="toggleDropDown()"
+                  [innerHtml]="fragment.value"></span>
+            <budgetkey-item-questions-parameter 
+              *ngIf="fragment.isParameter"
+              [value]="currentParameters[fragment.name]"
+              [values]="fragment.values | keys"
+              (change)="setParameter(fragment.name, $event)"
+            ></budgetkey-item-questions-parameter>
           </ng-container>
-          <ng-container *ngIf='question!=currentQuestion'>
-            <ng-container *ngFor="let fragment of question.parsed">
-              <span *ngIf="fragment.isText"
-                    [innerHtml]="fragment.value"></span>
-              <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
-            </ng-container>
+          &nbsp;<i *ngIf="isSearching" class="fa fa-circle-o-notch fa-spin"></i>
+          <div #btnToggleItemQuest class="toggle" (click)="toggleDropDown()">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+          </div>
+        </ng-container>
+        <ng-container *ngIf='question!==manager.currentQuestion'>
+          <ng-container *ngFor="let fragment of question.parsed">
+            <span *ngIf="fragment.isText"
+                  [innerHtml]="fragment.value"></span>
+            <span class="item-questions-parameter value" *ngIf="fragment.isParameter">{{ fragment.value }}</span>
           </ng-container>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
-  <div class="col-xs-2 item-questions-actions">
+  <div class="item-questions-actions">
     <a [href]="downloadUrl" title="הורדת טבלה" target="_blank">
       <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1"
         viewBox="0 0 24 32" width="20" height="25">
@@ -104,28 +101,5 @@
         <text y="11" style="stroke:black;font-size:16;stroke-width:2;fill:#000" x="24">XLS</text>
       </svg>
     </a>
-    <!--<a [href]="redashUrl" title="עבור ל- re:dash" target="_blank">-->
-      <!--<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1"-->
-        <!--viewBox="0 0 20 25" height="25" width="20">-->
-        <!--<svg:path class="stroked" d="m 9.9999994,0.82433 c -4.89105,0 -8.8494494,3.9580181-->
-              <!-- -8.8496094,8.8300781 0,4.8116859 3.8626156,8.7258209 8.6699219,8.8222659 l-->
-              <!--0,4.861328 6.9687501,-8.019531 c 0.01722,-0.02054 0.0357,-0.03985 0.05273,-0.06055-->
-              <!--l 0.03906,-0.04492 -0.0078,0.0039 c 1.234945,-1.517991 1.976557,-3.45234 1.976557,-5.5624929-->
-              <!--0,-4.87206 -3.95856,-8.8300781 -8.8496096,-8.8300781 z"/>-->
-        <!--<svg:path class="filled" d="m 4.63322,11.03481 1.30362,0 a 0.572751,0.572751 0 0 1 0.57095,0.57095-->
-              <!--l 0,1.29413 a 0.572751,0.572751 0 0 1 -0.57095,0.57095 l -1.30362,0 A 0.572751,0.572751-->
-              <!--0 0 1 4.06227,12.89989 l 0,-1.29413 a 0.572587,0.572587 0 0 1 0.57095,-0.57095 z m-->
-              <!--3.01647,-2.85475 1.29414,0 a 0.572751,0.572751 0 0 1 0.57095,0.57095 l 0,4.14888 a-->
-              <!--0.572751,0.572751 0 0 1 -0.57095,0.57095 l -1.29414,0 A 0.572751,0.572751 0 0 1-->
-              <!--7.07874,12.89989 l 0,-4.14888 A 0.572587,0.572587 0 0 1 7.64969,8.18006 Z m 3.00699,1.57011-->
-              <!--1.30362,0 a 0.572751,0.572751 0 0 1 0.57095,0.57095 l 0,2.57877 a 0.572751,0.572751 0 0 1-->
-              <!-- -0.57095,0.57095 l -1.30362,0 a 0.572751,0.572751 0 0 1 -0.57095,-0.57095 l 0,-2.57877 a-->
-              <!--0.572587,0.572587 0 0 1 0.57095,-0.57095 z m 3.08309,-3.72067 1.29414,0 a-->
-              <!--0.572751,0.572751 0 0 1 0.57095,0.57095 l 0,6.29944 a 0.572751,0.572751 0 0 1-->
-              <!-- -0.57095,0.57095 l -1.29414,0 a 0.572751,0.572751 0 0 1 -0.57095,-0.57095 l 0,-6.29944-->
-              <!--A 0.572587,0.572587 0 0 1 13.73977,6.0295 Z"/>-->
-      <!--</svg>-->
-    <!--</a>-->
   </div>
-  <div class="col-xs-1"></div>
 </div>

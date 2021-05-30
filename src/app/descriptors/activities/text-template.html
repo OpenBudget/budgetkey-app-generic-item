@@ -1,12 +1,9 @@
-{{ kind_he }} ב{{publisher_name}} (תחת {{ history[0].nice_org_hierarchy }}).<br/>
+{{ kind_he }} ב{{office}} (תחת {{ unit }}/{{ subunit }}).<br/>
 
 <ul>
-    {% for i in history %}
+    {% for i in manualBudget %}
     <li>
-        בשנת {{ i.year }} התקציב המוקצה לשירות היה {{ i.allocated_budget | format_number }}₪.<br>
-        {% if i.num_beneficiaries %}
-            מספר המוטבים בשנה זו היה: {{ i.num_beneficiaries }}
-        {% endif %}
+        בשנת {{ i.year }} התקציב המוקצה לשירות היה {{ i.allocated | format_number }}₪.<br>
     </li>
     {% endfor %}
 </ul>

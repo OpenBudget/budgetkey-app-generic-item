@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
 
 import { ItemDirective } from './item-directive';
-import { SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent } from './styles';
+import { SimpleItemComponent, ReportItemComponent, OrgItemComponent,
+         ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent } from './styles';
 
 @Component({
     selector: 'budgetkey-item-container',
@@ -16,6 +17,7 @@ export class ItemContainerComponent implements OnInit {
         org: OrgItemComponent,
         procure: ProcureItemComponent,
         people: PeopleItemComponent,
+        gov_unit: GovUnitItemComponent,
     };
 
     @Input() style: string;
