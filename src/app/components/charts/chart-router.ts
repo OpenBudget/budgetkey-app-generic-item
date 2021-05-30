@@ -75,7 +75,7 @@ export class ChartRouterComponent implements OnInit {
                 this.chart.questions,
                 this.store.item
             );
-          
+
         }
     }
 }

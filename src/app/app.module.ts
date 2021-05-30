@@ -56,7 +56,7 @@ import {
   ProcureItemComponent,
   CallForBidsItemInfoComponent,
   SupportCriteriaItemInfoComponent,
-  
+
   GovUnitItemComponent,
   GovUnitItemInfoComponent,
 
@@ -142,7 +142,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     ProcureItemComponent,
     CallForBidsItemInfoComponent,
     SupportCriteriaItemInfoComponent,
-    
+
     GovUnitItemComponent,
     GovUnitItemInfoComponent,
 
@@ -150,7 +150,9 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 
     PeopleItemComponent,
 ],
-  entryComponents: [ SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent],
+  entryComponents: [
+    SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent
+  ],
   providers: providers,
   bootstrap: [
     AppComponent
