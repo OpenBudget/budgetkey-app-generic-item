@@ -7,20 +7,20 @@ import {
     Question, Questions,
     PreparedQuestion, PreparedQuestions
   } from '../../model';
-  
+
 
 export class QuestionsManager {
 
     _preparedQuestions: PreparedQuestions | null = null;
     _currentQuestion: PreparedQuestion | null = null;
     _currentParameters: object | null = null;
-  
+
     preparedQuestionsChange = new BehaviorSubject(null);
     dataQueryChange = new BehaviorSubject(null);
     dataReady = new BehaviorSubject<{headers, data, err?, total?, graphLayout?, graphData?}>({headers: [], data: []});
 
     loading = false;
-  
+
     constructor(private store: StoreService, private itemService: BudgetKeyItemService) {}
 
     set preparedQuestions(value) {
@@ -45,19 +45,19 @@ export class QuestionsManager {
 
     get currentQuestion() {
         return this._currentQuestion;
-    } 
+    }
 
     get currentParameters(): object {
         return this._currentParameters;
     }
-    
+
     set currentParameters(value: object) {
         this._currentParameters = value;
-        
+
         this.doQuery();
-        // this.dataQueryChange.next(null);    
+        // this.dataQueryChange.next(null);
     }
-    
+
     get dataQuery(): string {
         const parameters = {};
         const context = this.store.item || {};
@@ -67,7 +67,7 @@ export class QuestionsManager {
         const query = this.formatQuery(this.currentQuestion.query, parameters);
         return this.formatQuery(query, context);
     }
-    
+
     doQuery() {
         if (!this.currentQuestion) {
             return;
@@ -106,7 +106,7 @@ export class QuestionsManager {
             return _.get(parameters, name) ? _.get(parameters, name) : match;
         });
     }
-    
+
     parseQuestions(questions: Questions, parameters: object): PreparedQuestions {
     return _.map(questions, (question: Question) => {
         const result = new PreparedQuestion();
@@ -184,7 +184,7 @@ export class QuestionsManager {
         return result;
     });
     }
-    
+
     getGraphFormatter(formatter: any) {
         if (formatter.type === 'bars') {
             return (items) => {
@@ -196,10 +196,10 @@ export class QuestionsManager {
                         name: s.display || s.field,
                         x: items.map((x) => x[formatter.x_field]),
                         y: items.map((x) => x[s.field]),
-                    }
+                    };
                 });
                 return {graphLayout, graphData};
-            }
+            };
         }
     }
 }

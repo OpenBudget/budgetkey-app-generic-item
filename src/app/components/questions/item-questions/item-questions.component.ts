@@ -1,7 +1,7 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, OnInit } from "@angular/core";
-import { PreparedQuestions, PreparedQuestion } from "../../../model";
-import { BudgetKeyItemService, StoreService, EventsService } from "../../..//services";
-import { QuestionsManager } from "../questions-manager";
+import { Component, OnDestroy, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import { PreparedQuestions, PreparedQuestion } from '../../../model';
+import { BudgetKeyItemService, StoreService, EventsService } from '../../..//services';
+import { QuestionsManager } from '../questions-manager';
 
 @Component({
   selector: 'budgetkey-item-questions',
@@ -10,7 +10,7 @@ import { QuestionsManager } from "../questions-manager";
 })
 export class ItemQuestionsComponent implements OnInit, OnDestroy {
 
-  @Input() label: string = 'הורדת<br/>נתונים';
+  @Input() label = 'הורדת<br/>נתונים';
 
   @Input() manager: QuestionsManager;
 
@@ -96,7 +96,7 @@ export class ItemQuestionsComponent implements OnInit, OnDestroy {
   get currentParameters() {
     return this.manager.currentParameters;
   }
-  
+
   setParameter(key: string, value: string) {
     const params = Object.assign({}, this.manager.currentParameters);
     params[key] = value;

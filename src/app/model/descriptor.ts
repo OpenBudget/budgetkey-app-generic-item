@@ -1,5 +1,5 @@
-import { QuestionParser } from "./question-parser";
-import { Questions } from "./questions";
+import { QuestionParser } from './question-parser';
+import { Questions } from './questions';
 
 export class DescriptorBase {
   visualizationTemplates: any;

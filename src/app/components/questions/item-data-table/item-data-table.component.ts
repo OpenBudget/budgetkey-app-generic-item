@@ -10,7 +10,7 @@ import { QuestionsManager } from '../questions-manager';
 })
 export class ItemDataTableComponent implements OnInit, OnDestroy {
 
-  @Input() manager: QuestionsManager
+  @Input() manager: QuestionsManager;
 
   private tableState = 'hidden';
 
@@ -64,10 +64,10 @@ export class ItemDataTableComponent implements OnInit, OnDestroy {
     if (headers.length) {
       if (!graphLayout) {
         this.graphAvailable = false;
-        this.graphSelected = false;  
+        this.graphSelected = false;
       } else {
         this.graphAvailable = true;
-        this.graphSelected = true; 
+        this.graphSelected = true;
       }
     }
   }

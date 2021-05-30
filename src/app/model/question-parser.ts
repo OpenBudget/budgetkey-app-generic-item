@@ -4,13 +4,13 @@ import { Question } from './questions';
 export class QuestionParser {
     private static SIMPLE_MODIFIER = /:([-a-z_]+)$/;
     private static PARAMETER_MODIFIER = /:([-a-z_]+\([a-z_]+\))$/;
-  
+
     private static getFormatter(mod: string, themeId: string) {
       // Simple modifiers first
       if (mod === 'number') {
         return (x: any, row: any) => {
           x = parseFloat(x);
-  
+
           return isFinite(x)
             ? format_number(x)
             : '-';
@@ -62,27 +62,27 @@ export class QuestionParser {
         }
       }
     }
-  
+
     private static getRowGetter(header: string) {
       return (x: any, row: any) => {
         return row[header];
       };
     }
-  
+
     private static compose(func: any, func2: any) {
       return (x: any, row: any) => func2(func(x, row), row);
     }
-  
+
     private static processHeadersFormatters(question: Question, themeId: string): any {
       if (question.originalHeaders) {
         // Don't process the same question twice
         return;
       }
       question.originalHeaders = question.headers;
-  
+
       const _headers = [];
       const _formatters = [];
-  
+
       for (let header of question.headers) {
         const _funcs: any[] = [];
         while (header.length > 0) {
@@ -100,7 +100,7 @@ export class QuestionParser {
           if (found) {
             continue;
           }
-  
+
           _funcs.push(this.getRowGetter(header));
           let func: any = null;
           while (_funcs.length > 0) {
@@ -111,7 +111,7 @@ export class QuestionParser {
               func = this.compose(func, func2);
             }
           }
-  
+
           _headers.push(header);
           _formatters.push((row: any) => func('', row));
           break;
@@ -120,7 +120,7 @@ export class QuestionParser {
       question.headers = _headers;
       question.formatters = _formatters;
     }
-  
+
     static processQuestions(questions, themeId?) {
       for (const question of questions) {
         this.processHeadersFormatters(question, themeId);
@@ -128,4 +128,3 @@ export class QuestionParser {
       return questions;
     }
   }
-  

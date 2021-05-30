@@ -8,13 +8,13 @@ export class Question {
     originalHeaders: string[] | null;
     graphFormatter: string;
   }
-  
+
   export class PreparedQuestionTextFragment {
     isText = false;
     isParameter = false;
     value = '';
   }
-  
+
   export class PreparedQuestionParameterFragment {
     isText = false;
     isParameter = false;
@@ -22,14 +22,14 @@ export class Question {
     value = '';
     values: object = {};
   }
-  
+
   export type PreparedQuestionFragment = PreparedQuestionTextFragment | PreparedQuestionParameterFragment;
   export type PreparedQuestionFragments = PreparedQuestionFragment[];
-  
+
   export class PreparedQuestion extends Question {
     parsed: PreparedQuestionFragments = [];
     defaults: object = {};  // key-value pairs of default values for each parameter
   }
-  
+
   export type Questions = Question[];
   export type PreparedQuestions = PreparedQuestion[];

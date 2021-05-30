@@ -75,7 +75,7 @@ export class SimpleItemVisualizationsComponent implements OnInit {
   ngOnInit() {
     this.updateItem();
   }
-  
+
   updateItem() {
     this.item = this.store.item;
     this.charts = {};
