@@ -1,0 +1,31 @@
+<h1>{{ item.page_title }}</h1>
+
+<div class='page-links'>
+    <a *ngFor='let link of PAGE_LINKS' [href]='link.href' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
+</div>
+
+<div class='filters'>
+    <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
+        <label>{{ filter.title }}</label>
+        <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()'>
+            <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
+        </select>
+    </div>
+</div>
+
+<div class='tab-selectors'>
+    <span [class.active]='currentTab === "services"' (click)='currentTab = "services"'>שירותים</span>
+    <span [class.active]='currentTab === "suppliers"' (click)='currentTab = "suppliers"'>מפעילים</span>
+</div>
+
+<div class='charts'>
+    <ng-container *ngFor='let ct of chartTemplates'>
+        <ng-container *ngIf='charts[ct.id] && currentTab === ct.location'>
+            <div class='single-chart'>
+                <div class='chart-title'>{{ct.title}}</div>
+                <div class='chart-subtitle'>{{ct._subtitle}}</div>
+                <budgetkey-chart-plotly [layout]='charts[ct.id].layout' [data]='charts[ct.id].data'></budgetkey-chart-plotly>    
+            </div>
+        </ng-container>
+    </ng-container>    
+</div>

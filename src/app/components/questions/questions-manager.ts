@@ -55,7 +55,7 @@ export class QuestionsManager {
         this._currentParameters = value;
 
         this.doQuery();
-        // this.dataQueryChange.next(null);
+        this.dataQueryChange.next(null);
     }
 
     get dataQuery(): string {

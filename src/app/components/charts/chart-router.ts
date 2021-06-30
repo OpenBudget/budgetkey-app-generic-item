@@ -41,7 +41,11 @@ import { QuestionsManager } from '../questions/questions-manager';
         <budgetkey-item-questions [manager]='questionsManager' [label]='chart.label'></budgetkey-item-questions>
         <budgetkey-item-data-table [manager]='questionsManager'></budgetkey-item-data-table>
     </ng-container>
-`
+`, styles: [
+    `budgetkey-chart-plotly {
+        min-height: 600px;
+    }`
+]
 })
 export class ChartRouterComponent implements OnInit {
 

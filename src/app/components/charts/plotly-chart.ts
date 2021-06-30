@@ -1,5 +1,7 @@
-import {Component, ViewChild, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ViewChild, ElementRef, Input, OnInit, OnChanges, AfterViewInit} from '@angular/core';
 import { Location } from '@angular/common';
+import { first } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
 
 declare const Plotly: any;
 declare const window: any;
@@ -9,20 +11,30 @@ declare const window: any;
   template: `
     <div style="direction: ltr" #plot>
     </div>
-  `
+  `, styles: [`
+  :host {
+    display: block;
+  }
+  `]
 })
-export class PlotlyChartComponent implements OnInit {
+export class PlotlyChartComponent implements OnChanges, AfterViewInit {
 
   @Input() public data: any;
   @Input() public layout: any;
 
   @ViewChild('plot') plot: ElementRef;
 
+  private ready = new ReplaySubject(1);
+
   constructor(private location: Location) {
   }
 
-  ngOnInit() {
-    this.checkPlotly();
+  ngAfterViewInit() {
+    this.ready.next();
+  }
+
+  ngOnChanges() {
+    this.ready.pipe(first()).subscribe(() => { this.checkPlotly(); });;
   }
 
   checkPlotly() {
@@ -34,7 +46,7 @@ export class PlotlyChartComponent implements OnInit {
         }
       }, this.layout);
 
-      Plotly.plot(this.plot.nativeElement, this.data, layout);
+      Plotly.newPlot(this.plot.nativeElement, this.data, layout, {responsive: true});
     } else {
       setTimeout(() => this.checkPlotly(), 100);
     }
