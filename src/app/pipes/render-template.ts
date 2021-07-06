@@ -32,6 +32,21 @@ export function format_number(x: number) {
   }
 }
 
+export function format_ils(x: number) {
+  if (x) {
+    let fracDigits = 0;
+    if (x < 1000 && x > -1000) {
+      fracDigits = 2;
+    }
+    return '<span class="number">₪' +
+              x.toLocaleString('en-US', {style: 'decimal',
+                                         maximumFractionDigits: fracDigits}) +
+           '</span>';
+  } else {
+    return '-';
+  }
+}
+
 export function format_absolute_percent(x: number) {
   if (x >= 0) {
     x = x * 100;

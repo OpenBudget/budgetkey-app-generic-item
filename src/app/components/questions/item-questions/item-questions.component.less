@@ -102,7 +102,10 @@
 
     .item-questions-actions {
         text-align: center;
-        padding: 15px 0;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
         flex: 0 0 auto;
         margin-right: auto;
 
@@ -115,9 +118,11 @@
             }
         }
 
-        svg {
+        svg, img {
             display: inline-block;
             margin: 5px 20px;
+            width: 20px;
+            height: 25px;
 
             path {
                 stroke: none;

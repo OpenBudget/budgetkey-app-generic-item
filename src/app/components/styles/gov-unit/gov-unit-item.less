@@ -46,6 +46,7 @@
         flex-flow: row wrap;
         align-items: flex-start;
         justify-content: flex-start;
+        margin-top: 40px;
 
         span {
             display: block;
@@ -94,5 +95,61 @@
                 height: 450px;
             }
         }
+    }
+
+    .pager {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 300;
+
+        > * {
+            margin-left: 32px;
+        }
+
+        div > span {
+            margin-left: 16px;
+        }
+        .pager-control {
+            text-decoration: underline;
+            color: #888;
+            &.active {
+                color: black;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .download {
+        margin-right: auto;
+        cursor: pointer;
+    }
+    
+    .results-table {
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+      
+            td {
+              padding: 10px;
+            }
+      
+            thead td {
+              color: #B7B7B7;
+              font-weight: bold;
+            }
+      
+            tbody tr {
+              border-radius: 4px;
+              background-color: #FFFFFF;
+              box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+            }
+
+            .fa, th {
+                cursor: pointer;
+            }
+        }      
     }
 }

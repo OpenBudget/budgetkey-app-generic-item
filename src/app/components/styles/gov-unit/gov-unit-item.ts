@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { from, ReplaySubject } from 'rxjs';
-import { first, map, mergeMap, switchMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { BudgetKeyItemService } from '../../../services';
-import { QuestionParser } from '../../../model/question-parser';
 
-import {StoreService} from '../../../services/store';
+import { StoreService } from '../../../services/store';
+
+import { chartTemplates } from './charts';
+import { tableDefs } from './tables';
 
 @Component({
     selector: 'gov-unit-item',
@@ -26,6 +28,7 @@ export class GovUnitItemComponent implements OnInit {
       {title: 'קבוצת גיל', id: 'target_age_group'},
       {title: 'אוכלוסיית היעד', id: 'target_audience'},
       {title: 'תחום ההתערבות', id: 'subject'},
+      {title: 'סוג המכרז', id: 'tender_type'},
       {title: 'מודל תמחור', id: 'pricing_model'},
     ];
 
@@ -35,320 +38,28 @@ export class GovUnitItemComponent implements OnInit {
         {value: `(tenders::text) like '%%"fixed"%%'`, display: 'מחיר קבוע'},
         {value: `(tenders::text) like '%%"proposal"%%'`, display: 'הצעת מחיר'},
         {value: `(tenders::text) like '%%"combined"%%'`, display: 'משולב'},
-      ]
+      ],
+      tender_type: [
+        {value: 'TRUE', display: 'כלשהו'},
+      ].concat([
+        'מכרז רגיל', 'מכרז סגור', 'מכרז מסגרת', 'מכרז מאגר',
+        'התקשרות המשך', 'ספק יחיד', 'מימוש אופציה', 'מיזם משותף', 'התקשרות עם רשות מקומית',
+        'אחר'
+      ].map((x) => { return {value: `(tenders::text) like '%%"sub_kind_he": "${x}"%%'`, display: x}; }))
     };
     private levelCond = 'TRUE';
     private groupByLvl: string = null;
+    private subunits = null;
     private ready = new ReplaySubject<void>(1);
     private filters = {
       pricing_model: 'TRUE',
+      tender_type: 'TRUE'
     };
     public currentTab = 'services';
-    private chartTemplates = [
-      {
-        location: 'services',
-        id: 'services',
-        query: `select :org-field as "משרד",
-            count(1) as value
-            from activities where :where group by 1 order by 1`,
-        title: 'שירותים',
-        subtitle: 'סה״כ :total שירותים',
-        x_field: 'משרד',
-        y_field: 'value',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          return [{
-            type: 'bar',
-            name: info.title,
-            x: items.map((x) => x[info.x_field]),
-            y: items.map((x) => x[info.y_field]),
-          }];
-        }
-      },
-      {
-        location: 'services',
-        id: 'budget',
-        query: `select :org-field as "משרד",
-            sum(current_budget) as value
-            from activities where :where group by 1 order by 1`,
-        title: 'תקציב מאושר',
-        subtitle: 'סה״כ :total ₪',
-        x_field: 'משרד',
-        y_field: 'value',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          return [{
-            type: 'bar',
-            name: info.title,
-            x: items.map((x) => x[info.x_field]),
-            y: items.map((x) => x[info.y_field]),
-          }];
-        }
-      },
-      {
-        location: 'services',
-        id: 'supplier_kinds',
-        query: `WITH objs AS
-        (SELECT :org-field,
-                jsonb_array_elements(suppliers::JSONB) AS obj
-         FROM activities
-         WHERE :where AND suppliers IS NOT NULL 
-           AND suppliers != 'null' )
-      SELECT :org-field as "משרד",
-             case obj->>'entity_kind'
-             when 'company' then 'עסקי'
-             when 'municipality' then 'רשויות מקומיות'
-             when 'association' then 'מגזר שלישי'
-             when 'ottoman-association' then 'מגזר שלישי'
-             when 'cooperative' then 'מגזר שלישי'
-             else 'אחר'
-             end as kind,
-            count(DISTINCT (obj->>'entity_id')) as value
-      FROM objs
-      GROUP BY 1,
-               2
-      order by 1`,
-        title: 'מפעילים',
-        x_field: 'משרד',
-        y_field: 'value',
-        subtitle: 'מפעילים שעובדים עם מספר משרדים במקביל נספרים פעם אחת בלבד',
-        layout: {
-          barmode: 'stack',
-        },
-        data: (items, info) => {
-          return ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'אחר'].map((kind) => {
-            return {
-              type: 'bar',
-              name: kind,
-              x: items.filter((x) => x.kind === kind).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.kind === kind).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'services',
-        id: 'budget_trend',
-        query: `WITH objs AS
-        (SELECT :org-field,
-                jsonb_array_elements("manualBudget"::JSONB) AS obj
-         FROM activities
-         WHERE :where AND "manualBudget" IS NOT NULL
-           AND "manualBudget" != 'null' )
-      SELECT :org-field as "משרד",
-             (obj->>'year')::integer as year,
-             sum((obj->>'approved')::numeric) as value
-      FROM objs
-      GROUP BY 1,
-               2
-      order by 1, 2`,
-        title: 'תקציב לאורך זמן',
-        x_field: 'year',
-        y_field: 'value',
-        subtitle: 'התקציב המאושר של השירותים השונים',
-        layout: {
-        },
-        data: (items, info) => {
-          const orgs = items.map((x) => x['משרד']).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return orgs.map((org) => {
-            return {
-              type: 'line',
-              name: org,
-              x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-              y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'services',
-        id: 'supplier_trend',
-        query: `WITH objs AS
-        (SELECT :org-field,
-                jsonb_array_elements(suppliers::JSONB) AS obj
-         FROM activities
-         WHERE suppliers IS NOT NULL
-           AND suppliers != 'null'),
-           years AS
-        (SELECT :org-field,
-                obj->>'entity_id' AS entity_id,
-                jsonb_array_elements(obj->'activity_years') AS YEAR
-         FROM objs)
-      SELECT :org-field as office,
-             (YEAR::text)::integer as year,
-             count(DISTINCT entity_id) AS value
-      FROM years
-      where (YEAR::text)::integer >= 2020
-      group by 1,2
-      ORDER BY 1`,
-        title: 'מפעילים לאורך זמן',
-        x_field: 'year',
-        y_field: 'value',
-        subtitle: 'מספר המפעילים בשירותים השונים',
-        layout: {
-        },
-        data: (items, info) => {
-          const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return orgs.map((org) => {
-            return {
-              type: 'line',
-              name: org,
-              x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'suppliers',
-        id: 'supplier_kinds_budget',
-        query: `
-      SELECT :org-field as office,
-             supplier_kinds,
-             sum(current_budget) as value
-      FROM activities
-      where :where and supplier_kinds is not null
-      group by 1,2
-      ORDER BY 1`,
-        title: 'תקציב שירותים לפי סוג מפעיל',
-        x_field: 'office',
-        y_field: 'value',
-        subtitle: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return kinds.map((kind) => {
-            return {
-              type: 'bar',
-              name: kind,
-              x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'suppliers',
-        id: 'supplier_kinds_count',
-        query: `
-      SELECT :org-field as office,
-             supplier_kinds,
-             count(1) as value
-      FROM activities
-      where :where and supplier_kinds is not null
-      group by 1,2
-      ORDER BY 1`,
-        title: 'מס׳ שירותים לפי סוג מפעיל',
-        x_field: 'office',
-        y_field: 'value',
-        subtitle: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return kinds.map((kind) => {
-            return {
-              type: 'bar',
-              name: kind,
-              x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'suppliers',
-        id: 'supplier_count_category_budget',
-        query: `
-      SELECT :org-field as office,
-             supplier_count_category,
-             sum(current_budget) as value
-      FROM activities
-      where :where and supplier_count_category is not null
-      group by 1,2
-      ORDER BY 1`,
-        title: 'תקציב שירותים לפי היקף המפעילים',
-        x_field: 'office',
-        y_field: 'value',
-        subtitle: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return kinds.map((kind) => {
-            return {
-              type: 'bar',
-              name: kind,
-              x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'suppliers',
-        id: 'supplier_count_category_count',
-        query: `
-      SELECT :org-field as office,
-             supplier_count_category,
-             sum(current_budget) as value
-      FROM activities
-      where :where and supplier_count_category is not null
-      group by 1,2
-      ORDER BY 1`,
-        title: 'מס׳ שירותים לפי היקף המפעילים',
-        x_field: 'office',
-        y_field: 'value',
-        subtitle: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
-        layout: {barmode: 'stack'},
-        data: (items, info) => {
-          const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return kinds.map((kind) => {
-            return {
-              type: 'bar',
-              name: kind,
-              x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-      {
-        location: 'suppliers',
-        id: 'concentration',
-        query: `
-      SELECT :org-field as office,
-             current_budget,
-             jsonb_array_length(suppliers) as num_suppliers
-      FROM activities
-      where :where and supplier_count_category is not null`,
-        title: 'מטריצת ריכוזיות',
-        x_field: 'current_budget',
-        y_field: 'num_suppliers',
-        subtitle: 'כמות המפעילים של השירות יחסית לתקציב השירות',
-        layout: {
-          xaxis: {
-            type: 'log',
-            autorange: true
-          },
-          yaxis: {
-            type: 'log',
-            autorange: true
-          }
-        },
-        data: (items, info) => {
-          const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-          return orgs.map((org) => {
-            return {
-              type: 'scatter',
-              mode: 'markers',
-              name: org,
-              x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-              y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-            }
-          });
-        }
-      },
-    ];
+    private chartTemplates = chartTemplates;
     public charts = {};
+    public TABLES = tableDefs;
+    public _currentTable: any = this.TABLES.services;
 
     constructor(private store: StoreService, private api: BudgetKeyItemService) {
       const fields = ['subject', 'intervention', 'target_audience', 'target_age_group'];
@@ -372,8 +83,8 @@ export class GovUnitItemComponent implements OnInit {
 
     ngOnInit() {
       this.item = this.store.item;
-      // console.log('ITEM', this.item);
-      this.processLevel(this.item);
+      console.log('ITEM', this.item);
+      this.processLevel();
       // this.item.charts = [];
       // this.ready.pipe(first()).subscribe(() => {
       //   this.item.charts = [
@@ -399,6 +110,23 @@ export class GovUnitItemComponent implements OnInit {
       //   this.store.item = this.store.item;
       // });
       this.filtersChanged();
+      if (this.item.office && !this.item.unit) {
+        this.item.unit = '';
+        this.getSubunits(this.item.office);
+      }
+    }
+
+    getSubunits(office) {
+      const query = `select distinct unit as unit from activities where office='${office}'`;
+      this.api.getItemData(
+        query, ['value'], [this.formatter]
+      ).pipe(
+        map((x: any) => x.rows),
+        map((x: any[]) => x.map((y) => y.unit)),
+      ).subscribe((rows) => {
+        console.log('SUBUNITS', rows);
+        this.subunits = rows.filter((x) => x);
+      })
     }
 
     processParams(records, field, female) {
@@ -417,12 +145,12 @@ export class GovUnitItemComponent implements OnInit {
       return params;
     }
 
-    processLevel(item) {
+    processLevel() {
       const levelCondParts = [];
       this.groupByLvl = null;
       for (const lvl of ['office', 'unit', 'subunit', 'subsubunit']) {
-        if (item[lvl]) {
-          levelCondParts.push(`${lvl} = '${item[lvl]}'`);
+        if (this.item[lvl]) {
+          levelCondParts.push(`${lvl} = '${this.item[lvl]}'`);
         } else if (!this.groupByLvl) {
           this.groupByLvl = lvl;
         } else {
@@ -432,19 +160,27 @@ export class GovUnitItemComponent implements OnInit {
       this.levelCond = levelCondParts.join(' AND ') || 'TRUE';
     }
 
-    formatter(x, row) {
-      return '' + x;
+    formatter(f) {
+      return (row) => '' + row[f];
     }
 
-    filtersChanged() {
+    calcWhere() {
       let where = '';
       for (const k of Object.keys(this.filters)) {
         where += ` ${this.filters[k]} AND`;
       }
       where += ' ' + this.levelCond;
       where = where.split(' TRUE AND').join('');
+      return where;
+    }
+
+    filtersChanged() {
+      const where = this.calcWhere();
       for (const ct of this.chartTemplates) {
         this.refreshChart(ct, where);
+      }
+      for (const tbl of Object.keys(this.TABLES)) {
+        this.refreshTable(this.TABLES[tbl], where);
       }
     }
 
@@ -466,22 +202,101 @@ export class GovUnitItemComponent implements OnInit {
         ct.query,
         [
           {from: ':where', to: where},
-          {from: ':org-field', to: this.groupByLvl},
+          {from: ':org-field', to: `coalesce("${this.groupByLvl}", 'אחר')`},
         ]
       );
       this.api.getItemData(
-        query, ['משרד', 'value'], [this.formatter, this.formatter]
+        query, ['משרד', 'value'], [this.formatter('משד'), this.formatter('value')]
       ).subscribe((result: any) => {
         const layout = ct.layout;
         layout.margin = {t: 20, l:30};
         layout.height = 400;
-        const total = this.sum(result.rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 2});
+        const rows = result.rows || [];
+        if (result.error || rows.length === 0) {
+          console.log('ERROR', query, result.error);
+        }
+        const total = this.sum(rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 2});
         ct._subtitle = ct.subtitle.replace(':total', total);
-        const data = ct.data(result.rows, ct);
+        const data = ct.data(rows, ct);
         this.charts[ct.id] = {layout, data};
       });
     }
 
+    refreshTable(tbl, where) {
+      if (!tbl.query) {
+        return;
+      }
+      let query = this.replaceAll(
+        tbl.query,
+        [
+          {from: ':where', to: where},
+          {from: ':tender-type', to: this.filters.tender_type},
+          {from: ':pricing-model', to: this.filters.pricing_model},
+          {from: ':fields', to: tbl.fields.join(', ')},
+        ]
+      );
+      if (!tbl.actualQuery || tbl.actualQuery !== query) {
+        tbl.actualQuery = query;
+        tbl.currentPage = 0;
+      }
+      if (tbl.sortField) {
+        if (tbl.sortDirectionDesc) {
+          query = query + ` ORDER BY ${tbl.sortField} DESC NULLS LAST`
+        } else {
+          query = query + ` ORDER BY ${tbl.sortField} ASC NULLS LAST`
+        }
+      }
+      const formatters = [];
+      tbl.fields.forEach(f => {
+        formatters.push(this.formatter(f));
+      });
+      this.api.getItemData(
+        query, tbl.fields, formatters, tbl.currentPage
+      ).subscribe((result: any) => {
+        tbl.rows = result.rows;
+        tbl.currentPage = result.page;
+        tbl.totalPages = result.pages;
+        tbl.totalRows = result.total;
+        console.log('TBLLLLL', result);
+      });
+    }
+
+    set currentTable(value) {
+      if (value !== this._currentTable) {
+        this._currentTable = value;
+        this._currentTable.sortField = this._currentTable.sortField || this._currentTable.sorting[0];
+      }      
+    }
+
+    get currentTable() {
+      return this._currentTable;
+    }
+
+    sortBy(field) {
+      if (this._currentTable.sortField !== field) {
+        this._currentTable.sortField = field;
+        this._currentTable.sortDirectionDesc = false;
+      } else {
+        this._currentTable.sortDirectionDesc = !this._currentTable.sortDirectionDesc;
+      }
+      this.refreshTable(this._currentTable, this.calcWhere());
+    }
+
+    movePage(by) {
+      const current = this.currentTable.currentPage;
+      this.currentTable.currentPage += by;
+      this.currentTable.currentPage = Math.max(this.currentTable.currentPage, 0);
+      this.currentTable.currentPage = Math.min(this.currentTable.currentPage, this.currentTable.totalPages - 1);
+      if (current !== this.currentTable.currentPage) {
+        this.refreshTable(this._currentTable, this.calcWhere());
+      }
+    }
+
+    download() {
+      const filename = `${this.item.page_title} / מידע על ${this.currentTable.name}`;
+      const url = this.api.getDownloadUrl(this.currentTable.actualQuery, 'xlsx', this.currentTable.downloadHeaders, filename)
+      window.open(url, '_blank');
+    }
 //     servicesQuestions(item) {
 //       const ret = [];
 //       ret.push({

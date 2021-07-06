@@ -101,8 +101,8 @@ export class BudgetKeyItemService {
         (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
-  getItemData(query: string, headersOrder: string[], formatters: any[]): Observable<object> {
-    const url = 'https://next.obudget.org/api/query?query=' + encodeURIComponent(query);
+  getItemData(query: string, headersOrder: string[], formatters: any[], page = 0): Observable<object> {
+    const url = 'https://next.obudget.org/api/query?query=' + encodeURIComponent(query) + '&page=' + page;
 
     return this.http.get(url)
         .pipe(
@@ -111,7 +111,10 @@ export class BudgetKeyItemService {
               const items: object[] = [];
               const rows = res.rows;
               const total = res.total;
+              const pages = res.pages;
+              const page = res.page;
               const headers = headersOrder;
+              const error = res.error;
 
               _.each(rows, (row) => {
                 const newItem: any[] = [];
@@ -122,7 +125,7 @@ export class BudgetKeyItemService {
                 });
                 items.push(newItem);
               });
-              return {query, headers, items, total, rows};
+              return {query, headers, items, total, rows, error, pages, page};
             }),
         );
   }
