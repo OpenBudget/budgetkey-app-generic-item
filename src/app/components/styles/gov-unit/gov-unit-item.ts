@@ -18,10 +18,10 @@ export class GovUnitItemComponent implements OnInit {
     private item: any;
 
     PAGE_LINKS = [
-      {title: 'משרדי הממשלה', href: '/units/gov_social_service_unit/main'},
-      {title: 'משרד הרווחה', href: '/units/gov_social_service_unit/משרד הרווחה'},
-      {title: 'משרד הבריאות', href: '/units/gov_social_service_unit/משרד הבריאות'},
-      {title: 'משרד החינוך', href: '/units/gov_social_service_unit/משרד החינוך'},
+      {title: 'משרדי הממשלה', href: '/i/units/gov_social_service_unit/main'},
+      {title: 'משרד הרווחה', href: '/i/units/gov_social_service_unit/משרד הרווחה'},
+      {title: 'משרד הבריאות', href: '/i/units/gov_social_service_unit/משרד הבריאות'},
+      {title: 'משרד החינוך', href: '/i/units/gov_social_service_unit/משרד החינוך'},
     ];   
     PAGE_FILTERS = [
       {title: 'אופן ההתערבות', id: 'intervention'},
