@@ -59,13 +59,24 @@ export const chartTemplates = [
            end as kind,
           count(DISTINCT (obj->>'entity_id')) as value
     FROM objs
+    WHERE obj->'year_activity_end' is null
     GROUP BY 1,
              2
     order by 1`,
+      subtitleQuery: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where AND suppliers IS NOT NULL 
+         AND suppliers != 'null' )
+    SELECT count(DISTINCT (obj->>'entity_id')) as value
+    FROM objs
+    WHERE obj->'year_activity_end' is null
+    `,
       title: 'מפעילים',
       x_field: 'משרד',
       y_field: 'value',
-      subtitle: 'מפעילים שעובדים עם מספר משרדים במקביל נספרים פעם אחת בלבד',
+      subtitle: 'סה״כ :total מפעילים פעילים שונים ב:org',
       layout: {
         barmode: 'stack',
       },
@@ -99,7 +110,7 @@ export const chartTemplates = [
       title: 'תקציב לאורך זמן',
       x_field: 'year',
       y_field: 'value',
-      subtitle: 'התקציב המאושר של השירותים השונים',
+      subtitle: 'סה״כ :total ₪',
       layout: {
       },
       data: (items, info) => {
@@ -135,10 +146,26 @@ export const chartTemplates = [
     where (YEAR::text)::integer >= 2020
     group by 1,2
     ORDER BY 1`,
+      subtitleQuery: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where and suppliers IS NOT NULL
+         AND suppliers != 'null'),
+         years AS
+      (SELECT obj->>'entity_id' AS entity_id,
+              jsonb_array_elements(obj->'activity_years') AS YEAR
+       FROM objs)
+    SELECT max((YEAR::text)::integer) as max_year,
+           min((YEAR::text)::integer) as min_year,
+           count(DISTINCT entity_id) AS value
+    FROM years
+    where (YEAR::text)::integer >= 2020
+    ORDER BY 1`,
       title: 'מפעילים לאורך זמן',
       x_field: 'year',
       y_field: 'value',
-      subtitle: 'מספר המפעילים בשירותים השונים',
+      subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
       layout: {
       },
       data: (items, info) => {
@@ -167,7 +194,7 @@ export const chartTemplates = [
       title: 'תקציב שירותים לפי סוג מפעיל',
       x_field: 'office',
       y_field: 'value',
-      subtitle: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
       layout: {barmode: 'stack'},
       data: (items, info) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -195,7 +222,7 @@ export const chartTemplates = [
       title: 'מס׳ שירותים לפי סוג מפעיל',
       x_field: 'office',
       y_field: 'value',
-      subtitle: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
       layout: {barmode: 'stack'},
       data: (items, info) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -223,7 +250,7 @@ export const chartTemplates = [
       title: 'תקציב שירותים לפי היקף המפעילים',
       x_field: 'office',
       y_field: 'value',
-      subtitle: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
+      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
       layout: {barmode: 'stack'},
       data: (items, info) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -251,7 +278,7 @@ export const chartTemplates = [
       title: 'מס׳ שירותים לפי היקף המפעילים',
       x_field: 'office',
       y_field: 'value',
-      subtitle: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
+      subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
       layout: {barmode: 'stack'},
       data: (items, info) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();

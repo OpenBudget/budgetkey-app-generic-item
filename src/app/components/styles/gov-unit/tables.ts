@@ -21,6 +21,13 @@ function suppliersTitle(row) {
     return parts.join('\n');
 }
 
+function fixTextQuotes(t) {
+  if (t) {
+    t = t.replace(/'/g, '״');
+  }
+  return t;
+}
+
 export const tableDefs = {
     services: {
       name: 'שירותים',
@@ -41,7 +48,8 @@ export const tableDefs = {
         'ארצי / אזורי<geo_coverage'
       ],
       fields: [
-        'office', 'unit', 'subunit', 'subsubunit', 'name', 'description', 'current_budget', 'current_beneficiaries', 'beneficiary_kind_name', 'supplier_count', 'supplier_count_company', 'supplier_count_association', 'supplier_count_municipality', 'geo_coverage'
+        'office', 'unit', 'subunit', 'subsubunit', 'name', 'description', 'current_budget', 'current_beneficiaries', 'beneficiary_kind_name',
+        'supplier_count', 'supplier_count_company', 'supplier_count_association', 'supplier_count_municipality', 'geo_coverage', 'id', 'kind'
       ],
       uiHeaders: [
         'משרד',
@@ -56,7 +64,7 @@ export const tableDefs = {
         (row) => row.office,
         (row) => row.unit,
         (row) => row.subunit,
-        (row) => `${row.name}&nbsp;<i title='${row.description}' class="fa fa-question-circle"></i>`,
+        (row) => `<a href='/i/activities/${row.kind}/${row.id}'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-question-circle"></i></a>`,
         (row) => format_ils(row.current_budget) + (beneficiariesTitle(row) ? `&nbsp;<i class="fa fa-question-circle" title='${beneficiariesTitle(row)}'></i>` : ''),
         (row) => `<span>${row.supplier_count}</span>&nbsp;<i title='${suppliersTitle(row)}' class="fa fa-question-circle"></i>`,
         (row) => row.geo_coverage
@@ -125,7 +133,7 @@ export const tableDefs = {
         ],
     },
     tenders: {
-      name: 'תהליכי רכש',
+      name: 'הליכי רכש',
       query: `
       with t as (
         select office || ' / ' || unit || ' / ' || subunit as org_unit,
@@ -168,7 +176,7 @@ export const tableDefs = {
       uiHtml: [
         (row) => row.tender_type_he,
         (row) => row.sub_kind_he,
-        (row) => `<a href='${row.page_url}'>${row.description}</a>`,
+        (row) => `<a href='${row.page_url}' target='_blank'>${row.description}</a>`,
         (row) => (row.tender_id === 'none' ? null : row.tender_id) || row.publication_id || row.tender_key.split(':')[0],
         (row) => row.org_unit,
         (row) => row.end_date || '',

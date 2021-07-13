@@ -21,8 +21,8 @@
 </div>
 
 <div class='tab-selectors'>
-    <span [class.active]='currentTab === "services"' (click)='currentTab = "services"'>שירותים</span>
-    <span [class.active]='currentTab === "suppliers"' (click)='currentTab = "suppliers"'>מפעילים</span>
+    <span [class.active]='currentTab === "services"' (click)='currentTab = "services"'>תמונת השירותים</span>
+    <span [class.active]='currentTab === "suppliers"' (click)='currentTab = "suppliers"'>הרחבה לגבי מפעילי השירותים</span>
 </div>
 
 <div class='charts'>
@@ -41,7 +41,7 @@
     <span>מידע גולמי עבור:</span>
     <span [class.active]='currentTable === TABLES.services' (click)='currentTable = TABLES.services'>שירותים</span>
     <span [class.active]='currentTable === TABLES.suppliers' (click)='currentTable = TABLES.suppliers'>מפעילים</span>
-    <span [class.active]='currentTable === TABLES.tenders' (click)='currentTable = TABLES.tenders'>תהליכי רכש</span>
+    <span [class.active]='currentTable === TABLES.tenders' (click)='currentTable = TABLES.tenders'>הליכי רכש</span>
 </div>
 
 <div class='pager'>

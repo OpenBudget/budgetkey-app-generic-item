@@ -90,7 +90,7 @@ export class QuestionsManager {
                 }
               },
               error: (err) => {
-                console.log('err', err);
+                console.log('QUERY ERROR', err);
                 this.loading = false;
                 this.dataReady.next({headers: [], data: [], err});
               }
@@ -188,7 +188,7 @@ export class QuestionsManager {
     getGraphFormatter(formatter: any) {
         if (formatter.type === 'bars') {
             return (items) => {
-                console.log('DATA', items);
+                // console.log('DATA', items);
                 const graphLayout = {barmode: 'stack'};
                 const graphData = formatter.series.map((s) => {
                     return {
