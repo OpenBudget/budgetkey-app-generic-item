@@ -88,6 +88,7 @@ export const tableDefs = {
            e AS
         (SELECT supplier->>'entity_id' AS id,
                 supplier->>'entity_name' AS name,
+                supplier->>'entity_kind' AS entity_kind,
                 case supplier->>'entity_kind'
                     when 'company' then 'עסקי'
                     when 'municipality' then 'רשויות מקומיות'
@@ -102,7 +103,8 @@ export const tableDefs = {
          FROM s
          GROUP BY 1,
                   2,
-                  3)
+                  3,
+                  4)
       SELECT :fields
       FROM e
       WHERE relevant`,
@@ -114,7 +116,7 @@ export const tableDefs = {
             `מספר שירותים חברתיים כולל שנותן<services`
         ],
         fields: [
-            'id', 'name', 'kind', 'offices', 'services'
+            'id', 'name', 'kind', 'offices', 'services', 'entity_kind'
         ],
         uiHeaders: [
             `שם המפעיל`,
@@ -123,7 +125,7 @@ export const tableDefs = {
             `מספר שירותים חברתיים כולל שנותן`
         ],
         uiHtml: [
-            (row) => row.name,
+            (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}'>${row.name}</a>` : row.name,
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,

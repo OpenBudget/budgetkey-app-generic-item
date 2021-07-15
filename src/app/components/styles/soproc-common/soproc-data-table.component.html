@@ -1,0 +1,37 @@
+<div class='tab-selectors'>
+    <span>מידע גולמי עבור:</span>
+    <ng-container *ngFor='let tbl of _tableKeys'>
+        <span [class.active]='currentTable === tables[tbl]' (click)='currentTable = tables[tbl]'>{{tables[tbl].name}}</span>        
+    </ng-container>
+</div>
+
+<div class='pager'>
+    <span *ngIf='currentTable.totalRows'>סה״כ תוצאות: {{currentTable.totalRows.toLocaleString()}}</span>
+    <div *ngIf='currentTable.totalPages && currentTable.totalPages > 1'>
+        <span>עמוד {{currentTable.currentPage + 1}} מתוך {{currentTable.totalPages}}</span>
+        <span class='pager-control' [class.active]='currentTable.currentPage > 0' (click)='movePage(-1)'>הקודם</span>
+        <span class='pager-control' [class.active]='currentTable.currentPage < currentTable.totalPages - 1' (click)='movePage(1)'>הבא</span>    
+    </div>
+    <span class='download' (click)='download()'>
+        הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg'>
+    </span>
+</div>
+
+<div class='results-table'>
+    <table>
+        <thead>
+            <ng-container *ngFor='let header of currentTable.uiHeaders; let i = index' >
+                <th (click)='sortBy(currentTable.sorting[i])'>
+                    <span [innerHtml]='header'></span>
+                    <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
+                    <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
+                </th> 
+            </ng-container>
+        </thead>
+        <tbody>
+            <tr *ngFor='let row of currentTable.rows'>
+                <td *ngFor='let content of currentTable.uiHtml' [innerHtml]='content(row)'></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

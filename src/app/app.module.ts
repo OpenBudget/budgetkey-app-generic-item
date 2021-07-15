@@ -59,6 +59,8 @@ import {
 
   GovUnitItemComponent,
   GovUnitItemInfoComponent,
+  SocialServiceItemComponent,
+  SoProcDatatableComponent,
 
   TimelinePartComponent,
 
@@ -145,13 +147,15 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 
     GovUnitItemComponent,
     GovUnitItemInfoComponent,
-
+    SocialServiceItemComponent,
+    SoProcDatatableComponent,
+    
     TimelinePartComponent,
 
     PeopleItemComponent,
 ],
   entryComponents: [
-    SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent
+    SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent, SocialServiceItemComponent
   ],
   providers: providers,
   bootstrap: [

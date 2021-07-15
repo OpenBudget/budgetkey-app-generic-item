@@ -23,7 +23,7 @@ import descriptorReportNGOActivity from './reports/ngo-activity-report';
 import descriptorReportNGODistrict from './reports/ngo-district-report';
 import descriptorPeople from './people';
 import descriptorGovDecisions from './gov_decisions';
-import descriptorActivities from './activities';
+import descriptorSocialService from './activities/social_services';
 import descriptorGovSocialServiceUnit from './gov_social_service_unit';
 
 import {DescriptorBase} from '../model/descriptor';
@@ -52,7 +52,7 @@ const descriptors: DescriptorBase[] = [
   descriptorReportNGODistrict,
   descriptorPeople,
   descriptorGovDecisions,
-  descriptorActivities,
+  descriptorSocialService,
   descriptorGovSocialServiceUnit,
 ];
 

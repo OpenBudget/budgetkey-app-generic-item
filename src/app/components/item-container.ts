@@ -2,7 +2,8 @@ import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver } from '@
 
 import { ItemDirective } from './item-directive';
 import { SimpleItemComponent, ReportItemComponent, OrgItemComponent,
-         ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent } from './styles';
+         ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent,
+         SocialServiceItemComponent } from './styles';
 
 @Component({
     selector: 'budgetkey-item-container',
@@ -18,6 +19,7 @@ export class ItemContainerComponent implements OnInit {
         procure: ProcureItemComponent,
         people: PeopleItemComponent,
         gov_unit: GovUnitItemComponent,
+        social_service: SocialServiceItemComponent,
     };
 
     @Input() style: string;

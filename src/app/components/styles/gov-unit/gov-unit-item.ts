@@ -58,8 +58,8 @@ export class GovUnitItemComponent implements OnInit {
   public currentTab = 'services';
   private chartTemplates = chartTemplates;
   public charts = {};
-  public TABLES = tableDefs;
-  public _currentTable: any = this.TABLES.services;
+  public tables = tableDefs;
+  public replacements: any[] = [];
 
   constructor(private store: StoreService, private api: BudgetKeyItemService) {
     const fields = ['subject', 'intervention', 'target_audience', 'target_age_group'];
@@ -178,9 +178,11 @@ export class GovUnitItemComponent implements OnInit {
     for (const ct of this.chartTemplates) {
       this.refreshChart(ct, where);
     }
-    for (const tbl of Object.keys(this.TABLES)) {
-      this.refreshTable(this.TABLES[tbl], where);
-    }
+    this.replacements = [
+      {from: ':where', to: where},
+      {from: ':tender-type', to: this.filters.tender_type},
+      {from: ':pricing-model', to: this.filters.pricing_model},
+    ];
   }
 
   sum(arr): number {
@@ -243,78 +245,4 @@ export class GovUnitItemComponent implements OnInit {
                         .replace(':org', this.item.breadcrumbs);
   }
 
-  refreshTable(tbl, where) {
-    if (!tbl.query) {
-      return;
-    }
-    let query = this.replaceAll(
-      tbl.query,
-      [
-        {from: ':where', to: where},
-        {from: ':tender-type', to: this.filters.tender_type},
-        {from: ':pricing-model', to: this.filters.pricing_model},
-        {from: ':fields', to: tbl.fields.join(', ')},
-      ]
-    );
-    if (!tbl.actualQuery || tbl.actualQuery !== query) {
-      tbl.actualQuery = query;
-      tbl.currentPage = 0;
-    }
-    if (tbl.sortField) {
-      if (tbl.sortDirectionDesc) {
-        query = query + ` ORDER BY ${tbl.sortField} DESC NULLS LAST`
-      } else {
-        query = query + ` ORDER BY ${tbl.sortField} ASC NULLS LAST`
-      }
-    }
-    const formatters = [];
-    tbl.fields.forEach(f => {
-      formatters.push(this.formatter(f));
-    });
-    this.api.getItemData(
-      query, tbl.fields, formatters, tbl.currentPage
-    ).subscribe((result: any) => {
-      tbl.rows = result.rows;
-      tbl.currentPage = result.page;
-      tbl.totalPages = result.pages;
-      tbl.totalRows = result.total;
-    });
-  }
-
-  set currentTable(value) {
-    if (value !== this._currentTable) {
-      this._currentTable = value;
-      this._currentTable.sortField = this._currentTable.sortField || this._currentTable.sorting[0];
-    }      
-  }
-
-  get currentTable() {
-    return this._currentTable;
-  }
-
-  sortBy(field) {
-    if (this._currentTable.sortField !== field) {
-      this._currentTable.sortField = field;
-      this._currentTable.sortDirectionDesc = false;
-    } else {
-      this._currentTable.sortDirectionDesc = !this._currentTable.sortDirectionDesc;
-    }
-    this.refreshTable(this._currentTable, this.calcWhere());
-  }
-
-  movePage(by) {
-    const current = this.currentTable.currentPage;
-    this.currentTable.currentPage += by;
-    this.currentTable.currentPage = Math.max(this.currentTable.currentPage, 0);
-    this.currentTable.currentPage = Math.min(this.currentTable.currentPage, this.currentTable.totalPages - 1);
-    if (current !== this.currentTable.currentPage) {
-      this.refreshTable(this._currentTable, this.calcWhere());
-    }
-  }
-
-  download() {
-    const filename = `${this.item.page_title} / מידע על ${this.currentTable.name}`;
-    const url = this.api.getDownloadUrl(this.currentTable.actualQuery, 'xlsx', this.currentTable.downloadHeaders, filename)
-    window.open(url, '_blank');
-  }
 }

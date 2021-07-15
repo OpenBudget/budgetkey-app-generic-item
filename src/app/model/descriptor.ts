@@ -94,3 +94,9 @@ export class GovUnitDescriptor extends SimpleDescriptor {
     super(x, 'gov_unit');
   }
 }
+
+export class SocialServiceDescriptor extends SimpleDescriptor {
+  constructor(x: any) {
+    super(x, 'social_service');
+  }
+}

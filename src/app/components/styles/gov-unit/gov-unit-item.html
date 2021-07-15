@@ -1,22 +1,25 @@
-<h1>{{ item.page_title }}</h1>
+<div class='soproc-header'>
+    <div class='soproc-bg'></div>
+    <h1>{{ item.page_title }}</h1>
 
-<div class='page-links'>
-    <a *ngFor='let link of PAGE_LINKS' [href]='link.href' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
-</div>
-
-<div class='filters'>
-    <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
-        <label>{{ filter.title }}</label>
-        <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()'>
-            <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
-        </select>
+    <div class='page-links'>
+        <a *ngFor='let link of PAGE_LINKS' [href]='link.href' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
     </div>
-    <div class='filter' *ngIf='subunits'>
-        <label>מנהל/אגף</label>
-        <select [(ngModel)]='item.unit' (change)='processLevel(); filtersChanged()'>
-            <option value='' selected>כלשהו</option>
-            <option *ngFor='let option of subunits' [value]='option'>{{option}}</option>
-        </select>
+
+    <div class='filters well'>
+        <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
+            <label>{{ filter.title }}</label>
+            <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()'>
+                <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
+            </select>
+        </div>
+        <div class='filter' *ngIf='subunits'>
+            <label>מנהל/אגף</label>
+            <select [(ngModel)]='item.unit' (change)='processLevel(); filtersChanged()'>
+                <option value='' selected>כלשהו</option>
+                <option *ngFor='let option of subunits' [value]='option'>{{option}}</option>
+            </select>
+        </div>
     </div>
 </div>
 
@@ -25,99 +28,16 @@
     <span [class.active]='currentTab === "suppliers"' (click)='currentTab = "suppliers"'>הרחבה לגבי מפעילי השירותים</span>
 </div>
 
-<div class='charts'>
+<div class='charts columns-3'>
     <ng-container *ngFor='let ct of chartTemplates'>
         <ng-container *ngIf='charts[ct.id] && currentTab === ct.location'>
             <div class='single-chart'>
                 <div class='chart-title'>{{ct.title}}</div>
                 <div class='chart-subtitle'>{{ct._subtitle}}</div>
-                <budgetkey-chart-plotly [layout]='charts[ct.id].layout' [data]='charts[ct.id].data'></budgetkey-chart-plotly>    
+                <budgetkey-chart-plotly [layout]='charts[ct.id].layout' [data]='charts[ct.id].data'></budgetkey-chart-plotly>
             </div>
         </ng-container>
     </ng-container>    
 </div>
 
-<div class='tab-selectors'>
-    <span>מידע גולמי עבור:</span>
-    <span [class.active]='currentTable === TABLES.services' (click)='currentTable = TABLES.services'>שירותים</span>
-    <span [class.active]='currentTable === TABLES.suppliers' (click)='currentTable = TABLES.suppliers'>מפעילים</span>
-    <span [class.active]='currentTable === TABLES.tenders' (click)='currentTable = TABLES.tenders'>הליכי רכש</span>
-</div>
-
-<div class='pager'>
-    <span *ngIf='currentTable.totalRows'>סה״כ תוצאות: {{currentTable.totalRows.toLocaleString()}}</span>
-    <div *ngIf='currentTable.totalPages && currentTable.totalPages > 1'>
-        <span>עמוד {{currentTable.currentPage + 1}} מתוך {{currentTable.totalPages}}</span>
-        <span class='pager-control' [class.active]='currentTable.currentPage > 0' (click)='movePage(-1)'>הקודם</span>
-        <span class='pager-control' [class.active]='currentTable.currentPage < currentTable.totalPages - 1' (click)='movePage(1)'>הבא</span>    
-    </div>
-    <span class='download' (click)='download()'>
-        הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg'>
-    </span>
-</div>
-<div class='results-table'>
-    <table>
-        <thead>
-            <ng-container *ngFor='let header of currentTable.uiHeaders; let i = index' >
-                <th (click)='sortBy(currentTable.sorting[i])'>
-                    <span [innerHtml]='header'></span>
-                    <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
-                    <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
-                </th> 
-            </ng-container>
-        </thead>
-        <tbody>
-            <tr *ngFor='let row of currentTable.rows'>
-                <td *ngFor='let content of currentTable.uiHtml' [innerHtml]='content(row)'></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- <div class='results-table' *ngIf='currentTable === TABLES.services'>
-    <table>
-        <thead>
-            <th>משרד</th>
-            <th>מנהל</th>
-            <th>אגף</th>
-            <th>שם שירות</th>
-            <th>תקציב מאושר</th>
-            <th>כמה מפעילים</th>
-            <th>ארצי / אזורי</th>
-        </thead>
-        <tbody>
-            <tr *ngFor='let row of currentTable.rows'>
-                <td>{{row.office}}</td>
-                <td>{{row.unit}}</td>
-                <td>{{row.subunit}}</td>
-                <td>{{row.name}}&nbsp;<i [title]='row.description' class="fa fa-question-circle"></i></td>
-                <td><span [innerHtml]='formatNumber(row.current_budget)'></span>&nbsp;<i *ngIf='beneficiariesTitle(row)' class="fa fa-question-circle" [title]='beneficiariesTitle(row)'></i></td>
-                <td><span [innerHtml]='row.supplier_count'></span>&nbsp;<i [title]='suppliersTitle(row)' class="fa fa-question-circle"></i></td>
-                <td>{{row.geo_coverage}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class='results-table' *ngIf='currentTable === TABLES.tenders'>
-    <table>
-        <thead>
-            <th>מכרז / פטור</th>
-            <th>שם מכרז</th>
-            <th>מס מכרז</th>
-            <th>יחידה ארגונית</th>
-            <th>תוקף מכרז</th>
-            <th>תוקף מכרז כולל אופציות</th>
-        </thead>
-        <tbody>
-            <tr *ngFor='let row of currentTable.rows'>
-                <td>{{row.tender_type_he}}</td>
-                <td><a [href]='row.page_url'>{{row.description}}</a></td>
-                <td>{{row.tender_id || row.publication_id}}</td>
-                <td>{{row.org_unit}}</td>
-                <td>{{row.end_date || ''}}</td>
-                <td>{{row.end_date_extended || ''}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div> -->
+<soproc-data-table [tables]='tables' [default]='"services"' [replacements]='replacements' [filename]='item.page_title'></soproc-data-table>
