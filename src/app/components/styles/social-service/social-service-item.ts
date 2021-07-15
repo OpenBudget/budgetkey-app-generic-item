@@ -83,17 +83,18 @@ export class SocialServiceItemComponent implements OnInit {
 
   mapFillFor(region) {
     let opacity = 0;
+    let count = ((this.supplierRegions['ארצי'] || {}).count || 0);
     if (this.supplierRegions[region]) {
-      const count = this.supplierRegions[region].count + ((this.supplierRegions['ארצי'] || {}).count || 0);
-      if (count === 1) {
-        opacity = 30;
-      }
-      else if (count < 5) {
-        opacity = 60;
-      }
-      else if (count > 5) {
-        opacity = 90;
-      }
+      count += this.supplierRegions[region].count;
+    }
+    if (count === 1) {
+      opacity = 30;
+    }
+    else if (count < 5) {
+      opacity = 60;
+    }
+    else if (count > 5) {
+      opacity = 90;
     }
     return `hsla(218, 44%, 58%, ${opacity}%)`;
   }

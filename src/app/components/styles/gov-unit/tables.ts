@@ -97,14 +97,17 @@ export const tableDefs = {
                     when 'cooperative' then 'מגזר שלישי'
                     else 'אחר (' || (supplier->>'entity_kind_he') || ')'
                 end as kind,
+                guidestar.association_yearly_turnover as association_yearly_turnover,
                 array_to_string(array_agg(DISTINCT office), ', ') AS offices,
                 count(1) AS services,
                 bool_or(relevant) AS relevant
          FROM s
+         LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
          GROUP BY 1,
                   2,
                   3,
-                  4)
+                  4,
+                  5)
       SELECT :fields
       FROM e
       WHERE relevant`,
@@ -113,25 +116,28 @@ export const tableDefs = {
             `שם המפעיל<name`,
             `מגזר המפעיל<kind`,
             `משרדים להם מספק שירותי רכש חברתי<offices`,
-            `מספר שירותים חברתיים כולל שנותן<services`
+            `מספר שירותים חברתיים כולל שנותן<services`,
+            `מחזור שנתי (לעמותות)<association_yearly_turnover`
         ],
         fields: [
-            'id', 'name', 'kind', 'offices', 'services', 'entity_kind'
+            'id', 'name', 'kind', 'offices', 'services', 'entity_kind', 'association_yearly_turnover'
         ],
         uiHeaders: [
             `שם המפעיל`,
             `מגזר המפעיל`,
             `משרדים להם מספק שירותי רכש חברתי`,
-            `מספר שירותים חברתיים כולל שנותן`
+            `מספר שירותים חברתיים כולל שנותן`,
+            `מחזור שנתי (לעמותות)`,
         ],
         uiHtml: [
             (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}'>${row.name}</a>` : row.name,
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,
+            (row) => format_ils(row.association_yearly_turnover),
         ],
         sorting: [
-            'name', 'kind', 'offices', 'services'
+            'name', 'kind', 'offices', 'services', 'association_yearly_turnover'
         ],
     },
     tenders: {

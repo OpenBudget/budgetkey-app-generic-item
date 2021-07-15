@@ -1,3 +1,12 @@
+import { format_ils } from '../../../pipes';
+
+function processOrgUnit(row) {
+  const orgUnit = row.org_unit;
+  const parts = orgUnit.split(' / ');
+  parts[0] = `<a href='/i/units/gov_social_service_unit/${parts[0]}'>${parts[0]}</a>`;
+  return parts.join(' / ');
+}
+
 export const tableDefs = {
   tenders: {
     name: 'הליכי רכש',
@@ -44,7 +53,7 @@ export const tableDefs = {
       (row) => row.sub_kind_he,
       (row) => `<a href='${row.page_url}' target='_blank'>${row.description}</a>`,
       (row) => (row.tender_id === 'none' ? null : row.tender_id) || row.publication_id || row.tender_key.split(':')[0],
-      (row) => row.org_unit,
+      processOrgUnit,
       (row) => row.end_date || '',
       (row) => row.end_date_extended || '',
     ],
@@ -71,8 +80,11 @@ export const tableDefs = {
                   when 'cooperative' then 'מגזר שלישי'
                   else 'אחר (' || (supplier->>'entity_kind_he') || ')'
               end as kind,
-              supplier->'geo' AS region
-        FROM s)
+              supplier->'geo' AS region,
+              guidestar.association_yearly_turnover as association_yearly_turnover
+        FROM s
+        LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
+        )
     SELECT :fields
     FROM e`,
     downloadHeaders: [
@@ -80,24 +92,27 @@ export const tableDefs = {
         `שם המפעיל<name`,
         `מגזר המפעיל<kind`,
         `איזורים גיאוגרפיים בהם פועל:comma-separated<region`,
+        `מחזור שנתי (לעמותות)<association_yearly_turnover`
     ],
     fields: [
-        'id', 'name', 'kind', 'region', 'entity_kind'
+        'id', 'name', 'kind', 'region', 'entity_kind', 'association_yearly_turnover'
     ],
     uiHeaders: [
         `מספר תאגיד`,
         `שם המפעיל`,
         `מגזר המפעיל`,
-        `איזורים גיאוגרפיים בהם פועל`
+        `איזורים גיאוגרפיים בהם פועל`,
+        `מחזור שנתי (לעמותות)`,
     ],
     uiHtml: [
         (row) => row.id,
         (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}'>${row.name}</a>` : row.name,
         (row) => row.kind,
         (row) => row.region.join(', '),
+        (row) => format_ils(row.association_yearly_turnover),
     ],
     sorting: [
-        'id', 'name', 'kind', 'region'
+        'id', 'name', 'kind', 'region', 'association_yearly_turnover'
     ],
   },
 };

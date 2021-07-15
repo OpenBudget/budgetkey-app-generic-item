@@ -227,5 +227,23 @@
       "תאריך סיום",
       "תקופה"
     ]
+  },
+  {
+    "text": "פירוט כל השירותים החברתיים אשר הארגון מפעיל",
+    "query": [
+      "WITH s AS (SELECT office, id, name, jsonb_array_elements(suppliers) AS supplier from activities",
+      "where suppliers IS NOT NULL AND suppliers::text != 'null'",
+      ") SELECT office as \"משרד\", name as \"שם השירות\", supplier->'geo' as \"איזורי הפעלה\",",
+      "'activities/gov_social_service/' || id as svc_id,",
+      "'units/gov_social_service_unit/' || office as unit_id",
+      "from s where supplier->>'entity_id' = ':id'"
+    ],
+    "parameters": {},
+    "defaults": {},
+    "headers": [
+      "שם השירות:item_link(svc_id)",
+      "משרד:item_link(unit_id)",
+      "איזורי הפעלה:comma-separated"
+    ]
   }
 ]
