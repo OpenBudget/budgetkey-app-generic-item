@@ -3,7 +3,7 @@ import { format_ils } from '../../../pipes';
 function processOrgUnit(row) {
   const orgUnit = row.org_unit;
   const parts = orgUnit.split(' / ');
-  parts[0] = `<a href='/i/units/gov_social_service_unit/${parts[0]}'>${parts[0]}</a>`;
+  parts[0] = `<a href='/i/units/gov_social_service_unit/${parts[0]}?theme=soproc'>${parts[0]}</a>`;
   return parts.join(' / ');
 }
 
@@ -106,7 +106,7 @@ export const tableDefs = {
     ],
     uiHtml: [
         (row) => row.id,
-        (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}'>${row.name}</a>` : row.name,
+        (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
         (row) => row.kind,
         (row) => row.region.join(', '),
         (row) => format_ils(row.association_yearly_turnover),
