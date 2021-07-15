@@ -64,7 +64,7 @@ export const tableDefs = {
         (row) => row.office,
         (row) => row.unit,
         (row) => row.subunit,
-        (row) => `<a href='/i/activities/${row.kind}/${row.id}'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-question-circle"></i></a>`,
+        (row) => `<a href='/i/activities/${row.kind}/${row.id}?theme=soproc'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-question-circle"></i></a>`,
         (row) => format_ils(row.current_budget) + (beneficiariesTitle(row) ? `&nbsp;<i class="fa fa-question-circle" title='${beneficiariesTitle(row)}'></i>` : ''),
         (row) => `<span>${row.supplier_count}</span>&nbsp;<i title='${suppliersTitle(row)}' class="fa fa-question-circle"></i>`,
         (row) => row.geo_coverage
@@ -130,7 +130,7 @@ export const tableDefs = {
             `מחזור שנתי (לעמותות)`,
         ],
         uiHtml: [
-            (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}'>${row.name}</a>` : row.name,
+            (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,

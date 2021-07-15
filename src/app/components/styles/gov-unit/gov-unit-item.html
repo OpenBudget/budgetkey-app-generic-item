@@ -3,7 +3,7 @@
     <h1>{{ item.page_title }}</h1>
 
     <div class='page-links'>
-        <a *ngFor='let link of PAGE_LINKS' [href]='link.href' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
+        <a *ngFor='let link of PAGE_LINKS' [href]='link.href + "?theme=soproc"' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
     </div>
 
     <div class='filters well'>
