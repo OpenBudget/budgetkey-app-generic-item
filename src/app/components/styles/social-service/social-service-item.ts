@@ -44,6 +44,9 @@ export class SocialServiceItemComponent implements OnInit {
         height: 400,
         yaxis: {
           rangemode: 'tozero'
+        },
+        xaxis: {
+          dtick: 1
         }
       },
       data: [{
@@ -58,6 +61,9 @@ export class SocialServiceItemComponent implements OnInit {
         height: 400,
         yaxis: {
           rangemode: 'tozero'
+        },
+        xaxis: {
+          dtick: 1
         }
       },
       data: [{

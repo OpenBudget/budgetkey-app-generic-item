@@ -167,6 +167,10 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
       layout: {
+        xaxis: {
+          tick0: 2019,
+          dtick: 1,
+        }
       },
       data: (items, info) => {
         const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -312,7 +316,7 @@ export const chartTemplates = [
         },
         yaxis: {
           type: 'log',
-          autorange: true
+          autorange: true,
         }
       },
       data: (items, info) => {
