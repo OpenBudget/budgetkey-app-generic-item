@@ -47,6 +47,11 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
       }, this.layout);
 
       Plotly.newPlot(this.plot.nativeElement, this.data, layout, {responsive: true});
+      (this.plot.nativeElement as HTMLDivElement).querySelectorAll('svg').forEach((svg) => {
+        svg.setAttribute('alt', this.data.title || 'diagram');
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', this.data.title || 'diagram');
+      });
     } else {
       setTimeout(() => this.checkPlotly(), 100);
     }

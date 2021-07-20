@@ -1,7 +1,7 @@
 <div class='tab-selectors'>
     <span>מידע גולמי עבור:</span>
     <ng-container *ngFor='let tbl of _tableKeys'>
-        <span [class.active]='currentTable === tables[tbl]' (click)='currentTable = tables[tbl]'>{{tables[tbl].name}}</span>        
+        <a [class.active]='currentTable === tables[tbl]' (click)='currentTable = tables[tbl]' tabindex='0'>{{tables[tbl].name}}</a>        
     </ng-container>
 </div>
 
@@ -9,20 +9,30 @@
     <span *ngIf='currentTable.totalRows'>סה״כ תוצאות: {{currentTable.totalRows.toLocaleString()}}</span>
     <div *ngIf='currentTable.totalPages && currentTable.totalPages > 1'>
         <span>עמוד {{currentTable.currentPage + 1}} מתוך {{currentTable.totalPages}}</span>
-        <span class='pager-control' [class.active]='currentTable.currentPage > 0' (click)='movePage(-1)'>הקודם</span>
-        <span class='pager-control' [class.active]='currentTable.currentPage < currentTable.totalPages - 1' (click)='movePage(1)'>הבא</span>    
+        <ng-container *ngIf='currentTable.currentPage === 0'>
+            <span class='pager-control' disabled>הקודם</span>
+        </ng-container>
+        <ng-container *ngIf='currentTable.currentPage > 0'>
+            <a class='pager-control active' (click)='movePage(-1)' tabindex="0">הקודם</a>
+        </ng-container>
+        <ng-container *ngIf='currentTable.currentPage < currentTable.totalPages - 1'>
+            <a class='pager-control active' (click)='movePage(1)' tabindex="0">הבא</a>        
+        </ng-container>
+        <ng-container *ngIf='currentTable.currentPage === currentTable.totalPages - 1'>
+            <span class='pager-control'>הבא</span>
+        </ng-container>
     </div>
-    <span class='download' (click)='download()'>
-        הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg'>
-    </span>
+    <a class='download' (click)='download()' tabindex="0">
+        הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
+    </a>
 </div>
 
 <div class='results-table'>
     <table>
         <thead>
             <ng-container *ngFor='let header of currentTable.uiHeaders; let i = index' >
-                <th (click)='sortBy(currentTable.sorting[i])'>
-                    <span [innerHtml]='header'></span>
+                <th>
+                    <a (click)='sortBy(currentTable.sorting[i])' [innerHtml]='header' tabindex="0"></a>
                     <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
                     <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
                 </th> 
