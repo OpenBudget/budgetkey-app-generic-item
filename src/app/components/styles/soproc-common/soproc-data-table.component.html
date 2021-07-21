@@ -1,7 +1,7 @@
 <div class='tab-selectors'>
     <span>מידע גולמי עבור:</span>
     <ng-container *ngFor='let tbl of _tableKeys'>
-        <a [class.active]='currentTable === tables[tbl]' (click)='currentTable = tables[tbl]' tabindex='0'>{{tables[tbl].name}}</a>        
+        <a [class.active]='currentTable === tables[tbl]' (activated)='currentTable = tables[tbl]' tabindex='0' clickOnReturn>{{tables[tbl].name}}</a>
     </ng-container>
 </div>
 
@@ -13,16 +13,16 @@
             <span class='pager-control' disabled>הקודם</span>
         </ng-container>
         <ng-container *ngIf='currentTable.currentPage > 0'>
-            <a class='pager-control active' (click)='movePage(-1)' tabindex="0">הקודם</a>
+            <a class='pager-control active' (activated)='movePage(-1)' tabindex="0" clickOnReturn>הקודם</a>
         </ng-container>
         <ng-container *ngIf='currentTable.currentPage < currentTable.totalPages - 1'>
-            <a class='pager-control active' (click)='movePage(1)' tabindex="0">הבא</a>        
+            <a class='pager-control active' (activated)='movePage(1)' tabindex="0" clickOnReturn>הבא</a>
         </ng-container>
         <ng-container *ngIf='currentTable.currentPage === currentTable.totalPages - 1'>
             <span class='pager-control'>הבא</span>
         </ng-container>
     </div>
-    <a class='download' (click)='download()' tabindex="0">
+    <a class='download' (activated)='download()' tabindex="0" clickOnReturn>
         הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
     </a>
 </div>
@@ -32,7 +32,7 @@
         <thead>
             <ng-container *ngFor='let header of currentTable.uiHeaders; let i = index' >
                 <th>
-                    <a (click)='sortBy(currentTable.sorting[i])' [innerHtml]='header' tabindex="0"></a>
+                    <a (activated)='sortBy(currentTable.sorting[i])' [innerHtml]='header' tabindex="0" clickOnReturn></a>
                     <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
                     <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
                 </th> 

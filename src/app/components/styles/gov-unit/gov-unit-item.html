@@ -24,8 +24,8 @@
 </div>
 
 <div class='tab-selectors'>
-    <a [class.active]='currentTab === "services"' (click)='currentTab = "services"' tabindex='0'>תמונת השירותים</a>
-    <a [class.active]='currentTab === "suppliers"' (click)='currentTab = "suppliers"' tabindex='0'>הרחבה לגבי מפעילי השירותים</a>
+    <a [class.active]='currentTab === "services"' (activated)='currentTab = "services"' tabindex='0' clickOnReturn>תמונת השירותים</a>
+    <a [class.active]='currentTab === "suppliers"' (activated)='currentTab = "suppliers"' tabindex='0' clickOnReturn>הרחבה לגבי מפעילי השירותים</a>
 </div>
 
 <div class='charts columns-3'>

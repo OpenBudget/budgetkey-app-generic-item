@@ -68,6 +68,7 @@ import {
 
   SafeHtmlPipe,
 } from './components';
+import { ClickOnReturnDirective } from './click-on-return.directive';
 
 
 declare let BUDGETKEY_NG2_COMPONENTS_THEME: any;
@@ -153,6 +154,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     TimelinePartComponent,
 
     PeopleItemComponent,
+
+    ClickOnReturnDirective,
 ],
   entryComponents: [
     SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent, SocialServiceItemComponent
