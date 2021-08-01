@@ -304,7 +304,7 @@ export const chartTemplates = [
            current_budget,
            jsonb_array_length(suppliers) as num_suppliers
     FROM activities
-    where :where and supplier_count_category is not null`,
+    where :where AND suppliers IS NOT NULL AND suppliers != 'null'`,
       title: 'מטריצת ריכוזיות',
       x_field: 'current_budget',
       y_field: 'num_suppliers',
