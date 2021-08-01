@@ -301,10 +301,13 @@ export const chartTemplates = [
       id: 'concentration',
       query: `
     SELECT :org-field as office,
-           current_budget,
+           100000*round(current_budget/100000) as current_budget,
            jsonb_array_length(suppliers) as num_suppliers
     FROM activities
-    where :where AND suppliers IS NOT NULL AND suppliers != 'null'`,
+    where :where AND suppliers IS NOT NULL AND suppliers != 'null'
+    group by 1,2,3
+    order by random()
+    `,
       title: 'מטריצת ריכוזיות',
       x_field: 'current_budget',
       y_field: 'num_suppliers',
