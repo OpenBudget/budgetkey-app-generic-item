@@ -274,7 +274,7 @@ export const chartTemplates = [
       query: `
     SELECT :org-field as office,
            supplier_count_category,
-           sum(current_budget) as value
+           count(1) as value
     FROM activities
     where :where and supplier_count_category is not null
     group by 1,2
