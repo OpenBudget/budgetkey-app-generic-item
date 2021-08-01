@@ -237,12 +237,15 @@ export class GovUnitItemComponent implements OnInit {
   }
 
   setSubtitle(ct, rows) {
-    const total = this.sum(rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 2});
-    ct._subtitle = ct.subtitle
-                        .replace(':total', total)
-                        .replace(':max-year', rows[0].max_year)
-                        .replace(':min-year', rows[0].min_year)
-                        .replace(':org', this.item.breadcrumbs);
+    if (rows && rows.length) {
+      const total = this.sum(rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 2});
+      ct._subtitle = ct.subtitle
+                          .replace(':total', total)
+                          .replace(':max-year', rows[0].max_year)
+                          .replace(':min-year', rows[0].min_year)
+                          .replace(':org', this.item.breadcrumbs);
+    } else {
+      ct._subtitle = 'לא נמצאו נתונים';
+    }
   }
-
 }
