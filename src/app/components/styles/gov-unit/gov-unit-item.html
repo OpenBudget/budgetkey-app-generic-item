@@ -1,6 +1,6 @@
 <div class='soproc-header'>
     <div class='soproc-bg'></div>
-    <h1>{{ item.page_title }}</h1>
+    <h1>{{ item.page_title }} - בהרצה, נתונים לא סופיים</h1>
 
     <div class='page-links'>
         <a *ngFor='let link of PAGE_LINKS' [href]='link.href + "?theme=soproc"' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
