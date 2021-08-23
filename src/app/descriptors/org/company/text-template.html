@@ -1,3 +1,11 @@
+{% if details.name_eng %}
+<div>
+    <label class="field-label">
+        שם באנגלית:
+    </label>
+    {{ details.name_eng }}
+</div>
+{% endif %}
 {% if details.description or details.goal %}
 <label class="field-label">
     תיאור ומטרת החברה:
@@ -22,7 +30,7 @@
     <label class="field-label">
         סטטוס:
     </label>
-    {{ details.status }}
+    {{ details.status }} {% if details.sub_status %}({{ details.sub_status }}){% endif %}
 </div>
 <br/>
 <div>
