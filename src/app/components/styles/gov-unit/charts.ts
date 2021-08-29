@@ -5,7 +5,7 @@ export const chartTemplates = [
       query: `select :org-field as "משרד",
           count(1) as value
           from activities where :where group by 1 order by 1`,
-      title: 'שירותים',
+      title: 'מספר השירותים החברתיים',
       subtitle: 'סה״כ :total שירותים',
       x_field: 'משרד',
       y_field: 'value',
@@ -73,10 +73,10 @@ export const chartTemplates = [
     FROM objs
     WHERE obj->'year_activity_end' is null
     `,
-      title: 'מפעילים',
+      title: 'מספר מפעילי השירותים',
       x_field: 'משרד',
       y_field: 'value',
-      subtitle: 'סה״כ :total מפעילים פעילים שונים ב:org',
+      subtitle: 'סה״כ :total מפעילים שונים ב:org',
       layout: {
         barmode: 'stack',
       },
@@ -104,13 +104,14 @@ export const chartTemplates = [
            (obj->>'year')::integer as year,
            sum((obj->>'approved')::numeric) as value
     FROM objs
+    where (obj->>'year')::integer >= 2017
     GROUP BY 1,
              2
     order by 1, 2`,
       title: 'תקציב לאורך זמן',
       x_field: 'year',
       y_field: 'value',
-      subtitle: 'סה״כ :total ₪',
+      subtitle: '',
       layout: {
       },
       data: (items, info) => {
@@ -118,6 +119,9 @@ export const chartTemplates = [
         return orgs.map((org) => {
           return {
             type: 'line',
+            line: {
+              dash: 'dot',
+            },          
             name: org,
             x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
@@ -162,7 +166,7 @@ export const chartTemplates = [
     FROM years
     where (YEAR::text)::integer >= 2020
     ORDER BY 1`,
-      title: 'מפעילים לאורך זמן',
+      title: 'מספר מפעילי השירותים לאורך זמן',
       x_field: 'year',
       y_field: 'value',
       subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
@@ -180,34 +184,6 @@ export const chartTemplates = [
             name: org,
             x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-          }
-        });
-      }
-    },
-    {
-      location: 'suppliers',
-      id: 'supplier_kinds_budget',
-      query: `
-    SELECT :org-field as office,
-           supplier_kinds,
-           sum(current_budget) as value
-    FROM activities
-    where :where and supplier_kinds is not null
-    group by 1,2
-    ORDER BY 1`,
-      title: 'תקציב שירותים לפי סוג מפעיל',
-      x_field: 'office',
-      y_field: 'value',
-      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
-      layout: {barmode: 'stack'},
-      data: (items, info) => {
-        const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return kinds.map((kind) => {
-          return {
-            type: 'bar',
-            name: kind,
-            x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
           }
         });
       }
@@ -242,28 +218,28 @@ export const chartTemplates = [
     },
     {
       location: 'suppliers',
-      id: 'supplier_count_category_budget',
+      id: 'supplier_kinds_budget',
       query: `
     SELECT :org-field as office,
-           supplier_count_category,
+           supplier_kinds,
            sum(current_budget) as value
     FROM activities
-    where :where and supplier_count_category is not null
+    where :where and supplier_kinds is not null
     group by 1,2
     ORDER BY 1`,
-      title: 'תקציב שירותים לפי היקף המפעילים',
+      title: 'תקציב שירותים לפי סוג מפעיל',
       x_field: 'office',
       y_field: 'value',
-      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
+      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
       layout: {barmode: 'stack'},
       data: (items, info) => {
-        const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
+        const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
         return kinds.map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
+            x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
           }
         });
       }
@@ -298,6 +274,34 @@ export const chartTemplates = [
     },
     {
       location: 'suppliers',
+      id: 'supplier_count_category_budget',
+      query: `
+    SELECT :org-field as office,
+           supplier_count_category,
+           sum(current_budget) as value
+    FROM activities
+    where :where and supplier_count_category is not null
+    group by 1,2
+    ORDER BY 1`,
+      title: 'תקציב שירותים לפי היקף המפעילים',
+      x_field: 'office',
+      y_field: 'value',
+      subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
+      layout: {barmode: 'stack'},
+      data: (items, info) => {
+        const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
+        return kinds.map((kind) => {
+          return {
+            type: 'bar',
+            name: kind,
+            x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
+          }
+        });
+      }
+    },
+    {
+      location: 'suppliers',
       id: 'concentration',
       query: `
     SELECT :org-field as office,
@@ -309,7 +313,7 @@ export const chartTemplates = [
       title: 'מטריצת ריכוזיות',
       x_field: 'current_budget',
       y_field: 'num_suppliers',
-      subtitle: 'כמות המפעילים של השירות יחסית לתקציב השירות',
+      subtitle: 'מספר המפעילים של השירות יחסית לתקציב השירות',
       layout: {
         xaxis: {
           type: 'log',

@@ -23,7 +23,7 @@
         </ng-container>
     </div>
     <a class='download' (activated)='download()' tabindex="0" clickOnReturn>
-        הורדת המידע לאקסל&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
+        הורדת המידע לאקסל עם שדות נוספים&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
     </a>
 </div>
 
@@ -33,8 +33,8 @@
             <ng-container *ngFor='let header of currentTable.uiHeaders; let i = index' >
                 <th>
                     <a (activated)='sortBy(currentTable.sorting[i])' [innerHtml]='header' tabindex="0" clickOnReturn></a>
-                    <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
-                    <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
+                    <i class="fa fa-chevron-down" *ngIf='currentTable.sorting[i] === currentTable.sortField && currentTable.sortDirectionDesc'></i>
+                    <i class="fa fa-chevron-up" *ngIf='currentTable.sorting[i] === currentTable.sortField && !currentTable.sortDirectionDesc'></i>
                 </th> 
             </ng-container>
         </thead>

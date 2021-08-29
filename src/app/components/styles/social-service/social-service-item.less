@@ -31,15 +31,20 @@
             align-items: flex-start;
 
             .properties {
-                flex: 1 0 auto;
-                width: 50%;
+                flex: 1 1 75%;
+                // width: 60%;
                 .property {
                     > * {
-                        line-height: 16px;
-                        font-size: 16px;
+                        line-height: 22px;
+                        font-size: 18px;
                     }
                     label {
                         margin: 0;
+                        margin-top: 20px;
+                        display: block;
+                    }
+                    a {
+                        text-decoration: underline;
                     }
                     margin-bottom: 8px;
                 }
@@ -48,16 +53,17 @@
             }
 
             .map {
-                width: 50%;
-                flex: 1 0 auto;
+                flex: 100 100 25%;
                 display: flex;
                 flex-flow: row;
-                min-width: 300px;
+                margin-right: auto;
+                align-self: center;
+                min-width: 200px;
+                max-width: 300px;
 
                 svg {
                     flex: 0 0 auto;
-                    width: 50%;
-                    margin-left: 40px;
+                    // width: 50%;
                 }
             }
         }

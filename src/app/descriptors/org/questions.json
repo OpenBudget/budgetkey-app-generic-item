@@ -229,7 +229,7 @@
     ]
   },
   {
-    "text": "פירוט כל השירותים החברתיים אשר הארגון מפעיל",
+    "text": "פירוט כל שירותי הרכש החברתי אשר הארגון מפעיל",
     "query": [
       "WITH s AS (SELECT office, id, name, jsonb_array_elements(suppliers) AS supplier from activities",
       "where suppliers IS NOT NULL AND suppliers::text != 'null'",

@@ -87,6 +87,17 @@ export class SocialServiceItemComponent implements OnInit {
     }
   }
 
+  titleForRegion(region) {
+    if (this.supplierRegions[region]) {
+      const sr = this.supplierRegions[region];
+      const count = sr.count === 1 ? 'מפעיל אחד' : `${sr.count} מפעילים`; 
+      const suppliers = (sr.suppliers as string[]).map(x => `- ${x}`).join('\n');
+      return `${region} - ${count}\n${suppliers}`;
+    }
+    return '';
+  }
+  
+
   mapFillFor(region) {
     let opacity = 0;
     let count = ((this.supplierRegions['ארצי'] || {}).count || 0);

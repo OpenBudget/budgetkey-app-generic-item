@@ -39,6 +39,7 @@ export const tableDefs = {
         'יחידת משנה<subsubunit',
         'שם השירות<name',
         'תקציב מאושר (₪):number<current_budget',
+        'ניצול תקציב (%):number<budget_utilization',
         'מספר מוטבים:number<current_beneficiaries',
         'סוג מוטבים<beneficiary_kind_name',
         'מספר מפעילים<supplier_count',
@@ -49,7 +50,8 @@ export const tableDefs = {
       ],
       fields: [
         'office', 'unit', 'subunit', 'subsubunit', 'name', 'description', 'current_budget', 'current_beneficiaries', 'beneficiary_kind_name',
-        'supplier_count', 'supplier_count_company', 'supplier_count_association', 'supplier_count_municipality', 'geo_coverage', 'id', 'kind'
+        'supplier_count', 'supplier_count_company', 'supplier_count_association', 'supplier_count_municipality', 'geo_coverage', 'id', 'kind',
+        'budget_utilization'
       ],
       uiHeaders: [
         'משרד',
@@ -57,20 +59,22 @@ export const tableDefs = {
         'אגף',
         'שם שירות',
         'תקציב מאושר',
-        'כמה מפעילים',
+        'ניצול תקציב',
+        'מס׳ מפעילים',
         'ארצי / אזורי',
       ],
       uiHtml: [
         (row) => row.office,
         (row) => row.unit,
         (row) => row.subunit,
-        (row) => `<a href='/i/activities/${row.kind}/${row.id}?theme=soproc'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-question-circle"></i></a>`,
-        (row) => format_ils(row.current_budget) + (beneficiariesTitle(row) ? `&nbsp;<i class="fa fa-question-circle" title='${beneficiariesTitle(row)}'></i>` : ''),
-        (row) => `<span>${row.supplier_count}</span>&nbsp;<i title='${suppliersTitle(row)}' class="fa fa-question-circle"></i>`,
+        (row) => `<a href='/i/activities/${row.kind}/${row.id}?theme=soproc'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-plus-circle"></i></a>`,
+        (row) => format_ils(row.current_budget) + (beneficiariesTitle(row) ? `&nbsp;<i class="fa fa-plus-circle" title='${beneficiariesTitle(row)}'></i>` : ''),
+        (row) => Number.isFinite(row.budget_utilization) ? row.budget_utilization.toFixed(1) + '%' : '',
+        (row) => `<span>${row.supplier_count}</span>&nbsp;<i title='${suppliersTitle(row)}' class="fa fa-plus-circle"></i>`,
         (row) => row.geo_coverage
       ],
       sorting: [
-        'office', 'unit', 'subunit', 'name', 'current_budget', 'supplier_count', 'geo_coverage'
+        'office', 'unit', 'subunit', 'name', 'current_budget', 'budget_utilization', 'supplier_count', 'geo_coverage'
       ]
     },
     suppliers: {
@@ -166,7 +170,7 @@ export const tableDefs = {
         'סוג הליך רכש<sub_kind_he',
         'שם מכרז<description',
         'יחידה ארגונית<org_unit',
-        'תוקף מכרז<end_date',
+        'תוקף מכרז/פטור<end_date',
         'תוקף מכרז כולל אופציות<end_date_extended'
       ],
       fields: [
@@ -176,9 +180,9 @@ export const tableDefs = {
         'מכרז / פטור',
         'סוג הליך רכש',
         'שם מכרז',
-        'מס מכרז',
+        'מס׳ הליך מכרזי',
         'יחידה ארגונית',
-        'תוקף מכרז',
+        'תוקף מכרז/פטור',
         'תוקף מכרז כולל אופציות',
       ],
       uiHtml: [
@@ -191,7 +195,7 @@ export const tableDefs = {
         (row) => row.end_date_extended || '',
       ],
       sorting: [
-        'tender_type_he', 'description', 'org_unit', 'coalesce(tender_id, tender_key)', 'end_date', 'end_date_extended'
+        'tender_type_he', 'sub_kind_he', 'description', 'coalesce(tender_id, tender_key)', 'org_unit','end_date', 'end_date_extended'
       ]
     },
   };

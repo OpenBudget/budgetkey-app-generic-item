@@ -24,23 +24,25 @@ export class GovUnitItemComponent implements OnInit {
     {title: 'משרד החינוך', href: '/i/units/gov_social_service_unit/משרד החינוך'},
   ];   
   PAGE_FILTERS = [
-    {title: 'אופן ההתערבות', id: 'intervention'},
-    {title: 'קבוצת גיל', id: 'target_age_group'},
     {title: 'אוכלוסיית היעד', id: 'target_audience'},
+    {title: 'קבוצת גיל', id: 'target_age_group'},
     {title: 'תחום ההתערבות', id: 'subject'},
+    {title: 'אופן ההתערבות', id: 'intervention'},
     {title: 'סוג המכרז', id: 'tender_type'},
     {title: 'מודל תמחור', id: 'pricing_model'},
   ];
 
   private parameters: any = {
     pricing_model: [
-      {value: 'TRUE', display: 'כלשהו'},
+      {value: 'TRUE', display: 'הכל'},
       {value: `(tenders::text) like '%%"fixed"%%'`, display: 'מחיר קבוע'},
       {value: `(tenders::text) like '%%"proposal"%%'`, display: 'הצעת מחיר'},
       {value: `(tenders::text) like '%%"combined"%%'`, display: 'משולב'},
     ],
     tender_type: [
-      {value: 'TRUE', display: 'כלשהו'},
+      {value: 'TRUE', display: 'הכל'},
+      {value: `(tenders::text) like '%%"tender_type": "office"%%'`, display: 'מכרז (כל הסוגים)'},
+      {value: `(tenders::text) like '%%"tender_type": "exemptions"%%'`, display: 'פטור (כל הסוגים)'},
     ].concat([
       'מכרז רגיל', 'מכרז סגור', 'מכרז מסגרת', 'מכרז מאגר',
       'התקשרות המשך', 'ספק יחיד', 'מימוש אופציה', 'מיזם משותף', 'התקשרות עם רשות מקומית',
@@ -130,7 +132,7 @@ export class GovUnitItemComponent implements OnInit {
 
   processParams(records, field, female) {
     const params = [];
-    const dflt = female ? 'כלשהי' : 'כלשהו';
+    const dflt =  'הכל';
     params.push({
       display: dflt,
       value: 'TRUE'
@@ -216,6 +218,7 @@ export class GovUnitItemComponent implements OnInit {
       const layout = ct.layout;
       layout.margin = {t: 20, l:30};
       layout.height = 400;
+      layout.bargap = 0.5;
       const rows = result.rows || [];
       if (result.error || rows.length === 0) {
         console.log('ERROR', query, result.error);
