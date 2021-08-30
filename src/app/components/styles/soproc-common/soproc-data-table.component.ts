@@ -59,7 +59,7 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
         query, tbl.fields, formatters, tbl.currentPage
       ).subscribe((result: any) => {
         tbl.rows = result.rows;
-        if (result.error || tbl.rows.length === 0) {
+        if (result.error) {
           console.log('ERROR', query, result.error);
         }  
         tbl.currentPage = result.page;

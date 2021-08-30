@@ -69,12 +69,13 @@ export class GovUnitItemComponent implements OnInit {
       mergeMap((field) => {
         return api.getDatarecords(field).pipe(
           map((results) => {
+            results = results.sort((a, b) => (a.order || 0) - (b.order || 0));
             return {results, field};
           })
         );
       })
     ).subscribe(({results, field}) => {
-      const params = this.processParams(results, field, field === 'target_age_group' || field === 'target_audience');
+      const params = this.processParams(results, field);
       this.parameters[field] = params;
       this.filters[field] = 'TRUE';
       if (Object.keys(this.parameters).length === fields.length) {
@@ -130,7 +131,7 @@ export class GovUnitItemComponent implements OnInit {
     })
   }
 
-  processParams(records, field, female) {
+  processParams(records, field) {
     const params = [];
     const dflt =  'הכל';
     params.push({
@@ -187,6 +188,13 @@ export class GovUnitItemComponent implements OnInit {
     ];
   }
 
+  clearFilters() {
+    for (const k of Object.keys(this.filters)) {
+      this.filters[k] = 'TRUE';
+    }
+    this.filtersChanged()
+  }
+
   sum(arr): number {
     return arr.reduce(function(a, b){
       return a + b;
@@ -220,7 +228,7 @@ export class GovUnitItemComponent implements OnInit {
       layout.height = 400;
       layout.bargap = 0.5;
       const rows = result.rows || [];
-      if (result.error || rows.length === 0) {
+      if (result.error) {
         console.log('ERROR', query, result.error);
       }
       if (ct.subtitleQuery) {
@@ -235,13 +243,16 @@ export class GovUnitItemComponent implements OnInit {
         this.setSubtitle(ct, rows);
       }
       const data = ct.data(rows, ct);
+      if (data[0].text) {
+        console.log('TEXTEXT', data[0].text);
+      }
       this.charts[ct.id] = {layout, data};
     });
   }
 
   setSubtitle(ct, rows) {
     if (rows && rows.length) {
-      const total = this.sum(rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 2});
+      const total = this.sum(rows.map((x) => x[ct.y_field])).toLocaleString('he-IL', {maximumFractionDigits: 0});
       ct._subtitle = ct.subtitle
                           .replace(':total', total)
                           .replace(':max-year', rows[0].max_year)
@@ -250,5 +261,9 @@ export class GovUnitItemComponent implements OnInit {
     } else {
       ct._subtitle = 'לא נמצאו נתונים';
     }
+  }
+
+  doSearch(href) {
+    window.open(href, '_self');
   }
 }

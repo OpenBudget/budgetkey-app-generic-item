@@ -6,20 +6,23 @@
         <a *ngFor='let link of PAGE_LINKS' [href]='link.href + "?theme=soproc"' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
     </div>
 
-    <div class='filters well'>
-        <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
-            <label [for]='filter.id'>{{ filter.title }}</label>
-            <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()' [id]='filter.id'>
-                <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
-            </select>
+    <div class='well filters-wrapper'>
+        <div class='filters'>
+            <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
+                <label [for]='filter.id'>{{ filter.title }}</label>
+                <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()' [id]='filter.id'>
+                    <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
+                </select>
+            </div>
+            <div class='filter' *ngIf='subunits'>
+                <label>מנהל/אגף</label>
+                <select [(ngModel)]='item.unit' (change)='processLevel(); filtersChanged()'>
+                    <option value='' selected>הכל</option>
+                    <option *ngFor='let option of subunits' [value]='option'>{{option}}</option>
+                </select>
+            </div>
         </div>
-        <div class='filter' *ngIf='subunits'>
-            <label>מנהל/אגף</label>
-            <select [(ngModel)]='item.unit' (change)='processLevel(); filtersChanged()'>
-                <option value='' selected>הכל</option>
-                <option *ngFor='let option of subunits' [value]='option'>{{option}}</option>
-            </select>
-        </div>
+        <a class='clear-filters' (click)='clearFilters()'>ניקוי כל הסינונים</a>
     </div>
 </div>
 

@@ -27,18 +27,31 @@
         }
     }
 
-    .filters {
+    .filters-wrapper {
         display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        justify-content: flex-start;
+        flex-flow: column;
+        align-items: stretch;
 
-        .filter {
-            flex: 0 0 50%;
-            label {
-                min-width: 100px;
+        .filters {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: flex-start;
+    
+            .filter {
+                flex: 0 0 50%;
+                label {
+                    min-width: 100px;
+                }
             }
         }
+
+        .clear-filters {
+            margin-top: 16px;
+            align-self: flex-end;
+            cursor: pointer;
+        }
+    
     }
 
 }

@@ -305,6 +305,7 @@ export const chartTemplates = [
       id: 'concentration',
       query: `
     SELECT :org-field as office,
+           name,
            current_budget,
            jsonb_array_length(suppliers) as num_suppliers
     FROM activities
@@ -313,6 +314,7 @@ export const chartTemplates = [
       title: 'מטריצת ריכוזיות',
       x_field: 'current_budget',
       y_field: 'num_suppliers',
+      text_field: 'name',
       subtitle: 'מספר המפעילים של השירות יחסית לתקציב השירות',
       layout: {
         xaxis: {
@@ -322,7 +324,8 @@ export const chartTemplates = [
         yaxis: {
           type: 'log',
           autorange: true,
-        }
+        },
+        hovermode:'closest'
       },
       data: (items, info) => {
         const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -333,6 +336,7 @@ export const chartTemplates = [
             name: org,
             x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
+            text: items.filter((x) => x.office === org).map((x) => x[info.text_field]),
           }
         });
       }
