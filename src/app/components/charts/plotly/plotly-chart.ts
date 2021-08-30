@@ -8,14 +8,11 @@ declare const window: any;
 
 @Component({
   selector: 'budgetkey-chart-plotly',
-  template: `
-    <div style="direction: ltr" #plot>
-    </div>
-  `, styles: [`
-  :host {
-    display: block;
+  templateUrl: './plotly-chart.html',
+  styleUrls: ['./plotly-chart.less'],
+  host: {
+    '[class.enlarged]': 'enlarged'
   }
-  `]
 })
 export class PlotlyChartComponent implements OnChanges, AfterViewInit {
 
@@ -23,6 +20,9 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
   @Input() public layout: any;
 
   @ViewChild('plot') plot: ElementRef;
+  @ViewChild('wrapper') wrapper: ElementRef;
+
+  _enlarged = false;
 
   private ready = new ReplaySubject(1);
 
@@ -37,17 +37,25 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
     this.ready.pipe(first()).subscribe(() => { this.checkPlotly(); });;
   }
 
-  checkPlotly() {
+  checkPlotly(big?: boolean) {
     if (window['Plotly']) {
+      const wrapper = this.wrapper.nativeElement as HTMLDivElement;
+      const el = this.plot.nativeElement as HTMLDivElement;
       const layout = Object.assign({
         height: 600,
         font: {
           size: 10
         }
       }, this.layout);
+      if (big) {
+        layout.height = wrapper.offsetHeight - 80;
+        layout.width = wrapper.offsetWidth - 80;
+      }
+      console.log('LAYOUT', layout, wrapper.offsetWidth, wrapper.offsetHeight);
 
-      Plotly.newPlot(this.plot.nativeElement, this.data, layout, {responsive: true});
-      (this.plot.nativeElement as HTMLDivElement).querySelectorAll('svg').forEach((svg) => {
+      el.innerHTML = '';
+      Plotly.newPlot(el, this.data, layout, {responsive: true});
+      el.querySelectorAll('svg').forEach((svg) => {
         svg.setAttribute('alt', this.data.title || 'diagram');
         svg.setAttribute('role', 'img');
         svg.setAttribute('aria-label', this.data.title || 'diagram');
@@ -55,5 +63,16 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
     } else {
       setTimeout(() => this.checkPlotly(), 100);
     }
+  }
+
+  set enlarged(value: boolean) {
+    this._enlarged = value;
+    setTimeout(() => {
+      this.checkPlotly(value);
+    }, 0);
+  }
+
+  get enlarged(): boolean {
+    return this._enlarged;
   }
 }

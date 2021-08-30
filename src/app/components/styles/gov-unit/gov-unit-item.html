@@ -22,8 +22,8 @@
                 </select>
             </div>
         </div>
-        <a class='clear-filters' (click)='clearFilters()'>ניקוי כל הסינונים</a>
     </div>
+    <a class='clear-filters' (click)='clearFilters()'>ניקוי כל הסינונים</a>
 </div>
 
 <div class='tab-selectors'>
@@ -43,4 +43,4 @@
     </ng-container>    
 </div>
 
-<soproc-data-table [tables]='tables' [default]='"services"' [replacements]='replacements' [filename]='item.page_title'></soproc-data-table>
+<soproc-data-table *ngIf='colorscheme | async' [tables]='tables' [default]='"services"' [replacements]='replacements' [filename]='item.page_title'></soproc-data-table>

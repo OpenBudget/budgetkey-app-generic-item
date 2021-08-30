@@ -2,6 +2,11 @@
 
 :host {
 
+    .soproc-header {
+        position: sticky;
+        top: -80px;
+        z-index: 20;
+    }
 
     .page-links {
         display: flex;
@@ -45,13 +50,14 @@
                 }
             }
         }
-
-        .clear-filters {
-            margin-top: 16px;
-            align-self: flex-end;
-            cursor: pointer;
-        }
     
+    }
+
+    .clear-filters {
+        color: white;
+        margin-top: -16px;
+        align-self: flex-end;
+        cursor: pointer;
     }
 
 }

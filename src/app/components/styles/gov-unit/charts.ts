@@ -1,3 +1,11 @@
+function getYfromX(items, x_field, y_field, x_values) {
+  const lookup = {};
+  for (const item of items) {
+    lookup[item[x_field]] = item[y_field];
+  }
+  return x_values.map(x => lookup[x] || 0);
+}
+
 export const chartTemplates = [
     {
       location: 'services',
@@ -10,12 +18,13 @@ export const chartTemplates = [
       x_field: 'משרד',
       y_field: 'value',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         return [{
           type: 'bar',
-          name: info.title,
-          x: items.map((x) => x[info.x_field]),
-          y: items.map((x) => x[info.y_field]),
+          name: 'default',
+          x: xValues,
+          y: getYfromX(items, info.x_field, info.y_field, xValues),
         }];
       }
     },
@@ -30,12 +39,13 @@ export const chartTemplates = [
       x_field: 'משרד',
       y_field: 'value',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         return [{
           type: 'bar',
-          name: info.title,
-          x: items.map((x) => x[info.x_field]),
-          y: items.map((x) => x[info.y_field]),
+          name: 'default',
+          x: xValues,
+          y: getYfromX(items, info.x_field, info.y_field, xValues),
         }];
       }
     },
@@ -80,13 +90,14 @@ export const chartTemplates = [
       layout: {
         barmode: 'stack',
       },
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         return ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'אחר'].map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.kind === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.kind === kind).map((x) => x[info.y_field]),
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.kind === kind), info.x_field, info.y_field, xValues),
           }
         });
       }
@@ -114,9 +125,9 @@ export const chartTemplates = [
       subtitle: '',
       layout: {
       },
-      data: (items, info) => {
-        const orgs = items.map((x) => x['משרד']).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return orgs.map((org) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return xValues.map((org) => {
           return {
             type: 'line',
             line: {
@@ -176,9 +187,9 @@ export const chartTemplates = [
           dtick: 1,
         }
       },
-      data: (items, info) => {
-        const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return orgs.map((org) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return xValues.map((org) => {
           return {
             type: 'line',
             name: org,
@@ -204,14 +215,15 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
         return kinds.map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues),
           }
         });
       }
@@ -232,14 +244,15 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
         return kinds.map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_kinds === kind).map((x) => x[info.y_field]),
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues),
           }
         });
       }
@@ -260,14 +273,15 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
         return kinds.map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues),
           }
         });
       }
@@ -288,14 +302,15 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
       layout: {barmode: 'stack'},
-      data: (items, info) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
         return kinds.map((kind) => {
           return {
             type: 'bar',
             name: kind,
-            x: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.supplier_count_category === kind).map((x) => x[info.y_field]),
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues),
           }
         });
       }
@@ -327,9 +342,9 @@ export const chartTemplates = [
         },
         hovermode:'closest'
       },
-      data: (items, info) => {
-        const orgs = items.map((x) => x.office).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return orgs.map((org) => {
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return xValues.map((org) => {
           return {
             type: 'scatter',
             mode: 'markers',

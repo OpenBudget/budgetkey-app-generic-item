@@ -67,7 +67,7 @@ export const tableDefs = {
         (row) => row.office,
         (row) => row.unit,
         (row) => row.subunit,
-        (row) => `<a href='/i/activities/${row.kind}/${row.id}?theme=soproc'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-plus-circle"></i></a>`,
+        (row) => `<a target='_blank' href='/i/activities/${row.kind}/${row.id}?theme=soproc'>${row.name}&nbsp;<i title='${fixTextQuotes(row.description)}' class="fa fa-plus-circle"></i></a>`,
         (row) => format_ils(row.current_budget) + (beneficiariesTitle(row) ? `&nbsp;<i class="fa fa-plus-circle" title='${beneficiariesTitle(row)}'></i>` : ''),
         (row) => Number.isFinite(row.budget_utilization) ? row.budget_utilization.toFixed(1) + '%' : '',
         (row) => `<span>${row.supplier_count}</span>&nbsp;<i title='${suppliersTitle(row)}' class="fa fa-plus-circle"></i>`,
@@ -134,7 +134,7 @@ export const tableDefs = {
             `מחזור שנתי (לעמותות)`,
         ],
         uiHtml: [
-            (row) =>  row.id  ? `<a href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
+            (row) =>  row.id  ? `<a target='_blank' href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,
@@ -159,7 +159,6 @@ export const tableDefs = {
                tenders->>'description' as description,
                tenders->>'page_url' as page_url,
                org_unit,
-               tenders->>'tender_id' as tender_id,
                tenders->>'end_date' as end_date,
                tenders->>'end_date_extended' as end_date_extended
                from t
@@ -195,7 +194,7 @@ export const tableDefs = {
         (row) => row.end_date_extended || '',
       ],
       sorting: [
-        'tender_type_he', 'sub_kind_he', 'description', 'coalesce(tender_id, tender_key)', 'org_unit','end_date', 'end_date_extended'
+        'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 'org_unit','end_date', 'end_date_extended'
       ]
     },
   };

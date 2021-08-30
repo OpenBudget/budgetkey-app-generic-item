@@ -51,8 +51,20 @@ export class SocialServiceItemComponent implements OnInit {
       },
       data: [{
         type: 'line',
+        line: {
+          dash: 'dot',
+        },          
+        name: 'תקציב מאושר',
         x: budget.map(x => x.year),
         y: budget.map(x => x.approved),
+      }, {
+        type: 'line',
+        line: {
+          dash: 'dot',
+        },
+        name: 'ביצוע בפועל',
+        x: budget.map(x => x.year),
+        y: budget.map(x => x.executed),
       }]
     };
     this.beneficiary_chart = {

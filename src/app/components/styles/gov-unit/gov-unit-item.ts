@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { from, ReplaySubject } from 'rxjs';
+import { forkJoin, from, ReplaySubject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { BudgetKeyItemService } from '../../../services';
 
@@ -30,6 +30,19 @@ export class GovUnitItemComponent implements OnInit {
     {title: 'אופן ההתערבות', id: 'intervention'},
     {title: 'סוג המכרז', id: 'tender_type'},
     {title: 'מודל תמחור', id: 'pricing_model'},
+  ];
+  COLORS = [
+    '#AB6701',
+    // '#ff9900',
+    '#526223',
+    '#6661d1',
+    '#68788c',
+    '#d6b618',
+    '#ef7625',
+    '#002070',
+    '#44b8e0',
+    '#b658cc',
+    '#192841',
   ];
 
   private parameters: any = {
@@ -62,6 +75,8 @@ export class GovUnitItemComponent implements OnInit {
   public charts = {};
   public tables = tableDefs;
   public replacements: any[] = [];
+  public colorscheme = new ReplaySubject<any>(1);
+  public xValues: any = {};
 
   constructor(private store: StoreService, private api: BudgetKeyItemService) {
     const fields = ['subject', 'intervention', 'target_audience', 'target_age_group'];
@@ -88,47 +103,62 @@ export class GovUnitItemComponent implements OnInit {
     this.item = this.store.item;
     // console.log('ITEM', this.item);
     this.processLevel();
-    // this.item.charts = [];
-    // this.ready.pipe(first()).subscribe(() => {
-    //   this.item.charts = [
-    //     {
-    //       title: 'שירותים',
-    //       long_title: 'השירותים החברתיים במיקור חוץ',
-    //       description: 'מידע נוסף על השירותים החברתיים, התקציב שלהם ומאפיינים נוספים שלהם',
-    //       type: 'questions',
-    //       label: 'שאילתות<br/>מוכנות',
-    //       questions: QuestionParser.processQuestions(this.servicesQuestions(this.item))
-    //     },
-    //     {
-    //       title: 'תקציב',
-    //       long_title: 'התקציב המוקצב לשירותים השונים',
-    //       description: 'התקציב המאושר והמבוצע לשירותים השונים, כפי שדווח על ידי המשרדים.',
-    //     },
-    //     {
-    //       title: 'מפעילים',
-    //       long_title: 'הגופים המפעילים את השירותים השונים',
-    //       description: 'מידע נוסף על הספקים או העמותות המפעילות את השירותים החברתיים ומאפיינים נוספים שלהם',
-    //     },
-    //   ];
-    //   this.store.item = this.store.item;
-    // });
-    this.filtersChanged();
-    if (this.item.office && !this.item.unit) {
-      this.item.unit = '';
-      this.getSubunits(this.item.office);
-    }
+    this.fetchColorscheme();
+    this.colorscheme.subscribe(() => {
+      this.filtersChanged();
+      if (this.item.office && !this.item.unit) {
+        this.item.unit = '';
+        this.subunits = this.xValues[this.item.office];
+      }
+    });
   }
 
-  getSubunits(office) {
-    const query = `select distinct unit as unit from activities where office='${office}'`;
+  fetchColorscheme() {
+    const query = `select office, unit, subunit from activities group by 1, 2, 3 order by 1, 2, 3`;
     this.api.getItemData(
-      query, ['value'], [this.formatter]
+      query, ['value', 'value', 'value'], [this.formatter, this.formatter, this.formatter]
     ).pipe(
       map((x: any) => x.rows),
-      map((x: any[]) => x.map((y) => y.unit)),
     ).subscribe((rows) => {
-      this.subunits = rows.filter((x) => x);
-    })
+      const scheme = {default: 0};
+      for (const row of rows) {
+        const office = row.office;
+        this.xValues.offices = this.xValues.offices || [];
+        if (this.xValues.offices.indexOf(office) === -1) {
+          scheme[office] = this.xValues.offices.length;
+          this.xValues.offices.push(office);
+        }
+        const unit = row.unit;
+        if (unit) {
+          this.xValues[office] = this.xValues[office] || [];
+          if (this.xValues[office].indexOf(unit) === -1) {
+            scheme[unit] = this.xValues[office].length;
+            this.xValues[office].push(unit);
+          }
+
+          const subunit = row.subunit || 'אחר';
+          const key = office + ':' + unit;
+          this.xValues[key] = this.xValues[key] || [];
+          if (this.xValues[key].indexOf(subunit) === -1) {
+            scheme[subunit] = this.xValues[key].length;
+            this.xValues[key].push(subunit);
+          }
+        }
+      }
+      const orgSizes = ['1', '2-5', '6+']
+      const orgKinds = ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'משולב'];
+      for (const i in orgSizes) {
+        scheme[orgSizes[i]] = i;
+      }
+      for (const i in orgKinds) {
+        scheme[orgKinds[i]] = i;
+      }
+      scheme['אחר'] = 9;
+      console.log('X_VALUES', this.xValues);
+      console.log('SENDING COLOR SCHEME', scheme);
+      this.colorscheme.next(scheme);
+      this.colorscheme.complete();
+    });
   }
 
   processParams(records, field) {
@@ -220,9 +250,12 @@ export class GovUnitItemComponent implements OnInit {
 
   refreshChart(ct, where) {
     const query = this.prepareChartQuery(ct.query, where);
-    this.api.getItemData(
-      query, ['משרד', 'value'], [this.formatter('משד'), this.formatter('value')]
-    ).subscribe((result: any) => {
+    forkJoin(
+      this.colorscheme,
+      this.api.getItemData(
+        query, ['משרד', 'value'], [this.formatter('משד'), this.formatter('value')]
+      )
+    ).subscribe(([scheme, result]: any[]) => {
       const layout = ct.layout;
       layout.margin = {t: 20, l:30};
       layout.height = 400;
@@ -242,9 +275,35 @@ export class GovUnitItemComponent implements OnInit {
       } else {
         this.setSubtitle(ct, rows);
       }
-      const data = ct.data(rows, ct);
-      if (data[0].text) {
-        console.log('TEXTEXT', data[0].text);
+      let x_values = [];
+      if (ct.kind === 'org') {
+        let key = 'offices';
+        if (this.item.office) {
+          key = this.item.office;
+          if (this.item.unit) {
+            key += ':' + this.item.unit;
+          }
+        }
+        x_values = this.xValues[key];
+        console.log('X VALUES', key, x_values)
+      } else {
+        console.log('UNKNOWN CHART KIND', ct.title)
+      }
+      const data = ct.data(rows, ct, x_values);
+      for (const d of data) {
+        if (scheme.hasOwnProperty(d.name)) {
+          const color = this.COLORS[scheme[d.name]];
+          d.marker = {
+            color: color,
+            opacity: 1,
+            line: {
+              color: color,
+              opacity: 1,
+            }
+          };
+        } else {
+          console.log('MISSING VALUE', d.name)
+        }
       }
       this.charts[ct.id] = {layout, data};
     });
