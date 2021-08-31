@@ -42,9 +42,6 @@ export class MultiSelectComponent implements OnInit {
 
   set _value(value) {
     this.value = value;
-    this.fixEmpty();
-    this.valueChange.emit(this.value);
-    this.changed.emit();
   }
 
   get display() {
@@ -76,11 +73,15 @@ export class MultiSelectComponent implements OnInit {
 
   set visible(visible: boolean) {
     this._visible = visible;
-    setTimeout(() => {
-      if (visible) {
+    if (visible) {
+      setTimeout(() => {
         this.select.nativeElement.focus();
-      }
-    }, 0);
+      }, 0);
+    } else {
+      this.fixEmpty();
+      this.valueChange.emit(this.value);
+      this.changed.emit();  
+    }
   }
 
   get visible() {
