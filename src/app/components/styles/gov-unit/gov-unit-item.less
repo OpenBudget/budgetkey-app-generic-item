@@ -45,9 +45,16 @@
     
             .filter {
                 flex: 0 0 50%;
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                margin-bottom: 4px;
                 label {
                     min-width: 100px;
+                    margin: 0;
                 }
+                max-width: 50%;
+                padding-right: 20px;
             }
         }
     
@@ -58,6 +65,10 @@
         margin-top: -16px;
         align-self: flex-end;
         cursor: pointer;
+    }
+
+    ::ng-deep .explanation {
+        text-decoration: underline dotted;
     }
 
 }

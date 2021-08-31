@@ -35,18 +35,21 @@ export class SocialServiceItemComponent implements OnInit {
       {from: ':where', to: `id = '${this.item.id}'`}
     ];
     this.item.breadcrumbs = [this.item.office, this.item.unit, this.item.subunit, this.item.subsubunit].filter(x => !!x).join(' / ');
+    this.item.catalog_number = parseInt(this.item.catalog_number, 10) || null;
     // console.log('ITEM=', this.item);
     const budget = this.item.manualBudget.sort((a, b) => a.year - b.year);
     const beneficiaries = this.item.beneficiaries.sort((a, b) => a.year - b.year);
     this.budget_chart = {
       layout: {
-        margin: {t: 20, l:40, r:40, b:20},
+        margin: {t: 20, r:40},
         height: 400,
         yaxis: {
-          rangemode: 'tozero'
+          rangemode: 'tozero',
+          title: '(₪) תקציב השירות',
         },
         xaxis: {
-          dtick: 1
+          dtick: 1,
+          title: 'שנת התקציב'
         }
       },
       data: [{
@@ -69,13 +72,15 @@ export class SocialServiceItemComponent implements OnInit {
     };
     this.beneficiary_chart = {
       layout: {
-        margin: {t: 20, l:40, r:40, b:20},
+        margin: {t: 20, r:40},
         height: 400,
         yaxis: {
-          rangemode: 'tozero'
+          rangemode: 'tozero',
+          title: 'מספר מוטבים',
         },
         xaxis: {
-          dtick: 1
+          dtick: 1,
+          title: 'שנה',
         }
       },
       data: [{

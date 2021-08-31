@@ -10,9 +10,7 @@
         <div class='filters'>
             <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
                 <label [for]='filter.id'>{{ filter.title }}</label>
-                <select [(ngModel)]='filters[filter.id]' (change)='filtersChanged()' [id]='filter.id'>
-                    <option *ngFor='let option of parameters[filter.id]' [value]='option.value'>{{option.display}}</option>
-                </select>
+                <budgetkey-multi-select [(value)]='filters[filter.id]' (valueChange)='filtersChanged()' [id]='filter.id' [options]='parameters[filter.id]'></budgetkey-multi-select>
             </div>
             <div class='filter' *ngIf='subunits'>
                 <label>מנהל/אגף</label>
@@ -35,7 +33,7 @@
     <ng-container *ngFor='let ct of chartTemplates'>
         <ng-container *ngIf='charts[ct.id] && currentTab === ct.location'>
             <div class='single-chart'>
-                <div class='chart-title'>{{ct.title}}</div>
+                <div class='chart-title' [innerHtml]='processTitles(ct.title)'></div>
                 <div class='chart-subtitle'>{{ct._subtitle}}</div>
                 <budgetkey-chart-plotly [layout]='charts[ct.id].layout' [data]='charts[ct.id].data'></budgetkey-chart-plotly>
             </div>

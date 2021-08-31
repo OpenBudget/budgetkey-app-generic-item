@@ -9,16 +9,23 @@ function beneficiariesTitle(row) {
 
 function suppliersTitle(row) {
     const parts = [];
+    let count_other = row.supplier_count;
     if (row.supplier_count_association) {
         parts.push(`מגזר שלישי: ${row.supplier_count_association}`);
+        count_other -= row.supplier_count_association;
     }
     if (row.supplier_count_company) {
         parts.push(`מגזר עסקי: ${row.supplier_count_company}`);
+        count_other -= row.supplier_count_company;
     }
     if (row.supplier_count_municipality) {
         parts.push(`רשויות מקומיות: ${row.supplier_count_municipality}`);
+        count_other -= row.supplier_count_municipality;
     }
-    return parts.join('\n');
+    if (count_other > 0) {
+      parts.push(`אחר: ${count_other}`);
+  }
+  return parts.join('\n');
 }
 
 function fixTextQuotes(t) {

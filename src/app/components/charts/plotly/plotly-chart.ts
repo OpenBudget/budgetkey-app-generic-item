@@ -51,7 +51,6 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
         layout.height = wrapper.offsetHeight - 80;
         layout.width = wrapper.offsetWidth - 80;
       }
-      console.log('LAYOUT', layout, wrapper.offsetWidth, wrapper.offsetHeight);
 
       el.innerHTML = '';
       Plotly.newPlot(el, this.data, layout, {responsive: true});

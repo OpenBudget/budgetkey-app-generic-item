@@ -69,6 +69,7 @@ import {
   SafeHtmlPipe,
 } from './components';
 import { ClickOnReturnDirective } from './click-on-return.directive';
+import { MultiSelectComponent } from './components/widgets/multi-select/multi-select.component';
 
 
 declare let BUDGETKEY_NG2_COMPONENTS_THEME: any;
@@ -156,6 +157,8 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     PeopleItemComponent,
 
     ClickOnReturnDirective,
+
+    MultiSelectComponent,
 ],
   entryComponents: [
     SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent, SocialServiceItemComponent

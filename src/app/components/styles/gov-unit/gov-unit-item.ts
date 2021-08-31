@@ -32,9 +32,9 @@ export class GovUnitItemComponent implements OnInit {
     {title: 'מודל תמחור', id: 'pricing_model'},
   ];
   COLORS = [
-    '#AB6701',
-    // '#ff9900',
-    '#526223',
+    // '#AB6701',
+    '#87cefa',
+    '#ff9900',
     '#6661d1',
     '#68788c',
     '#d6b618',
@@ -43,6 +43,7 @@ export class GovUnitItemComponent implements OnInit {
     '#44b8e0',
     '#b658cc',
     '#192841',
+    '#526223',
   ];
 
   private parameters: any = {
@@ -67,8 +68,8 @@ export class GovUnitItemComponent implements OnInit {
   private subunits = null;
   private ready = new ReplaySubject<void>(1);
   private filters = {
-    pricing_model: 'TRUE',
-    tender_type: 'TRUE'
+    pricing_model: ['TRUE'],
+    tender_type: ['TRUE']
   };
   public currentTab = 'services';
   private chartTemplates = chartTemplates;
@@ -92,7 +93,7 @@ export class GovUnitItemComponent implements OnInit {
     ).subscribe(({results, field}) => {
       const params = this.processParams(results, field);
       this.parameters[field] = params;
-      this.filters[field] = 'TRUE';
+      this.filters[field] = ['TRUE'];
       if (Object.keys(this.parameters).length === fields.length) {
         this.ready.next();
       }
@@ -154,8 +155,6 @@ export class GovUnitItemComponent implements OnInit {
         scheme[orgKinds[i]] = i;
       }
       scheme['אחר'] = 9;
-      console.log('X_VALUES', this.xValues);
-      console.log('SENDING COLOR SCHEME', scheme);
       this.colorscheme.next(scheme);
       this.colorscheme.complete();
     });
@@ -196,12 +195,18 @@ export class GovUnitItemComponent implements OnInit {
     return (row) => '' + row[f];
   }
 
+  filterExpression(k) {
+    return '(' + this.filters[k].join(' OR ') + ')';
+  }
+
   calcWhere() {
     let where = '';
     for (const k of Object.keys(this.filters)) {
-      where += ` ${this.filters[k]} AND`;
+      const filter = this.filterExpression(k);
+      where += ` ${filter} AND`;
     }
     where += ' ' + this.levelCond;
+    where = where.split(' (TRUE) AND').join('');
     where = where.split(' TRUE AND').join('');
     return where;
   }
@@ -213,14 +218,14 @@ export class GovUnitItemComponent implements OnInit {
     }
     this.replacements = [
       {from: ':where', to: where},
-      {from: ':tender-type', to: this.filters.tender_type},
-      {from: ':pricing-model', to: this.filters.pricing_model},
+      {from: ':tender-type', to: this.filterExpression('tender_type')},
+      {from: ':pricing-model', to: this.filterExpression('pricing_model')},
     ];
   }
 
   clearFilters() {
     for (const k of Object.keys(this.filters)) {
-      this.filters[k] = 'TRUE';
+      this.filters[k] = ['TRUE'];
     }
     this.filtersChanged()
   }
@@ -257,7 +262,7 @@ export class GovUnitItemComponent implements OnInit {
       )
     ).subscribe(([scheme, result]: any[]) => {
       const layout = ct.layout;
-      layout.margin = {t: 20, l:30};
+      layout.margin = {t: 20};
       layout.height = 400;
       layout.bargap = 0.5;
       const rows = result.rows || [];
@@ -285,7 +290,6 @@ export class GovUnitItemComponent implements OnInit {
           }
         }
         x_values = this.xValues[key];
-        console.log('X VALUES', key, x_values)
       } else {
         console.log('UNKNOWN CHART KIND', ct.title)
       }
@@ -324,5 +328,12 @@ export class GovUnitItemComponent implements OnInit {
 
   doSearch(href) {
     window.open(href, '_self');
+  }
+
+  processTitles(t: string) {
+    const supplier_type_explanation = 'האם המפעיל מהמגזר הפרטי, השלישי (עמותות וחל״צ), רשות מקומית או אחר (למשל: הקדש, שותפות, תאגיד סטטוטורי, קופתח חולים,  שירות דת, אוניברסיטה ועוד)';
+    return t.replace('סוג מפעיל', `
+    <span title='${supplier_type_explanation}' class='explanation'>סוג מפעיל</span>
+    `);
   }
 }

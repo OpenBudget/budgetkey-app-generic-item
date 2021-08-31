@@ -39,6 +39,10 @@
                 <span>{{item.subject.join(', ')}}</span>
             </div>
     
+            <div class='property' *ngIf='item.catalog_number'>
+                <label><a target='_blank' [href]='"https://clickrevaha.molsa.gov.il/product-page/" + item.catalog_number'>קישור למערכת ״קליק לרווחה״</a></label>
+            </div>
+    
         </div>
     
         <div class='map'>

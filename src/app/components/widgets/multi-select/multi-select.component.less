@@ -1,0 +1,58 @@
+:host {
+    height: 24px;
+    overflow: visible;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    flex: 0 1 auto;
+
+    a {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 24px;
+        border: 0.5px solid #192841c0;
+        background: white;
+        font-size: 14px;
+        line-height: 14px;
+        min-width: 200px;
+        border-radius: 2px;
+        color: black;
+        padding: 0 4px;
+        width: 100%;
+        max-width: 100%;
+
+        &:hover, &:visited, &:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        span {
+            margin-left: 16px;
+            overflow: hidden;
+            flex: 1 1 auto;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        i {
+            flex: 0 0 auto;
+            font-size: 10px;
+        }
+    }
+    select {
+        position: absolute;
+        right: 0;
+        top: 23px;
+        display: none;
+        background-color: white;
+        &.visible {
+            display: block;
+        }
+        z-index: 1;
+        min-width: 200px;
+    }
+}

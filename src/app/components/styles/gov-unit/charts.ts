@@ -17,7 +17,15 @@ export const chartTemplates = [
       subtitle: 'סה״כ :total שירותים',
       x_field: 'משרד',
       y_field: 'value',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר השירותים'
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         return [{
@@ -38,7 +46,15 @@ export const chartTemplates = [
       subtitle: 'סה״כ :total ₪',
       x_field: 'משרד',
       y_field: 'value',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'תקציב מאושר'
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         return [{
@@ -89,6 +105,12 @@ export const chartTemplates = [
       subtitle: 'סה״כ :total מפעילים שונים ב:org',
       layout: {
         barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר המפעילים'
+        }
       },
       kind: 'org',
       data: (items, info, xValues) => {
@@ -124,6 +146,12 @@ export const chartTemplates = [
       y_field: 'value',
       subtitle: '',
       layout: {
+        xaxis: {
+          title: 'שנת תקציב'
+        },
+        yaxis: {
+          title: '(₪) תקציב השירותים',
+        }
       },
       kind: 'org',
       data: (items, info, xValues) => {
@@ -183,8 +211,13 @@ export const chartTemplates = [
       subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
       layout: {
         xaxis: {
-          tick0: 2019,
+          // tick0: 2019,
+          title: 'שנה',
           dtick: 1,
+          range: [2019.5, 2020.5]
+        },
+        yaxis: {
+          title: 'מספר המפעילים',
         }
       },
       kind: 'org',
@@ -214,7 +247,15 @@ export const chartTemplates = [
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר שירותים',
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -243,7 +284,15 @@ export const chartTemplates = [
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: '(₪) תקציב השירותים',
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -272,7 +321,15 @@ export const chartTemplates = [
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר שירותים',
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -301,7 +358,15 @@ export const chartTemplates = [
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
-      layout: {barmode: 'stack'},
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: '(₪) תקציב השירותים',
+        }
+      },
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_count_category).filter((item, i, ar) => ar.indexOf(item) === i).sort();
@@ -334,11 +399,13 @@ export const chartTemplates = [
       layout: {
         xaxis: {
           type: 'log',
-          autorange: true
+          autorange: true,
+          title: '(₪) תקציב השירות',
         },
         yaxis: {
           type: 'log',
           autorange: true,
+          title: 'מספר המפעילים',
         },
         hovermode:'closest'
       },

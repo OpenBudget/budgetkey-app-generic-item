@@ -1,0 +1,10 @@
+<ng-container *ngIf='options'>
+  <a aria-haspopup="true" [attr.aria-expanded]="visible" (focus)='visible=true' tabindex="0">
+    <span>{{display}}</span>
+    <i class="fa fa-chevron-down" *ngIf='!visible'></i>
+    <i class="fa fa-chevron-up" *ngIf='visible'></i>
+  </a>
+  <select #select [(ngModel)]='_value' [id]='id' [class.visible]='visible' (blur)='visible=false' tabindex="0" multiple [size]='options.length'>
+    <option *ngFor='let option of options' [value]='option.value'>{{option.display}}</option>
+  </select>
+</ng-container>
