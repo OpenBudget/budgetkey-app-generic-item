@@ -38,35 +38,6 @@ export const chartTemplates = [
     },
     {
       location: 'services',
-      id: 'budget',
-      query: `select :org-field as "משרד",
-          sum(current_budget) as value
-          from activities where :where group by 1 order by 1`,
-      title: 'תקציב מאושר',
-      subtitle: 'סה״כ :total ₪',
-      x_field: 'משרד',
-      y_field: 'value',
-      layout: {
-        barmode: 'stack',
-        xaxis: {
-          title: 'משרד / יחידה'
-        },
-        yaxis: {
-          title: 'תקציב מאושר'
-        }
-      },
-      kind: 'org',
-      data: (items, info, xValues) => {
-        return [{
-          type: 'bar',
-          name: 'default',
-          x: xValues,
-          y: getYfromX(items, info.x_field, info.y_field, xValues),
-        }];
-      }
-    },
-    {
-      location: 'services',
       id: 'supplier_kinds',
       query: `WITH objs AS
       (SELECT :org-field as office,
@@ -126,6 +97,35 @@ export const chartTemplates = [
     },
     {
       location: 'services',
+      id: 'budget',
+      query: `select :org-field as "משרד",
+          sum(current_budget) as value
+          from activities where :where group by 1 order by 1`,
+      title: 'תקציב מאושר',
+      subtitle: 'סה״כ :total ₪',
+      x_field: 'משרד',
+      y_field: 'value',
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'תקציב מאושר'
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return [{
+          type: 'bar',
+          name: 'default',
+          x: xValues,
+          y: getYfromX(items, info.x_field, info.y_field, xValues),
+        }];
+      }
+    },
+    {
+      location: 'services',
       id: 'budget_trend',
       query: `WITH objs AS
       (SELECT :org-field as office,
@@ -135,7 +135,8 @@ export const chartTemplates = [
          AND "manualBudget" != 'null' )
     SELECT office as "משרד",
            (obj->>'year')::integer as year,
-           sum((obj->>'approved')::numeric) as value
+           sum((obj->>'approved')::numeric) as value,
+           sum((obj->>'executed')::numeric) as value2
     FROM objs
     where (obj->>'year')::integer >= 2017
     GROUP BY 1,
@@ -144,7 +145,8 @@ export const chartTemplates = [
       title: 'תקציב לאורך זמן',
       x_field: 'year',
       y_field: 'value',
-      subtitle: '',
+      y_field2: 'value2',
+      subtitle: '(תקציב מאושר בקו רציף, הביצוע בקו מקווקו)',
       layout: {
         xaxis: {
           title: 'שנת תקציב'
@@ -155,15 +157,76 @@ export const chartTemplates = [
       },
       kind: 'org',
       data: (items, info, xValues) => {
+        const budgets = xValues.map((org) => {
+          return {
+            type: 'line',
+            name: org,
+            x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
+            y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
+          }
+        });
+        if (xValues[0].indexOf('משרד ה') === 0) {
+          budgets.push(...xValues.map((org) => {
+            return {
+              type: 'line',
+              line: {
+                dash: 'dot',
+              },
+              name: org,
+              x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
+              y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]),
+            }
+          }));
+        }
+        return budgets;
+      }
+    },
+    {
+      location: 'services',
+      id: 'service_trend',
+      query: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements("manualBudget"::JSONB) AS obj
+       FROM all_activities
+       WHERE :where and "manualBudget" IS NOT NULL
+         AND "manualBudget" != 'null'),
+         years AS
+      (SELECT office,
+              (obj->>'year')::integer AS year
+       FROM objs)
+    SELECT office,
+           year,
+           count(1) AS value
+    FROM years
+    where year >= 2020
+    group by 1,2
+    ORDER BY 1`,
+      title: 'מספר השירותים השונים לאורך זמן',
+      subtitle: '',
+      x_field: 'year',
+      y_field: 'value',
+      layout: {
+        xaxis: {
+          // tick0: 2019,
+          title: 'שנה',
+          dtick: 1,
+          range: [2019.5, 2020.5]
+        },
+        yaxis: {
+          title: 'מספר השירותים',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
         return xValues.map((org) => {
           return {
             type: 'line',
             line: {
               dash: 'dot',
-            },          
+            },
             name: org,
-            x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-            y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
+            x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
           }
         });
       }
@@ -225,6 +288,9 @@ export const chartTemplates = [
         return xValues.map((org) => {
           return {
             type: 'line',
+            line: {
+              dash: 'dot',
+            },
             name: org,
             x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
