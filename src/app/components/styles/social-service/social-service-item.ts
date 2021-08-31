@@ -56,7 +56,15 @@ export class SocialServiceItemComponent implements OnInit {
         type: 'line',
         line: {
           dash: 'dot',
-        },          
+        },
+        marker: {
+          color: '#87cefa',
+          opacity: 1,
+          line: {
+            color: '#87cefa',
+            opacity: 1
+          }
+        },
         name: 'תקציב מאושר',
         x: budget.map(x => x.year),
         y: budget.map(x => x.approved),
@@ -64,6 +72,14 @@ export class SocialServiceItemComponent implements OnInit {
         type: 'line',
         line: {
           dash: 'dot',
+        },
+        marker: {
+          color: '#ff9900',
+          opacity: 1,
+          line: {
+            color: '#ff9900',
+            opacity: 1
+          }
         },
         name: 'ביצוע בפועל',
         x: budget.map(x => x.year),
@@ -85,6 +101,14 @@ export class SocialServiceItemComponent implements OnInit {
       },
       data: [{
         type: 'line',
+        marker: {
+          color: '#6661d1',
+          opacity: 1,
+          line: {
+            color: '#6661d1',
+            opacity: 1
+          }
+        },
         x: beneficiaries.map(x => x.year),
         y: beneficiaries.map(x => x.num_beneficiaries),
       }]

@@ -10,37 +10,52 @@
     <div class='info well'>
         <div class='properties'>
             <div class='property' *ngIf='item.virtue_of_table && item.virtue_of_table.length && item.virtue_of_table[0].kind'>
+                <div class='icon f1'><i class="fa fa-university" aria-hidden="true"></i></div>
                 <label>ניתן מכח:</label>&nbsp;
-                <ul>
+                <div class='property-value'>
                     <ng-container *ngFor='let el of item.virtue_of_table'>
-                        <li *ngIf='el.details'><a [href]='el.details' target="_blank">{{el.kind}}</a></li>
-                        <li *ngIf='!el.details'>{{el.kind}}</li>
+                        <span *ngIf='el.details' class='link'><a [href]='el.details' target="_blank">{{el.kind}}</a><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                        <span *ngIf='!el.details'>{{el.kind}}</span>
                     </ng-container>
-                </ul>
+                </div>
             </div>
     
             <div class='property' *ngIf='item.target_audience && item.target_audience.length'>
-                <label>אוכלוסיית יעד:&nbsp;</label>
-                <span>{{item.target_audience.join(', ')}}</span>
+                <div class='icon f2'><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                <label>אוכלוסיית יעד</label>
+                <div class='property-value'>
+                    <span class='tag b2' *ngFor='let i of item.target_audience'>{{i}}</span>                    
+                </div>
             </div>
     
             <div class='property' *ngIf='item.target_age_group && item.target_age_group.length'>
-                <label>קבוצת גיל:&nbsp;</label>
-                <span>{{item.target_age_group.join(', ')}}</span>
+                <div class='icon f3'><i class="fa fa-users" aria-hidden="true"></i></div>
+                <label>קבוצת גיל</label>
+                <div class='property-value'>
+                    <span class='tag b3' *ngFor='let i of item.target_age_group'>{{i}}</span>
+                </div>
             </div>
     
             <div class='property' *ngIf='item.intervention && item.intervention.length'>
-                <label>אופן התערבות:&nbsp;</label>
-                <span>{{item.intervention.join(', ')}}</span>
+                <div class='icon f4'><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
+                <label>אופן התערבות</label>
+                <div class='property-value'>
+                    <span class='tag b4' *ngFor='let i of item.intervention'>{{i}}</span>
+                </div>
             </div>
     
             <div class='property' *ngIf='item.subject && item.subject.length'>
-                <label>תחום התערבות:&nbsp;</label>
-                <span>{{item.subject.join(', ')}}</span>
+                <div class='icon f5'><i class="fa fa-arrows" aria-hidden="true"></i></div>
+                <label>תחום התערבות</label>
+                <div class='property-value'>
+                    <span class='tag b5' *ngFor='let i of item.subject'>{{i}}</span>
+                </div>
             </div>
     
-            <div class='property' *ngIf='item.catalog_number'>
-                <label><a target='_blank' [href]='"https://clickrevaha.molsa.gov.il/product-page/" + item.catalog_number'>קישור למערכת ״קליק לרווחה״</a></label>
+            <div class='property bottom' *ngIf='item.catalog_number'>
+                <div class='property-value'>
+                    <span class='link'><a target='_blank' [href]='"https://clickrevaha.molsa.gov.il/product-page/" + item.catalog_number'>קישור למערכת ״קליק לרווחה״</a><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                </div>
             </div>
     
         </div>

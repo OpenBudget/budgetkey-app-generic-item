@@ -1,5 +1,37 @@
 @import '../soproc-common/social-service-common.less';
 
+.b1 {
+    background: #19284180;
+}
+.b2 {
+    background: #87cefac0;
+}
+.b3 {
+    background: #ff9900c0;
+}
+.b4 {
+    background: #6661d180;
+}
+.b5 {
+    background: #68788c80;
+}
+.f1 {
+    color: #192841;
+}
+.f2 {
+    color: #87cefa;
+}
+.f3 {
+    color: #ff9900;
+}
+.f4 {
+    color: #6661d1;
+}
+.f5 {
+    color: #68788c;
+}
+
+
 :host {
 
     .soproc-header {
@@ -28,27 +60,69 @@
         .info {
             display: flex;
             flex-flow: row wrap;
-            align-items: flex-start;
+            align-items: stretch;
 
             .properties {
                 flex: 1 1 75%;
+                display: flex;
+                flex-flow: column;
                 // width: 60%;
                 .property {
-                    > * {
-                        line-height: 22px;
-                        font-size: 18px;
+                    display: flex;
+                    flex-flow: row;
+                    align-items: center;
+                    margin-top: 20px;
+
+                    .icon {
+                        // color: #6661d1;
+                        font-size: 34px;
+                        width: 60px;
+                        flex: 0 0 auto;
+                        text-align: center;
+                        i {
+                            vertical-align: middle;
+                        }
                     }
                     label {
                         margin: 0;
-                        margin-top: 20px;
                         display: block;
+                        color: #192841;
+                        font-size: 22px;
+                        min-width: 170px;
                     }
-                    a {
-                        text-decoration: underline;
+                    &.bottom {
+                        margin-top: auto;
                     }
-                    margin-bottom: 8px;
+                    .property-value {
+                        font-size: 22px;
+                        font-weight: 300;
+                        display: flex;
+                        flex-flow: row wrap;    
+                        a {
+                            text-decoration: underline;
+                        }
+                        ul {
+                            margin: 0;
+                        }
+                        span {
+                            &.tag {
+                                padding: 0px 8px;
+                                // border-radius: 22px;
+                                margin: 4px 0px;
+                                margin-left: 10px;
+                                color: #192841;
+                                white-space: nowrap;
+                            }
+                            &.link {
+                                flex: 100%;
+                                i {
+                                    margin-right: 8px;
+                                    vertical-align: middle;
+                                }
+                            }
+                        }
+                    }
                 }
-                margin-bottom: 40px;
                 padding-left: 40px;
             }
 
@@ -60,6 +134,8 @@
                 align-self: center;
                 min-width: 200px;
                 max-width: 300px;
+                padding: 16px;
+                box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
 
                 svg {
                     flex: 0 0 auto;
