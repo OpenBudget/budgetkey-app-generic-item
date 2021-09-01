@@ -38,7 +38,7 @@
     
             <div class='property' *ngIf='item.intervention && item.intervention.length'>
                 <div class='icon f4'><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
-                <label>אופן התערבות</label>
+                <label class='bk-tooltip-anchor'>אופן התערבות<span class='bk-tooltip'>הדרך או הצורה שבה ניתן השירות</span></label>
                 <div class='property-value'>
                     <span class='tag b4' *ngFor='let i of item.intervention'>{{i}}</span>
                 </div>
@@ -46,7 +46,7 @@
     
             <div class='property' *ngIf='item.subject && item.subject.length'>
                 <div class='icon f5'><i class="fa fa-arrows" aria-hidden="true"></i></div>
-                <label>תחום התערבות</label>
+                <label class='bk-tooltip-anchor'>תחום התערבות<span class='bk-tooltip'>תחומי התוכן או הנושאים שבהם מתמקד השירות</span></label>
                 <div class='property-value'>
                     <span class='tag b5' *ngFor='let i of item.subject'>{{i}}</span>
                 </div>
@@ -203,15 +203,15 @@
 <div class='charts columns-2'>
 
     <div class='single-chart'>
-        <div class='chart-title'>תקציב מאושר וביצוע תקציב בש״ח</div>
+        <div class='chart-title bk-tooltip-anchor'>תקציב מאושר וביצוע תקציב בש״ח<span class='bk-tooltip'>התקציב המאושר ותקציב הביצוע בפועל של השירות לאורך זמן. שינויים בתקציב עשויים לנבוע ממעבר של השירות לצורות הפעלה שונות (שאינן הליך מכרזי) או משינויים במבנה ארגוני (כגון איחוד שירותים) ואינם מעידים בהכרח על שינויים באספקת השירות בפועל. בחלק מהשירותים התקציב כולל השתתפות רשויות מקומיות.</span></div>
         <budgetkey-chart-plotly [layout]='budget_chart.layout' [data]='budget_chart.data'></budgetkey-chart-plotly>
     </div>
 
     <div class='single-chart'>
-        <div class='chart-title'>מספר מוטבים ({{item.beneficiary_kind_name}})</div>
+        <div class='chart-title bk-tooltip-anchor'>מספר מוטבים ({{item.beneficiary_kind_name}})<span class='bk-tooltip'>מספר מוטבי השירות לאורך זמן. שינוי במספר המוטבים עשוי לנבוע ממעבר של השירות לצורות הפעלה שונות (שאינן הליך מכרזי) או משינויים במבנה ארגוני (כגון איחוד שירותים) ואינם מעידים בהכרח על שינוי בפועל במספר המוטבים</span></div>
         <budgetkey-chart-plotly [layout]='beneficiary_chart.layout' [data]='beneficiary_chart.data'></budgetkey-chart-plotly>
     </div>
 
 </div>
 
-<soproc-data-table [tables]='tables' [default]='"tenders"' [replacements]='replacements' [filename]='item.page_title'></soproc-data-table>
+<soproc-data-table [tables]='tables' [default]='"tenders"' [replacements]='replacements' [filename]='item.page_title' [item]='item'></soproc-data-table>

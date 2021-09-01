@@ -9,7 +9,8 @@
     <div class='well filters-wrapper'>
         <div class='filters'>
             <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
-                <label [for]='filter.id'>{{ filter.title }}</label>
+                <label [for]='filter.id' *ngIf='!filter.tooltip'>{{ filter.title }}</label>
+                <label [for]='filter.id' *ngIf='filter.tooltip' class='bk-tooltip-anchor'>{{ filter.title }}<span class='bk-tooltip'>{{ filter.tooltip }}</span></label>
                 <budgetkey-multi-select [(value)]='filters[filter.id]' (valueChange)='filtersChanged()' [id]='filter.id' [options]='parameters[filter.id]'></budgetkey-multi-select>
             </div>
             <div class='filter' *ngIf='subunits'>
@@ -33,7 +34,7 @@
     <ng-container *ngFor='let ct of chartTemplates'>
         <ng-container *ngIf='charts[ct.id] && currentTab === ct.location'>
             <div class='single-chart'>
-                <div class='chart-title' [innerHtml]='processTitles(ct.title)'></div>
+                <div class='chart-title' [innerHtml]='processTitles(ct)'></div>
                 <div class='chart-subtitle'>{{ct._subtitle}}</div>
                 <budgetkey-chart-plotly [layout]='charts[ct.id].layout' [data]='charts[ct.id].data'></budgetkey-chart-plotly>
             </div>
@@ -41,4 +42,4 @@
     </ng-container>    
 </div>
 
-<soproc-data-table *ngIf='colorscheme | async' [tables]='tables' [default]='"services"' [replacements]='replacements' [filename]='item.page_title'></soproc-data-table>
+<soproc-data-table *ngIf='colorscheme | async' [tables]='tables' [default]='"services"' [replacements]='replacements' [filename]='item.page_title' [item]='item'></soproc-data-table>

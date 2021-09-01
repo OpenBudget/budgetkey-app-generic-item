@@ -44,8 +44,8 @@ export const tableDefs = {
       'שם מכרז',
       'מס׳ הליך מכרזי',
       'יחידה ארגונית',
-      'תוקף מכרז/פטור',
-      'תוקף מכרז כולל אופציות',
+      `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
+      `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
     ],
     uiHtml: [
       (row) => row.tender_type_he,
@@ -100,8 +100,8 @@ export const tableDefs = {
         `מספר תאגיד`,
         `שם המפעיל`,
         `מגזר המפעיל`,
-        `איזורים גיאוגרפיים בהם פועל`,
-        `מחזור שנתי (לעמותות)`,
+        `<span class='bk-tooltip-anchor'>איזורים גיאוגרפיים בהם פועל<span class='bk-tooltip'>האם המפעיל מספק את השירות באופן ארצי או שזכה בהפעלת השירות באיזור גיאוגרפי מסוים</span></span>`,
+        `<span class='bk-tooltip-anchor'>מחזור שנתי (לעמותות)<span class='bk-tooltip'>המחזור הכספי השנתי הכולל של העמותה (לא רק רכש חברתי)</span></span>`,
     ],
     uiHtml: [
         (row) => row.id,

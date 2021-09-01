@@ -14,6 +14,7 @@ export const chartTemplates = [
           count(1) as value
           from activities where :where group by 1 order by 1`,
       title: 'מספר השירותים החברתיים',
+      titleTooltip: 'מספר השירותים ברכש החברתי הניתנים בשנה הנוכחית. לפירוט סוגי השירותים הנכללים באתר ראו דף "אודות". ישנם שירותים הכוללים מספר מכרזים. שינויים במספר השירותים יכול לנבוע משינויים במבנה ארגוני (כגון איחוד שירותים) או משינויים בדרכי ההפעלה של השירותים ואינם מעידים בהכרח על הפסקת אספקת השירותים',
       subtitle: 'סה״כ :total שירותים',
       x_field: 'משרד',
       y_field: 'value',
@@ -71,6 +72,7 @@ export const chartTemplates = [
     WHERE obj->'year_activity_end' is null
     `,
       title: 'מספר מפעילי השירותים',
+      titleTooltip: 'מספר הגופים המפעילים את השירותים בשנה הנוכחית, בחלוקה למפעילים מהמגזר השלישי, המגזר העסקי ורשויות מקומיות. קטגוריית אחר כוללת למשל: הקדשים, שותפויות, תאגידים סטטוטורים, קופות חולים,  שירותי דת, אוניברסיטאות ועוד. ',
       x_field: 'משרד',
       y_field: 'value',
       subtitle: 'סה״כ :total מפעילים שונים ב:org',
@@ -102,6 +104,7 @@ export const chartTemplates = [
           sum(current_budget) as value
           from activities where :where group by 1 order by 1`,
       title: 'תקציב מאושר',
+      titleTooltip: 'סך התקציב המאושר לשירותים בשנה הנוכחית. בחלק מהשירותים התקציב כולל השתתפות רשויות מקומיות',
       subtitle: 'סה״כ :total ₪',
       x_field: 'משרד',
       y_field: 'value',
@@ -143,6 +146,7 @@ export const chartTemplates = [
              2
     order by 1, 2`,
       title: 'תקציב לאורך זמן',
+      titleTooltip: 'סך התקציב המאושר לשירותים לפי שנים. התקציב מחושב באופן שנתי. שינויים בתקציב עשויים לנבוע ממעבר של שירותים לצורות הפעלה שונות (שאינן הליך מכרזי) ואינם מעידים בהכרח על הפסקת השירותים',
       x_field: 'year',
       y_field: 'value',
       y_field2: 'value2',
@@ -269,6 +273,7 @@ export const chartTemplates = [
     where (YEAR::text)::integer >= 2020
     ORDER BY 1`,
       title: 'מספר מפעילי השירותים לאורך זמן',
+      titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
       x_field: 'year',
       y_field: 'value',
       subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
@@ -310,6 +315,7 @@ export const chartTemplates = [
     group by 1,2
     ORDER BY 1`,
       title: 'מס׳ שירותים לפי סוג מפעיל',
+      titleTooltip: 'מספר השירותים הניתנים באופן בלעדי על ידי מפעילים ממגזר מסוים (עסקי, שלישי, אחר) ושירותים הניתנים על ידי שילוב בין מפעילים ממגזרים שונים ("משולב")',
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
@@ -347,6 +353,7 @@ export const chartTemplates = [
     group by 1,2
     ORDER BY 1`,
       title: 'תקציב שירותים לפי סוג מפעיל',
+      titleTooltip: 'תקציב השירותים הניתנים באופן בלעדי על ידי מפעילים ממגזר מסוים (עסקי, שלישי, אחר), ותקציב השירותים הניתנים על ידי שילוב בין מפעילים ממגזרים שונים ("משולב")',
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
@@ -384,6 +391,7 @@ export const chartTemplates = [
     group by 1,2
     ORDER BY 1`,
       title: 'מס׳ שירותים לפי היקף המפעילים',
+      titleTooltip: 'מספר השירותים הניתנים על ידי מפעיל אחד, על ידי 5-2 גופים מפעילים ועל ידי 6 מפעילים ומעלה',
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total שירותים', // WAS: 'מספר השרותים בחלוקה לכמות המפעילים בשירות',
@@ -421,6 +429,7 @@ export const chartTemplates = [
     group by 1,2
     ORDER BY 1`,
       title: 'תקציב שירותים לפי היקף המפעילים',
+      titleTooltip: 'תקציב השירותים הניתנים על ידי מפעיל אחד, על ידי 5-2 מפעילים ועל ידי 6 מפעילים ומעלה',
       x_field: 'office',
       y_field: 'value',
       subtitle: 'סה״כ :total ₪', // WAS: 'תקציב השרותים בחלוקה לכמות המפעילים בשירות',
@@ -458,6 +467,7 @@ export const chartTemplates = [
     where :where AND suppliers IS NOT NULL AND suppliers != 'null'
     `,
       title: 'מטריצת ריכוזיות',
+      titleTooltip: 'מספר הגופים אשר מפעילים את השירות ביחס להיקף התקציב של השירות. ככל שתקציב השירות גדול יותר ומספר המפעילים קטן יותר, כך הריכוזוית גבוהה יותר.',
       x_field: 'current_budget',
       y_field: 'num_suppliers',
       text_field: 'name',

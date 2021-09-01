@@ -8,6 +8,7 @@ import { BudgetKeyItemService } from "src/app/services";
 })
 export class SoProcDatatableComponent implements OnInit, OnChanges {
 
+  @Input() item: any;
   @Input() tables: any;
   @Input() replacements: any[];
   @Input() default: string;
@@ -103,6 +104,11 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
       const filename = `${this.filename} / מידע על ${this.currentTable.name}`;
       const url = this.api.getDownloadUrl(this.currentTable.actualQuery, 'xlsx', this.currentTable.downloadHeaders, filename)
       window.open(url, '_blank');
+    }
+    
+    downloadReportUrl() {
+      const url = `https://next.obudget.org/datapackages/reports/services/שירותים חברתיים - ${this.item.office}.xlsx`;
+      return url;
     }
 
     replaceAll(query, conf) {

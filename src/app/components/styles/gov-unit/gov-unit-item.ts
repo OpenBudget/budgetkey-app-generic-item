@@ -26,10 +26,10 @@ export class GovUnitItemComponent implements OnInit {
   PAGE_FILTERS = [
     {title: 'אוכלוסיית היעד', id: 'target_audience'},
     {title: 'קבוצת גיל', id: 'target_age_group'},
-    {title: 'תחום ההתערבות', id: 'subject'},
-    {title: 'אופן ההתערבות', id: 'intervention'},
-    {title: 'סוג המכרז', id: 'tender_type'},
-    {title: 'מודל תמחור', id: 'pricing_model'},
+    {title: 'תחום ההתערבות', id: 'subject', tooltip: 'תחומי התוכן או הנושאים שבהם מתמקד השירות'},
+    {title: 'אופן ההתערבות', id: 'intervention', tooltip: 'הדרך או הצורה שבה ניתן השירות'},
+    {title: 'סוג המכרז', id: 'tender_type', tooltip: 'הליך מכרזי רגיל או הליך של פטור ממכרז ופירוט של סוג המכרז/סוג הפטור'},
+    {title: 'מודל תמחור', id: 'pricing_model', tooltip: 'האם נקבע מראש תעריף לאספקת השירות או שעל המציעים להגיש הצעת מחיר או מודל משולב'},
   ];
   COLORS = [
     // '#AB6701',
@@ -330,10 +330,11 @@ export class GovUnitItemComponent implements OnInit {
     window.open(href, '_self');
   }
 
-  processTitles(t: string) {
-    const supplier_type_explanation = 'האם המפעיל מהמגזר הפרטי, השלישי (עמותות וחל״צ), רשות מקומית או אחר (למשל: הקדש, שותפות, תאגיד סטטוטורי, קופתח חולים,  שירות דת, אוניברסיטה ועוד)';
-    return t.replace('סוג מפעיל', `
-    <span title='${supplier_type_explanation}' class='explanation'>סוג מפעיל</span>
-    `);
+  processTitles(ct: any) {
+    if (ct.titleTooltip) {
+      return `<span class='bk-tooltip-anchor'>${ct.title}<span class='bk-tooltip'>${ct.titleTooltip}</span></span>`;
+    } else {
+      return ct.title;
+    }
   }
 }

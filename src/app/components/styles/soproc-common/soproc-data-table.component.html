@@ -24,9 +24,14 @@
             <span class='pager-control'>הבא</span>
         </ng-container>
     </div>
-    <a class='download' (activated)='download()' tabindex="0" clickOnReturn>
-        הורדת המידע לאקסל עם שדות נוספים&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
-    </a>
+    <div class='download'>
+        <a (activated)='download()' tabindex="0" clickOnReturn>
+            הורדת הטבלה לאקסל עם שדות נוספים&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
+        </a>
+        <a [href]='downloadReportUrl()' tabindex="0" *ngIf='item.office'>
+            הורדת דו״ח כוללני עבור {{item.office}}&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
+        </a>    
+    </div>
 </div>
 
 <div class='results-table'>

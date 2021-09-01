@@ -7,7 +7,6 @@
 
 .results-table {
     max-width: 100%;
-    overflow-x: scroll;
 
     table {
         width: 100%;
@@ -17,6 +16,11 @@
         th {
             white-space: nowrap;
             padding: 0 5px;
+            ::ng-deep {
+                .bk-tooltip {
+                    white-space: normal;
+                }
+            }
         }
         
         td {
