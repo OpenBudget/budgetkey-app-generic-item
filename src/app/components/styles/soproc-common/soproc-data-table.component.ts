@@ -111,6 +111,10 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
       return url;
     }
 
+    doSearch(href) {
+      window.open(href, '_self');
+    }
+  
     replaceAll(query, conf) {
       for (const {from, to} of conf) {
         query = query.split(from).join(to);

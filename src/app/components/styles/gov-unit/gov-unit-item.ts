@@ -326,10 +326,6 @@ export class GovUnitItemComponent implements OnInit {
     }
   }
 
-  doSearch(href) {
-    window.open(href, '_self');
-  }
-
   processTitles(ct: any) {
     if (ct.titleTooltip) {
       return `<span class='bk-tooltip-anchor'>${ct.title}<span class='bk-tooltip'>${ct.titleTooltip}</span></span>`;
