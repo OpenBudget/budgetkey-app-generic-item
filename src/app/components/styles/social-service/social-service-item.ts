@@ -157,7 +157,10 @@ export class SocialServiceItemComponent implements OnInit {
 
   mapFillFor(region) {
     const count = this.countForRegion(region);
-    if (count === 1) {
+    if (count < 1) {
+      return '#00000000';
+    }
+    else if (count === 1) {
       return '#ef7625';
     }
     else if (count < 5) {
