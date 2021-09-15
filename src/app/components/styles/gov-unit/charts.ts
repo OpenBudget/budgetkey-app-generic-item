@@ -124,7 +124,7 @@ export const chartTemplates = [
         return [{
           type: 'bar',
           name: '',
-          hovertemplate: '%{y}₪',
+          hovertemplate: '₪%{y}',
           x: xValues,
           y: getYfromX(items, info.x_field, info.y_field, xValues),
         }];
@@ -168,7 +168,7 @@ export const chartTemplates = [
         const budgets = xValues.map((org) => {
           return {
             type: 'line',
-            hovertemplate: '%{y}₪',
+            hovertemplate: '₪%{y}',
             name: org,
             x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
@@ -178,7 +178,7 @@ export const chartTemplates = [
           budgets.push(...xValues.map((org) => {
             return {
               type: 'line',
-              hovertemplate: '%{y}₪',
+              hovertemplate: '₪%{y}',
               line: {
                 dash: 'dot',
               },
