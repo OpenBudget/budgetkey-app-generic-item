@@ -371,6 +371,7 @@ export const chartTemplates = [
         },
         yaxis: {
           title: '(₪) תקציב השירותים',
+          hoverformat: ',.0f'
         }
       },
       kind: 'org',
@@ -379,6 +380,7 @@ export const chartTemplates = [
         return kinds.map((kind) => {
           return {
             type: 'bar',
+            hovertemplate: '₪%{y}',
             name: kind,
             x: xValues,
             y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues),
@@ -447,6 +449,7 @@ export const chartTemplates = [
         },
         yaxis: {
           title: '(₪) תקציב השירותים',
+          hoverformat: ',.0f'
         }
       },
       kind: 'org',
@@ -455,6 +458,7 @@ export const chartTemplates = [
         return kinds.map((kind) => {
           return {
             type: 'bar',
+            hovertemplate: '₪%{y}',
             name: kind,
             x: xValues,
             y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues),
@@ -498,6 +502,8 @@ export const chartTemplates = [
           return {
             type: 'scatter',
             mode: 'markers',
+            hovertemplate: '#%{y} / ₪%{x:,.0f}' + '<br>' + '%{text}',
+            // hovertemplate: '%{x} מפעילים / ₪%{y}',
             name: org,
             x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
