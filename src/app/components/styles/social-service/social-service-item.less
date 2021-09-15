@@ -129,13 +129,48 @@
             .map {
                 flex: 100 100 25%;
                 display: flex;
-                flex-flow: row;
+                flex-flow: column;
                 margin-right: auto;
                 align-self: center;
                 min-width: 200px;
                 max-width: 300px;
                 padding: 16px;
                 box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
+
+                .map-legend {
+                    display: flex;
+                    flex-flow: column;
+                    > label {
+                        margin: 0;
+                    }
+                    > span {
+                        font-size: 12px;
+                        font-weight: 300;
+                    }
+                }
+
+                .legend {
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: space-between;
+                    margin-top: 16px;
+
+                    .item {
+                        white-space: nowrap;
+                        .color {
+                            display: inline-block;
+                            width: 12px;
+                            height: 12px;
+                            border: 1px solid #888;
+                            margin-left: 4px;
+                        }
+                        .text {
+                            display: inline-block;
+                            font-size: 12px;
+                            font-weight: 300;           
+                        }
+                    }
+                }
 
                 svg {
                     flex: 0 0 auto;

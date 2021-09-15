@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { forkJoin, from, ReplaySubject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { BudgetKeyItemService } from '../../../services';
@@ -17,6 +17,10 @@ export class GovUnitItemComponent implements OnInit {
 
   private item: any;
 
+  @ViewChild('filters') filtersElement: ElementRef;
+  @ViewChild('tabs') tabsElement: ElementRef;
+  intersection: IntersectionObserver = null;
+
   PAGE_LINKS = [
     {title: 'משרדי הממשלה', href: '/i/units/gov_social_service_unit/main'},
     {title: 'משרד הרווחה', href: '/i/units/gov_social_service_unit/משרד הרווחה'},
@@ -28,7 +32,7 @@ export class GovUnitItemComponent implements OnInit {
     {title: 'קבוצת גיל', id: 'target_age_group'},
     {title: 'תחום ההתערבות', id: 'subject', tooltip: 'תחומי התוכן או הנושאים שבהם מתמקד השירות'},
     {title: 'אופן ההתערבות', id: 'intervention', tooltip: 'הדרך או הצורה שבה ניתן השירות'},
-    {title: 'סוג המכרז', id: 'tender_type', tooltip: 'הליך מכרזי רגיל או הליך של פטור ממכרז ופירוט של סוג המכרז/סוג הפטור'},
+    {title: 'סוג הליך מכרזי', id: 'tender_type', tooltip: 'הליך מכרזי רגיל או הליך של פטור ממכרז ופירוט של סוג המכרז/סוג הפטור'},
     {title: 'מודל תמחור', id: 'pricing_model', tooltip: 'האם נקבע מראש תעריף לאספקת השירות או שעל המציעים להגיש הצעת מחיר או מודל משולב'},
   ];
   COLORS = [
@@ -36,14 +40,14 @@ export class GovUnitItemComponent implements OnInit {
     '#87cefa',
     '#ff9900',
     '#6661d1',
-    '#68788c',
-    '#d6b618',
-    '#ef7625',
     '#002070',
+    '#ef7625',
+    '#d6b618',
     '#44b8e0',
     '#b658cc',
     '#192841',
     '#526223',
+    '#68788c',
   ];
 
   private parameters: any = {
@@ -59,7 +63,9 @@ export class GovUnitItemComponent implements OnInit {
       {value: `(tenders::text) like '%%"tender_type": "exemptions"%%'`, display: 'פטור (כל הסוגים)'},
     ].concat([
       'מכרז רגיל', 'מכרז סגור', 'מכרז מסגרת', 'מכרז מאגר',
+    ].map((x) => { return {value: `(tenders::text) like '%%"sub_kind_he": "${x}"%%'`, display: x}; })).concat([
       'התקשרות המשך', 'ספק יחיד', 'מימוש אופציה', 'מיזם משותף', 'התקשרות עם רשות מקומית',
+    ].map((x) => { return {value: `(tenders::text) like '%%"sub_kind_he": "${x}"%%'`, display: x + ' (פטור)'}; })).concat([
       'אחר'
     ].map((x) => { return {value: `(tenders::text) like '%%"sub_kind_he": "${x}"%%'`, display: x}; }))
   };
@@ -78,6 +84,7 @@ export class GovUnitItemComponent implements OnInit {
   public replacements: any[] = [];
   public colorscheme = new ReplaySubject<any>(1);
   public xValues: any = {};
+  public sticky = false;
 
   constructor(private store: StoreService, private api: BudgetKeyItemService) {
     const fields = ['subject', 'intervention', 'target_audience', 'target_age_group'];
@@ -126,14 +133,14 @@ export class GovUnitItemComponent implements OnInit {
         const office = row.office;
         this.xValues.offices = this.xValues.offices || [];
         if (this.xValues.offices.indexOf(office) === -1) {
-          scheme[office] = this.xValues.offices.length;
+          scheme[office] = this.xValues.offices.length + 1;
           this.xValues.offices.push(office);
         }
         const unit = row.unit;
         if (unit) {
           this.xValues[office] = this.xValues[office] || [];
           if (this.xValues[office].indexOf(unit) === -1) {
-            scheme[unit] = this.xValues[office].length;
+            scheme[unit] = this.xValues[office].length + 1;
             this.xValues[office].push(unit);
           }
 
@@ -141,7 +148,7 @@ export class GovUnitItemComponent implements OnInit {
           const key = office + ':' + unit;
           this.xValues[key] = this.xValues[key] || [];
           if (this.xValues[key].indexOf(subunit) === -1) {
-            scheme[subunit] = this.xValues[key].length;
+            scheme[subunit] = this.xValues[key].length + 1;
             this.xValues[key].push(subunit);
           }
         }
@@ -149,10 +156,10 @@ export class GovUnitItemComponent implements OnInit {
       const orgSizes = ['1', '2-5', '6+']
       const orgKinds = ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'משולב'];
       for (const i in orgSizes) {
-        scheme[orgSizes[i]] = i;
+        scheme[orgSizes[i]] = parseInt(i) + 4;
       }
       for (const i in orgKinds) {
-        scheme[orgKinds[i]] = i;
+        scheme[orgKinds[i]] = parseInt(i) + 4;
       }
       scheme['אחר'] = 9;
       this.colorscheme.next(scheme);
@@ -265,6 +272,14 @@ export class GovUnitItemComponent implements OnInit {
       layout.margin = {t: 20};
       layout.height = 400;
       layout.bargap = 0.5;
+      if (layout.xaxis && layout.xaxis.title === 'משרד / יחידה') {
+        layout.xaxis.title = {
+          text: layout.xaxis.title,
+          standoff: 100
+        }
+      } else {
+        layout.margin.b = 40;
+      }
       const rows = result.rows || [];
       if (result.error) {
         console.log('ERROR', query, result.error);
@@ -332,5 +347,23 @@ export class GovUnitItemComponent implements OnInit {
     } else {
       return ct.title;
     }
+  }
+
+  stickyTop() {
+    if (this.filtersElement && this.filtersElement.nativeElement) {
+      const el = this.filtersElement.nativeElement;
+      const top = el.offsetTop;
+      if (!this.intersection) {
+        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
+        // console.log('SETTING UP INTERSECTION', options);
+        this.intersection = new IntersectionObserver((entries) => {
+          // console.log('INTERSECTION', entries[0]);
+          this.sticky = !entries[0].isIntersecting;
+        }, options);
+        this.intersection.observe(this.tabsElement.nativeElement);
+      }
+      return `-${top}px`;
+    }
+    return '-80px';
   }
 }

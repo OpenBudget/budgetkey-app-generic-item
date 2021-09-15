@@ -6,6 +6,69 @@
         position: sticky;
         top: -80px;
         z-index: 20;
+
+        .intro {
+            margin: 40px 0;
+            > p {
+                color: #f2f2f2;
+                font-weight: 300;
+                font-size: 18px;
+            }
+            > a {
+                color: #f2f2f2;
+                font-weight: 700;
+                font-size: 18px;
+            }
+        }
+
+        .filters-wrapper {
+            display: flex;
+            flex-flow: column;
+            align-items: stretch;
+    
+            .filters {
+                display: flex;
+                flex-flow: row wrap;
+                align-items: center;
+                justify-content: flex-start;
+        
+                .filter {
+                    flex: 0 0 50%;
+                    display: flex;
+                    flex-flow: row;
+                    align-items: center;
+                    margin-bottom: 4px;
+                    label {
+                        min-width: 100px;
+                        margin: 0;
+                    }
+                    max-width: 50%;
+                    padding-right: 20px;
+                    select {
+                        background-color: white;
+                        width: 100%;
+                        border-radius: 2px;
+                        height: 24px;
+                        border: 0.5px solid #192841c0;
+                        color: black;
+                    }                
+                }
+            }
+        }
+    
+        .clear-filters {
+            color: white;
+            margin-top: -16px;
+            align-self: flex-end;
+            cursor: pointer;
+        }
+    
+        &.sticky {
+            .filters-wrapper {
+                padding: 4px 20px;
+            }
+            padding-bottom: 4px;
+        }
     }
 
     .page-links {
@@ -32,43 +95,13 @@
         }
     }
 
-    .filters-wrapper {
-        display: flex;
-        flex-flow: column;
-        align-items: stretch;
-
-        .filters {
-            display: flex;
-            flex-flow: row wrap;
-            align-items: center;
-            justify-content: flex-start;
-    
-            .filter {
-                flex: 0 0 50%;
-                display: flex;
-                flex-flow: row;
-                align-items: center;
-                margin-bottom: 4px;
-                label {
-                    min-width: 100px;
-                    margin: 0;
-                }
-                max-width: 50%;
-                padding-right: 20px;
-            }
-        }
-    
-    }
-
-    .clear-filters {
-        color: white;
-        margin-top: -16px;
-        align-self: flex-end;
-        cursor: pointer;
-    }
-
     ::ng-deep .explanation {
         text-decoration: underline dotted;
+        text-underline-offset: 2px;
+    }
+
+    ::ng-deep .bk-tooltip-anchor {
+        text-underline-offset: 2px;
     }
 
 }

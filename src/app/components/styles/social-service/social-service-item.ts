@@ -128,32 +128,47 @@ export class SocialServiceItemComponent implements OnInit {
     }
   }
 
-  titleForRegion(region) {
-    if (this.supplierRegions[region]) {
-      const sr = this.supplierRegions[region];
-      const count = sr.count === 1 ? 'מפעיל אחד' : `${sr.count} מפעילים`; 
-      const suppliers = (sr.suppliers as string[]).map(x => `- ${x}`).join('\n');
-      return `${region} - ${count}\n${suppliers}`;
-    }
-    return '';
-  }
-  
-
-  mapFillFor(region) {
-    let opacity = 0;
+  countForRegion(region) {
     let count = ((this.supplierRegions['ארצי'] || {}).count || 0);
     if (this.supplierRegions[region]) {
       count += this.supplierRegions[region].count;
     }
+    console.log('this.supplierRegions', count, this.supplierRegions[region])
+    return count;
+  }
+
+  titleForRegion(region) {
+    let ret = '';
+    let count = this.countForRegion(region);
+    if (count > 0) {
+      ret += count === 1 ? 'מפעיל אחד' : `${count} מפעילים:`; 
+      ret += '\n';
+    }
+    for (const r of [region, 'ארצי']) {
+      if (this.supplierRegions[r]) {
+        const sr = this.supplierRegions[r];
+        const suppliers = (sr.suppliers as string[]).map(x => `- ${x}`).join('\n');
+        ret += `${r}\n${suppliers}\n`;
+      }
+    }
+    return ret;
+  }
+  
+
+  mapFillFor(region) {
+    const count = this.countForRegion(region);
     if (count === 1) {
-      opacity = 30;
+      return '#ef7625';
     }
     else if (count < 5) {
-      opacity = 60;
+      return '#d6b618';
     }
     else if (count > 5) {
-      opacity = 90;
+      return '#44b8e0';
     }
-    return `hsla(218, 44%, 58%, ${opacity}%)`;
+  }
+
+  get virtue_of_table() {
+    return (this.item.virtue_of_table || []).filter(i => i.kind !== 'לא רלוונטי');
   }
 }

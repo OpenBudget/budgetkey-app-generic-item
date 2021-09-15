@@ -1,4 +1,4 @@
-<div class='soproc-header'>
+<div class='soproc-header' [style.top]='stickyTop()' [class.sticky]='sticky'>
     <div class='soproc-bg'></div>
     <h1>מפתח לרכש החברתי - בהרצה, נתונים לא סופיים</h1>
 
@@ -6,7 +6,18 @@
         <a *ngFor='let link of PAGE_LINKS' [href]='link.href + "?theme=soproc"' [class.active]='item.breadcrumbs === link.title'>{{ link.title }}</a>
     </div>
 
-    <div class='well filters-wrapper'>
+    <div class='intro' *ngIf="!item.office">
+        <p>
+            מידי שנה מספקים המשרדים החברתיים מאות שירותים חברתיים באמצעות מפעילים חיצוניים (מיקור חוץ). באילו שירותים מדובר? למי הם מיועדים? מי מספק אותם בפועל? מהם ההליכים המכרזיים שבמסגרתם הם מסופקים? מהן מגמות השינוי בהספקת השירותים לאורך השנים? גללו ומצאו.
+        </p>
+        <p>
+            ניתן לבחון את תמונת המאקרו, להיכנס לעמוד של כל אחד משלושת המשרדים החברתיים לקבלת התמונה הספציפית אליו, ולהעמיק בעמוד של כל שירות חברתי.
+        </p>
+        <a href='/about?theme=soproc'>למידע נוסף על מהם שירותים חברתיים במיקור חוץ</a>
+    </div>        
+
+
+    <div class='well filters-wrapper' #filters>
         <div class='filters'>
             <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
                 <label [for]='filter.id' *ngIf='!filter.tooltip'>{{ filter.title }}</label>
@@ -25,7 +36,7 @@
     <a class='clear-filters' (click)='clearFilters()'>ניקוי כל הסינונים</a>
 </div>
 
-<div class='tab-selectors'>
+<div class='tab-selectors' #tabs>
     <a [class.active]='currentTab === "services"' (activated)='currentTab = "services"' tabindex='0' clickOnReturn>תמונת השירותים</a>
     <a [class.active]='currentTab === "suppliers"' (activated)='currentTab = "suppliers"' tabindex='0' clickOnReturn>הרחבה לגבי מפעילי השירותים</a>
 </div>

@@ -24,7 +24,8 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: 'מספר השירותים'
+          rangemode: 'tozero',
+          title: 'מספר השירותים',
         }
       },
       kind: 'org',
@@ -114,14 +115,16 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: 'תקציב מאושר'
+          title: 'תקציב מאושר',
+          hoverformat: ',.0f'
         }
       },
       kind: 'org',
       data: (items, info, xValues) => {
         return [{
           type: 'bar',
-          name: 'default',
+          name: '',
+          hovertemplate: '%{y}₪',
           x: xValues,
           y: getYfromX(items, info.x_field, info.y_field, xValues),
         }];
@@ -157,6 +160,7 @@ export const chartTemplates = [
         },
         yaxis: {
           title: '(₪) תקציב השירותים',
+          hoverformat: ',.0f'
         }
       },
       kind: 'org',
@@ -164,6 +168,7 @@ export const chartTemplates = [
         const budgets = xValues.map((org) => {
           return {
             type: 'line',
+            hovertemplate: '%{y}₪',
             name: org,
             x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
             y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
@@ -173,6 +178,7 @@ export const chartTemplates = [
           budgets.push(...xValues.map((org) => {
             return {
               type: 'line',
+              hovertemplate: '%{y}₪',
               line: {
                 dash: 'dot',
               },
@@ -185,124 +191,125 @@ export const chartTemplates = [
         return budgets;
       }
     },
-    {
-      location: 'services',
-      id: 'service_trend',
-      query: `WITH objs AS
-      (SELECT :org-field as office,
-              jsonb_array_elements("manualBudget"::JSONB) AS obj
-       FROM all_activities
-       WHERE :where and "manualBudget" IS NOT NULL
-         AND "manualBudget" != 'null'),
-         years AS
-      (SELECT office,
-              (obj->>'year')::integer AS year
-       FROM objs)
-    SELECT office,
-           year,
-           count(1) AS value
-    FROM years
-    where year >= 2020
-    group by 1,2
-    ORDER BY 1`,
-      title: 'מספר השירותים השונים לאורך זמן',
-      subtitle: '',
-      x_field: 'year',
-      y_field: 'value',
-      layout: {
-        xaxis: {
-          // tick0: 2019,
-          title: 'שנה',
-          dtick: 1,
-          range: [2019.5, 2020.5]
-        },
-        yaxis: {
-          title: 'מספר השירותים',
-        }
-      },
-      kind: 'org',
-      data: (items, info, xValues) => {
-        return xValues.map((org) => {
-          return {
-            type: 'line',
-            line: {
-              dash: 'dot',
-            },
-            name: org,
-            x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-          }
-        });
-      }
-    },
-    {
-      location: 'services',
-      id: 'supplier_trend',
-      query: `WITH objs AS
-      (SELECT :org-field as office,
-              jsonb_array_elements(suppliers::JSONB) AS obj
-       FROM activities
-       WHERE :where and suppliers IS NOT NULL
-         AND suppliers != 'null'),
-         years AS
-      (SELECT office,
-              obj->>'entity_id' AS entity_id,
-              jsonb_array_elements(obj->'activity_years') AS YEAR
-       FROM objs)
-    SELECT office,
-           (YEAR::text)::integer as year,
-           count(DISTINCT entity_id) AS value
-    FROM years
-    where (YEAR::text)::integer >= 2020
-    group by 1,2
-    ORDER BY 1`,
-      subtitleQuery: `WITH objs AS
-      (SELECT :org-field as office,
-              jsonb_array_elements(suppliers::JSONB) AS obj
-       FROM activities
-       WHERE :where and suppliers IS NOT NULL
-         AND suppliers != 'null'),
-         years AS
-      (SELECT obj->>'entity_id' AS entity_id,
-              jsonb_array_elements(obj->'activity_years') AS YEAR
-       FROM objs)
-    SELECT max((YEAR::text)::integer) as max_year,
-           min((YEAR::text)::integer) as min_year,
-           count(DISTINCT entity_id) AS value
-    FROM years
-    where (YEAR::text)::integer >= 2020
-    ORDER BY 1`,
-      title: 'מספר מפעילי השירותים לאורך זמן',
-      titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
-      x_field: 'year',
-      y_field: 'value',
-      subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
-      layout: {
-        xaxis: {
-          // tick0: 2019,
-          title: 'שנה',
-          dtick: 1,
-          range: [2019.5, 2020.5]
-        },
-        yaxis: {
-          title: 'מספר המפעילים',
-        }
-      },
-      kind: 'org',
-      data: (items, info, xValues) => {
-        return xValues.map((org) => {
-          return {
-            type: 'line',
-            line: {
-              dash: 'dot',
-            },
-            name: org,
-            x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-            y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-          }
-        });
-      }
-    },
+    // KEPT TO BE RE-ENABLED IN THE FUTURE
+    // {
+    //   location: 'services',
+    //   id: 'service_trend',
+    //   query: `WITH objs AS
+    //   (SELECT :org-field as office,
+    //           jsonb_array_elements("manualBudget"::JSONB) AS obj
+    //    FROM all_activities
+    //    WHERE :where and "manualBudget" IS NOT NULL
+    //      AND "manualBudget" != 'null'),
+    //      years AS
+    //   (SELECT office,
+    //           (obj->>'year')::integer AS year
+    //    FROM objs)
+    // SELECT office,
+    //        year,
+    //        count(1) AS value
+    // FROM years
+    // where year >= 2020
+    // group by 1,2
+    // ORDER BY 1`,
+    //   title: 'מספר השירותים השונים לאורך זמן',
+    //   subtitle: '',
+    //   x_field: 'year',
+    //   y_field: 'value',
+    //   layout: {
+    //     xaxis: {
+    //       // tick0: 2019,
+    //       title: 'שנה',
+    //       dtick: 1,
+    //       range: [2019.5, 2020.5]
+    //     },
+    //     yaxis: {
+    //       title: 'מספר השירותים',
+    //     }
+    //   },
+    //   kind: 'org',
+    //   data: (items, info, xValues) => {
+    //     return xValues.map((org) => {
+    //       return {
+    //         type: 'line',
+    //         line: {
+    //           dash: 'dot',
+    //         },
+    //         name: org,
+    //         x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
+    //         y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
+    //       }
+    //     });
+    //   }
+    // },
+    // {
+    //   location: 'services',
+    //   id: 'supplier_trend',
+    //   query: `WITH objs AS
+    //   (SELECT :org-field as office,
+    //           jsonb_array_elements(suppliers::JSONB) AS obj
+    //    FROM activities
+    //    WHERE :where and suppliers IS NOT NULL
+    //      AND suppliers != 'null'),
+    //      years AS
+    //   (SELECT office,
+    //           obj->>'entity_id' AS entity_id,
+    //           jsonb_array_elements(obj->'activity_years') AS YEAR
+    //    FROM objs)
+    // SELECT office,
+    //        (YEAR::text)::integer as year,
+    //        count(DISTINCT entity_id) AS value
+    // FROM years
+    // where (YEAR::text)::integer >= 2020
+    // group by 1,2
+    // ORDER BY 1`,
+    //   subtitleQuery: `WITH objs AS
+    //   (SELECT :org-field as office,
+    //           jsonb_array_elements(suppliers::JSONB) AS obj
+    //    FROM activities
+    //    WHERE :where and suppliers IS NOT NULL
+    //      AND suppliers != 'null'),
+    //      years AS
+    //   (SELECT obj->>'entity_id' AS entity_id,
+    //           jsonb_array_elements(obj->'activity_years') AS YEAR
+    //    FROM objs)
+    // SELECT max((YEAR::text)::integer) as max_year,
+    //        min((YEAR::text)::integer) as min_year,
+    //        count(DISTINCT entity_id) AS value
+    // FROM years
+    // where (YEAR::text)::integer >= 2020
+    // ORDER BY 1`,
+    //   title: 'מספר מפעילי השירותים לאורך זמן',
+    //   titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
+    //   x_field: 'year',
+    //   y_field: 'value',
+    //   subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
+    //   layout: {
+    //     xaxis: {
+    //       // tick0: 2019,
+    //       title: 'שנה',
+    //       dtick: 1,
+    //       range: [2019.5, 2020.5]
+    //     },
+    //     yaxis: {
+    //       title: 'מספר המפעילים',
+    //     }
+    //   },
+    //   kind: 'org',
+    //   data: (items, info, xValues) => {
+    //     return xValues.map((org) => {
+    //       return {
+    //         type: 'line',
+    //         line: {
+    //           dash: 'dot',
+    //         },
+    //         name: org,
+    //         x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
+    //         y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
+    //       }
+    //     });
+    //   }
+    // },
     {
       location: 'suppliers',
       id: 'supplier_kinds_count',
@@ -314,7 +321,7 @@ export const chartTemplates = [
     where :where and supplier_kinds is not null
     group by 1,2
     ORDER BY 1`,
-      title: 'מס׳ שירותים לפי סוג מפעיל',
+      title: 'מספר שירותים לפי סוג מפעיל',
       titleTooltip: 'מספר השירותים הניתנים באופן בלעדי על ידי מפעילים ממגזר מסוים (עסקי, שלישי, אחר) ושירותים הניתנים על ידי שילוב בין מפעילים ממגזרים שונים ("משולב")',
       x_field: 'office',
       y_field: 'value',
@@ -390,7 +397,7 @@ export const chartTemplates = [
     where :where and supplier_count_category is not null
     group by 1,2
     ORDER BY 1`,
-      title: 'מס׳ שירותים לפי היקף המפעילים',
+      title: 'מספר שירותים לפי היקף המפעילים',
       titleTooltip: 'מספר השירותים הניתנים על ידי מפעיל אחד, על ידי 5-2 גופים מפעילים ועל ידי 6 מפעילים ומעלה',
       x_field: 'office',
       y_field: 'value',

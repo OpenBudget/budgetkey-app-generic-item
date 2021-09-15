@@ -85,7 +85,11 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
         this._currentTable.sortField = field;
         this._currentTable.sortDirectionDesc = false;
       } else {
-        this._currentTable.sortDirectionDesc = !this._currentTable.sortDirectionDesc;
+        if (this._currentTable.sortDirectionDesc === false) {
+          this._currentTable.sortDirectionDesc = true;
+        } else {
+          this._currentTable.sortField = null;
+        }
       }
       this.refreshTable(this._currentTable);
     }
