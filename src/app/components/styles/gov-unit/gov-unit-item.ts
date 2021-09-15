@@ -128,7 +128,7 @@ export class GovUnitItemComponent implements OnInit {
     ).pipe(
       map((x: any) => x.rows),
     ).subscribe((rows) => {
-      const scheme = {default: 0};
+      const scheme = {default: 0, '': 0};
       for (const row of rows) {
         const office = row.office;
         this.xValues.offices = this.xValues.offices || [];
