@@ -354,13 +354,17 @@ export class GovUnitItemComponent implements OnInit {
       const el = this.filtersElement.nativeElement;
       const top = el.offsetTop;
       if (!this.intersection) {
-        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
-        // console.log('SETTING UP INTERSECTION', options);
-        this.intersection = new IntersectionObserver((entries) => {
-          // console.log('INTERSECTION', entries[0]);
-          this.sticky = !entries[0].isIntersecting;
-        }, options);
-        this.intersection.observe(this.tabsElement.nativeElement);
+        setTimeout(() => {
+          if (!this.intersection) {
+            const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
+            // console.log('SETTING UP INTERSECTION', options);
+            this.intersection = new IntersectionObserver((entries) => {
+              // console.log('INTERSECTION', entries[0]);
+              this.sticky = !entries[0].isIntersecting;
+            }, options);
+            this.intersection.observe(this.tabsElement.nativeElement);
+          }
+        }, 1000);
       }
       return `-${top}px`;
     }

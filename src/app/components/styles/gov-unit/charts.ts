@@ -115,7 +115,7 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: 'תקציב מאושר',
+          title: '₪ תקציב מאושר במיליוני',
           hoverformat: ',.0f'
         }
       },
@@ -124,9 +124,10 @@ export const chartTemplates = [
         return [{
           type: 'bar',
           name: '',
-          hovertemplate: '₪%{y}',
+          hovertemplate: '₪%{text}',
+          text: getYfromX(items, info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
           x: xValues,
-          y: getYfromX(items, info.x_field, info.y_field, xValues),
+          y: getYfromX(items, info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
         }];
       }
     },
@@ -159,7 +160,7 @@ export const chartTemplates = [
           title: 'שנת תקציב'
         },
         yaxis: {
-          title: '(₪) תקציב השירותים',
+          title: '(₪ מיליון) תקציב השירותים',
           hoverformat: ',.0f'
         }
       },
@@ -168,23 +169,25 @@ export const chartTemplates = [
         const budgets = xValues.map((org) => {
           return {
             type: 'line',
-            hovertemplate: '₪%{y}',
             name: org,
+            hovertemplate: '₪%{text}',
+            text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v: number) => Math.floor(v).toLocaleString()),
             x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-            y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]),
+            y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v) => v/1000000.0),
           }
         });
         if (xValues[0].indexOf('משרד ה') === 0) {
           budgets.push(...xValues.map((org) => {
             return {
               type: 'line',
-              hovertemplate: '₪%{y}',
               line: {
                 dash: 'dot',
               },
               name: org,
+              hovertemplate: '₪%{text}',
+              text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v: number) => Math.floor(v).toLocaleString()),    
               x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-              y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]),
+              y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v) => v/1000000.0),
             }
           }));
         }
@@ -370,7 +373,7 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: '(₪) תקציב השירותים',
+          title: '(₪ מיליון) תקציב השירותים',
           hoverformat: ',.0f'
         }
       },
@@ -380,10 +383,11 @@ export const chartTemplates = [
         return kinds.map((kind) => {
           return {
             type: 'bar',
-            hovertemplate: '₪%{y}',
+            hovertemplate: '₪%{text}',
+            text: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
             name: kind,
             x: xValues,
-            y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues),
+            y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
           }
         });
       }
@@ -448,7 +452,7 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: '(₪) תקציב השירותים',
+          title: '(₪ מיליון) תקציב השירותים',
           hoverformat: ',.0f'
         }
       },
@@ -458,10 +462,11 @@ export const chartTemplates = [
         return kinds.map((kind) => {
           return {
             type: 'bar',
-            hovertemplate: '₪%{y}',
+            hovertemplate: '₪%{text}',
+            text: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
             name: kind,
             x: xValues,
-            y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues),
+            y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
           }
         });
       }
