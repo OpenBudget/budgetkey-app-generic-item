@@ -160,7 +160,7 @@ export const chartTemplates = [
           title: 'שנת תקציב'
         },
         yaxis: {
-          title: '(₪ מיליון) תקציב השירותים',
+          title: '₪ תקציב השירותים במיליוני',
           hoverformat: ',.0f'
         }
       },
@@ -373,7 +373,7 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: '(₪ מיליון) תקציב השירותים',
+          title: '₪ תקציב השירותים במיליוני',
           hoverformat: ',.0f'
         }
       },
@@ -452,7 +452,7 @@ export const chartTemplates = [
           title: 'משרד / יחידה'
         },
         yaxis: {
-          title: '(₪ מיליון) תקציב השירותים',
+          title: '₪ תקציב השירותים במיליוני',
           hoverformat: ',.0f'
         }
       },

@@ -45,7 +45,8 @@ export class SocialServiceItemComponent implements OnInit {
         height: 400,
         yaxis: {
           rangemode: 'tozero',
-          title: '(₪) תקציב השירות',
+          title: '₪ תקציב השירות במיליוני',
+          hoverformat: ',.0f',
         },
         xaxis: {
           dtick: 1,
@@ -67,7 +68,9 @@ export class SocialServiceItemComponent implements OnInit {
         },
         name: 'תקציב מאושר',
         x: budget.map(x => x.year),
-        y: budget.map(x => x.approved),
+        y: budget.map(x => x.approved/1000000.0),
+        text: budget.map(x => Math.floor(x.approved).toLocaleString()),
+        hovertemplate: '₪%{text}',
       }, {
         type: 'line',
         line: {
@@ -83,7 +86,9 @@ export class SocialServiceItemComponent implements OnInit {
         },
         name: 'ביצוע בפועל',
         x: budget.map(x => x.year),
-        y: budget.map(x => x.executed),
+        y: budget.map(x => x.executed/1000000.0),
+        text: budget.map(x => Math.floor(x.executed).toLocaleString()),
+        hovertemplate: '₪%{text}',
       }]
     };
     this.beneficiary_chart = {
