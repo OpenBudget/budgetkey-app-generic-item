@@ -119,6 +119,9 @@ export class GovUnitItemComponent implements OnInit {
         this.subunits = this.xValues[this.item.office];
       }
     });
+    if (window.innerWidth < 600) {
+      alert('מומלץ לפתוח ממחשב שולחני לשימוש מיטבי');
+    }
   }
 
   fetchColorscheme() {
