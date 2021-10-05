@@ -17,7 +17,7 @@ export class GovUnitItemComponent implements OnInit {
 
   private item: any;
 
-  @ViewChild('filters') filtersElement: ElementRef;
+  @ViewChild('filtersElement') filtersElement: ElementRef;
   @ViewChild('tabs') tabsElement: ElementRef;
   intersection: IntersectionObserver = null;
 

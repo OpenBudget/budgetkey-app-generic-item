@@ -17,7 +17,7 @@
     </div>        
 
 
-    <div class='well filters-wrapper' #filters>
+    <div class='well filters-wrapper' #filtersElement>
         <div class='filters'>
             <div class='filter' *ngFor='let filter of PAGE_FILTERS'>
                 <label [for]='filter.id' *ngIf='!filter.tooltip'>{{ filter.title }}</label>
