@@ -56,13 +56,25 @@
             }
         }
     
-        .clear-filters {
+        .subtext {
             color: white;
             margin-top: -16px;
-            align-self: flex-end;
-            cursor: pointer;
+            padding: 0 4px;
+            width: 100%;
+            display: flex;
+            flex-flow: row;
+            justify-content: space-between;
+
+            span {
+                font-style: italic;
+                font-weight: 100;
+            }
+
+            .clear-filters {
+                cursor: pointer;
+            }    
         }
-    
+
         &.sticky-filters {
             .filters-wrapper {
                 padding: 4px 20px;
