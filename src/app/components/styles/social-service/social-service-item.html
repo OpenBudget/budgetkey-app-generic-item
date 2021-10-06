@@ -10,7 +10,7 @@
     <div class='info well'>
         <div class='properties'>
             <div class='property' *ngIf='virtue_of_table && virtue_of_table.length && virtue_of_table[0].kind'>
-                <div class='icon f1'><i class="fa fa-university" aria-hidden="true"></i></div>
+                <div class='icon f1'><i class="fa fa-gavel" aria-hidden="true"></i></div>
                 <label>ניתן מכח</label>&nbsp;
                 <div class='property-value'>
                     <ng-container *ngFor='let el of virtue_of_table'>
@@ -21,7 +21,7 @@
             </div>
     
             <div class='property' *ngIf='item.target_audience && item.target_audience.length'>
-                <div class='icon f2'><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                <div class='icon f2'><i class="fa fa-users" aria-hidden="true"></i></div>
                 <label>אוכלוסיית יעד</label>
                 <div class='property-value'>
                     <span class='tag b2' *ngFor='let i of item.target_audience'>{{i}}</span>                    
@@ -29,7 +29,7 @@
             </div>
     
             <div class='property' *ngIf='item.target_age_group && item.target_age_group.length'>
-                <div class='icon f3'><i class="fa fa-users" aria-hidden="true"></i></div>
+                <div class='icon f3'><i class="fa fa-child" aria-hidden="true"></i></div>
                 <label>קבוצת גיל</label>
                 <div class='property-value'>
                     <span class='tag b3' *ngFor='let i of item.target_age_group'>{{i}}</span>
@@ -37,7 +37,7 @@
             </div>
     
             <div class='property' *ngIf='item.subject && item.subject.length'>
-                <div class='icon f5'><i class="fa fa-arrows" aria-hidden="true"></i></div>
+                <div class='icon f5'><i class="fa fa-dot-circle-o" aria-hidden="true"></i></div>
                 <label class='bk-tooltip-anchor'>תחום התערבות<span class='bk-tooltip'>תחומי התוכן או הנושאים שבהם מתמקד השירות</span></label>
                 <div class='property-value'>
                     <span class='tag b5' *ngFor='let i of item.subject'>{{i}}</span>
@@ -45,7 +45,7 @@
             </div>
     
             <div class='property' *ngIf='item.intervention && item.intervention.length'>
-                <div class='icon f4'><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
+                <div class='icon f4'><i class="fa fa-cog" aria-hidden="true"></i></div>
                 <label class='bk-tooltip-anchor'>אופן התערבות<span class='bk-tooltip'>הדרך או הצורה שבה ניתן השירות</span></label>
                 <div class='property-value'>
                     <span class='tag b4' *ngFor='let i of item.intervention'>{{i}}</span>
