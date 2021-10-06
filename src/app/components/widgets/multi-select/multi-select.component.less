@@ -54,5 +54,18 @@
         }
         z-index: 1;
         min-width: 200px;
+        option {
+            &::before {
+                font-family: FontAwesome;
+                content: '\f096';
+                margin-left: 8px;
+                // content: '�'
+            }
+            &:checked {
+                &::before {
+                    content: '\f046';
+                }
+            }
+        }
     }
 }
