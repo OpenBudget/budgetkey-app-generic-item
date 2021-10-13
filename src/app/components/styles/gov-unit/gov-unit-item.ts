@@ -133,7 +133,7 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
       if (!this.intersection) {
         const el = this.filtersElement.nativeElement;
         console.log('INTERSECTION', el.offsetHeight);
-        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
+        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0};
         // console.log('SETTING UP INTERSECTION', options);
         this.intersection = new IntersectionObserver((entries) => {
           // console.log('INTERSECTION', entries[0]);
