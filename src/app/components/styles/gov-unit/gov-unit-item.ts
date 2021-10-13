@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { forkJoin, from, ReplaySubject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, first, delay } from 'rxjs/operators';
 import { BudgetKeyItemService } from '../../../services';
 
 import { StoreService } from '../../../services/store';
@@ -13,7 +13,7 @@ import { tableDefs } from './tables';
     templateUrl: `./gov-unit-item.html`,
     styleUrls: [`./gov-unit-item.less`]
 })
-export class GovUnitItemComponent implements OnInit {
+export class GovUnitItemComponent implements OnInit, AfterViewInit {
 
   private item: any;
 
@@ -122,6 +122,21 @@ export class GovUnitItemComponent implements OnInit {
     if (window.innerWidth < 600) {
       alert('מומלץ לפתוח ממחשב שולחני לשימוש מיטבי');
     }
+  }
+
+  ngAfterViewInit() {
+    this.ready.pipe(first(), delay(3000)).subscribe(() => {
+      if (!this.intersection) {
+        const el = this.filtersElement.nativeElement;
+        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
+        // console.log('SETTING UP INTERSECTION', options);
+        this.intersection = new IntersectionObserver((entries) => {
+          // console.log('INTERSECTION', entries[0]);
+          this.sticky = !entries[0].isIntersecting;
+        }, options);
+        this.intersection.observe(this.tabsElement.nativeElement);
+      }
+    });
   }
 
   fetchColorscheme() {
@@ -356,19 +371,6 @@ export class GovUnitItemComponent implements OnInit {
     if (this.filtersElement && this.filtersElement.nativeElement) {
       const el = this.filtersElement.nativeElement;
       const top = el.offsetTop;
-      if (!this.intersection) {
-        setTimeout(() => {
-          if (!this.intersection) {
-            const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0.5};
-            // console.log('SETTING UP INTERSECTION', options);
-            this.intersection = new IntersectionObserver((entries) => {
-              // console.log('INTERSECTION', entries[0]);
-              this.sticky = !entries[0].isIntersecting;
-            }, options);
-            this.intersection.observe(this.tabsElement.nativeElement);
-          }
-        }, 1000);
-      }
       return `-${top}px`;
     }
     return '-80px';
