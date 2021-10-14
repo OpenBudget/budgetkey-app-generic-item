@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { forkJoin, from, ReplaySubject } from 'rxjs';
-import { map, mergeMap, first, delay, switchMap } from 'rxjs/operators';
+import { forkJoin, from, ReplaySubject, Subscription, fromEvent } from 'rxjs';
+import { map, mergeMap, first, delay, switchMap, throttleTime } from 'rxjs/operators';
 import { BudgetKeyItemService } from '../../../services';
 
 import { StoreService } from '../../../services/store';
@@ -19,7 +19,7 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
 
   @ViewChild('filtersElement') filtersElement: ElementRef;
   @ViewChild('tabs') tabsElement: ElementRef;
-  intersection: IntersectionObserver = null;
+  intersection: Subscription = null;
 
   PAGE_LINKS = [
     {title: 'משרדי הממשלה', href: '/i/units/gov_social_service_unit/main'},
@@ -128,18 +128,15 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
     this.ready.pipe(
       first(),
       switchMap(() => this.colorscheme),
-      delay(3000)
+      delay(100)
     ).subscribe(() => {
       if (!this.intersection) {
-        const el = this.filtersElement.nativeElement;
-        console.log('INTERSECTION', el.offsetHeight);
-        const options = {rootMargin: `-${el.offsetHeight + 40}px`, threshold: 0};
-        // console.log('SETTING UP INTERSECTION', options);
-        this.intersection = new IntersectionObserver((entries) => {
-          // console.log('INTERSECTION', entries[0]);
-          this.sticky = !entries[0].isIntersecting;
-        }, options);
-        this.intersection.observe(this.tabsElement.nativeElement);
+        this.intersection = fromEvent(window, 'scroll').pipe(throttleTime(500)).subscribe(() => {
+          const top = this.filtersElement.nativeElement.getBoundingClientRect().top + 56;
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          console.log('INTERSECTION', scrollTop, top);
+          this.sticky = scrollTop > top;
+        });
       }
     });
   }
