@@ -26,8 +26,9 @@
             display: flex;
             flex-flow: column;
             align-items: stretch;
-            transition: padding 200ms ease-in-out;
-    
+            transition: padding,margin 200ms ease-in-out;
+            padding-bottom: 4px;
+
             .filters {
                 display: flex;
                 flex-flow: row wrap;
@@ -59,13 +60,16 @@
         }
     
         .subtext {
-            color: white;
-            margin-top: -16px;
+            color: black;
+            margin-top: 8px;
             padding: 0 4px;
+            padding-right: 20px;
             width: 100%;
             display: flex;
             flex-flow: row;
-            justify-content: space-between;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 16px;
             z-index: 0;
 
             span {
@@ -74,15 +78,23 @@
             }
 
             .clear-filters {
+                margin-right: auto;
                 cursor: pointer;
+            }    
+
+            .apply-filters {
+                border-radius: 4px;
+                padding: 0 20px;
+                background: white;                
             }    
         }
 
         &.sticky-filters {
             .filters-wrapper {
                 padding: 4px 20px;
+                margin-bottom: 8px;
             }
-            padding-bottom: 4px;
+            padding-bottom: 0px;
         }    
     }
 

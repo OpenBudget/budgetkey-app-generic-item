@@ -134,7 +134,6 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
         this.intersection = fromEvent(window, 'scroll').pipe(throttleTime(500)).subscribe(() => {
           const top = this.filtersElement.nativeElement.getBoundingClientRect().top + 56;
           const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-          console.log('INTERSECTION', scrollTop, top);
           this.sticky = scrollTop > top;
         });
       }

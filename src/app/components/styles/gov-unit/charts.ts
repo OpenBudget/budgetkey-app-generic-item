@@ -6,6 +6,10 @@ function getYfromX(items, x_field, y_field, x_values) {
   return x_values.map(x => lookup[x] || 0);
 }
 
+const budgetDisclaimer = '<br/><strong>' +
+  'שינויים בתקציב עשויים לנבוע ממעבר של השירות לצורות הפעלה שונות (שאינן הליך מכרזי) או משינויים במבנה ארגוני (כגון איחוד שירותים) או פערים בין מועד הפעילות למועד התשלום, ואינם מעידים בהכרח על שינויים באספקת השירות בפועל' +
+  '</strong>';
+
 export const chartTemplates = [
     {
       location: 'services',
@@ -88,7 +92,7 @@ export const chartTemplates = [
       },
       kind: 'org',
       data: (items, info, xValues) => {
-        return ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'אחר'].map((kind) => {
+        return ['אחר', 'רשויות מקומיות', 'עסקי', 'מגזר שלישי'].map((kind) => {
           return {
             type: 'bar',
             name: kind,
@@ -150,7 +154,7 @@ export const chartTemplates = [
              2
     order by 1, 2`,
       title: 'תקציב לאורך זמן',
-      titleTooltip: 'סך התקציב המאושר לשירותים לפי שנים. התקציב מחושב באופן שנתי. שינויים בתקציב עשויים לנבוע ממעבר של שירותים לצורות הפעלה שונות (שאינן הליך מכרזי) ואינם מעידים בהכרח על הפסקת השירותים',
+      titleTooltip: 'סך התקציב המאושר לשירותים לפי שנים. התקציב מחושב באופן שנתי. שינויים בתקציב עשויים לנבוע ממעבר של שירותים לצורות הפעלה שונות (שאינן הליך מכרזי) ואינם מעידים בהכרח על הפסקת השירותים' + budgetDisclaimer,
       x_field: 'year',
       y_field: 'value',
       y_field2: 'value2',
@@ -341,7 +345,7 @@ export const chartTemplates = [
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return kinds.map((kind) => {
+        return ['אחר', 'משולב', 'עסקי', 'מגזר שלישי'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
           return {
             type: 'bar',
             name: kind,
@@ -380,7 +384,7 @@ export const chartTemplates = [
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return kinds.map((kind) => {
+        return ['אחר', 'משולב', 'עסקי', 'מגזר שלישי'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
           return {
             type: 'bar',
             hovertemplate: '₪%{text}',
