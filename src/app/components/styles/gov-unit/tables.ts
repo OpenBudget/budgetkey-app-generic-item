@@ -148,7 +148,7 @@ export const tableDefs = {
             `<span class='bk-tooltip-anchor'>מחזור שנתי (לעמותות)<span class='bk-tooltip'>המחזור הכספי השנתי הכולל של העמותה (לא רק רכש חברתי)</span></span>`,
         ],
         uiHtml: [
-            (row) =>  row.id  ? `<a target='_blank' href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
+            (row) =>  row.id  ? `<a target='_blank' href='https://next.obudget.org/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,

@@ -92,7 +92,7 @@ export const chartTemplates = [
       },
       kind: 'org',
       data: (items, info, xValues) => {
-        return ['אחר', 'רשויות מקומיות', 'עסקי', 'מגזר שלישי'].map((kind) => {
+        return ['מגזר שלישי', 'עסקי', 'רשויות מקומיות', 'אחר'].map((kind) => {
           return {
             type: 'bar',
             name: kind,
@@ -149,7 +149,9 @@ export const chartTemplates = [
            sum((obj->>'approved')::numeric) as value,
            sum((obj->>'executed')::numeric) as value2
     FROM objs
-    where (obj->>'year')::integer >= 2017
+    where
+      (obj->>'year')::integer >= 2017 and 
+      (obj->>'year')::integer <= 2020
     GROUP BY 1,
              2
     order by 1, 2`,
@@ -345,7 +347,7 @@ export const chartTemplates = [
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return ['אחר', 'משולב', 'עסקי', 'מגזר שלישי'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
+        return ['מגזר שלישי', 'עסקי', 'משולב', 'אחר'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
           return {
             type: 'bar',
             name: kind,
@@ -384,7 +386,7 @@ export const chartTemplates = [
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.supplier_kinds).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return ['אחר', 'משולב', 'עסקי', 'מגזר שלישי'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
+        return ['מגזר שלישי', 'עסקי', 'משולב', 'אחר'].filter(k => kinds.indexOf(k) > -1).map((kind) => {
           return {
             type: 'bar',
             hovertemplate: '₪%{text}',

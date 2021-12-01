@@ -105,7 +105,7 @@ export const tableDefs = {
     ],
     uiHtml: [
         (row) => row.id,
-        (row) =>  row.id  ? `<a target='_blank' href='/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
+        (row) =>  row.id  ? `<a target='_blank' href='https://next.obudget.org/i/org/${row.entity_kind}/${row.id}?theme=soproc'>${row.name}</a>` : row.name,
         (row) => row.kind,
         (row) => row.region.join(', '),
         (row) => format_ils(row.association_yearly_turnover),
