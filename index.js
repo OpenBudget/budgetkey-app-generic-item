@@ -29,8 +29,11 @@ nunjucks.configure(rootPath, {
 app.set('port', process.env.PORT || 8000);
 
 app.get('/', (req, res) => {
+  console.log('GOT / on', req.hostname);
   if (req.hostname.indexOf('socialpro.org.il') > -1) {
     res.redirect('https://www.socialpro.org.il/i/units/gov_social_service_unit/main?theme=soproc');
+  } else {
+    res.sendStatus(404);
   }
 });
 
