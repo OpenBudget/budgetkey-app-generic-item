@@ -1,0 +1,74 @@
+בשנת {{year}} הכנסת {{title}}
+{% if net_allocated %}
+ עמדה על {{net_allocated | format_number}}₪.
+{% endif %}
+{% if not net_allocated %}
+  לא הוקצה.
+{% endif %}
+
+{% if (net_allocated != net_revised) %}
+<br />
+אחרי העברות תקציביות, התקציב עמד על {{net_revised | format_number}}₪
+{% endif %}
+<br/>
+זוהי תקנת
+{{direction[0]}}
+המשמשת לצורך {{nice_econ_category}}.
+<br/>
+
+{% if covid19_expenses_revised > 0 %}
+<strong>
+תקנה זו כוללת הוצאה מיוחדת להתמודדות עם מגיפת הקורונה בסך 
+{{covid19_expenses_revised | format_number}}₪.
+</strong>
+<br />
+{% endif %}
+
+{% if (history[(year-1)].net_executed) %}
+הביצוע בשנת {{year-1}} עמד על
+{{history[year-1].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-2)].net_executed) %}
+הביצוע בשנת {{year-2}} עמד על
+{{history[year-2].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-3)].net_executed) %}
+הביצוע בשנת {{year-3}} עמד על
+{{history[year-3].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-4)].net_executed) %}
+הביצוע בשנת {{year-4}} עמד על
+{{history[year-4].net_executed | format_number}}₪
+<br/>
+{% endif %}
+
+{% if personnel_allocated + contractors_allocated %}
+תחת סעיף זה מוקצים
+{% if personnel_allocated %}
+{{personnel_allocated}}
+תקני כח אדם
+{% endif %}
+{% if (personnel_allocated>0) and (contractors_allocated>0) %}
+, ובנוסף
+{% endif %}
+{% if contractors_allocated %}
+{{contractors_allocated}} חודשי עבודה בלתי צמיתה (יועצים וקבלנים)
+{% endif %}.
+<br/>
+{% endif %}
+
+{% if history | length > 0 %}
+
+  <!-- Sort the history years by key, get first year from output dict pairs-->
+  {% set years_sorted = history | dictsort %}
+  {% set first_year = years_sorted[0][0] %}
+
+  <!-- Output year range line the budget was active, or a single year line-->
+  {% if year > first_year %}
+  הכנסה זו פעילה בין השנים:
+  {{ first_year }} - {{ year }}.
+  {% else %}
+  הכנסה זו היתה פעילה בשנת: {{ year }} בלבד.
+  {% endif %}
+{% endif %}
+

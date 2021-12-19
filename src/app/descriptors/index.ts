@@ -9,9 +9,12 @@ import descriptorBudgetFuncDetail from "./budget/budgetFuncDetail";
 import descriptorBudget0Dig from "./budget/budget0dig";
 import descriptorBudget2Dig from "./budget/budget2dig";
 import descriptorBudget4Dig from "./budget/budget4dig";
-import descriptorBudget4DigInc from "./budget/budget4diginc";
 import descriptorBudget6Dig from "./budget/budget6dig";
 import descriptorBudget8Dig from "./budget/budget8dig";
+import descriptorIncome2Dig from "./income/income2dig";
+import descriptorIncome4Dig from "./income/income4dig";
+import descriptorIncome6Dig from "./income/income6dig";
+import descriptorIncome8Dig from "./income/income8dig";
 import descriptorTendersExemptions from "./tenders/exemptions";
 import descriptorTendersCentral from "./tenders/central";
 import descriptorTendersOffice from "./tenders/office";
@@ -39,9 +42,12 @@ const descriptors: DescriptorBase[] = [
   descriptorBudget0Dig,
   descriptorBudget2Dig,
   descriptorBudget4Dig,
-  descriptorBudget4DigInc,
   descriptorBudget6Dig,
   descriptorBudget8Dig,
+  descriptorIncome2Dig,
+  descriptorIncome4Dig,
+  descriptorIncome6Dig,
+  descriptorIncome8Dig,
   descriptorTendersExemptions,
   descriptorTendersCentral,
   descriptorTendersOffice,

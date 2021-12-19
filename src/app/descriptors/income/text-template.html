@@ -1,0 +1,42 @@
+בשנת {{year}} הכנסות {{title}}
+{% if net_allocated %}
+ עמדו על {{net_allocated | format_number}}₪.
+{% endif %}
+{% if not net_allocated %}
+  לא הוקצה.
+{% endif %}
+<br />
+
+<!-- בחלוקה לפי סוגי הכנסות עיקריים:
+     <ul>
+     {% if total_econ_cls_salaries > 0 %}
+     <li>שכר: {{total_econ_cls_salaries | format_number}}₪
+     (%{{(total_econ_cls_salaries/total_direction_expense*100) | format_number}})
+     </li>{% endif %}
+     {% if total_econ_cls_transfers > 0 %}
+     <li>תמיכות והעברות: {{total_econ_cls_transfers | format_number}}₪
+     (%{{(total_econ_cls_transfers/total_direction_expense*100) | format_number}})
+     </li>{% endif %}
+     {% if total_econ_cls_procurement > 0 %}<li>רכש וקניות: {{total_econ_cls_procurement | format_number}}₪
+     (%{{(total_econ_cls_procurement/total_direction_expense*100) | format_number}})
+     </li>{% endif %}
+     </ul> -->
+
+{% if (history[(year-1)].net_executed) %}
+<br />
+הביצוע בשנת {{year-1}} עמד על
+{{history[year-1].net_executed | format_number}}₪
+<br />
+{% elif (history[(year-2)].net_executed) %}
+הביצוע בשנת {{year-2}} עמד על
+{{history[year-2].net_executed | format_number}}₪
+<br />
+{% elif (history[(year-3)].net_executed) %}
+הביצוע בשנת {{year-3}} עמד על
+{{history[year-3].net_executed | format_number}}₪
+<br />
+{% elif (history[(year-4)].net_executed) %}
+הביצוע בשנת {{year-4}} עמד על
+{{history[year-4].net_executed | format_number}}₪
+<br />
+{% endif %}
