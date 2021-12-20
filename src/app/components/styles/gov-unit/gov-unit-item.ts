@@ -215,6 +215,7 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
       }
     }
     this.levelCond = levelCondParts.join(' AND ') || 'TRUE';
+    this.filtersChanged();
   }
 
   formatter(f) {
@@ -253,7 +254,8 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
     for (const k of Object.keys(this.filters)) {
       this.filters[k] = ['TRUE'];
     }
-    this.filtersChanged()
+    this.item.unit = '';
+    this.processLevel();
   }
 
   sum(arr): number {

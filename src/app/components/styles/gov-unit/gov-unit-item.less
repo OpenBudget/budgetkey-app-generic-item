@@ -2,11 +2,38 @@
 
 :host {
 
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+
+/* Inline #6 | http://localhost:8000/units/gov_social_service_unit/%D7%9E%D7%A9%D7%A8%D7%93%20%D7%94%D7%A8%D7%95%D7%95%D7%97%D7%94?theme=soproc */
+
+    .sticky-contact-us {
+        color: black;
+        background-color: #87cefa;
+        position: fixed;
+        margin-left: -16px;
+        bottom: 0px;
+        width: auto;
+        z-index: 100;
+        padding: 0px 16px;
+        font-weight: 700;
+        border-top-right-radius: 8px;
+        align-self: flex-end;
+        height: 28px;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;    
+    }
+
     .soproc-header {
         position: sticky;
         top: -80px;
         z-index: 20;
         transition: padding 200ms ease-in-out;
+
 
         .intro {
             margin: 40px 0;
