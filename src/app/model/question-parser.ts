@@ -44,10 +44,14 @@ export class QuestionParser {
           return (x: any, row: any) => {
             const item_id = row[param];
             if (item_id) {
+              let base = '';
+              if (item_id.indexOf('activities/gov_social_service') === 0) {
+                base = 'https://www.socialpro.org.il';
+              }
               if (themeId) {
-                return '<a href="/i/' + row[param] + '?theme=' + themeId + '">' + (x || '---') + '</a>';
+                return '<a href="' + base + '/i/' + item_id + '?theme=' + themeId + '">' + (x || '---') + '</a>';
               } else {
-                return '<a href="/i/' + row[param] + '">' + (x || '---') + '</a>';
+                return '<a href="' + base + '/i/' + item_id + '">' + (x || '---') + '</a>';
               }
             } else {
               return x;
