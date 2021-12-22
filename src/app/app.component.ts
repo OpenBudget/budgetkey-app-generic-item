@@ -62,6 +62,7 @@ export class AppComponent implements AfterViewInit, OnInit  {
     }
     moment.locale('he');
     this.showQuestions = true;
+    if (itemId.substr(7, 4) === "0000") this.showQuestions = false; // Remove questions from income items.
   }
 
   ngAfterViewInit() {
