@@ -24,6 +24,7 @@ export class BudgetKeyItemService {
   }
 
   getDownloadUrl(query: string, format: string, headers: string[], fileName: string): string {
+    query = query.split(/\s+/).join(' ');
     return '//next.obudget.org/api/download?query=' + encodeURIComponent(query) +
       '&format=' + format +
       '&filename=' + encodeURIComponent(fileName) +
