@@ -9,7 +9,7 @@ export class MultiSelectComponent implements OnInit {
 
   @Input() value: any[];
   @Input() options: {value: any; display: string}[] = [];
-  @Input() id: any[];
+  @Input() id: string;
   @Output() valueChange = new EventEmitter<any>();
   @Output() changed = new EventEmitter<void>();
 
@@ -50,7 +50,7 @@ export class MultiSelectComponent implements OnInit {
     for (const value of this.value) {
       for (const option of this.options) {
         if (option.value === value) {
-          if (display.length + option.display.length < 60) {
+          if (display.length + option.display.length < 60 || display.length === 0) {
             if (display.length > 0) {
               display += ', ';
             }

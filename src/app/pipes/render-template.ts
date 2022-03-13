@@ -127,8 +127,12 @@ env.addFilter('search_url', function(searchTerm: string, displayDocs: string) {
 });
 
 env.addFilter('item_url', function(docId) {
+  let base = '//next.obudget.org';
+  if (docId.indexOf('activities/gov_social_service') === 0) {
+    base = '//www.socialpro.org.il';
+  }
   return env.renderString(
-    '//next.obudget.org/i/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
+    base + '/i/{{docId}}{% if themeId %}?theme={{themeId}}{% endif %}',
     {docId: docId}
   );
 });
