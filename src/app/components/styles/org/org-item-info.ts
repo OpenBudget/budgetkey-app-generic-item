@@ -44,5 +44,10 @@ export class OrgItemInfoComponent extends BaseItemInfoComponent {
 
   setDescriptor(descriptor: DescriptorBase) {
     this.descriptor = <OrgDescriptor>this.store.descriptor;
+    const arl = this.item.details && this.item.details.activity_region_list;
+    const arac = this.item.details && this.item.details.activity_region_all_country;
+    if (arac || (arl && arl.length > 0 && arl.indexOf('ארצי') >= 0)) {
+      this.item['country_wide'] = true;
+    }
   }
 }

@@ -9,7 +9,11 @@
     {{details.field_of_activity_display | item_link('reports/ngo-activity-report/' + details.field_of_activity)}}.
 </p>
 
-{% if (details.activity_region_list | length) == 1 %}
+{% if (country_wide) %}
+<p>
+        על פי הדיווח, הפעילות מרוכזת בכל הארץ.
+</p>
+{% elif (details.activity_region_list | length) == 1 %}
 <p>
         על פי הדיווח, הפעילות מרוכזת ב{{details.activity_region_list[0]}}.
 </p>
