@@ -1,7 +1,7 @@
 import { SimpleDescriptor } from '../../../model';
 
 export default new SimpleDescriptor({
-  pathPrefix: 'budget/00([^0][0-9]|[0-9][^0])[0-9]{4}/',
+  pathPrefix: 'budget/00[0-9]{6}/',
   titleTemplate: require('../title-template.html'),
   preTitleTemplate: require('./pretitle-template.html'),
   amountTemplate: require('../amount-template.html'),
