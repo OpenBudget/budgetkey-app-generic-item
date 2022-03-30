@@ -6,24 +6,6 @@
   לא הוקצה.
 {% endif %}
 
-{% if (net_allocated != net_revised) %}
-<br />
-אחרי העברות תקציביות, התקציב עמד על {{net_revised | format_number}}₪
-{% endif %}
-<br/>
-זוהי תקנת
-{{direction[0]}}
-המשמשת לצורך {{nice_econ_category}}.
-<br/>
-
-{% if covid19_expenses_revised > 0 %}
-<strong>
-תקנה זו כוללת הוצאה מיוחדת להתמודדות עם מגיפת הקורונה בסך 
-{{covid19_expenses_revised | format_number}}₪.
-</strong>
-<br />
-{% endif %}
-
 {% if (history[(year-1)].net_executed) %}
 הביצוע בשנת {{year-1}} עמד על
 {{history[year-1].net_executed | format_number}}₪
@@ -39,21 +21,6 @@
 {% elif (history[(year-4)].net_executed) %}
 הביצוע בשנת {{year-4}} עמד על
 {{history[year-4].net_executed | format_number}}₪
-<br/>
-{% endif %}
-
-{% if personnel_allocated + contractors_allocated %}
-תחת סעיף זה מוקצים
-{% if personnel_allocated %}
-{{personnel_allocated}}
-תקני כח אדם
-{% endif %}
-{% if (personnel_allocated>0) and (contractors_allocated>0) %}
-, ובנוסף
-{% endif %}
-{% if contractors_allocated %}
-{{contractors_allocated}} חודשי עבודה בלתי צמיתה (יועצים וקבלנים)
-{% endif %}.
 <br/>
 {% endif %}
 
