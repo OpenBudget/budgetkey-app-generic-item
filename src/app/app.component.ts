@@ -61,7 +61,7 @@ export class AppComponent implements AfterViewInit, OnInit  {
       }
     }
     moment.locale('he');
-    this.showQuestions = !itemId.startsWith("budget/0000");
+    this.showQuestions = true;
   }
 
   ngAfterViewInit() {
