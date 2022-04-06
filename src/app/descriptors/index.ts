@@ -4,6 +4,10 @@ import descriptorOrgAssociation from './org/association';
 import descriptorOrgCompany from './org/company';
 import descriptorOrgMunicipality from './org/municipality';
 import descriptorOrg from './org';
+import descriptorIncome2Dig from './income/income2dig';
+import descriptorIncome4Dig from './income/income4dig';
+import descriptorIncome6Dig from './income/income6dig';
+import descriptorIncome8Dig from './income/income8dig';
 import descriptorBudgetFunc from './budget/budgetFunc';
 import descriptorBudgetFuncDetail from './budget/budgetFuncDetail';
 import descriptorBudget0Dig from './budget/budget0dig';
@@ -26,7 +30,7 @@ import descriptorGovDecisions from './gov_decisions';
 import descriptorSocialService from './activities/social_services';
 import descriptorGovSocialServiceUnit from './gov_social_service_unit';
 
-import {DescriptorBase} from '../model/descriptor';
+import { DescriptorBase } from '../model/descriptor';
 
 const descriptors: DescriptorBase[] = [
   descriptorOrgAssociation,
@@ -35,6 +39,10 @@ const descriptors: DescriptorBase[] = [
   descriptorOrg,
   descriptorBudgetFunc,
   descriptorBudgetFuncDetail,
+  descriptorIncome2Dig,
+  descriptorIncome4Dig,
+  descriptorIncome6Dig,
+  descriptorIncome8Dig,
   descriptorBudget0Dig,
   descriptorBudget2Dig,
   descriptorBudget4Dig,

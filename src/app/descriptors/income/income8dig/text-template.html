@@ -1,0 +1,41 @@
+בשנת {{year}} הכנסת {{title}}
+{% if net_allocated %}
+ עמדה על {{net_allocated | format_number}}₪.
+{% endif %}
+{% if not net_allocated %}
+  לא הוקצה.
+{% endif %}
+
+{% if (history[(year-1)].net_executed) %}
+הביצוע בשנת {{year-1}} עמד על
+{{history[year-1].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-2)].net_executed) %}
+הביצוע בשנת {{year-2}} עמד על
+{{history[year-2].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-3)].net_executed) %}
+הביצוע בשנת {{year-3}} עמד על
+{{history[year-3].net_executed | format_number}}₪
+<br/>
+{% elif (history[(year-4)].net_executed) %}
+הביצוע בשנת {{year-4}} עמד על
+{{history[year-4].net_executed | format_number}}₪
+<br/>
+{% endif %}
+
+{% if history | length > 0 %}
+
+  <!-- Sort the history years by key, get first year from output dict pairs-->
+  {% set years_sorted = history | dictsort %}
+  {% set first_year = years_sorted[0][0] %}
+
+  <!-- Output year range line the budget was active, or a single year line-->
+  {% if year > first_year %}
+  הכנסה זו פעילה בין השנים:
+  {{ first_year }} - {{ year }}.
+  {% else %}
+  הכנסה זו היתה פעילה בשנת: {{ year }} בלבד.
+  {% endif %}
+{% endif %}
+
