@@ -2,9 +2,10 @@ import {Component, ViewChild, ElementRef, Input, OnInit, OnChanges, AfterViewIni
 import { Location } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import * as Plotly from 'plotly.js-dist';
 
-declare const Plotly: any;
-declare const window: any;
+// declare const Plotly: any;
+// declare const window: any;
 
 @Component({
   selector: 'budgetkey-chart-plotly',
@@ -38,30 +39,30 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
   }
 
   checkPlotly(big?: boolean) {
-    if (window['Plotly']) {
-      const wrapper = this.wrapper.nativeElement as HTMLDivElement;
-      const el = this.plot.nativeElement as HTMLDivElement;
-      const layout = Object.assign({
-        height: 600,
-        font: {
-          size: 10
-        }
-      }, this.layout);
-      if (big) {
-        layout.height = wrapper.offsetHeight - 80;
-        layout.width = wrapper.offsetWidth - 80;
+    // if (window['Plotly']) {
+    const wrapper = this.wrapper.nativeElement as HTMLDivElement;
+    const el = this.plot.nativeElement as HTMLDivElement;
+    const layout = Object.assign({
+      height: 600,
+      font: {
+        size: 10
       }
-
-      el.innerHTML = '';
-      Plotly.newPlot(el, this.data, layout, {responsive: true});
-      el.querySelectorAll('svg').forEach((svg) => {
-        svg.setAttribute('alt', this.data.title || 'diagram');
-        svg.setAttribute('role', 'img');
-        svg.setAttribute('aria-label', this.data.title || 'diagram');
-      });
-    } else {
-      setTimeout(() => this.checkPlotly(), 100);
+    }, this.layout);
+    if (big) {
+      layout.height = wrapper.offsetHeight - 80;
+      layout.width = wrapper.offsetWidth - 80;
     }
+
+    el.innerHTML = '';
+    Plotly.newPlot(el, this.data, layout, {responsive: true});
+    el.querySelectorAll('svg').forEach((svg) => {
+      svg.setAttribute('alt', this.data.title || 'diagram');
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', this.data.title || 'diagram');
+    });
+    // } else {
+    //   setTimeout(() => this.checkPlotly(), 100);
+    // }
   }
 
   set enlarged(value: boolean) {

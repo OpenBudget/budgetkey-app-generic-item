@@ -117,9 +117,9 @@ export class SimpleItemVisualizationsComponent implements OnInit {
 
   tabsScroll(event: any) {
     const center = event.target.offsetWidth / 2;
-    const scrollCenter = event.target.scrollLeft + center;
+    const scrollCenter = -event.target.scrollLeft + center;
     const itemWidth = event.target.scrollWidth / this.charts.length;
-    const visibleItem = this.charts.length - Math.floor(scrollCenter / itemWidth) - 1;
+    const visibleItem = Math.floor(scrollCenter / itemWidth);
     this.showTab(this.charts[visibleItem]);
   }
 

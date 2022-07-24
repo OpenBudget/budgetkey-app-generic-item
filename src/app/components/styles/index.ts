@@ -6,3 +6,4 @@ export * from './people';
 export * from './gov-unit';
 export * from './social-service';
 export * from './soproc-common';
+export * from './muni';

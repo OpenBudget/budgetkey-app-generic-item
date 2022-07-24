@@ -1,6 +1,6 @@
-import { SimpleDescriptor } from '../../../model';
+import { MuniDescriptor } from '../../../model';
 
-export default new SimpleDescriptor({
+export default new MuniDescriptor({
   pathPrefix: 'org/municipality',
   titleTemplate: require('../title-template.html'),
   preTitleTemplate: require('../pretitle-template.html'),
