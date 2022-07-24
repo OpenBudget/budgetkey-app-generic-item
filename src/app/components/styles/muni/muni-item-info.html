@@ -1,0 +1,84 @@
+<div class='streched'>
+    <div class='header'>
+        <h1>{{ (ext.name && ext.name.value) || item.name }}</h1>
+    </div>
+    <div class='general-info'>
+        <div class='section'>
+            <div class='section-icon'>
+                <div class='ic information'></div>
+            </div>
+            <div class='section-content'>
+                <muni-item-tidbit [item]='ext.status'></muni-item-tidbit>
+                <span> במחוז </span>
+                <muni-item-tidbit [item]='ext.district'></muni-item-tidbit>
+                <ng-container *ngIf='ext.status_year'>
+                    <span> מאז שנת </span>
+                    <muni-item-tidbit [item]='ext.status_year'></muni-item-tidbit>.
+                </ng-container>
+                <ng-container *ngIf='ext.other_names && ext.other_names.value.length > 0'>
+                    <span> בעבר נקראה גם </span>
+                    <muni-item-tidbit [item]='ext.other_names'></muni-item-tidbit>.
+                </ng-container>
+                <ng-container *ngIf='ext.num_settlements && ext.num_settlements.value > 0'>
+                    <span>במועצה יש </span>
+                    <muni-item-tidbit [item]='ext.num_settlements'></muni-item-tidbit>
+                    <span> יישובים.</span>
+                </ng-container>
+            </div>
+        </div>
+        <div class='section'>
+            <div class='section-icon'>
+                <div class='ic demographics'></div>
+            </div>
+            <div class='section-content'>
+                <span>ברשות מתגוררים </span>
+                <muni-item-tidbit [item]='ext.residents' kind='integer' *ngIf='ext.residents'></muni-item-tidbit>
+                <span> תושבים, מתוכם </span>
+                <ng-container *ngIf='ext.pct_jews_other'>
+                    <muni-item-tidbit [item]='ext.pct_jews_other' kind='percent'></muni-item-tidbit>
+                    <span> יהודים</span>
+                </ng-container>
+                <ng-container *ngIf='ext.pct_jews_other && ext.pct_arabs'><span> ו-</span></ng-container>
+                <ng-container *ngIf='ext.pct_arabs'>
+                    <muni-item-tidbit [item]='ext.pct_arabs' kind='percent'></muni-item-tidbit>
+                    <span> ערבים</span>
+                </ng-container>
+                <span>.</span>
+            </div>
+        </div>
+        <div class='section' *ngIf='ext.socioeconomic_cluster && ext.socioeconomic_rating'>
+            <div class='section-icon'>
+                <div class='ic socioeconomic'></div>
+            </div>
+            <div class='section-content'>
+                <span>הרשות נמצאת באשכול </span>
+                <muni-item-tidbit [item]='ext.socioeconomic_cluster'></muni-item-tidbit>
+                <span> של <strong>המדד החברתי-כלכלי</strong>. יחסית לרשויות אחרות, היא מדורגת במקום ה-</span>
+                <muni-item-tidbit [item]='ext.socioeconomic_rating'></muni-item-tidbit>
+                <span> (כאשר 1 הוא המקום/אשכול הנמוך ביותר).</span>
+            </div>
+        </div>
+        <div class='section'  *ngIf='ext.peripheriality_cluster'>
+            <div class='section-icon'>
+                <div class='ic periphery'></div>
+            </div>
+            <div class='section-content'>
+                <ng-container>
+                    <span>לפי <strong>מדד הפריפריאליות</strong>, הרשות נמצאת באשכול </span>
+                    <muni-item-tidbit [item]='ext.peripheriality_cluster'></muni-item-tidbit>
+                    <span>, המייצג, בין השאר את מידת הנגישות הפוטנציאלית של הרשות ואת הקרבה שלה למחוז תל-אביב (אשכול 1 הוא הפריפריאלי ביותר).</span>
+                </ng-container>
+            </div>
+        </div>
+        <div class='section'>
+            <div class='section-icon'>
+                <div class='ic institutional'></div>
+            </div>
+            <div class='section-content-2'>
+                <muni-item-tidbit [item]='ext.symbol' *ngIf='ext.symbol' [name]='true'></muni-item-tidbit>
+                <muni-item-tidbit [item]='ext.building_committee_name' *ngIf='ext.building_committee_name' [name]='true'></muni-item-tidbit>
+                <muni-item-tidbit [item]='ext.council_member_count' *ngIf='ext.council_member_count' [name]='true'></muni-item-tidbit>
+            </div>
+        </div>
+    </div>
+</div>

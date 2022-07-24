@@ -1,0 +1,113 @@
+@color-light-blue: #E3EDF7;
+@color-dark-blue: #022E57;
+@color-off-white: #F3F3F3;
+@color-strong-blue: #00B2FF;
+@color-icon-gray: #8C9FB1;
+
+:host {
+    font-family: "Abraham TRIAL";
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    width: 100%;
+
+    .streched {
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        width: calc(100% ~'+' 30px);
+        margin: 0 -15px;
+        gap: 8px;
+
+        .header {
+            width: 100%;
+            padding: 8px 32px;
+            background: @color-light-blue;
+            box-shadow: -5px 5px 10px rgba(172, 186, 206, 0.2), 5px -5px 10px rgba(133, 157, 193, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(206, 223, 242, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(205, 211, 227, 0.5);
+            h1 {
+                margin: 0;
+                font-weight: 700;
+                font-size: 48px;
+                color: @color-dark-blue;    
+            }
+        }
+        .general-info {
+            display: flex;
+            flex-flow: column;
+            align-items: stretch ;
+            gap: 16px;
+
+            width: 100%;
+            background: @color-off-white;
+            background-image: url(../../../../assets/img/muni-image-bottom.svg);
+            background-size: contain;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            padding: 16px 32px;
+            padding-bottom: 33%;
+            font-size: 20px;
+
+            .section {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                gap: 16px;
+                span {
+                    white-space: pre-wrap;
+                }
+                word-spacing: 100%;
+                .section-icon {
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 28px;
+                    // padding: 4px;
+
+                    border: @color-strong-blue solid 4px;
+                    
+                    .ic {
+                        width: 100%;
+                        height: 100%;
+                        background: @color-off-white;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: 28px;
+                        border-radius: 28px;
+                        box-shadow: 2px 2px 4px rgba(114, 142, 171, 0.1), -6px -6px 20px #FFFFFF, 4px 4px 20px rgba(111, 140, 176, 0.41);
+
+                        &.institutional {
+                            background-image: url(../../../../assets/img/icon-muni-institutional.svg);
+                        }
+                        &.demographics {
+                            background-image: url(../../../../assets/img/icon-muni-demographics.svg);
+                        }
+                        &.socioeconomic {
+                            background-image: url(../../../../assets/img/icon-muni-socioeconomic.svg);
+                        }
+                        &.information {
+                            background-image: url(../../../../assets/img/icon-muni-information.svg);
+                        }
+                        &.periphery {
+                            background-image: url(../../../../assets/img/icon-muni-periphery.svg);
+                        }
+                    }
+                }
+                .section-content {
+                    flex: 1 1 auto;
+                    width: 100%;
+                }
+                .section-content-2 {
+                    flex: 1 1 auto;
+                    width: 100%;
+                    display: flex;
+                    flex-flow: column;
+                    justify-content: baseline;
+                    & > * {
+                        flex: 0 0 50%;
+                        min-width: 269px;
+                    }    
+                }
+            }
+        }
+    }
+
+}
