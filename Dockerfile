@@ -1,7 +1,5 @@
 FROM node:14-slim
 
-RUN apk add --update git
-
 COPY . /app/
 RUN cd /app/ && \
     npm install node-sass && \
