@@ -2,7 +2,7 @@ import {Component, ViewChild, ElementRef, Input, OnInit, OnChanges, AfterViewIni
 import { Location } from '@angular/common';
 import { first } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
-import * as Plotly from 'plotly.js-dist';
+import * as Plotly from 'plotly.js-dist-min';
 
 // declare const Plotly: any;
 // declare const window: any;
