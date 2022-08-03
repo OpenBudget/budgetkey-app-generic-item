@@ -80,5 +80,30 @@
                 <muni-item-tidbit [item]='ext.council_member_count' *ngIf='ext.council_member_count' [name]='true'></muni-item-tidbit>
             </div>
         </div>
+
+        <div class='section budget' *ngIf='budgets.length > 0'>
+            <div class='budget-info'>
+                <div class='budget-title'>סעיפי תקציב נבחרים</div>
+                <div class='budget-subtitle'>{{budgets[0].value_kind}} בשנת {{budgets[0].year}}</div>
+                <div class='budget-items'>
+                    <ng-container  *ngFor='let budget of budgets'>
+                        <div class='budget-item' *ngIf='budget.code.length > 1'>
+                            <div class='budget-item-icon'>
+                                <i [class]='"fa " + budget.icon'></i>
+                            </div>
+                            <div class='budget-item-title'>{{budget.name}}</div>
+                            <div class='budget-item-amount' 
+                                 [innerHTML]='format_number(budget.value) + "₪"'
+                            ></div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class='budget-info'>
+                <div class='budget-title'>מקורות ההכנסה למימון הפעילות</div>
+                <div class='budget-subtitle'>{{budgets[0].value_kind}} בשנת {{budgets[0].year}}</div>
+                <budgetkey-chart-plotly [data]='incomeChartData' [layout]='incomeChartLayout' [config]='incomeChartConfig'></budgetkey-chart-plotly>
+            </div>
+        </div>
     </div>
 </div>

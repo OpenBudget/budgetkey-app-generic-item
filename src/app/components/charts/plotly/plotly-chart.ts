@@ -19,6 +19,7 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
 
   @Input() public data: any;
   @Input() public layout: any;
+  @Input() public config: any = {};
 
   @ViewChild('plot') plot: ElementRef;
   @ViewChild('wrapper') wrapper: ElementRef;
@@ -54,7 +55,7 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
     }
 
     el.innerHTML = '';
-    Plotly.newPlot(el, this.data, layout, {responsive: true});
+    Plotly.newPlot(el, this.data, layout, Object.assign({responsive: true}, this.config));
     el.querySelectorAll('svg').forEach((svg) => {
       svg.setAttribute('alt', this.data.title || 'diagram');
       svg.setAttribute('role', 'img');
