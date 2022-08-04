@@ -1,0 +1,73 @@
+{% for support_title, payments_ in payments | groupby("support_title") %}
+    <div>
+        <label class="field-label">
+            מטרת התמיכה:
+        </label>
+            {{ support_title }}
+    </div>
+    <div>
+        <label class="field-label">
+            מטעם:
+        </label>
+        {{ payments_[0].supporting_ministry }}
+    </div>
+    {% if budget_code %}
+    <div>
+        <label class="field-label">
+            התקנה התקציבית:
+        </label>
+        {{ (budget_code + ' - ' + support_title) | search_link(budget_code, 'budget') }}
+    </div>
+    {% endif %}
+{% endfor %}
+
+<div>
+    <label class="field-label">
+        תשלומים:
+    </label>
+    <ul>
+        {% for payment in payments %}
+            {% if payment.amount_approved %}
+            <li>
+                <label class="field-label">
+                    אושר ב-
+                    {{year_requested}}:
+                </label>
+                {{ payment.amount_approved | format_number }}
+                <small>₪</small>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% for payment in payments %}
+            {% if payment.amount_paid %}
+            <li>
+                <label class="field-label">
+                    שולם ב-
+                    {{payment.year_paid}}:
+                </label>
+                {{ payment.amount_total | format_number }}
+                <small>₪</small>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+{% if criteria_docs.length > 0 %}
+<div>
+    <label class="field-label">
+        מבחני תמיכה:
+    </label>
+    <ul>
+        {% for doc in criteria_docs %}
+        <li>
+            <a href="{{doc.pdf_url}}" target="_blank">
+                {{doc.title}} ({{doc.date}})
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <small>הערה: אנו לא יודעים להתאים בוודאות תמיכה תקציבית למבחן התמיכה הרלוונטי אליה. המבחנים המקושרים למעלה הן התאמות אפשריות אך לא וודאיות.</small>
+</div>
+{% endif %}

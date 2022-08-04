@@ -7,3 +7,4 @@ export * from './gov-unit';
 export * from './social-service';
 export * from './soproc-common';
 export * from './muni';
+export * from './muni-budget';

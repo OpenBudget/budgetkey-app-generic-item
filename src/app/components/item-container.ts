@@ -3,7 +3,7 @@ import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver } from '@
 import { ItemDirective } from './item-directive';
 import { SimpleItemComponent, ReportItemComponent, OrgItemComponent,
          ProcureItemComponent, PeopleItemComponent, GovUnitItemComponent,
-         SocialServiceItemComponent, MuniItemComponent} from './styles';
+         SocialServiceItemComponent, MuniItemComponent, MuniBudgetItemComponent} from './styles';
 
 @Component({
     selector: 'budgetkey-item-container',
@@ -21,6 +21,7 @@ export class ItemContainerComponent implements OnInit {
         gov_unit: GovUnitItemComponent,
         social_service: SocialServiceItemComponent,
         muni: MuniItemComponent,
+        muni_budget: MuniBudgetItemComponent,
     };
 
     @Input() style: string;

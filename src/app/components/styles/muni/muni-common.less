@@ -1,0 +1,48 @@
+@color-light-blue: #E3EDF7;
+@color-dark-blue: #022E57;
+@color-off-white: #F3F3F3;
+@color-strong-blue: #00B2FF;
+@color-neon-blue: #24DFDF;
+@color-icon-gray: #8C9FB1;
+
+.section-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    // padding: 4px;
+
+    border: @color-strong-blue solid 4px;
+    
+    .ic {
+        width: 100%;
+        height: 100%;
+        background: @color-off-white;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 28px;
+        border-radius: 28px;
+        box-shadow: 2px 2px 4px rgba(114, 142, 171, 0.1), -6px -6px 20px #FFFFFF, 4px 4px 20px rgba(111, 140, 176, 0.41);
+
+        &.institutional {
+            background-image: url(../../../../assets/img/icon-muni-institutional.svg);
+        }
+        &.demographics {
+            background-image: url(../../../../assets/img/icon-muni-demographics.svg);
+        }
+        &.socioeconomic {
+            background-image: url(../../../../assets/img/icon-muni-socioeconomic.svg);
+        }
+        &.information {
+            background-image: url(../../../../assets/img/icon-muni-information.svg);
+        }
+        &.periphery {
+            background-image: url(../../../../assets/img/icon-muni-periphery.svg);
+        }
+        &.money-bag {
+            background-image: url(../../../../assets/img/icon-muni-money-bag.svg);
+        }
+        &.hierarchy {
+            background-image: url(../../../../assets/img/icon-muni-hierarchy.svg);
+        }
+    }
+}

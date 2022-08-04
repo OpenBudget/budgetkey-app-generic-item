@@ -87,13 +87,15 @@
                 <div class='budget-subtitle'>{{budgets[0].value_kind}} בשנת {{budgets[0].year}}</div>
                 <div class='budget-items'>
                     <ng-container  *ngFor='let budget of budgets'>
-                        <div class='budget-item' *ngIf='budget.code.length > 1'>
+                        <div class='budget-item' *ngIf='budget.use === "selected"'>
                             <div class='budget-item-icon'>
-                                <i [class]='"fa " + budget.icon'></i>
+                                <a [href]='budgetHref(budget)'><i [class]='"fa " + budget.icon'></i></a>
                             </div>
-                            <div class='budget-item-title'>{{budget.name}}</div>
+                            <div class='budget-item-title'>
+                                <a [href]='budgetHref(budget)'>{{budget.name}}</a>
+                            </div>
                             <div class='budget-item-amount' 
-                                 [innerHTML]='format_number(budget.value) + "₪"'
+                                 [innerHTML]='format_ils(budget.value)'
                             ></div>
                         </div>
                     </ng-container>
@@ -104,6 +106,20 @@
                 <div class='budget-subtitle'>{{budgets[0].value_kind}} בשנת {{budgets[0].year}}</div>
                 <budgetkey-chart-plotly [data]='incomeChartData' [layout]='incomeChartLayout' [config]='incomeChartConfig'></budgetkey-chart-plotly>
             </div>
+        </div>
+    </div>
+    <div class='full-budget' *ngIf='budgets.length > 0'>
+        <div>
+            <div class='budget-title'>סה״כ הכנסות: <span [innerHtml]='format_ils(totalIncome)'></span></div>
+            <ng-container *ngFor='let budget of incomeBudgets'>
+                <muni-budget-minicard [item]='budget' [entry]='budget'></muni-budget-minicard>
+            </ng-container>
+        </div>
+        <div>
+            <div class='budget-title'>סה״כ הוצאות: <span [innerHtml]='format_ils(totalExpense)'></span></div>
+            <ng-container *ngFor='let budget of expenseBudgets'>
+                <muni-budget-minicard [item]='budget' [entry]='budget'></muni-budget-minicard>
+            </ng-container>    
         </div>
     </div>
 </div>

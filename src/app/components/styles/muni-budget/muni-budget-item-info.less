@@ -1,0 +1,71 @@
+@import '../muni/muni-common.less';
+
+:host {
+    font-family: "Abraham TRIAL";
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    width: 100%;
+
+    .streched {
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        width: calc(100% ~'+' 30px);
+        margin: 0 -15px;
+        gap: 8px;
+
+        .header {
+            width: 100%;
+            padding: 8px 32px;
+            background: @color-light-blue;
+            box-shadow: -5px 5px 10px rgba(172, 186, 206, 0.2), 5px -5px 10px rgba(133, 157, 193, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.9), 5px 5px 13px rgba(206, 223, 242, 0.9), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(205, 211, 227, 0.5);
+            h1 {
+                margin: 0;
+                font-weight: 700;
+                font-size: 48px;
+                color: @color-dark-blue;    
+            }
+        }
+        .general-info {
+            display: flex;
+            flex-flow: column;
+            align-items: stretch ;
+            gap: 16px;
+
+            width: 100%;
+            padding: 16px 32px;
+            font-size: 20px;
+
+            .section {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                gap: 16px;
+                span {
+                    white-space: pre-wrap;
+                }
+                word-spacing: 50%;
+                .section-content {
+                    flex: 1 1 auto;
+                    width: 100%;
+                }
+                &.top {
+                    align-items: flex-start;
+                }
+                .minicards {
+                    display: flex;
+                    flex-flow: column;
+                    gap: 8px;
+                    align-items: stretch;
+                    width: 100%;
+                    max-width: 800px;
+                    padding-right: 48px;
+                    margin-top: 16px;
+                    margin-bottom: 48px;
+                }
+            }
+        }
+    }
+
+}

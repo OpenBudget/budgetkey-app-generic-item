@@ -34,6 +34,6 @@ export class Item {
   documents?: any;
   payments?: any;
   subject_list_keywords?: string[];
-
+  children: any[];
 
 }

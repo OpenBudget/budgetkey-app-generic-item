@@ -68,11 +68,17 @@ import {
 
   SafeHtmlPipe,
   MuniItemComponent,
+  MuniItemTidbitComponent,
   MuniItemInfoComponent,
+  MuniBudgetItemComponent,
+  MuniBudgetItemInfoComponent,
+  MuniBudgetLinkComponent,
+  MuniBudgetMinicardComponent,
+
 } from './components';
+
 import { ClickOnReturnDirective } from './click-on-return.directive';
 import { MultiSelectComponent } from './components/widgets/multi-select/multi-select.component';
-import { MuniItemTidbitComponent } from './components/styles/muni/muni-tidbit/muni-item-tidbit';
 
 
 declare let BUDGETKEY_NG2_COMPONENTS_THEME: any;
@@ -148,6 +154,11 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
     MuniItemInfoComponent,
     MuniItemTidbitComponent,
 
+    MuniBudgetItemComponent,
+    MuniBudgetItemInfoComponent,
+    MuniBudgetLinkComponent,
+    MuniBudgetMinicardComponent,
+
     TenderItemInfoComponent,
     ContractItemInfoComponent,
     ProcureItemComponent,
@@ -169,7 +180,7 @@ if (typeof(BUDGETKEY_NG2_COMPONENTS_THEME) !== 'undefined') {
 ],
   entryComponents: [
     SimpleItemComponent, ReportItemComponent, OrgItemComponent, ProcureItemComponent, PeopleItemComponent,
-    GovUnitItemComponent, SocialServiceItemComponent, MuniItemComponent,
+    GovUnitItemComponent, SocialServiceItemComponent, MuniItemComponent, MuniBudgetItemComponent
   ],
   providers: providers,
   bootstrap: [

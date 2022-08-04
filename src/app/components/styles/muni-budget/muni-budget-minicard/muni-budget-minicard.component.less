@@ -1,0 +1,64 @@
+@import '../../muni/muni-common.less';
+
+:host {
+    width: 100%;
+
+    .card {
+        background: #FFFFFF;
+        border: 1px solid @color-light-blue;
+        border-radius: 8px;
+        height: 40px;
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+
+        .top {
+            flex: 1 1 auto;
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            padding-right: 16px;
+            padding-left: 8px;
+            font-size: 18px;
+            letter-spacing: 0.2px;
+            color: @color-dark-blue;
+            font-weight: 400;
+
+            .title {
+                font-weight: 300;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .value {
+                min-width: 150px;
+                text-align: right;
+            }
+            .chevron {
+                margin-right: auto;
+                width: 24px;
+                height: 24px;
+                background-image: url(../../../../../assets/img/muni-chevron-left.svg);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+
+        .bottom {
+            flex: 0 0 auto;
+            height: 4px;
+            background: linear-gradient(0deg, rgba(21, 203, 203, 0.1), rgba(21, 203, 203, 0.1)), #FFFFFF;
+            display: flex;
+            flex-flow: row;
+            align-items: stretch;
+
+            .budget-share {
+                height: 100%;
+                background: linear-gradient(86.39deg, #00A6CC 4.44%, #006DA3 99.51%), #08A6A7;
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<div>
+תמיכה משנת
+{{year_requested}}
+ב
+{% if entity_name %}
+    {{ entity_name | item_link('org/' + entity_kind + '/' + entity_id) }}
+{% else %}
+    {{ recipient }}
+{% endif %}
+</div>

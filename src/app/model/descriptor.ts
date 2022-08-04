@@ -102,10 +102,12 @@ export class SocialServiceDescriptor extends SimpleDescriptor {
 }
 
 export class MuniDescriptor extends SimpleDescriptor {
-  tips: string[] = [];
-
   constructor(x: any) {
     super(x, 'muni');
-    this.tips = x.tips;
+  }
+}
+export class MuniBudgetDescriptor extends SimpleDescriptor {
+  constructor(x: any) {
+    super(x, 'muni_budget');
   }
 }

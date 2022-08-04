@@ -4,6 +4,7 @@ import descriptorOrgAssociation from './org/association';
 import descriptorOrgCompany from './org/company';
 import descriptorOrgMunicipality from './org/municipality';
 import descriptorOrg from './org';
+import descriptorMuniBudget from './muni_budgets';
 import descriptorIncome2Dig from './income/income2dig';
 import descriptorIncome4Dig from './income/income4dig';
 import descriptorIncome6Dig from './income/income6dig';
@@ -37,6 +38,7 @@ const descriptors: DescriptorBase[] = [
   descriptorOrgCompany,
   descriptorOrgMunicipality,
   descriptorOrg,
+  descriptorMuniBudget,
   descriptorBudgetFunc,
   descriptorBudgetFuncDetail,
   descriptorIncome2Dig,
