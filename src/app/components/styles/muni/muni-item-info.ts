@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, AfterViewInit } from '@angular/core';
 import { DescriptorBase, MuniDescriptor, Chart } from '../../../model';
 
 import { BaseItemInfoComponent } from '../../base-item-info';
@@ -10,7 +10,7 @@ import { timer } from 'rxjs';
   templateUrl: './muni-item-info.html',
   styleUrls: ['./muni-item-info.less']
 })
-export class MuniItemInfoComponent extends BaseItemInfoComponent {
+export class MuniItemInfoComponent extends BaseItemInfoComponent implements AfterViewInit {
 
   descriptor: MuniDescriptor;
 
@@ -71,13 +71,22 @@ export class MuniItemInfoComponent extends BaseItemInfoComponent {
       }];
       this.incomeChartLayout = {
         height: 300,
-        width: 400,
+        width: 0,
         margin: {b:0, l:0, r:0, t:0},
         legend: {bgcolor: 'rgba(255,255,255,0)'},
         paper_bgcolor: '#F3F3F3',
         plot_bgcolor: 'rgba(255,255,255,0)',
         colorway : ['#022E57', '#03548F', '#08A6A7', '#0CB0A7', '#0DC0DE']
       };
+    });
+  }
+
+  ngAfterViewInit() {
+    timer().subscribe(() => {
+      this.incomeChartLayout.width = this.el.nativeElement.offsetWidth;
+      if (this.incomeChartLayout.width > 400) {
+        this.incomeChartLayout.width = 400;
+      }
     });
   }
 

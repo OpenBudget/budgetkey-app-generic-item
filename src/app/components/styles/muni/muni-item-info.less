@@ -40,6 +40,10 @@
             background-position: bottom, bottom;
             background-repeat: no-repeat, no-repeat;
             padding: 16px 32px;
+            @media only screen and (max-width: 600px) {
+                padding-right: 16px;
+                padding-left: 16px;
+            }
             padding-bottom: 33%;
             font-size: 20px;
 
@@ -81,6 +85,10 @@
                     gap: 16px;
                     flex: 1 1 auto;
 
+                    budgetkey-chart-plotly {
+                        max-width: 100%;
+                    }
+
                     .budget-subtitle {
                         color: @color-dark-blue;
                         font-weight: 300;
@@ -95,7 +103,9 @@
                         justify-content: space-evenly;
                         gap: 16px 32px;
                         max-width: 790px;
-                        min-width: 450px;
+                        @media only screen and (min-width: 600px) {
+                            min-width: 450px;
+                        }
 
                         .budget-item {
                             display: flex;
@@ -158,7 +168,7 @@
                 flex-flow: column;
                 align-items: stretch;
                 gap: 8px;
-                min-width: 340px;
+                min-width: 300px;
                 .budget-title {
                     margin-bottom: 32px;
                 }

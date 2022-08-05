@@ -101,7 +101,7 @@
                     </ng-container>
                 </div>
             </div>
-            <div class='budget-info'>
+            <div class='budget-info' *ngIf='incomeChartLayout.width > 0'>
                 <div class='budget-title'>מקורות ההכנסה למימון הפעילות</div>
                 <div class='budget-subtitle'>{{budgets[0].value_kind}} בשנת {{budgets[0].year}}</div>
                 <budgetkey-chart-plotly [data]='incomeChartData' [layout]='incomeChartLayout' [config]='incomeChartConfig'></budgetkey-chart-plotly>

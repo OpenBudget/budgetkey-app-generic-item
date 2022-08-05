@@ -1,4 +1,4 @@
-import {Inject } from '@angular/core';
+import {Inject, ElementRef } from '@angular/core';
 import { Item } from '../model';
 
 import * as _ from 'lodash';
@@ -12,6 +12,7 @@ export class BaseItemInfoComponent {
     ngComponentsTheme: any;
 
     constructor(store: StoreService,
+                public el: ElementRef,
                 @Inject(THEME_TOKEN) ngComponentsTheme: any) {
         this.store = store;
         this.item = this.store.item;
