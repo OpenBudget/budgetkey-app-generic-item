@@ -30,16 +30,16 @@
                         </ng-container>
                     </span>
                 </ng-container>
-                <span> ב<a [href]='"/i/" + item.entity_doc_id'>תקציב הרגיל של {{item.muni_name}}</a>.</span>
+                <span> ב<a [href]='"/i/" + item.entity_doc_id + "?theme=" + ngComponentsTheme.themeId'>תקציב הרגיל של {{item.muni_name}}</a>.</span>
                 <div *ngIf='item.children'>
                     <span>תחת סעיף זה נמצאים הסעיפים הבאים:</span>
-                    <div class='minicards'>
-                        <ng-container *ngFor='let child of item.children'>
-                            <muni-budget-minicard [item]='item' [entry]='child'></muni-budget-minicard>
-                        </ng-container>
-                    </div>
                 </div>    
             </div>
+        </div>
+        <div class='minicards'>
+            <ng-container *ngFor='let child of item.children'>
+                <muni-budget-minicard [item]='item' [entry]='child'></muni-budget-minicard>
+            </ng-container>
         </div>
     </div>
 </div>

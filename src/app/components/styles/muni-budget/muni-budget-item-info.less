@@ -53,16 +53,21 @@
                 &.top {
                     align-items: flex-start;
                 }
-                .minicards {
-                    display: flex;
-                    flex-flow: column;
-                    gap: 8px;
-                    align-items: stretch;
-                    width: 100%;
-                    max-width: 800px;
-                    padding-right: 48px;
-                    margin-top: 16px;
-                    margin-bottom: 48px;
+
+            }
+            .minicards {
+                display: flex;
+                flex-flow: column;
+                gap: 8px;
+                align-items: stretch;
+                width: 100%;
+                max-width: 800px;
+                padding-right: 72px;
+                margin-top: 16px;
+                margin-bottom: 48px;
+
+                @media only screen and (max-width: 600px) {
+                    padding: 0;
                 }
             }
         }

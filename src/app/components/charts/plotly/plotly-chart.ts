@@ -49,6 +49,10 @@ export class PlotlyChartComponent implements OnChanges, AfterViewInit {
         size: 10
       }
     }, this.layout);
+    if (wrapper.offsetWidth < 500) {
+      layout.legend = Object.assign({orientation: 'h'}, layout.legend || {});
+      layout.margin = Object.assign({b:50, l:50, r:0, t:40}, layout.margin || {});
+    }
     if (big) {
       layout.height = wrapper.offsetHeight - 80;
       layout.width = wrapper.offsetWidth - 80;

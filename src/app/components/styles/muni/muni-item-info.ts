@@ -95,6 +95,6 @@ export class MuniItemInfoComponent extends BaseItemInfoComponent implements Afte
   }
 
   budgetHref(budget: any) {
-    return `/i/muni_budgets/${this.ext.symbol.value}/${budget.code}`;
+    return `/i/muni_budgets/${this.ext.symbol.value}/${budget.code}?theme=${this.ngComponentsTheme.themeId}`;
   }
 }
