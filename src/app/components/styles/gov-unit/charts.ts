@@ -130,6 +130,7 @@ export const chartTemplates = [
           name: '',
           hovertemplate: '₪%{text}',
           text: getYfromX(items, info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
+          textposition: 'none',
           x: xValues,
           y: getYfromX(items, info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
         }];
@@ -391,6 +392,7 @@ export const chartTemplates = [
             type: 'bar',
             hovertemplate: '₪%{text}',
             text: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
+            textposition: 'none',
             name: kind,
             x: xValues,
             y: getYfromX(items.filter((x) => x.supplier_kinds === kind), info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
@@ -470,6 +472,7 @@ export const chartTemplates = [
             type: 'bar',
             hovertemplate: '₪%{text}',
             text: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues).map((v: number) => Math.floor(v).toLocaleString()),
+            textposition: 'none',
             name: kind,
             x: xValues,
             y: getYfromX(items.filter((x) => x.supplier_count_category === kind), info.x_field, info.y_field, xValues).map((v) => v/1000000.0),
