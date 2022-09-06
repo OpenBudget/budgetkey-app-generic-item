@@ -105,7 +105,7 @@ export const tableDefs = {
            AND suppliers::text != 'null' ),
            e AS
         (SELECT supplier->>'entity_id' AS id,
-                supplier->>'entity_name' AS name,
+                max(supplier->>'entity_name') AS name,
                 supplier->>'entity_kind' AS entity_kind,
                 case supplier->>'entity_kind'
                     when 'company' then 'עסקי'
@@ -122,7 +122,6 @@ export const tableDefs = {
          FROM s
          LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
          GROUP BY 1,
-                  2,
                   3,
                   4,
                   5)
