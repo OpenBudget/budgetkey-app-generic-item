@@ -66,7 +66,7 @@ export class MuniItemInfoComponent extends BaseItemInfoComponent implements Afte
       this.incomeChartData = [{
         type: 'pie',
         labels: this.budgets.filter(b => b.use === 'income-pie').map(b => b.name),
-        values: this.budgets.filter(b => b.use === 'income-pie').map(b => b.num_value),
+        values: this.budgets.filter(b => b.use === 'income-pie').map(b => Math.abs(b.num_value)),
         hole: .4,
       }];
       this.incomeChartLayout = {
