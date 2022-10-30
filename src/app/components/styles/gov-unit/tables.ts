@@ -165,7 +165,7 @@ export const tableDefs = {
                id, kind, name,
                jsonb_array_elements(tenders) as tenders
                from activities where :where and tenders is not null and tenders::text != 'null'
-      ) select tenders->>'tender_type_he' as tender_type_he,
+      ), s as (select tenders->>'tender_type_he' as tender_type_he,
                tenders->>'tender_id' as tender_id,
                tenders->>'sub_kind_he' as sub_kind_he,
                tenders->>'publication_id' as publication_id,
@@ -177,7 +177,9 @@ export const tableDefs = {
                tenders->>'end_date' as end_date,
                tenders->>'end_date_extended' as end_date_extended
                from t
-               where :tender-type and :pricing-model
+               where :tender-type and :pricing-model)
+      select *, coalesce(tender_id, tender_key) as identifier, 
+                coalesce(end_date_extended, end_date) as u_end_date from s
       `,
       downloadHeaders: [
         'מכרז / פטור<tender_type_he',
@@ -189,7 +191,7 @@ export const tableDefs = {
         'תוקף מכרז כולל אופציות<end_date_extended'
       ],
       fields: [
-        'tender_type_he', 'sub_kind_he', 'description', 'name', 'org_unit', 'end_date', 'end_date_extended'
+        'tender_type_he', 'sub_kind_he', 'description', 'identifier', 'name', 'org_unit', 'end_date', 'end_date_extended'
       ],
       uiHeaders: [
         'מכרז / פטור',
@@ -212,7 +214,14 @@ export const tableDefs = {
         (row) => row.end_date_extended || '',
       ],
       sorting: [
-        'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 'org_unit','end_date', 'end_date_extended'
+        'tender_type_he',
+        'sub_kind_he',
+        'description',
+        'identifier',
+        'name',
+        'org_unit',
+        'end_date',
+        'u_end_date'
       ]
     },
   };
