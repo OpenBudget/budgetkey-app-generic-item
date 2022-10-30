@@ -202,6 +202,7 @@ export const tableDefs = {
         'יחידה ארגונית',
         `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
         `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
+        ''
       ],
       uiHtml: [
         (row) => row.tender_type_he,
@@ -212,6 +213,13 @@ export const tableDefs = {
         (row) => row.org_unit,
         (row) => row.end_date || '',
         (row) => row.end_date_extended || '',
+        (row) => {
+          const year = row.u_end_date? row.u_end_date.split('-')[0] : null;
+          if (year === new Date().getFullYear().toString()) {
+            return `<i class='fa fa-exclamation-triangle' title='מכרז זה עומד לפוג תוקף בשנה הקרובה'></i>`
+          }
+          return '';
+        }
       ],
       sorting: [
         'tender_type_he',
