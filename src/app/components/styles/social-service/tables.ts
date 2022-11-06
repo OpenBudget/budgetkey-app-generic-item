@@ -24,7 +24,8 @@ export const tableDefs = {
               tenders->>'page_url' as page_url,
               org_unit,
               tenders->>'end_date' as end_date,
-              tenders->>'end_date_extended' as end_date_extended
+              tenders->>'end_date_extended' as end_date_extended,
+              tenders->>'suppliers' as suppliers
               from t
     `,
     downloadHeaders: [
@@ -46,6 +47,8 @@ export const tableDefs = {
       'יחידה ארגונית',
       `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
       `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
+      `מספר מפעילים`,
+      `מפעילים`
     ],
     uiHtml: [
       (row) => row.tender_type_he,
@@ -55,9 +58,12 @@ export const tableDefs = {
       processOrgUnit,
       (row) => row.end_date || '',
       (row) => row.end_date_extended || '',
+      (row) => row.suppliers && JSON.parse(row.suppliers).length ? JSON.parse(row.suppliers).length : 'לא ידוע',
+      (row) => row.suppliers ? JSON.parse(row.suppliers).map(s => s.entity_name).slice(0, 3).join(', ') : ''
     ],
     sorting: [
-      'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 'org_unit', 'end_date', 'end_date_extended'
+      'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 
+      'org_unit', 'end_date', 'end_date_extended', 'jsonb_array_length(suppliers)', 'jsonb_array_length(suppliers)'
     ]
   },
   suppliers: {

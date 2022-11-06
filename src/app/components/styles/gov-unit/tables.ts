@@ -175,7 +175,8 @@ export const tableDefs = {
                org_unit,
                id, kind, name,
                tenders->>'end_date' as end_date,
-               tenders->>'end_date_extended' as end_date_extended
+               tenders->>'end_date_extended' as end_date_extended,
+               tenders->>'suppliers' as suppliers
                from t
                where :tender-type and :pricing-model)
       select *, coalesce(tender_id, tender_key) as identifier, 
@@ -202,7 +203,9 @@ export const tableDefs = {
         'יחידה ארגונית',
         `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
         `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
-        ''
+        '',
+        `מספר מפעילים`,
+        `מפעילים`  
       ],
       uiHtml: [
         (row) => row.tender_type_he,
@@ -219,7 +222,9 @@ export const tableDefs = {
             return `<i class='fa fa-exclamation-triangle' title='מכרז זה עומד לפוג תוקף בשנה הקרובה'></i>`
           }
           return '';
-        }
+        },
+        (row) => row.suppliers && JSON.parse(row.suppliers).length ? JSON.parse(row.suppliers).length : 'לא ידוע',
+        (row) => row.suppliers ? JSON.parse(row.suppliers).map(s => s.entity_name).slice(0, 3).join(', ') : ''  
       ],
       sorting: [
         'tender_type_he',
@@ -229,7 +234,10 @@ export const tableDefs = {
         'name',
         'org_unit',
         'end_date',
-        'u_end_date'
+        'u_end_date',
+        '',
+        'jsonb_array_length(suppliers)',
+        'jsonb_array_length(suppliers)'
       ]
     },
   };
