@@ -120,7 +120,7 @@
     ]
   },
   {
-    "text": "כלל המכרזים והפטורים ממכרז עם הארגון",
+    "text": "המכרזים והפטורים ממכרז עם הארגון - <scope>",
     "query": ["select tender_type_he as \"סוג הליך הרכש\",",
               "coalesce(page_title, description) as \"כותרת\",",
               "regulation as \"תקנהֿ\",",
@@ -130,10 +130,11 @@
               "'tenders/' || tender_type || '/' || publication_id || '/' || tender_id as item_id, ", 
               "date(claim_date) as \"מועד סיום התהליך\",",
               "start_date as \"תחילת ההתקשרות\",",
-              "end_date as \"סיום ההתקשרות\"",
+              "end_date as \"סיום ההתקשרות\",",
+              "soproc_tender as \"רכש חברתי\"",
               "from procurement_tenders_processed",
-              "where entity_id=':id' or",
-              "awardees::text like '%%:id%%'"],
+              "where (entity_id=':id' or",
+              "awardees::text like '%%:id%%') and :scope"],
     "headers": [
       "סוג הליך הרכש",
       "כותרת:item_link(item_id)",
@@ -143,8 +144,18 @@
       "היקף:number",
       "מועד סיום התהליך",
       "תחילת ההתקשרות",
-      "סיום ההתקשרות"
-    ]
+      "סיום ההתקשרות",
+      "רכש חברתי:yesno"
+    ],
+    "parameters": {
+      "scope": {
+        "הכל": "true",
+        "רכש חברתי": "soproc_tender is true"
+      }
+    },
+    "defaults": {
+      "scope": "הכל"
+    }
   },
   {
     "text": " סיכום ההתקשרויות עם הארגון מ <period>",
