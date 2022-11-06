@@ -152,7 +152,7 @@ export const chartTemplates = [
     FROM objs
     where
       (obj->>'year')::integer >= 2017 and 
-      (obj->>'year')::integer <= 2020
+      (obj->>'year')::integer <= 2021
     GROUP BY 1,
              2
     order by 1, 2`,
