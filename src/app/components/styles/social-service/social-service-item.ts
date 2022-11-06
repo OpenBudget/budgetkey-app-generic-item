@@ -37,7 +37,7 @@ export class SocialServiceItemComponent implements OnInit {
     this.item.breadcrumbs = [this.item.office, this.item.unit, this.item.subunit, this.item.subsubunit].filter(x => !!x).join(' / ');
     this.item.catalog_number = parseInt(this.item.catalog_number, 10) || null;
     // console.log('ITEM=', this.item);
-    const budget = this.item.manualBudget.sort((a, b) => a.year - b.year).filter(x => x.year <= 2020);
+    const budget = this.item.manualBudget.sort((a, b) => a.year - b.year).filter(x => x.year <= 2021);
     const beneficiaries = this.item.beneficiaries.sort((a, b) => a.year - b.year);
     this.budget_chart = {
       layout: {
