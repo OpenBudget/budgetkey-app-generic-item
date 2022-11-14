@@ -4,6 +4,7 @@ import { BudgetKeyItemService } from '../../../services';
 import { StoreService } from '../../../services/store';
 
 import { tableDefs } from './tables';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'social-service-item',
@@ -26,7 +27,7 @@ export class SocialServiceItemComponent implements OnInit {
     'ירושלים ויו"ש'
   ];
 
-  constructor(private store: StoreService, private api: BudgetKeyItemService) {
+  constructor(private store: StoreService, private api: BudgetKeyItemService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -165,18 +166,23 @@ export class SocialServiceItemComponent implements OnInit {
 
   mapFillFor(region) {
     const count = this.countForRegion(region);
+    let ret = '';
     if (count < 1) {
-      return '#00000000';
+      ret += 'fill: #00000000';
     }
     else if (count === 1) {
-      return '#ef7625';
+      ret += 'fill: #ef7625;';
+      ret += 'stroke: #ef7625';
     }
     else if (count < 5) {
-      return '#d6b618';
+      ret += 'fill: #d6b618;';
+      ret += 'stroke: #d6b618';
     }
     else if (count > 5) {
-      return '#44b8e0';
+      ret += 'fill: #44b8e0;';
+      ret += 'stroke: #44b8e0';
     }
+    return this.sanitizer.bypassSecurityTrustStyle(ret);
   }
 
   get virtue_of_table() {
