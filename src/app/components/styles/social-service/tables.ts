@@ -1,11 +1,11 @@
 import { format_ils } from '../../../pipes';
 
-function processOrgUnit(row) {
-  const orgUnit = row.org_unit;
-  const parts = orgUnit.split(' / ');
-  parts[0] = `<a target='_blank' href='/i/units/gov_social_service_unit/${parts[0]}?theme=soproc'>${parts[0]}</a>`;
-  return parts.join(' / ');
-}
+// function processOrgUnit(row) {
+//   const orgUnit = row.org_unit;
+//   const parts = orgUnit.split(' / ');
+//   parts[0] = `<a target='_blank' href='/i/units/gov_social_service_unit/${parts[0]}?theme=soproc'>${parts[0]}</a>`;
+//   return parts.join(' / ');
+// }
 
 export const tableDefs = {
   tenders: {
@@ -25,28 +25,30 @@ export const tableDefs = {
               org_unit,
               tenders->>'end_date' as end_date,
               tenders->>'end_date_extended' as end_date_extended,
-              tenders->>'suppliers' as suppliers
+              tenders->>'suppliers' as suppliers,
+              jsonb_array_length(tenders->'suppliers') as suppliers_count,
+              case when tenders->>'active' = 'no' then FALSE else TRUE end as active
               from t
     `,
     downloadHeaders: [
       'מכרז / פטור<tender_type_he',
       'סוג הליך רכש<sub_kind_he',
       'שם מכרז<description',
-      'יחידה ארגונית<org_unit',
       'תוקף מכרז/פטור<end_date',
-      'תוקף מכרז כולל אופציות<end_date_extended'
+      'תוקף מכרז כולל אופציות<end_date_extended',
+      'פעיל:yesno<active',
     ],
     fields: [
-      'tender_type_he', 'sub_kind_he', 'description', 'org_unit', 'end_date', 'end_date_extended'
+      'tender_type_he', 'sub_kind_he', 'description', 'org_unit', 'end_date', 'end_date_extended', 'active'
     ],
     uiHeaders: [
       'מכרז / פטור',
       'סוג הליך רכש',
       'שם מכרז',
       'מספר הליך מכרזי',
-      'יחידה ארגונית',
       `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
       `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
+      `פעיל`,
       `מספר מפעילים`,
       `מפעילים`
     ],
@@ -55,15 +57,15 @@ export const tableDefs = {
       (row) => row.sub_kind_he,
       (row) => `<a href='${row.page_url}' target='_blank'>${row.description}</a>`,
       (row) => (row.tender_id === 'none' ? null : row.tender_id) || row.publication_id || row.tender_key.split(':')[0],
-      processOrgUnit,
       (row) => row.end_date || '',
       (row) => row.end_date_extended || '',
-      (row) => row.suppliers && JSON.parse(row.suppliers).length ? JSON.parse(row.suppliers).length : 'לא ידוע',
+      (row) => row.active ? 'כן' : 'לא',
+      (row) => row.suppliers_count,
       (row) => row.suppliers ? JSON.parse(row.suppliers).map(s => s.entity_name).slice(0, 3).join(', ') : ''
     ],
     sorting: [
       'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 
-      'org_unit', 'end_date', 'end_date_extended', 'jsonb_array_length(suppliers)', 'jsonb_array_length(suppliers)'
+      'end_date', 'end_date_extended', 'active', 'suppliers_count', 'suppliers'
     ]
   },
   suppliers: {
@@ -86,6 +88,7 @@ export const tableDefs = {
                   else 'אחר (' || (supplier->>'entity_kind_he') || ')'
               end as kind,
               supplier->'geo' AS region,
+              case when supplier->>'active' = 'yes' then TRUE else FALSE end as active,
               guidestar.association_yearly_turnover as association_yearly_turnover
         FROM s
         LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
@@ -97,10 +100,11 @@ export const tableDefs = {
         `שם המפעיל<name`,
         `מגזר המפעיל<kind`,
         `איזורים גיאוגרפיים בהם פועל:comma-separated<region`,
-        `מחזור שנתי (לעמותות)<association_yearly_turnover`
+        `מחזור שנתי (לעמותות)<association_yearly_turnover`,
+        `פעיל:yesno<active`,
     ],
     fields: [
-        'id', 'name', 'kind', 'region', 'entity_kind', 'association_yearly_turnover'
+        'id', 'name', 'kind', 'region', 'entity_kind', 'association_yearly_turnover', 'active'
     ],
     uiHeaders: [
         `מספר תאגיד`,
@@ -108,6 +112,7 @@ export const tableDefs = {
         `מגזר המפעיל`,
         `<span class='bk-tooltip-anchor'>איזורים גיאוגרפיים בהם פועל<span class='bk-tooltip'>האם המפעיל מספק את השירות באופן ארצי או שזכה בהפעלת השירות באיזור גיאוגרפי מסוים</span></span>`,
         `<span class='bk-tooltip-anchor'>מחזור שנתי (לעמותות)<span class='bk-tooltip'>המחזור הכספי השנתי הכולל של העמותה (לא רק רכש חברתי)</span></span>`,
+        `פעיל`
     ],
     uiHtml: [
         (row) => row.id,
@@ -115,9 +120,10 @@ export const tableDefs = {
         (row) => row.kind,
         (row) => row.region.join(', '),
         (row) => format_ils(row.association_yearly_turnover),
+        (row) => row.active ? 'כן' : 'לא'
     ],
     sorting: [
-        'id', 'name', 'kind', 'region', 'association_yearly_turnover'
+        'id', 'name', 'kind', 'region', 'association_yearly_turnover', 'active'
     ],
   },
 };

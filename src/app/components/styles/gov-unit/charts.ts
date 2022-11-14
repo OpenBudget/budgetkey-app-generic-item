@@ -218,7 +218,7 @@ export const chartTemplates = [
            year,
            count(1) AS value
     FROM years
-    where year >= 2020
+    where year >= 2020 and year < 2022
     group by 1,2
     ORDER BY 1`,
       title: 'מספר השירותים השונים לאורך זמן',

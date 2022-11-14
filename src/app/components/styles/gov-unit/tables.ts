@@ -176,7 +176,8 @@ export const tableDefs = {
                id, kind, name,
                tenders->>'end_date' as end_date,
                tenders->>'end_date_extended' as end_date_extended,
-               tenders->>'suppliers' as suppliers
+               tenders->>'suppliers' as suppliers,
+               jsonb_array_length(tenders->'suppliers') as suppliers_count
                from t
                where :tender-type and :pricing-model)
       select *, coalesce(tender_id, tender_key) as identifier, 
@@ -236,8 +237,8 @@ export const tableDefs = {
         'end_date',
         'u_end_date',
         '',
-        'jsonb_array_length(suppliers)',
-        'jsonb_array_length(suppliers)'
+        'suppliers_count',
+        'suppliers'
       ]
     },
   };
