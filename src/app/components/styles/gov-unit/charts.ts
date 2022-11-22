@@ -525,4 +525,169 @@ export const chartTemplates = [
         });
       }
     },
+
+
+    {
+      location: 'tenders',
+      id: 'tenders_kinds_count',
+      query: `
+    with s as (SELECT :org-field as office,
+               jsonb_array_elements(tenders) as t
+               from activities
+               where :where and tenders is not null and tenders::text != 'null')
+    select office, t->>'tender_type_he' as tender_type_he, count(1) as value
+    from s
+    group by 1,2
+    ORDER BY 1`,
+      title: 'מספר הליכי רכש לפי סוג הליך',
+      titleTooltip: 'מספר מספר הליכי רכש לפי סוג ההליך - מרכזי, משרדי, התקשרות בפטור וכו׳',
+      x_field: 'office',
+      y_field: 'value',
+      subtitle: 'סה״כ :total הליכי רכש', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר הליכי רכש',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        const kinds = items.map((x) => x.tender_type_he).filter((item, i, ar) => ar.indexOf(item) === i).sort();
+        return kinds.filter(k => kinds.indexOf(k) > -1).map((kind) => {
+          return {
+            type: 'bar',
+            name: kind,
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.tender_type_he === kind), info.x_field, info.y_field, xValues),
+          }
+        });
+      }
+    },
+    {
+      location: 'tenders',
+      id: 'tenders_exemption_kinds_count',
+      query: `
+    with s as (SELECT :org-field as office,
+               jsonb_array_elements(tenders) as t
+               from activities
+               where :where and tenders is not null and tenders::text != 'null')
+    select office, t->>'sub_kind_he' as sub_kind_he, count(1) as value
+    from s
+    where t->>'tender_type' = 'exemptions'
+    group by 1,2
+    ORDER BY 1`,
+      title: 'מספר פטורים לפי סוג פטור',
+      titleTooltip: 'מספר מספר הליכי פטור ממכרז לפי סוג תקנת הפטור',
+      x_field: 'office',
+      y_field: 'value',
+      subtitle: 'סה״כ :total הליכי רכש בפטור ממכרז', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר הליכי רכש',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        const kinds = items.map((x) => x.sub_kind_he).filter((item, i, ar) => ar.indexOf(item) === i).sort();
+        return kinds.filter(k => kinds.indexOf(k) > -1).map((kind) => {
+          return {
+            type: 'bar',
+            name: kind,
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.sub_kind_he === kind), info.x_field, info.y_field, xValues),
+          }
+        });
+      }
+    },
+    {
+      location: 'tenders',
+      id: 'tenders_pricing_kinds_count',
+      query: `
+    with s as (SELECT :org-field as office,
+               jsonb_array_elements(tenders) as t
+               from activities
+               where :where and tenders is not null and tenders::text != 'null')
+    select office, t->>'pricing' as pricing, count(1) as value
+    from s
+    where t->>'tender_type' != 'exemptions'
+    group by 1,2
+    ORDER BY 1`,
+      title: 'מספר הליכי רכש לפי מודל התמחור',
+      titleTooltip: 'מספר המכרזים לפי מודל התמחור שלהם - קבוע, הצעת מחיר או משולב',
+      x_field: 'office',
+      y_field: 'value',
+      subtitle: 'סה״כ :total מכרזים עם מודל תמחור ידוע', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      layout: {
+        barmode: 'stack',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר הליכי רכש',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        const kinds = ['fixed', 'proposal', 'combined'];
+        const heb = {
+          fixed: 'מחיר קבוע (תעריף)',
+          proposal: 'הצעת מחיר',
+          combined: 'משולב',
+        };
+        return kinds.filter(k => kinds.indexOf(k) > -1).map((kind) => {
+          return {
+            type: 'bar',
+            name: heb[kind],
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.pricing === kind), info.x_field, info.y_field, xValues),
+          }
+        });
+      }
+    },
+    {
+      location: 'tenders',
+      id: 'services_exemption_kinds_count',
+      query: `with s as (SELECT :org-field as office, id,
+        jsonb_array_elements(tenders) as t
+        from activities
+        where :where and tenders is not null and tenders::text != 'null')
+        select office, t->>'sub_kind_he' as sub_kind_he, count(distinct id) as value
+        from s
+        where t->>'sub_kind_he' in ('ספק יחיד', 'מיזם משותף', 'התקשרות עם רשות מקומית')
+        group by 1,2
+        ORDER BY 1`,
+      title: 'מספר שירותים עם פטור מהליך מכרזי',
+      titleTooltip: 'מספר בשירותים עם פטור מהליך מכרזי – ספק יחיד, מיזם משותף, התקשרות עם רשות מקומית',
+      x_field: 'office',
+      y_field: 'value',
+      subtitle: 'סה״כ :total שירותים עם הליכי רכש מסוג ספק יחיד, מיזם משותף או התקשרות עם רשות מקומית', // WAS: 'מספר השרותים שניתנים ע״י מפעילים מהמגזרים השונים',
+      layout: {
+        barmode: 'group',
+        xaxis: {
+          title: 'משרד / יחידה'
+        },
+        yaxis: {
+          title: 'מספר הליכי רכש',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        const kinds = ['ספק יחיד', 'מיזם משותף', 'התקשרות עם רשות מקומית'];
+        return kinds.filter(k => kinds.indexOf(k) > -1).map((kind) => {
+          return {
+            type: 'bar',
+            name: kind,
+            x: xValues,
+            y: getYfromX(items.filter((x) => x.sub_kind_he === kind), info.x_field, info.y_field, xValues),
+          }
+        });
+      }
+    },
   ];
