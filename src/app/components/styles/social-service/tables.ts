@@ -66,7 +66,9 @@ export const tableDefs = {
     sorting: [
       'tender_type_he', 'sub_kind_he', 'description', `coalesce(tenders->>'tender_id', tenders->>'tender_key')`, 
       'end_date', 'end_date_extended', 'active', 'suppliers_count', 'suppliers'
-    ]
+    ],
+    sortField: 'active',
+    sortDirectionDesc: true
   },
   suppliers: {
     name: 'מפעילים',
@@ -125,5 +127,7 @@ export const tableDefs = {
     sorting: [
         'id', 'name', 'kind', 'region', 'association_yearly_turnover', 'active'
     ],
+    sortField: 'active',
+    sortDirectionDesc: true
   },
 };

@@ -129,4 +129,12 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
     formatter(f) {
       return (row) => '' + row[f];
     }
+
+    hasActive() {
+      return this.currentTable.sorting.indexOf('active') >= 0;
+    }
+
+    onlyActive(row) {
+      return !this.hasActive() || !this.currentTable.onlyActive || row.active;
+    }
 }

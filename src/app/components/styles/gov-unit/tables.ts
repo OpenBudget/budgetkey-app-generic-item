@@ -160,6 +160,8 @@ export const tableDefs = {
         sorting: [
             'name', 'kind', 'offices', 'services', 'active', 'association_yearly_turnover'
         ],
+        sortField: 'active',
+        sortDirectionDesc: true
     },
     tenders: {
       name: 'הליכי רכש',
@@ -248,6 +250,8 @@ export const tableDefs = {
         'active',
         'suppliers_count',
         'suppliers'
-      ]
+      ],
+      sortField: 'active',
+      sortDirectionDesc: true,
     },
   };
