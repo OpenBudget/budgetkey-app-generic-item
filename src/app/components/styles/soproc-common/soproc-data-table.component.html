@@ -46,7 +46,7 @@
             </ng-container>
         </thead>
         <tbody>
-            <tr *ngFor='let row of currentTable.rows'>
+            <tr *ngFor='let row of currentTable.rows' [class.inactive]='row.active === false'>
                 <td *ngFor='let content of currentTable.uiHtml' [innerHtml]='content(row)'></td>
             </tr>
         </tbody>

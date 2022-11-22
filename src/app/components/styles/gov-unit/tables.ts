@@ -118,6 +118,7 @@ export const tableDefs = {
                 guidestar.association_yearly_turnover as association_yearly_turnover,
                 array_to_string(array_agg(DISTINCT office), ', ') AS offices,
                 count(1) AS services,
+                bool_or(case when supplier->>'active' = 'yes' then TRUE else FALSE end) as active,
                 bool_or(relevant) AS relevant
          FROM s
          LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
@@ -134,16 +135,18 @@ export const tableDefs = {
             `מגזר המפעיל<kind`,
             `משרדים להם מספק שירותי רכש חברתי<offices`,
             `מספר שירותים חברתיים כולל שנותן<services`,
-            `מחזור שנתי (לעמותות)<association_yearly_turnover`
+            `פעיל:yesno<active`,
+            `מחזור שנתי (לעמותות)<association_yearly_turnover`,
         ],
         fields: [
-            'id', 'name', 'kind', 'offices', 'services', 'entity_kind', 'association_yearly_turnover'
+            'id', 'name', 'kind', 'offices', 'services', 'entity_kind', 'association_yearly_turnover', 'active'
         ],
         uiHeaders: [
             `שם המפעיל`,
             `מגזר המפעיל`,
             `<span class='bk-tooltip-anchor'>משרדים להם מספק שירותי רכש חברתי<span class='bk-tooltip'>המשרדים שלהם התקשרות פעילה עם המפעיל לאספקת שירותים חברתיים</span></span>`,
             `<span class='bk-tooltip-anchor'>מספר שירותים חברתיים כולל שנותן<span class='bk-tooltip'>מספר השירותים ברכש חברתי אשר מפעיל הגוף</span></span>`,
+            `פעיל`,
             `<span class='bk-tooltip-anchor'>מחזור שנתי (לעמותות)<span class='bk-tooltip'>המחזור הכספי השנתי הכולל של העמותה (לא רק רכש חברתי)</span></span>`,
         ],
         uiHtml: [
@@ -151,10 +154,11 @@ export const tableDefs = {
             (row) => row.kind,
             (row) => row.offices,
             (row) => row.services,
+            (row) => row.active ? 'כן' : 'לא',
             (row) => format_ils(row.association_yearly_turnover),
         ],
         sorting: [
-            'name', 'kind', 'offices', 'services', 'association_yearly_turnover'
+            'name', 'kind', 'offices', 'services', 'active', 'association_yearly_turnover'
         ],
     },
     tenders: {
@@ -177,6 +181,7 @@ export const tableDefs = {
                tenders->>'end_date' as end_date,
                tenders->>'end_date_extended' as end_date_extended,
                tenders->>'suppliers' as suppliers,
+               case when tenders->>'active' = 'no' then FALSE else TRUE end as active,
                jsonb_array_length(tenders->'suppliers') as suppliers_count
                from t
                where :tender-type and :pricing-model)
@@ -190,10 +195,11 @@ export const tableDefs = {
         'שם השירות<name',
         'יחידה ארגונית<org_unit',
         'תוקף מכרז/פטור<end_date',
-        'תוקף מכרז כולל אופציות<end_date_extended'
+        'תוקף מכרז כולל אופציות<end_date_extended',
+        'פעיל:yesno<active',
       ],
       fields: [
-        'tender_type_he', 'sub_kind_he', 'description', 'identifier', 'name', 'org_unit', 'end_date', 'end_date_extended'
+        'tender_type_he', 'sub_kind_he', 'description', 'identifier', 'name', 'org_unit', 'end_date', 'end_date_extended', 'active'
       ],
       uiHeaders: [
         'מכרז / פטור',
@@ -205,8 +211,9 @@ export const tableDefs = {
         `<span class='bk-tooltip-anchor'>תוקף מכרז/פטור<span class='bk-tooltip'>תוקף ההליך המכרזי אשר באמצעותו ניתן השירות</span></span>`,
         `<span class='bk-tooltip-anchor'>תוקף מכרז כולל אופציות<span class='bk-tooltip'>תוקף ההליך המכרזי כולל כל האופציות שניתנו במסגרתו (מוערך- המשרד לא בהכרח יממש את האופציות שניתנו)</span></span>`,
         '',
+        `פעיל`,
         `מספר מפעילים`,
-        `מפעילים`  
+        `מפעילים`
       ],
       uiHtml: [
         (row) => row.tender_type_he,
@@ -224,6 +231,7 @@ export const tableDefs = {
           }
           return '';
         },
+        (row) => row.active ? 'כן' : 'לא',
         (row) => row.suppliers && JSON.parse(row.suppliers).length ? JSON.parse(row.suppliers).length : 'לא ידוע',
         (row) => row.suppliers ? JSON.parse(row.suppliers).map(s => s.entity_name).slice(0, 3).join(', ') : ''  
       ],
@@ -237,6 +245,7 @@ export const tableDefs = {
         'end_date',
         'u_end_date',
         '',
+        'active',
         'suppliers_count',
         'suppliers'
       ]
