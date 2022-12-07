@@ -30,7 +30,7 @@
     "core-js": "^2.5.4",
     "d3": "^5.7.0",
     "express": "^4.16.4",
-    "moment": "^2.23.0",
+    "moment": "^2.29.4",
     "mushonkey": "^0.2.0",
     "nunjucks": "^3.1.6",
     "plotly.js-dist-min": "^2.13.2",
