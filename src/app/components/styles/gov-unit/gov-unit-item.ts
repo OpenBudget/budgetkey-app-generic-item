@@ -174,7 +174,7 @@ export class GovUnitItemComponent implements OnInit, AfterViewInit {
       }
       const orgSizes = ['1', '2-5', '6+']
       const orgKinds = ['עסקי', 'מגזר שלישי', 'רשויות מקומיות', 'משולב'];
-      const exemptionKinds = ['מימוש אופציה', 'ספק יחיד', 'התקשרות המשך', 'מיזם משותף', 'התקשרות עם רשות מקומית', 'מכרז סגור', 'אחר'];
+      const exemptionKinds = ['מימוש אופציה', 'ספק יחיד', 'התקשרות המשך', 'מיזם משותף', 'התקשרות עם רשות מקומית', 'מכרז סגור'];
       const tenderTypes = ['מכרז פומבי', 'התקשרות בפטור במכרז או בהליך תחרותי אחר', 'פרסום כוונה להתקשרות', 'פרסום מיזם ללא כוונת רווח', 'פניה לקבלת מידע RFI', 'קול קורא להקמת/עדכון רשימת מציעים (מאגר'];
       for (const l of [orgSizes, orgKinds, exemptionKinds, tenderTypes]) {
         for (const i in l) {
