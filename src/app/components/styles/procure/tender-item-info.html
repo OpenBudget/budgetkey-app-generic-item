@@ -91,9 +91,9 @@
             </div>
             <div *ngIf='item.tender_type == "office"'>
                 <label>פרטי המכרז</label><br/>
-                <span class='label-text'>סוג המכרז: משרדי
+                <span class='label-text'>סוג המכרז: {{item.tender_type_he}}
                 </span><br/>
-                <span class='label-text'>מספר המכרז: 
+                <span class='label-text' *ngIf='item.publication_id !== "0"'>מספר המכרז: 
                     {{item.publication_id}}
                 </span><br/>
                 <ng-container *ngIf='item.description && item.description.length>34'>
