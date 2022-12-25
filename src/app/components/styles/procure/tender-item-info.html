@@ -93,9 +93,16 @@
                 <label>פרטי המכרז</label><br/>
                 <span class='label-text'>סוג המכרז: {{item.tender_type_he}}
                 </span><br/>
-                <span class='label-text' *ngIf='item.publication_id !== "0"'>מספר המכרז: 
-                    {{item.publication_id}}
-                </span><br/>
+                <ng-container *ngIf='item.publication_id !== "0"'>
+                    <span class='label-text'>מספר המכרז: 
+                        {{item.publication_id}}
+                    </span><br/>    
+                </ng-container>
+                <ng-container *ngIf='item.publication_id === "0" && item.regulation'>
+                    <span class='label-text'>מזהה המכרז: 
+                        {{item.regulation}}
+                    </span><br/>    
+                </ng-container>
                 <ng-container *ngIf='item.description && item.description.length>34'>
                     <span class='label-text'>תיאור:
                         <span [innerHtml]='tooltip(item.description)'></span>
