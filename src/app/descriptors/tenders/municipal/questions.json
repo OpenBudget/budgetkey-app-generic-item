@@ -6,7 +6,7 @@
       "'muni_tenders/' || tender_type || '/' || publication_id || '/' || tender_id as item_id, ",
       "description as \"תיאור\",",
       "status as \"מצב נוכחי\", ",
-      "start_date as \"מועד פרסום\", ",
+      "publication_date as \"מועד פרסום\", ",
       "claim_date as \"מועד סגירה\", ",
       "last_update_date as \"מועד עדכון אחרון\" ",
       "from muni_tenders",
