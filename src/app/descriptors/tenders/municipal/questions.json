@@ -10,7 +10,7 @@
       "claim_date as \"מועד סגירה\", ",
       "last_update_date as \"מועד עדכון אחרון\" ",
       "from muni_tenders",
-      "where publisher=':publisher' and :status order by claim_date desc" 
+      "where publisher=':publisher' and :status order by claim_date desc nulls last" 
     ],
     "parameters": {
       "status": {
