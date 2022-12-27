@@ -106,8 +106,8 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
     
     download() {
       const filename = `${this.filename} / מידע על ${this.currentTable.name}`;
-      const url = this.api.getDownloadUrl(this.currentTable.actualQuery, 'xlsx', this.currentTable.downloadHeaders, filename)
-      window.open(url, '_blank');
+      const url = this.api.getDownloadUrlPost('xlsx', this.currentTable.downloadHeaders, filename)
+      return url;
     }
     
     downloadReportUrl() {

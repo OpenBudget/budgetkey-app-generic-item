@@ -24,14 +24,15 @@
             <span class='pager-control'>הבא</span>
         </ng-container>
     </div>
-    <div class='download'>
-        <a (activated)='download()' tabindex="0" clickOnReturn>
+    <form class='download' [action]='download()' method='post' name='download' ngNoForm>
+        <input type='hidden' name='query' [value]='currentTable.actualQuery'>
+        <button type='submit' tabindex="0">
             הורדת הטבלה לאקסל עם שדות נוספים&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
-        </a>
+        </button>
         <a [href]='downloadReportUrl()' tabindex="0" *ngIf='item.office'>
             הורדת דו״ח כוללני עבור {{item.office}}&nbsp;&nbsp;<img src='assets/img/icon-xlsx.svg' alt='download to excel'>
         </a>    
-    </div>
+    </form>
 </div>
 
 <div class='filters' *ngIf='hasActive()'>
