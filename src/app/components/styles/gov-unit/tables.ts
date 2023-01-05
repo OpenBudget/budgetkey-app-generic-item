@@ -128,7 +128,8 @@ export const tableDefs = {
                   5)
       SELECT :fields
       FROM e
-      WHERE relevant`,
+      WHERE relevant AND
+            (NOT :only-active) OR active`,
         downloadHeaders: [
             `מספר תאגיד<id`,
             `שם המפעיל<name`,
@@ -189,6 +190,7 @@ export const tableDefs = {
                where :tender-type and :pricing-model)
       select *, coalesce(tender_id, tender_key) as identifier, 
                 coalesce(end_date_extended, end_date) as u_end_date from s
+      WHERE (NOT :only-active) OR active
       `,
       downloadHeaders: [
         'מכרז / פטור<tender_type_he',

@@ -110,8 +110,11 @@ export class BudgetKeyItemService {
         (this.ngComponentsTheme.themeId ? '&theme=' + this.ngComponentsTheme.themeId : '') + '">' + parts[2] + '</a>';
   }
 
-  getItemData(query: string, headersOrder: string[], formatters: any[], page = 0): Observable<object> {
-    const url = 'https://next.obudget.org/api/query?query=' + encodeURIComponent(query) + '&page=' + page;
+  getItemData(query: string, headersOrder: string[], formatters: any[], page = 0, pageSize?): Observable<object> {
+    let url = 'https://next.obudget.org/api/query?query=' + encodeURIComponent(query) + '&page=' + page;
+    if (!!pageSize) {
+      url += '&page_size=' + pageSize;
+    }
 
     return this.http.get(url)
         .pipe(

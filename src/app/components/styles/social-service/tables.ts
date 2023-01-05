@@ -15,7 +15,7 @@ export const tableDefs = {
       select office || ' / ' || unit || ' / ' || subunit as org_unit,
               jsonb_array_elements(tenders) as tenders
               from activities where :where and tenders is not null and tenders::text != 'null'
-    ) select tenders->>'tender_type_he' as tender_type_he,
+    ), tt as (select tenders->>'tender_type_he' as tender_type_he,
               tenders->>'tender_id' as tender_id,
               tenders->>'sub_kind_he' as sub_kind_he,
               tenders->>'publication_id' as publication_id,
@@ -28,7 +28,9 @@ export const tableDefs = {
               tenders->>'suppliers' as suppliers,
               jsonb_array_length(tenders->'suppliers') as suppliers_count,
               case when tenders->>'active' = 'no' then FALSE else TRUE end as active
-              from t
+              from t)
+    SELECT * from tt
+    WHERE (NOT :only-active) OR active
     `,
     downloadHeaders: [
       'מכרז / פטור<tender_type_he',
@@ -96,7 +98,9 @@ export const tableDefs = {
         LEFT JOIN guidestar on (supplier->>'entity_id' = guidestar.id)
         )
     SELECT :fields
-    FROM e`,
+    FROM e
+    WHERE (NOT :only-active) OR active
+    `,
     downloadHeaders: [
         `מספר תאגיד<id`,
         `שם המפעיל<name`,

@@ -39,7 +39,10 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
         return;
     }
     let query = this.replaceAll(
-      tbl.query, this.replacements.concat([{from: ':fields', to: tbl.fields.join(', ')}])
+      tbl.query, this.replacements.concat([
+        {from: ':fields', to: tbl.fields.join(', ')},
+        {from: ':only-active', to: tbl.onlyActive ? 'TRUE' : 'FALSE'}
+      ])
     );
       if (!tbl.actualQuery || tbl.actualQuery !== query) {
         tbl.actualQuery = query;
@@ -57,7 +60,7 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
         formatters.push(this.formatter(f));
       });
       this.api.getItemData(
-        query, tbl.fields, formatters, tbl.currentPage
+        query, tbl.fields, formatters, tbl.currentPage, 100
       ).subscribe((result: any) => {
         tbl.rows = result.rows;
         if (result.error) {
@@ -132,9 +135,5 @@ export class SoProcDatatableComponent implements OnInit, OnChanges {
 
     hasActive() {
       return this.currentTable.sorting.indexOf('active') >= 0;
-    }
-
-    onlyActive(row) {
-      return !this.hasActive() || !this.currentTable.onlyActive || row.active;
     }
 }

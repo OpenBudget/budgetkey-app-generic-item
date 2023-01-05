@@ -36,7 +36,7 @@
 </div>
 
 <div class='filters' *ngIf='hasActive()'>
-    <input type='checkbox' id='only-active' [(ngModel)]='currentTable.onlyActive'>
+    <input type='checkbox' id='only-active' [(ngModel)]='currentTable.onlyActive' (change)='refreshTable(currentTable)'>
     <label for='only-active'>הצגת רק שורות פעילות</label>
 </div>
 
@@ -53,11 +53,9 @@
         </thead>
         <tbody>
             <ng-container *ngFor='let row of currentTable.rows'>
-                <ng-container *ngIf='onlyActive(row)'>
-                    <tr  [class.inactive]='row.active === false'>
-                        <td *ngFor='let content of currentTable.uiHtml' [innerHtml]='content(row)'></td>
-                    </tr>
-                </ng-container> 
+                <tr  [class.inactive]='row.active === false'>
+                    <td *ngFor='let content of currentTable.uiHtml' [innerHtml]='content(row)'></td>
+                </tr>
             </ng-container>
         </tbody>
     </table>
