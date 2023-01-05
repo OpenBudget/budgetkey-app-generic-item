@@ -596,7 +596,8 @@ export const chartTemplates = [
       kind: 'org',
       data: (items, info, xValues) => {
         const kinds = items.map((x) => x.sub_kind_he).filter((item, i, ar) => ar.indexOf(item) === i).sort();
-        return kinds.filter(k => kinds.indexOf(k) > -1).map((kind) => {
+        const ordered = ['אחר', 'מכרז סגור', 'התקשרות עם רשות מקומית', 'מיזם משותף', 'התקשרות המשך', 'ספק יחיד', 'מימוש אופציה']
+        return ordered.filter(k => kinds.indexOf(k) > -1).map((kind) => {
           return {
             type: 'bar',
             name: kind,
