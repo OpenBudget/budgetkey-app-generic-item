@@ -235,7 +235,19 @@ export const tableDefs = {
         },
         (row) => row.active ? 'כן' : 'לא',
         (row) => row.suppliers && JSON.parse(row.suppliers).length ? JSON.parse(row.suppliers).length : 'לא ידוע',
-        (row) => row.suppliers ? JSON.parse(row.suppliers).map(s => s.entity_name).slice(0, 3).join(', ') : ''  
+        (row) => {
+          if (row.suppliers) {
+            const suppliers = JSON.parse(row.suppliers).map(s => s.entity_name);
+            const ret = suppliers.slice(0, 2).join(', ');
+            if (suppliers.length > 2) {
+              return `${ret} + ${suppliers.length - 2}`;
+            } else {
+              return ret;
+            }
+          } else {
+            return '';
+          }
+        }
       ],
       sorting: [
         'tender_type_he',
