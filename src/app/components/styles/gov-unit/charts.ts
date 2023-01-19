@@ -136,189 +136,189 @@ export const chartTemplates = [
         }];
       }
     },
-    // {
-    //   location: 'services',
-    //   id: 'budget_trend',
-    //   query: `WITH objs AS
-    //   (SELECT :org-field as office,
-    //           jsonb_array_elements("manualBudget"::JSONB) AS obj
-    //    FROM activities
-    //    WHERE :where AND "manualBudget" IS NOT NULL
-    //      AND "manualBudget" != 'null' )
-    // SELECT office as "משרד",
-    //        (obj->>'year')::integer as year,
-    //        sum((obj->>'approved')::numeric) as value,
-    //        sum((obj->>'executed')::numeric) as value2
-    // FROM objs
-    // where
-    //   (obj->>'year')::integer >= 2017 and 
-    //   (obj->>'year')::integer <= 2021
-    // GROUP BY 1,
-    //          2
-    // order by 1, 2`,
-    //   title: 'תקציב לאורך זמן',
-    //   titleTooltip: 'סך התקציב המאושר לשירותים לפי שנים. התקציב מחושב באופן שנתי. שינויים בתקציב עשויים לנבוע ממעבר של שירותים לצורות הפעלה שונות (שאינן הליך מכרזי) ואינם מעידים בהכרח על הפסקת השירותים' + budgetDisclaimer,
-    //   x_field: 'year',
-    //   y_field: 'value',
-    //   y_field2: 'value2',
-    //   subtitle: '(תקציב מאושר בקו רציף, הביצוע בקו מקווקו)',
-    //   layout: {
-    //     xaxis: {
-    //       title: 'שנת תקציב'
-    //     },
-    //     yaxis: {
-    //       title: '₪ תקציב השירותים במיליוני',
-    //       hoverformat: ',.0f'
-    //     }
-    //   },
-    //   kind: 'org',
-    //   data: (items, info, xValues) => {
-    //     const budgets = xValues.map((org) => {
-    //       return {
-    //         type: 'line',
-    //         name: org,
-    //         hovertemplate: '₪%{text}',
-    //         text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v: number) => Math.floor(v).toLocaleString()),
-    //         x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-    //         y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v) => v/1000000.0),
-    //       }
-    //     });
-    //     if (xValues[0].indexOf('משרד ה') === 0) {
-    //       budgets.push(...xValues.map((org) => {
-    //         return {
-    //           type: 'line',
-    //           line: {
-    //             dash: 'dot',
-    //           },
-    //           name: org,
-    //           hovertemplate: '₪%{text}',
-    //           text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v: number) => Math.floor(v).toLocaleString()),    
-    //           x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
-    //           y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v) => v/1000000.0),
-    //         }
-    //       }));
-    //     }
-    //     return budgets;
-    //   }
-    // },
-    // {
-    //   location: 'services',
-    //   id: 'service_trend',
-    //   query: `WITH objs AS
-    //   (SELECT :org-field as office,
-    //           jsonb_array_elements("manualBudget"::JSONB) AS obj
-    //    FROM all_activities
-    //    WHERE :where and "manualBudget" IS NOT NULL
-    //      AND "manualBudget" != 'null'),
-    //      years AS
-    //   (SELECT office,
-    //           (obj->>'year')::integer AS year
-    //    FROM objs)
-    // SELECT office,
-    //        year,
-    //        count(1) AS value
-    // FROM years
-    // where year >= 2020 and year < 2022
-    // group by 1,2
-    // ORDER BY 1`,
-    //   title: 'מספר השירותים השונים לאורך זמן',
-    //   subtitle: '',
-    //   x_field: 'year',
-    //   y_field: 'value',
-    //   layout: {
-    //     xaxis: {
-    //       // tick0: 2019,
-    //       title: 'שנה',
-    //       dtick: 1,
-    //       range: [2019.5, 2021.5]
-    //     },
-    //     yaxis: {
-    //       title: 'מספר השירותים',
-    //     }
-    //   },
-    //   kind: 'org',
-    //   data: (items, info, xValues) => {
-    //     return xValues.map((org) => {
-    //       return {
-    //         type: 'line',
-    //         line: {
-    //           dash: 'dot',
-    //         },
-    //         name: org,
-    //         x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-    //         y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-    //       }
-    //     });
-    //   }
-    // },
-    // {
-    //   location: 'services',
-    //   id: 'supplier_trend',
-    //   query: `WITH objs AS
-    //   (SELECT :org-field as office,
-    //           jsonb_array_elements(suppliers::JSONB) AS obj
-    //    FROM activities
-    //    WHERE :where and suppliers IS NOT NULL
-    //      AND suppliers != 'null'),
-    //      years AS
-    //   (SELECT office,
-    //           obj->>'entity_id' AS entity_id,
-    //           jsonb_array_elements(obj->'activity_years') AS YEAR
-    //    FROM objs)
-    // SELECT office,
-    //        (YEAR::text)::integer as year,
-    //        count(DISTINCT entity_id) AS value
-    // FROM years
-    // where (YEAR::text)::integer >= 2020
-    // group by 1,2
-    // ORDER BY 1`,
-    //   subtitleQuery: `WITH objs AS
-    //   (SELECT :org-field as office,
-    //           jsonb_array_elements(suppliers::JSONB) AS obj
-    //    FROM activities
-    //    WHERE :where and suppliers IS NOT NULL
-    //      AND suppliers != 'null'),
-    //      years AS
-    //   (SELECT obj->>'entity_id' AS entity_id,
-    //           jsonb_array_elements(obj->'activity_years') AS YEAR
-    //    FROM objs)
-    // SELECT max((YEAR::text)::integer) as max_year,
-    //        min((YEAR::text)::integer) as min_year,
-    //        count(DISTINCT entity_id) AS value
-    // FROM years
-    // where (YEAR::text)::integer >= 2020
-    // ORDER BY 1`,
-    //   title: 'מספר מפעילי השירותים לאורך זמן',
-    //   titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
-    //   x_field: 'year',
-    //   y_field: 'value',
-    //   subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
-    //   layout: {
-    //     xaxis: {
-    //       // tick0: 2019,
-    //       title: 'שנה',
-    //       dtick: 1,
-    //       range: [2019.5, 2021.5]
-    //     },
-    //     yaxis: {
-    //       title: 'מספר המפעילים',
-    //     }
-    //   },
-    //   kind: 'org',
-    //   data: (items, info, xValues) => {
-    //     return xValues.map((org) => {
-    //       return {
-    //         type: 'line',
-    //         line: {
-    //           dash: 'dot',
-    //         },
-    //         name: org,
-    //         x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
-    //         y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
-    //       }
-    //     });
-    //   }
-    // },
+    {
+      location: 'services',
+      id: 'budget_trend',
+      query: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements("manualBudget"::JSONB) AS obj
+       FROM activities
+       WHERE :where AND "manualBudget" IS NOT NULL
+         AND "manualBudget" != 'null' )
+    SELECT office as "משרד",
+           (obj->>'year')::integer as year,
+           sum((obj->>'approved')::numeric) as value,
+           sum((obj->>'executed')::numeric) as value2
+    FROM objs
+    where
+      (obj->>'year')::integer >= 2017 and 
+      (obj->>'year')::integer <= 2021
+    GROUP BY 1,
+             2
+    order by 1, 2`,
+      title: 'תקציב לאורך זמן',
+      titleTooltip: 'סך התקציב המאושר לשירותים לפי שנים. התקציב מחושב באופן שנתי. שינויים בתקציב עשויים לנבוע ממעבר של שירותים לצורות הפעלה שונות (שאינן הליך מכרזי) ואינם מעידים בהכרח על הפסקת השירותים' + budgetDisclaimer,
+      x_field: 'year',
+      y_field: 'value',
+      y_field2: 'value2',
+      subtitle: '(תקציב מאושר בקו רציף, הביצוע בקו מקווקו)',
+      layout: {
+        xaxis: {
+          title: 'שנת תקציב'
+        },
+        yaxis: {
+          title: '₪ תקציב השירותים במיליוני',
+          hoverformat: ',.0f'
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        const budgets = xValues.map((org) => {
+          return {
+            type: 'line',
+            name: org,
+            hovertemplate: '₪%{text}',
+            text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v: number) => Math.floor(v).toLocaleString()),
+            x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
+            y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field]).map((v) => v/1000000.0),
+          }
+        });
+        if (xValues[0].indexOf('משרד ה') === 0) {
+          budgets.push(...xValues.map((org) => {
+            return {
+              type: 'line',
+              line: {
+                dash: 'dot',
+              },
+              name: org,
+              hovertemplate: '₪%{text}',
+              text: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v: number) => Math.floor(v).toLocaleString()),    
+              x: items.filter((x) => x['משרד'] === org).map((x) => x[info.x_field]),
+              y: items.filter((x) => x['משרד'] === org).map((x) => x[info.y_field2]).map((v) => v/1000000.0),
+            }
+          }));
+        }
+        return budgets;
+      }
+    },
+    {
+      location: 'services',
+      id: 'service_trend',
+      query: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements("manualBudget"::JSONB) AS obj
+       FROM all_activities
+       WHERE :where and "manualBudget" IS NOT NULL
+         AND "manualBudget" != 'null'),
+         years AS
+      (SELECT office,
+              (obj->>'year')::integer AS year
+       FROM objs)
+    SELECT office,
+           year,
+           count(1) AS value
+    FROM years
+    where year >= 2020 and year < 2022
+    group by 1,2
+    ORDER BY 1`,
+      title: 'מספר השירותים השונים לאורך זמן',
+      subtitle: '',
+      x_field: 'year',
+      y_field: 'value',
+      layout: {
+        xaxis: {
+          // tick0: 2019,
+          title: 'שנה',
+          dtick: 1,
+          range: [2019.5, 2021.5]
+        },
+        yaxis: {
+          title: 'מספר השירותים',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return xValues.map((org) => {
+          return {
+            type: 'line',
+            line: {
+              dash: 'dot',
+            },
+            name: org,
+            x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
+          }
+        });
+      }
+    },
+    {
+      location: 'services',
+      id: 'supplier_trend',
+      query: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where and suppliers IS NOT NULL
+         AND suppliers != 'null'),
+         years AS
+      (SELECT office,
+              obj->>'entity_id' AS entity_id,
+              jsonb_array_elements(obj->'activity_years') AS YEAR
+       FROM objs)
+    SELECT office,
+           (YEAR::text)::integer as year,
+           count(DISTINCT entity_id) AS value
+    FROM years
+    where (YEAR::text)::integer IN (2020, 2021)
+    group by 1,2
+    ORDER BY 1`,
+      subtitleQuery: `WITH objs AS
+      (SELECT :org-field as office,
+              jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where and suppliers IS NOT NULL
+         AND suppliers != 'null'),
+         years AS
+      (SELECT obj->>'entity_id' AS entity_id,
+              jsonb_array_elements(obj->'activity_years') AS YEAR
+       FROM objs)
+    SELECT max((YEAR::text)::integer) as max_year,
+           min((YEAR::text)::integer) as min_year,
+           count(DISTINCT entity_id) AS value
+    FROM years
+    where (YEAR::text)::integer IN (2020, 2021)
+    ORDER BY 1`,
+      title: 'מספר מפעילי השירותים לאורך זמן',
+      titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
+      x_field: 'year',
+      y_field: 'value',
+      subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
+      layout: {
+        xaxis: {
+          // tick0: 2019,
+          title: 'שנה',
+          dtick: 1,
+          range: [2019.5, 2021.5]
+        },
+        yaxis: {
+          title: 'מספר המפעילים',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return xValues.map((org) => {
+          return {
+            type: 'line',
+            line: {
+              dash: 'dot',
+            },
+            name: org,
+            x: items.filter((x) => x.office === org).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.office === org).map((x) => x[info.y_field]),
+          }
+        });
+      }
+    },
     {
       location: 'suppliers',
       id: 'supplier_kinds_count',
@@ -486,14 +486,14 @@ export const chartTemplates = [
     SELECT :org-field as office,
            name,
            current_budget,
-           jsonb_array_length(suppliers) as num_suppliers
+           supplier_count
     FROM activities
     where :where AND suppliers IS NOT NULL AND suppliers != 'null'
     `,
       title: 'מטריצת ריכוזיות',
       titleTooltip: 'מספר הגופים אשר מפעילים את השירות ביחס להיקף התקציב של השירות. ככל שתקציב השירות גדול יותר ומספר המפעילים קטן יותר, כך הריכוזוית גבוהה יותר.',
       x_field: 'current_budget',
-      y_field: 'num_suppliers',
+      y_field: 'supplier_count',
       text_field: 'name',
       subtitle: 'מספר המפעילים של השירות יחסית לתקציב השירות',
       layout: {
@@ -537,6 +537,7 @@ export const chartTemplates = [
                where :where and tenders is not null and tenders::text != 'null')
     select office, t->>'tender_type_he' as tender_type_he, count(1) as value
     from s
+    where t->>'active' = 'yes'
     group by 1,2
     ORDER BY 1`,
       title: 'מספר הליכי רכש לפי סוג הליך',
@@ -577,6 +578,7 @@ export const chartTemplates = [
     select office, t->>'sub_kind_he' as sub_kind_he, count(1) as value
     from s
     where t->>'tender_type' = 'exemptions'
+    and t->>'active' = 'yes'
     group by 1,2
     ORDER BY 1`,
       title: 'מספר פטורים לפי סוג פטור',
@@ -618,6 +620,7 @@ export const chartTemplates = [
     select office, t->>'pricing' as pricing, count(1) as value
     from s
     where t->>'tender_type' != 'exemptions'
+    and t->>'active' = 'yes'
     group by 1,2
     ORDER BY 1`,
       title: 'מספר הליכי רכש לפי מודל התמחור',
@@ -662,6 +665,7 @@ export const chartTemplates = [
         select office, t->>'sub_kind_he' as sub_kind_he, count(distinct id) as value
         from s
         where t->>'sub_kind_he' in ('ספק יחיד', 'מיזם משותף', 'התקשרות עם רשות מקומית')
+        and t->>'active' = 'yes'
         group by 1,2
         ORDER BY 1`,
       title: 'מספר שירותים עם פטור מהליך מכרזי',
