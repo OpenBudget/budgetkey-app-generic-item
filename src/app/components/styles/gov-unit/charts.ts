@@ -319,6 +319,7 @@ export const chartTemplates = [
         });
       }
     },
+    
     {
       location: 'suppliers',
       id: 'supplier_kinds_count',
@@ -525,7 +526,79 @@ export const chartTemplates = [
         });
       }
     },
-
+    {
+      location: 'suppliers',
+      id: 'supplier_kind_trend',
+      query: `/*xxx*/ WITH objs AS
+      (SELECT jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where and suppliers IS NOT NULL
+         AND suppliers != 'null'),
+         years AS
+      (SELECT case obj->>'entity_kind'
+              when 'company' then 'עסקי'
+              when 'municipality' then 'רשויות מקומיות'
+              when 'association' then 'מגזר שלישי'
+              when 'ottoman-association' then 'מגזר שלישי'
+              when 'cooperative' then 'מגזר שלישי'
+              else 'אחר'
+              end as kind,
+              obj->>'entity_id' AS entity_id,
+              jsonb_array_elements(obj->'activity_years') AS YEAR
+       FROM objs)
+    SELECT kind,
+           (YEAR::text)::integer as year,
+           count(DISTINCT entity_id) AS value
+    FROM years
+    where (YEAR::text)::integer IN (2020, 2021)
+    group by 1,2
+    ORDER BY 1`,
+      subtitleQuery: `WITH objs AS
+      (SELECT jsonb_array_elements(suppliers::JSONB) AS obj
+       FROM activities
+       WHERE :where and suppliers IS NOT NULL
+         AND suppliers != 'null'),
+         years AS
+      (SELECT obj->>'entity_id' AS entity_id,
+              jsonb_array_elements(obj->'activity_years') AS YEAR
+       FROM objs)
+    SELECT max((YEAR::text)::integer) as max_year,
+           min((YEAR::text)::integer) as min_year,
+           count(DISTINCT entity_id) AS value
+    FROM years
+    where (YEAR::text)::integer IN (2020, 2021)
+    ORDER BY 1`,
+      title: 'מגזר מפעילי השירותים לאורך זמן',
+      titleTooltip: 'המגזר של הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
+      x_field: 'year',
+      y_field: 'value',
+      subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
+      layout: {
+        xaxis: {
+          // tick0: 2019,
+          title: 'שנה',
+          dtick: 1,
+          range: [2019.5, 2021.5]
+        },
+        yaxis: {
+          title: 'מספר המפעילים',
+        }
+      },
+      kind: 'org',
+      data: (items, info, xValues) => {
+        return ['מגזר שלישי', 'עסקי', 'רשויות מקומיות', 'אחר'].map((kind) => {
+          return {
+            type: 'line',
+            line: {
+              dash: 'dot',
+            },
+            name: kind,
+            x: items.filter((x) => x.kind === kind).map((x) => x[info.x_field]),
+            y: items.filter((x) => x.kind === kind).map((x) => x[info.y_field]),
+          }
+        });
+      }
+    },
 
     {
       location: 'tenders',
