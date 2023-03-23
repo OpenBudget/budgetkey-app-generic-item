@@ -62,6 +62,7 @@
             <div *ngIf='item.purchase_method'>
                 <label>אופן רכישה:&nbsp;</label><br/>
                 <span class='label-text'>{{ item.purchase_method }}</span>
+                <span *ngIf='item.exemption_reason && item.exemption_reason.length && item.exemption_reason[0].length && item.exemption_reason[0].length > 5'>&nbsp;({{item.exemption_reason[0]}})</span>
             </div>
             
             <div class='payments' *ngIf='paymentsTable()'>
