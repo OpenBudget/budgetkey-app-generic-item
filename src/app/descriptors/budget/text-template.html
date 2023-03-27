@@ -1,6 +1,6 @@
 בשנת {{year}} תקציב {{title}}
 {% if net_allocated %}
- עמד על {{net_allocated | format_number}}₪.
+ הוא {{net_allocated | format_number}}₪.
 {% endif %}
 {% if not net_allocated %}
   לא הוקצה.
@@ -8,7 +8,7 @@
 
 {% if (net_allocated != net_revised) %}
 <br />
-אחרי העברות תקציביות, התקציב עמד על {{net_revised | format_number}}₪
+אחרי העברות תקציביות, התקציב הוא {{net_revised | format_number}}₪
 {% endif %}
 
 

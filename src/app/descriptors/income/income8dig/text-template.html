@@ -1,9 +1,9 @@
 בשנת {{year}} הכנסת {{title}}
 {% if net_allocated %}
- עמדה על {{net_allocated | format_number}}₪.
+ היא {{net_allocated | format_number}}₪.
 {% endif %}
 {% if not net_allocated %}
-  לא הוקצה.
+  לא הוקצתה.
 {% endif %}
 
 {% if (history[(year-1)].net_executed) %}
