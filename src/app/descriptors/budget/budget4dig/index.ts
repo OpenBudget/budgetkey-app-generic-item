@@ -9,6 +9,7 @@ export default new SimpleDescriptor({
   textTemplate: require('../text-template.html'),
   questions: [].concat(
     require('../questions.spending.json'),
-    require('../questions.json')
+    require('../questions.json'),
+    require('../questions-parents.json')
   ),
 });

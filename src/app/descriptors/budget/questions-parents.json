@@ -1,0 +1,25 @@
+[
+  {
+    "text": "תת-הסעיפים של סעיף זה לפי שנה",
+    "query": [
+        "select year as \"שנה\", ",
+        "code as \"מספר סעיף\", ",
+        "title as \"שם סעיף\", ",
+        "'budget/' || code || '/' || year as \"item_id\", ",
+        "net_allocated as \"תקציב מקורי\", ",
+        "net_revised as \"תקציב אחרי שינויים\", ",
+        "net_executed as \"ביצוע בפועל\" ",
+        "from raw_budget where code like ':code%%' and length(code)=:child_code_len order by \"שנה\" desc, \"מספר סעיף\" asc"
+    ],
+    "parameters": {
+    },
+    "headers": [
+      "שנה",
+      "מספר סעיף:budget_code",
+      "שם סעיף:item_link(item_id)",  
+      "תקציב מקורי:number",
+      "תקציב אחרי שינויים:number",
+      "ביצוע בפועל:number"
+    ]
+  }
+]
