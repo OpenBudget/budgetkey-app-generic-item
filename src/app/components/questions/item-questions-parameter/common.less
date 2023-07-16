@@ -21,9 +21,22 @@
       border: 1px solid #EEEEEE;
       border-radius: 4px;
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-      right: -5px;
+      // right: -5px;
       position: absolute;
       z-index: 9999;
+      max-height: 50vh;
+      overflow: scroll;
+      margin-bottom: 20px;
+      transform: translateY(-50%);
+      /*FireFox*/
+      scrollbar-width: none;
+      /*IE10+*/
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      &::-webkit-scrollbar {
+      /*Chrome, Safari, Edge*/
+          display: none;
+      }
+
 
       li {
         list-style: none;
