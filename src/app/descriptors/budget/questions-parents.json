@@ -10,7 +10,7 @@
         "net_revised as \"תקציב אחרי שינויים\", ",
         "net_executed as \"ביצוע בפועל\" ",
         "from raw_budget where code like ':code%%' and length(code)=:child_code_len and ",
-        "(\"תקציב מקורי\" != 0 or \"תקציב אחרי שינויים\" != 0 or \"ביצוע בפועל\" != 0) and year:period",
+        "(net_allocated != 0 or net_revised != 0 or net_executed != 0) and year:period",
         "order by \"שנה\" desc, \"מספר סעיף\" asc"
     ],
     "parameters": {
