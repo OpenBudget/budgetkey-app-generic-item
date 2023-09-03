@@ -292,7 +292,7 @@ export const chartTemplates = [
       titleTooltip: 'סך הגופים המפעילים את השירותים לאורך זמן (כל גוף מפעיל נספר פעם אחת, גם אם הוא מספק יותר משירות אחד)',
       x_field: 'year',
       y_field: 'value',
-      subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
+      // subtitle: ':total מפעילים שונים ב:org', // בין השנים :min-year ל-:max-year',
       layout: {
         xaxis: {
           // tick0: 2019,
